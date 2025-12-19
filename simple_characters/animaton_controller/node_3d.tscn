@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://beamuxs5txuc6"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
