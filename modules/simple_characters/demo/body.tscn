@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://uce7uh34d0uv"]
+
+[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/demo/pc_input_handler.gd" id="1_tf7cr"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_tf7cr")
