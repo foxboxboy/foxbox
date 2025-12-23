@@ -1,0 +1,184 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqkyvc35kvhw3"]
+
+[ext_resource type="Script" uid="uid://s80ndg4udkj8" path="res://modules/modifiers/demo/gui.gd" id="1_6i6kb"]
+
+[node name="GUI" type="Control" node_paths=PackedStringArray("health_bar")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_6i6kb")
+health_bar = NodePath("ProgressBar")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 25.0
+offset_right = 168.0
+offset_bottom = 208.0
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "DAMAGE:"
+
+[node name="DamageLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "HEALTH:"
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer3/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "SPEED:"
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/PanelContainer3/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 100.0
+offset_right = 316.0
+offset_bottom = 135.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 288.0
+offset_right = 103.0
+offset_bottom = 328.0
+
+[node name="VSeparator3" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stackable
+Upgrades"
+
+[node name="WindUpButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Wind Up"
+
+[node name="ChaseButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Chase"
+
+[node name="VSeparator4" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Weapons
+"
+
+[node name="LanceButton" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Lance"
+
+[node name="SwordButton" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Sword"
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Status 
+Effects"
+
+[node name="SetOnFireButton" type="Button" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Set on Fire"
+
+[node name="PoisonButton" type="Button" parent="HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Poison"
+
+[node name="VSeparator5" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="ClearAllEffectsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "CLEAR ALL 
+EFFECTS"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/WindUpButton" to="." method="_on_wind_up_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/ChaseButton" to="." method="_on_chase_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/LanceButton" to="." method="_on_lance_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/SwordButton" to="." method="_on_sword_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/SetOnFireButton" to="." method="_on_set_on_fire_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/PoisonButton" to="." method="_on_poison_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ClearAllEffectsButton" to="." method="_on_clear_all_effects_button_pressed"]

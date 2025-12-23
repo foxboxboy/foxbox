@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffd589" stop-opacity="1"/><stop offset=".83" stop-color="#ff9c7e" stop-opacity="1"/><stop offset="100%" stop-color="#a84176"/></linearGradient></defs><style>#rect1 {
+      fill: url("#Gradient1");
+    }
+    .stop1 {
+      stop-color: red;
+    }
+    .stop2 {
+      stop-color: black;
+      stop-opacity: 0;
+    }
+    .stop3 {
+      stop-color: blue;
+    }</style><rect x="0" y="0" rx="0" ry="0" width="16" height="16" fill="url(#Gradient2)"/></svg><line x2="-.25" stroke="#000" x1="1.5" y1="8.75" y2="7.5" stroke-width=".5" transform="translate(8 1)"/><line x2="-.5" stroke="#000" x1="1.5" y1="8.75" y2="7.5" stroke-width=".5" transform="translate(0 1)"/><line x2=".5" stroke="#000" x1="2.75" y1="6.75" y2="4.75" stroke-width=".5" transform="translate(8 1)"/><line x2=".75" stroke="#000" x1="2.75" y1="6.75" y2="4.5" stroke-width=".5" transform="translate(0 1)"/><line x2="4" stroke="#000" x1="4" y1="6.25" y2="3.75" stroke-width=".5" transform="translate(8 1)"/><line x2="4" stroke="#000" x1="4" y1="6.25" y2="3.75" stroke-width=".5" transform="translate(0 1)"/><line x2="7.5" stroke="#000" x1="5.5" y1="7" y2="5" stroke-width=".5" transform="translate(8 1)"/><line x2="7.25" stroke="#000" x1="5.5" y1="7" y2="4.25" stroke-width=".5" transform="translate(0 1)"/><line x2="8.5" stroke="#000" x1="6.5" y1="9.25" y2="7.5" stroke-width=".5" transform="translate(8 1)"/><line x2="8" stroke="#000" x1="6.5" y1="9.25" y2="8.25" stroke-width=".5" transform="translate(0 1)"/><circle r="1.25" cx="1.25" cy="10" transform="translate(13.5 1)"/><circle r="1.25" cx="1.25" cy="10" transform="translate(0 1)"/><rect width="6" height="1" x="1" y="10" fill="#ff9c7e" transform="translate(8 1)"/><rect width="6" height="1" x="1" y="10" fill="#ff9c7e" transform="translate(0 1)"/><path d="M1 10Q1 6 4 6 7 6 7 10Z" fill="#ff9c7e" transform="translate(8 1)"/><path d="M1 10Q1 6 4 6 7 6 7 10Z" fill="#ff9c7e" transform="translate(0 1)"/><rect width=".75" height="2.75" x="5" y="7.25" fill="#000" transform="translate(8 1)"/><rect width=".75" height="2.75" x="5" y="7.25" fill="#000" transform="translate(0 1)"/><path d="M1 10Q1 6 4 6 7 6 7 10L7 11 1 11 1 10Z" fill="none" stroke="#000" stroke-width=".5" transform="translate(0 1)"/><path d="M1 10Q1 6 4 6 7 6 7 10L7 11 1 11 1 10Z" fill="none" stroke="#000" stroke-width=".5" transform="translate(8 1)"/></svg>

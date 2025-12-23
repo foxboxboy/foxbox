@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bedvskmd1tusw"]
+[gd_scene load_steps=17 format=3 uid="uid://bedvskmd1tusw"]
 
 [ext_resource type="Script" uid="uid://cfr0uqygf4xtu" path="res://modules/simple_characters/demo/character.gd" id="1_i5pi4"]
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/demo/triplanar.png" id="1_i6m7q"]
@@ -37,22 +37,6 @@ albedo_color = Color(1, 0, 0, 1)
 albedo_texture = ExtResource("1_i6m7q")
 uv1_triplanar = true
 texture_filter = 0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aq0ug"]
-direction = Vector3(0, -1, 0)
-spread = 180.0
-initial_velocity_min = 0.79999995
-initial_velocity_max = 0.79999995
-gravity = Vector3(0, -3, 0)
-linear_accel_min = 2.9999976
-linear_accel_max = 4.9999976
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0tlq"]
-billboard_mode = 1
-
-[sub_resource type="QuadMesh" id="QuadMesh_3lune"]
-material = SubResource("StandardMaterial3D_r0tlq")
-size = Vector2(0.1, 0.1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i5pi4"]
 
@@ -110,19 +94,13 @@ script = ExtResource("2_81bif")
 [node name="CharacterBody3D" type="CharacterBody3D" parent="Character" node_paths=PackedStringArray("ground_cast")]
 script = ExtResource("2_cv082")
 ground_cast = NodePath("GroundCast")
-can_double_jump = true
-
-[node name="JumpParticles" type="GPUParticles3D" parent="Character/CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51431644, 0)
-emitting = false
-lifetime = 0.3
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_aq0ug")
-draw_pass_1 = SubResource("QuadMesh_3lune")
+coyote_time = null
+speed = null
+jump_strength = null
+gravity_multiplier = null
 
 [node name="ThirdPersonCamera" type="Camera3D" parent="Character/CharacterBody3D"]
-transform = Transform3D(1, 4.440892e-16, -2.7818132e-08, 7.1998625e-09, 0.9659259, 0.25881907, 2.6870252e-08, -0.25881907, 0.9659258, 1.368924, 2.700238, 1.9574723)
+transform = Transform3D(1, 0, -2.7818132e-08, 7.1998625e-09, 0.9659258, 0.25881904, 2.6870252e-08, -0.25881904, 0.9659258, 0, 3, 2)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -152,7 +130,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0
 top_level = true
 
 [node name="Mannequin" parent="Character/CharacterBody3D/Node3D/Torso" instance=ExtResource("1_lxaxe")]
-transform = Transform3D(-1, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742278e-08, 0, -0.99999994, 0, -0.1, 0)
+transform = Transform3D(-1, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742278e-08, 0, -0.99999994, 0, 0, 0)
 script = ExtResource("6_5ixkb")
 
 [node name="HeadBoneAttachment" type="BoneAttachment3D" parent="Character/CharacterBody3D/Node3D/Torso/Mannequin/armature/Skeleton3D" index="1"]
@@ -313,6 +291,5 @@ horizontal_alignment = 1
 [connection signal="move_input" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_move_input"]
 [connection signal="zoom_in" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_zoom_in"]
 [connection signal="zoom_out" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_zoom_out"]
-[connection signal="jumped" from="Character/CharacterBody3D" to="Character" method="_on_character_body_3d_jumped"]
 
 [editable path="Character/CharacterBody3D/Node3D/Torso/Mannequin"]

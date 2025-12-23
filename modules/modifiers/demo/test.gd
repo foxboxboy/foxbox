@@ -1,6 +1,6 @@
 extends Node
 
-@export var test_stat : ModifiableStat = ModifiableStat.new()
+@export var test_stat : ModifiableStat = TateModifiableStat.new()
 
 func _ready() -> void:
 	test_stat.add_flat_modifier("extra_health", 1.0)

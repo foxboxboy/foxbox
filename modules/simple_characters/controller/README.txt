@@ -1,4 +1,4 @@
-tates_framework/modules/simple_characters/controller
+tates_library/modules/simple_characters/controller
 
 Logic for control of a character.
 

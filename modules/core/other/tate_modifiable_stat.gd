@@ -1,5 +1,5 @@
-extends Resource
-class_name ModifiableStat
+extends TateResource
+class_name TateModifiableStat
 ## Changes a number based on two lists of modifiers.
 ##
 ## The flat_modifiers do addition (+) operations on the base value.

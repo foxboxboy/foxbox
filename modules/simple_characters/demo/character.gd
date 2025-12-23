@@ -1,13 +1,14 @@
 extends Node3D
 
-@onready var body: TateCharacterMotor = $CharacterBody3D
+@onready var body: TateCharacterMotor3D = $CharacterBody3D
 
 @onready var mannequin: Node3D = $CharacterBody3D/Node3D
 @onready var head: Marker3D = $CharacterBody3D/Node3D/Head
 @onready var torso: Marker3D = $CharacterBody3D/Node3D/Torso
+@onready var jump_particles: GPUParticles3D = $CharacterBody3D/JumpParticles
 
-@export var mouse_sensitivity := 0.001
-@export var vertical_sensitivity := 0.65
+@export var mouse_sensitivity := 0.0005
+@export var vertical_sensitivity := 0.5
 #@onready var camera_3d: Camera3D = $CharacterBody3D/Camera3D
 
 
@@ -40,7 +41,7 @@ func sync_torso():
 	
 		var target_angle = body.rotation.y + half_spin + strafe_amount * quarter_spin
 		#target_angle = wrapf(target_angle, -half_spin, half_spin)
-		var rotation_speed_multiplier := 0.03
+		var rotation_speed_multiplier := 0.02
 		var rotation_speed : float = clamp(body.velocity.length() * rotation_speed_multiplier, 0.0, 0.9)
 		torso.rotation.y = lerp_angle(torso.rotation.y, target_angle, rotation_speed)
 
@@ -156,3 +157,7 @@ func _on_pc_input_handler_jump_pressed() -> void:
 
 func _on_pc_input_handler_jump_released() -> void:
 	body.reset_jump()
+
+
+func _on_character_body_3d_jumped() -> void:
+	jump_particles.restart()

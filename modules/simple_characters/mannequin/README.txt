@@ -1,4 +1,4 @@
-tates_framework/simple_characters/mannequin
+tates_library/simple_characters/mannequin
 
 "Test dummy" blockbench bbmodel and imported gltf model.
 

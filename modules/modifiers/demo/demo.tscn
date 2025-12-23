@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbrnxcafx8i3w"]
+
+[ext_resource type="PackedScene" uid="uid://dqkyvc35kvhw3" path="res://modules/modifiers/demo/gui.tscn" id="1_72qgp"]
+[ext_resource type="Script" uid="uid://pdauhh1b2d50" path="res://modules/modifiers/demo/main.gd" id="1_j6k3g"]
+[ext_resource type="Script" uid="uid://bmuvg26u1d45l" path="res://modules/modifiers/demo/chase_upgrade.gd" id="2_hfk16"]
+[ext_resource type="PackedScene" uid="uid://cndfb5ei0tgxp" path="res://modules/modifiers/demo/knight.tscn" id="3_8rr27"]
+
+[sub_resource type="Resource" id="Resource_jc2tg"]
+script = ExtResource("2_hfk16")
+effect_id = "chase_upgrade"
+stack_mode = 1
+metadata/_custom_type_script = "uid://bmuvg26u1d45l"
+
+[node name="Demo" type="Node"]
+script = ExtResource("1_j6k3g")
+chase_upgrade_effect = SubResource("Resource_jc2tg")
+
+[node name="GUI" parent="." instance=ExtResource("1_72qgp")]
+
+[node name="Knight" parent="." instance=ExtResource("3_8rr27")]
+
+[connection signal="chase_button_pressed" from="GUI" to="." method="_on_gui_chase_button_pressed"]
+[connection signal="clear_all_effects_button_pressed" from="GUI" to="." method="_on_gui_clear_all_effects_button_pressed"]
+[connection signal="lance_button_pressed" from="GUI" to="." method="_on_gui_lance_button_pressed"]
+[connection signal="poison_button_pressed" from="GUI" to="." method="_on_gui_poison_button_pressed"]
+[connection signal="set_on_fire_button_pressed" from="GUI" to="." method="_on_gui_set_on_fire_button_pressed"]
+[connection signal="sword_button_pressed" from="GUI" to="." method="_on_gui_sword_button_pressed"]
+[connection signal="wind_up_button_pressed" from="GUI" to="." method="_on_gui_wind_up_button_pressed"]
+[connection signal="speed_stat_value_changed" from="Knight/StatsComponent" to="." method="_on_stats_component_speed_stat_value_changed"]
+
+[editable path="Knight"]

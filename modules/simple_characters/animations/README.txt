@@ -1,6 +1,6 @@
-tates_framework/modules/simple_characters/animatons
+tates_library/modules/simple_characters/animations
 
-Simple library of generic animations.
+Simple library of generic character animations.
 
 The bone structure is vastly simplified compared to most
 animation libraries. This allows for faster simpler animation
