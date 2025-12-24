@@ -33,27 +33,27 @@ signal saturated(overflow: float)
 		_check_bounds()
 
 ## The actual fluctuating state.
-var current_value : float = 1.0:
+var value : float = 1.0:
 	set(v):
-		current_value = v # We allow temporary out-of-bounds for calculation
+		value = v # We allow temporary out-of-bounds for calculation
 		_check_bounds()
 
 #endregion
 
 #region API
 
-func _init(p_max: float = 1.0, p_min: float = 0.0):
+func _init(starting_value := 1.0, p_max: float = 1.0, p_min: float = 0.0):
 	max_limit = p_max
 	min_limit = p_min
-	current_value = max_limit
+	value = starting_value
 
 ## Standard way to decrease the value.
 func subtract(amount : float) -> void:
-	current_value -= amount
+	value -= amount
 
 ## Standard way to increase the value.
 func add(amount : float) -> void:
-	current_value += amount
+	value += amount
 
 #endregion
 
@@ -61,16 +61,16 @@ func add(amount : float) -> void:
 
 func _check_bounds() -> void:
 	# Calculate overflow/underflow before clamping
-	if current_value < min_limit:
-		var underflow = current_value - min_limit
-		current_value = min_limit
+	if value < min_limit:
+		var underflow = value - min_limit
+		value = min_limit
 		depleted.emit(underflow)
 	
-	elif current_value > max_limit:
-		var overflow = current_value - max_limit
-		current_value = max_limit
+	elif value > max_limit:
+		var overflow = value - max_limit
+		value = max_limit
 		saturated.emit(overflow)
 	
-	value_changed.emit(current_value, max_limit, min_limit)
+	value_changed.emit(value, max_limit, min_limit)
 
 #endregion

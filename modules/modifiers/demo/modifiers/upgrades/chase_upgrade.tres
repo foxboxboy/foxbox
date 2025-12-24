@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TateDemoModifierChaseUpgrade" load_steps=2 format=3 uid="uid://cv87e0qntijny"]
+
+[ext_resource type="Script" uid="uid://bmuvg26u1d45l" path="res://modules/modifiers/demo/modifiers/upgrades/chase_upgrade.gd" id="1_dg34x"]
+
+[resource]
+script = ExtResource("1_dg34x")
+stack_mode = 1
+metadata/_custom_type_script = "uid://bmuvg26u1d45l"

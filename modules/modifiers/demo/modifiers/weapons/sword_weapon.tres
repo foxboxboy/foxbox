@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TateDemoModifierSwordWeapon" load_steps=3 format=3 uid="uid://kuunl3b2x0rb"]
+
+[ext_resource type="Script" uid="uid://bygmgo7fugjge" path="res://modules/modifiers/demo/modifiers/weapons/sword_weapon.gd" id="1_o3nno"]
+[ext_resource type="PackedScene" uid="uid://dqt70ofnp6htu" path="res://modules/modifiers/demo/sword.tscn" id="2_g7t7c"]
+
+[resource]
+script = ExtResource("1_o3nno")
+sword_scene = ExtResource("2_g7t7c")
+metadata/_custom_type_script = "uid://bygmgo7fugjge"

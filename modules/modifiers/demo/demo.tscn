@@ -1,31 +1,46 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbrnxcafx8i3w"]
+[gd_scene load_steps=11 format=3 uid="uid://dbrnxcafx8i3w"]
 
 [ext_resource type="PackedScene" uid="uid://dqkyvc35kvhw3" path="res://modules/modifiers/demo/gui.tscn" id="1_72qgp"]
 [ext_resource type="Script" uid="uid://pdauhh1b2d50" path="res://modules/modifiers/demo/main.gd" id="1_j6k3g"]
-[ext_resource type="Script" uid="uid://bmuvg26u1d45l" path="res://modules/modifiers/demo/chase_upgrade.gd" id="2_hfk16"]
+[ext_resource type="Resource" uid="uid://cv87e0qntijny" path="res://modules/modifiers/demo/modifiers/upgrades/chase_upgrade.tres" id="2_d165p"]
+[ext_resource type="Resource" uid="uid://c7m4rfvfrg57" path="res://modules/modifiers/demo/modifiers/upgrades/wind_up_upgrade.tres" id="3_6ybc4"]
 [ext_resource type="PackedScene" uid="uid://cndfb5ei0tgxp" path="res://modules/modifiers/demo/knight.tscn" id="3_8rr27"]
+[ext_resource type="Resource" uid="uid://dbisn0qy7jcuo" path="res://modules/modifiers/demo/modifiers/weapons/lance_weapon.tres" id="4_5dtnt"]
+[ext_resource type="Resource" uid="uid://kuunl3b2x0rb" path="res://modules/modifiers/demo/modifiers/weapons/sword_weapon.tres" id="5_3ah6a"]
+[ext_resource type="Script" uid="uid://bhdc3rbce0uhq" path="res://modules/core/other/tate_modifiable_stat.gd" id="5_d165p"]
 
-[sub_resource type="Resource" id="Resource_jc2tg"]
-script = ExtResource("2_hfk16")
-effect_id = "chase_upgrade"
-stack_mode = 1
-metadata/_custom_type_script = "uid://bmuvg26u1d45l"
+[sub_resource type="Resource" id="Resource_6ybc4"]
+resource_local_to_scene = true
+script = ExtResource("5_d165p")
+metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
+
+[sub_resource type="Resource" id="Resource_5dtnt"]
+resource_local_to_scene = true
+script = ExtResource("5_d165p")
+metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_j6k3g")
-chase_upgrade_effect = SubResource("Resource_jc2tg")
+chase_upgrade = ExtResource("2_d165p")
+wind_up_upgrade = ExtResource("3_6ybc4")
+lance_weapon = ExtResource("4_5dtnt")
+sword_weapon = ExtResource("5_3ah6a")
 
 [node name="GUI" parent="." instance=ExtResource("1_72qgp")]
 
 [node name="Knight" parent="." instance=ExtResource("3_8rr27")]
+position = Vector2(775, 283)
+damage_component = SubResource("Resource_6ybc4")
+speed_component = SubResource("Resource_5dtnt")
 
 [connection signal="chase_button_pressed" from="GUI" to="." method="_on_gui_chase_button_pressed"]
-[connection signal="clear_all_effects_button_pressed" from="GUI" to="." method="_on_gui_clear_all_effects_button_pressed"]
+[connection signal="clear_all_modifiers_button_pressed" from="GUI" to="." method="_on_gui_clear_all_modifiers_button_pressed"]
 [connection signal="lance_button_pressed" from="GUI" to="." method="_on_gui_lance_button_pressed"]
 [connection signal="poison_button_pressed" from="GUI" to="." method="_on_gui_poison_button_pressed"]
 [connection signal="set_on_fire_button_pressed" from="GUI" to="." method="_on_gui_set_on_fire_button_pressed"]
 [connection signal="sword_button_pressed" from="GUI" to="." method="_on_gui_sword_button_pressed"]
 [connection signal="wind_up_button_pressed" from="GUI" to="." method="_on_gui_wind_up_button_pressed"]
-[connection signal="speed_stat_value_changed" from="Knight/StatsComponent" to="." method="_on_stats_component_speed_stat_value_changed"]
-
-[editable path="Knight"]
+[connection signal="damage_updated" from="Knight" to="." method="_on_knight_damage_updated"]
+[connection signal="health_updated" from="Knight" to="." method="_on_knight_health_updated"]
+[connection signal="speed_updated" from="Knight" to="." method="_on_knight_speed_updated"]
+[connection signal="upgrades_changed" from="Knight" to="." method="_on_knight_upgrades_changed"]

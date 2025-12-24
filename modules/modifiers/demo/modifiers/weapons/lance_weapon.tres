@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TateDemoModifierLanceWeapon" load_steps=3 format=3 uid="uid://dbisn0qy7jcuo"]
+
+[ext_resource type="Script" uid="uid://dr5iy2a6hohn8" path="res://modules/modifiers/demo/modifiers/weapons/lance_weapon.gd" id="1_rh7pv"]
+[ext_resource type="PackedScene" uid="uid://d03q8prh3jo2m" path="res://modules/modifiers/demo/lance.tscn" id="1_waqo4"]
+
+[resource]
+script = ExtResource("1_rh7pv")
+lance_scene = ExtResource("1_waqo4")
+metadata/_custom_type_script = "uid://dr5iy2a6hohn8"

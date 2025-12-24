@@ -13,7 +13,7 @@ extends Node3D
 
 
 @onready var first_person_camera: Camera3D = $CharacterBody3D/Node3D/Head/FirstPersonCamera
-@onready var third_person_camera: Camera3D = $CharacterBody3D/ThirdPersonCamera
+@onready var third_person_camera: Camera3D = $CharacterBody3D/Node3D/Head/ThirdPersonCamera
 @onready var world_camera: Camera3D = $"../WorldCamera"
 
 

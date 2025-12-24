@@ -121,9 +121,6 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_aq0ug")
 draw_pass_1 = SubResource("QuadMesh_3lune")
 
-[node name="ThirdPersonCamera" type="Camera3D" parent="Character/CharacterBody3D"]
-transform = Transform3D(1, 4.440892e-16, -2.7818132e-08, 7.1998625e-09, 0.9659259, 0.25881907, 2.6870252e-08, -0.25881907, 0.9659258, 1.368924, 2.700238, 1.9574723)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_i5pi4")
@@ -136,6 +133,9 @@ target_position = Vector3(0, -1.1, 0)
 
 [node name="Head" type="Marker3D" parent="Character/CharacterBody3D/Node3D"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.9953966, 0)
+
+[node name="ThirdPersonCamera" type="Camera3D" parent="Character/CharacterBody3D/Node3D/Head"]
+transform = Transform3D(-1, 0, -5.960464e-08, -1.7763568e-15, 1, 2.9802322e-08, 5.960464e-08, 2.9802322e-08, -1, -1.3689241, 0.25330234, -1.9574722)
 
 [node name="FirstPersonCamera" type="Camera3D" parent="Character/CharacterBody3D/Node3D/Head"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.004603386, 0)
