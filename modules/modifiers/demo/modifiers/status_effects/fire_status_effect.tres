@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TateDemoModifierFireStatusEffect" load_steps=3 format=3 uid="uid://spersremf05u"]
+
+[ext_resource type="PackedScene" uid="uid://cecfxehs1aosa" path="res://modules/modifiers/demo/flame.tscn" id="1_di37e"]
+[ext_resource type="Script" uid="uid://b06y1kint4gon" path="res://modules/modifiers/demo/modifiers/status_effects/fire_status_effect.gd" id="1_vx0jy"]
+
+[resource]
+script = ExtResource("1_vx0jy")
+damage_per_tick = 0.1
+tick_interval = 0.1
+flame_scene = ExtResource("1_di37e")
+duration = 3.0
+metadata/_custom_type_script = "uid://b06y1kint4gon"

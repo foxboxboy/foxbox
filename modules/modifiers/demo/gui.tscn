@@ -9,7 +9,7 @@ anchors_preset = 0
 script = ExtResource("1_6i6kb")
 upgrade_entry = ExtResource("2_u8772")
 upgrade_list = NodePath("PanelContainer/MarginContainer/VBoxContainer/Upgrades")
-health_bar = NodePath("ProgressBar")
+health_bar = NodePath("HealthBar")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -96,12 +96,12 @@ text = "SPEED:"
 layout_mode = 2
 text = "0"
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 100.0
-offset_right = 316.0
-offset_bottom = 135.0
+offset_left = 298.0
+offset_top = 101.0
+offset_right = 434.0
+offset_bottom = 136.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -128,6 +128,10 @@ text = "Wind Up"
 [node name="ChaseButton" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Chase"
+
+[node name="HealthButton" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Health"
 
 [node name="VSeparator4" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
@@ -237,6 +241,7 @@ text = "test"
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/WindUpButton" to="." method="_on_wind_up_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ChaseButton" to="." method="_on_chase_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HealthButton" to="." method="_on_health_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/LanceButton" to="." method="_on_lance_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer2/SwordButton" to="." method="_on_sword_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer3/SetOnFireButton" to="." method="_on_set_on_fire_button_pressed"]

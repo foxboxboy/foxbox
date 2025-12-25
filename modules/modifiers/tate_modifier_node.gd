@@ -9,7 +9,6 @@ var target: Node
 
 func _ready() -> void:
 	# Set the name so it looks nice in the Remote Scene Tree
-	print("NAME: ",modifier_data.resource_name)
 	name = modifier_data.modifier_id 
 	modifier_data.execute(target)
 

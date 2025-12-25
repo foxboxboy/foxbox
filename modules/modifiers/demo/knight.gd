@@ -30,15 +30,15 @@ func clear_all_modifiers():
 
 
 func add_upgrade(upgrade : TateModifier):
-	upgrade_slot_policy.add_modifier(upgrade, self)
+	upgrade_slot_policy.try_add(upgrade, self)
 
 
 func set_weapon(weapon : TateModifier):
-	weapon_slot_policy.add_modifier(weapon, self)
+	weapon_slot_policy.try_add(weapon, self)
 
 
-func add_status_effect():
-	pass
+func add_status_effect(status_effect : TateModifier):
+	modifier_manager.add_modifier(status_effect, self)
 
 
 func _process(_delta: float) -> void:

@@ -55,7 +55,6 @@ func clear_all_effects() -> void:
 	
 	speed_stat.clear_all_modifiers()
 	damage_stat.clear_all_modifiers()
-	#print(speed_stat.flat_modifiers)
 
 
 func _handle_unique(e: TateModifier) -> void:

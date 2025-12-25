@@ -11,6 +11,7 @@ extends Control
 
 signal wind_up_button_pressed
 signal chase_button_pressed
+signal health_button_pressed
 signal lance_button_pressed
 signal sword_button_pressed
 signal set_on_fire_button_pressed
@@ -49,6 +50,10 @@ func _on_set_on_fire_button_pressed() -> void:
 
 func _on_poison_button_pressed() -> void:
 	poison_button_pressed.emit()
+
+
+func _on_health_button_pressed() -> void:
+	health_button_pressed.emit()
 
 
 func _on_clear_all_modifiers_button_pressed() -> void:

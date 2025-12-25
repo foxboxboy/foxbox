@@ -1,59 +1,55 @@
 # tates_lib/modifiers/tate_modifier_manager.gd
 extends Node
 class_name TateModifierManager
-## Handles the addition, removal, and collision of TateModifierNodes.
+## Handles the creation and collision logic of Modifier Nodes.
 
-## Signal for UI to listen to for updating buff bars/icons.
 signal modifiers_updated
 
-## Adds a modifier to the target unit.
-func add_modifier(new_modifier_node: TateModifierNode, target: Node) -> void:
-	if new_modifier_node == null:
-		printerr("ERROR: new_modifier_node is empty under add_modifier in TateModifierManager ",get_path())
-	
-	var modifier_data := new_modifier_node.modifier_data
-	
-	# 1. Check for 'UNIQUE' collisions
-	if modifier_data.stack_mode == TateModifier.StackMode.UNIQUE:
-		var existing = get_node_or_null(modifier_data.modifier_id)
-		if existing:
-			# Refresh timer and stop
-			existing.time_left = modifier_data.duration
-			return
 
-	# 2. Check for 'ADDITIVE' collisions
-	if modifier_data.stack_mode == TateModifier.StackMode.ADDITIVE:
-		var existing = get_node_or_null(modifier_data.modifier_id)
-		if existing:
-			# Custom logic to "power up" existing mod
-			existing.modifier_data.on_reapply(target)
-			existing.time_left = modifier_data.duration
-			return
+## The central point for adding logic to a unit.
+func add_modifier(mod_data: TateModifier, target: Node) -> TateModifierNode:
+	if not mod_data: return null
 
-	# 3. Create the new Node Instance (for STACKING or New UNIQUEs)
-	#var new_node : = TateModifierNode.new()
+	# 1. Check for existing instances by ID (Node Name)
+	var existing: TateModifierNode = get_node_or_null(mod_data.modifier_id)
 	
-	# Configure the node before it enters the tree
-	#new_node.modifier_data = mod_data
-	new_modifier_node.target = target
-	new_modifier_node.time_left = modifier_data	.duration
+	if existing:
+		if mod_data.stack_mode == TateModifier.StackMode.UNIQUE:
+			existing.time_left = mod_data.duration
+			return existing
+			
+		if mod_data.stack_mode == TateModifier.StackMode.ADDITIVE:
+			existing.apply_stack()
+			existing.time_left = mod_data.duration
+			return existing
+			
+		# If STACKING, we ignore 'existing' and proceed to create a new one.
+
+	# 2. Create the New Node Instance
+	var new_node := TateModifierNode.new()
+	new_node.modifier_data = mod_data
+	new_node.target = target
+	new_node.time_left = mod_data.duration
 	
-	# Use modifier_id as node name for easy lookup
-	# For stacking, we add a timestamp to keep the name unique
-	#if mod_data.stack_mode == TateModifier.StackMode.STACKING:
-	#	new_node.name = str(mod_data.modifier_id, "_", Time.get_ticks_msec())
-	#else:
-	#new_node.name = mod_data.modifier_id
+	# Naming logic to prevent "wind_up_2" clutter
+	if mod_data.stack_mode == TateModifier.StackMode.STACKING:
+		new_node.name = str(mod_data.modifier_id, "_", Time.get_ticks_msec())
+	else:
+		new_node.name = mod_data.modifier_id
 		
-	add_child(new_modifier_node)
+	add_child(new_node)
 	modifiers_updated.emit()
+	return new_node
 
-## Forces removal of a specific modifier.
-func remove_modifier(modifier_node: TateModifierNode) -> void:
-	modifier_node.queue_free() # Triggers _exit_tree cleanup
-	modifiers_updated.emit()
+
+func remove_modifier_by_id(id: String) -> void:
+	var node = get_node_or_null(id)
+	if node: node.queue_free()
+
 
 func remove_all_modifiers():
 	for node in get_children():
 		if node is TateModifierNode:
 			node.queue_free()
+		if node is TateModifierSlotPolicy:
+			node.clear_modifiers()

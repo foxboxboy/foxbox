@@ -36,6 +36,7 @@ speed_component = SubResource("Resource_ywdca")
 
 [node name="HealthComponent" type="Node" parent="Logic"]
 script = ExtResource("5_pxxq0")
+base_max = 20.0
 metadata/_custom_type_script = "uid://tmlvua8qu5ni"
 
 [node name="ModifierManager" type="Node" parent="Logic"]
@@ -68,4 +69,5 @@ offset_right = -2.0
 offset_bottom = -68.0
 text = "KNIGHT"
 
+[connection signal="updated" from="Logic/HealthComponent" to="." method="_on_health_component_updated"]
 [connection signal="slots_updated" from="Logic/ModifierManager/UpgradeSlotPolicy" to="." method="_on_upgrade_slot_policy_slots_updated"]

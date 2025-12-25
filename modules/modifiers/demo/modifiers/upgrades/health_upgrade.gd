@@ -1,0 +1,31 @@
+# project/modifiers/health_upgrade_modifier.gd
+extends TateModifier
+class_name TateDemoModifierHealthUpgrade
+
+@export var health_bonus: float = 5.0
+
+func _on_execute(target: Node) -> void:
+	# 1. Find the physical 'Address' in the Logic folder
+	var health_node
+	
+	if target is TateDemoKnight:
+		health_node = target.health_component
+	
+	if health_node is TateModifiableBoundedNode:
+		# 2. Add the bonus to the MAX engine
+		# We use the ModifierNode's name or ID as the unique key
+		health_node.max_stat.add_flat_modifier(modifier_id, health_bonus)
+		
+		# 3. Optional: Heal the player for the amount gained so it doesn't just look like 
+		# an empty extension of the health bar.
+		health_node.add(health_bonus)
+
+func _on_remove(target: Node) -> void:
+	var health_node
+	
+	if target is TateDemoKnight:
+		health_node = target.health_component
+	
+	if health_node is TateModifiableBoundedNode:
+		# Remove the specific bonus using the ID
+		health_node.max_stat.remove_flat_modifier(modifier_id)
