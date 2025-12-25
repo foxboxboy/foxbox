@@ -1,3 +1,4 @@
+# modules/core/math/tate_bounded_value.gd
 extends TateResource
 class_name TateBoundedValue
 ## A generic resource that manages a float value within a defined range.

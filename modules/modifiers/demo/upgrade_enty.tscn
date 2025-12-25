@@ -5,13 +5,13 @@
 [node name="UpgradeEnty" type="PanelContainer"]
 script = ExtResource("1_4v8p1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "1:"
-
-[node name="Name" type="Label" parent="VBoxContainer"]
+[node name="Name" type="Label" parent="MarginContainer"]
 layout_mode = 2
 text = "test"

@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cndfb5ei0tgxp"]
 
 [ext_resource type="Script" uid="uid://codq24s47n5pj" path="res://modules/modifiers/demo/knight.gd" id="1_3qvm3"]
-[ext_resource type="Script" uid="uid://bhdc3rbce0uhq" path="res://modules/core/other/tate_modifiable_stat.gd" id="2_pxxq0"]
+[ext_resource type="Script" uid="uid://bhdc3rbce0uhq" path="res://modules/core/math/tate_modifiable_stat.gd" id="2_pxxq0"]
 [ext_resource type="Script" uid="uid://cdkn6cx44hooq" path="res://modules/modifiers/tate_modifier_manager.gd" id="3_a38tj"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="3_nnvdn"]
 [ext_resource type="Script" uid="uid://ba07qx514fx3n" path="res://modules/modifiers/tate_modifier_slot_policy.gd" id="4_1guiv"]
-[ext_resource type="Script" uid="uid://tmlvua8qu5ni" path="res://modules/core/other/tate_modifiable_bounded_node.gd" id="5_pxxq0"]
+[ext_resource type="Script" uid="uid://tmlvua8qu5ni" path="res://modules/core/math/tate_modifiable_bounded_node.gd" id="5_pxxq0"]
 
 [sub_resource type="Resource" id="Resource_vuvbh"]
 resource_local_to_scene = true

@@ -3,13 +3,13 @@ extends Node
 class_name TateModifierSlotPolicy
 ## Enforces slot limits (e.g., 1 Weapon slot, 3 Upgrade slots).
 
-signal slots_updated(current_slots: Array[TateModifierNode])
+signal slots_updated(current_slots: Array[TateModifierInstance])
 
 @export var max_slots: int = 3
 @export var push_out_oldest: bool = true
 
 @onready var manager: TateModifierManager = get_parent()
-var slots: Array[TateModifierNode] = []
+var slots: Array[TateModifierInstance] = []
 
 func try_add(mod: TateModifier, target: Node) -> bool:
 	# 1. Ask Manager to process the logic/instantiation
@@ -36,6 +36,6 @@ func try_add(mod: TateModifier, target: Node) -> bool:
 	return true
 
 
-func clear_modifiers():
+func clear_slots():
 	slots.clear()
 	slots_updated.emit(slots)

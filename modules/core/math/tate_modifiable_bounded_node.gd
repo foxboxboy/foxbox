@@ -1,4 +1,4 @@
-# tates_lib/logic/tate_modifiable_bounded_node.gd
+# modules/core/math/tate_modifiable_bounded_node.gd
 extends TateComponent
 class_name TateModifiableBoundedNode
 
@@ -46,7 +46,7 @@ func _on_max_stat_changed(new_max: float) -> void:
 	pool.value = clamp(pool.value, 0, new_max)
 	#updated.emit(pool.value, new_max)
 
-func _on_pool_changed(curr: float, _min: float, m_max: float) -> void:
+func _on_pool_changed(curr: float, _min: float, _max: float) -> void:
 	updated.emit(curr, max_stat.value)
 	
 # --- Public API ---

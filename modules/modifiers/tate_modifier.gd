@@ -12,12 +12,12 @@ enum StackMode { UNIQUE, STACKING, ADDITIVE }
 ## (Optional) the string id associated with this Modifier. 
 ## Leave blank to use the name of the resource file associated
 ## with this TateModifier instance.
-@export var modifier_id: String:
+@export var modifier_id: StringName:
 	get:
 		if modifier_id.length() > 0: 
 			return modifier_id
 		else:
-			return get_resource_name()
+			return _get_resource_name()
 
 ## How the modifier will be applied.
 ## StackMode.UNIQUE = Prevents "Log Bloat" and duplicate logic. 
@@ -40,12 +40,17 @@ func execute(target: Node) -> void:
 func remove(target: Node) -> void:
 	_on_remove(target)
  
+## Logic to run when the TateModifierInstance's stack is increased.
+func reapply(target: Node):
+	_on_reapply(target)
+
 # Virtual methods for implementation
 ## Change this for everything that extends TateModifier
 func _on_execute(_target: Node) -> void: pass
 ## Change this for everything that extends TateModifier
 func _on_remove(_target: Node) -> void: pass
+## Change this for everything that extends TateModifier
+func _on_reapply(_target: Node) -> void: pass
 
-
-func get_resource_name():
+func _get_resource_name():
 	return resource_path.get_file().trim_suffix('.tres')

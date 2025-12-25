@@ -4,7 +4,7 @@ class_name TateDemoKnight
 signal health_updated(current: float, max_val: float)
 signal damage_updated(current: float)
 signal speed_updated(current: float)
-signal upgrades_changed(upgrade_list : Array[TateModifierNode])
+signal upgrades_changed(upgrade_list : Array[TateModifierInstance])
 
 @export var sprite_2d: Sprite2D
 @export var weapon_socket : Marker2D
@@ -57,5 +57,5 @@ func _on_speed_component_value_changed(current: float) -> void:
 	speed_updated.emit(current)
 
 
-func _on_upgrade_slot_policy_slots_updated(current_slots: Array[TateModifierNode]) -> void:
+func _on_upgrade_slot_policy_slots_updated(current_slots: Array[TateModifierInstance]) -> void:
 	upgrades_changed.emit(current_slots)

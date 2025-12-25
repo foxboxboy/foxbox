@@ -36,7 +36,6 @@ func _on_gui_chase_button_pressed() -> void:
 
 
 func _on_gui_health_button_pressed() -> void:
-	print("UPGRADE")
 	knight.add_upgrade(health_upgrade)
 
 
@@ -80,7 +79,7 @@ func _on_knight_health_updated(current: float, max_val: float) -> void:
 	health_bar.max_value = snappedf(max_val,0.1)
 
 
-func _on_knight_upgrades_changed(upgrade_list: Array[TateModifierNode]) -> void:
+func _on_knight_upgrades_changed(upgrade_list: Array[TateModifierInstance]) -> void:
 	gui.clear_upgrade_entries()
 	
 	for upgrade in upgrade_list:

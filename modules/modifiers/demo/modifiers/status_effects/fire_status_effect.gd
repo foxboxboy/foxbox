@@ -12,7 +12,7 @@ class_name TateDemoModifierFireStatusEffect
 
 func _on_execute(target: Node) -> void:
 	# We create a local timer node to handle the ticking logic
-	# and child it to the TateModifierNode itself.
+	# and child it to the TateModifierInstance itself.
 	var timer = Timer.new()
 	timer.name = "BurnTimer"
 	timer.wait_time = tick_interval
@@ -27,7 +27,7 @@ func _on_execute(target: Node) -> void:
 	
 	# The 'target' in _on_execute is the Unit. 
 	# But where do we put the timer? 
-	# Best place is to find the active TateModifierNode that called this.
+	# Best place is to find the active TateModifierInstance that called this.
 	target.get_node("Logic/ModifierManager/" + modifier_id).add_child(timer)
 
 func _apply_burn_damage(target: Node) -> void:

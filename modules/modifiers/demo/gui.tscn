@@ -168,6 +168,7 @@ layout_mode = 2
 text = "Set on Fire"
 
 [node name="PoisonButton" type="Button" parent="HBoxContainer/VBoxContainer3"]
+visible = false
 layout_mode = 2
 text = "Poison"
 
@@ -207,37 +208,6 @@ text = "Upgrades"
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 theme_override_constants/separation = 44
-
-[node name="UpgradeEnty" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades" instance=ExtResource("2_u8772")]
-layout_mode = 2
-
-[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer2/VBoxContainer"]
-layout_mode = 2
-text = "1:"
-
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer2/VBoxContainer"]
-layout_mode = 2
-text = "test"
-
-[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer3"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-text = "1:"
-
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Upgrades/PanelContainer3/VBoxContainer"]
-layout_mode = 2
-text = "test"
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/WindUpButton" to="." method="_on_wind_up_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ChaseButton" to="." method="_on_chase_button_pressed"]

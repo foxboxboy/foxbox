@@ -1,3 +1,4 @@
+# modules/core/math/tate_modifiable_stat.gd
 extends TateResource
 class_name TateModifiableStat
 ## Changes a number based on two lists of modifiers.
@@ -20,19 +21,19 @@ signal value_changed(new_value: float)
 signal all_modifiers_cleared(new_value: float)
 
 ## Emitted when a new modifier is added.
-signal modifier_added(modifier_id: String, is_multiplier: bool, instance_value : float)
+signal modifier_added(modifier_id: StringName, is_multiplier: bool, instance_value : float)
 ## Emitted when a modifier is removed.
-signal modifier_removed(modifier_id: String, instance_value : float)
+signal modifier_removed(modifier_id: StringName, instance_value : float)
 
 ## Emitted when a new multiplier_modifier is removed.
-signal multiplier_modifier_removed(modifier_id: String, is_multiplier: bool, instance_value : float)
+signal multiplier_modifier_removed(modifier_id: StringName, is_multiplier: bool, instance_value : float)
 ## Emitted when an multiplier_modifier is added.
-signal multiplier_modifier_added(modifier_id: String, instance_value : float)
+signal multiplier_modifier_added(modifier_id: StringName, instance_value : float)
 
 ## Emitted when a new flat_modifier is added.
-signal flat_modifier_added(modifier_id: String, instance_value : float)
+signal flat_modifier_added(modifier_id: StringName, instance_value : float)
 ## Emitted when a flat_modifier is removed.
-signal flat_modifier_removed(modifier_id: String, instance_value : float)
+signal flat_modifier_removed(modifier_id: StringName, instance_value : float)
 
 #endregion
 
@@ -47,20 +48,20 @@ signal flat_modifier_removed(modifier_id: String, instance_value : float)
 
 ## Dictionary of all flat_modifier instances on this ModifiableStat. 
 ## Flat modifier instances can be negative to make them penalties.
-## The String key is the id of the flat_modifier, the Array represents each flat_modifier instance with that matching id. 
+## The StringName key is the id of the flat_modifier, the Array represents each flat_modifier instance with that matching id. 
 ## Every index in this Array points to what the value of that instance is. 
 ## This allows multiple copies of the same id that can have their own value.
 ## Two +2 "extra_health" bonuses totaling to +4: multipliers{"extra_health", [2, 2]}
 ## A +1 "extra_health" and a +2 "extra_health" totaling to 3: multipliers{"speed_boost", [0.30, 0.60]}
-var flat_modifiers: Dictionary[String, Array] = {}
+var flat_modifiers: Dictionary[StringName, Array] = {}
 ## Dictionary  of all multiplier instances on this ModifiableStat. 
 ## Multiplier instances can be negative to make them penalties.
-## The String key is the id of the multiplier, the Array represents each multiplier instance with that matching id. 
+## The StringName key is the id of the multiplier, the Array represents each multiplier instance with that matching id. 
 ## Every index in this Array points to what the value of that instance is. 
 ## This allows multiple copies of the same id that can have their own value.
 ## Two 60% "speed_boost" bonuses totaling to 120%: multipliers{"speed_boost", [0.60, 0.60]}
 ## A 30% "speed_boost" and a 60% "speed_boost" totaling to 90%: multipliers{"speed_boost", [0.30, 0.60]}
-var multiplier_modifiers: Dictionary[String, Array] = {}
+var multiplier_modifiers: Dictionary[StringName, Array] = {}
 
 ## The 'cached' value for internal use. Do not use.
 var _current_value: float = 0.0
@@ -76,7 +77,7 @@ var value: float:
 #region Modifiers
 
 ## Adds a modifier instance.
-func add_modifier(id: String, is_multiplier: bool, instance_value: float) -> void:
+func add_modifier(id: StringName, is_multiplier: bool, instance_value: float) -> void:
 	var target_dict := _get_target_dict(is_multiplier)
 
 	if not target_dict.has(id):
@@ -96,7 +97,7 @@ func add_modifier(id: String, is_multiplier: bool, instance_value: float) -> voi
 ## all_instances deletes every instance with that matching ID. Not specifying all_copies deletes only the most recent instance.
 ## specific_value will find the first instance of a matching ID that has a specific value and remove it.
 ## Pair all_instances and specific_value to remove all instances of a matching ID that have a specific value.  
-func remove_modifier(id: String, is_multiplier: bool, all_instances: bool = false, specific_value : = NAN):
+func remove_modifier(id: StringName, is_multiplier: bool, all_instances: bool = false, specific_value : = NAN):
 	var target_dict := _get_target_dict(is_multiplier)
 	var return_value
 	
@@ -160,7 +161,7 @@ func remove_modifier(id: String, is_multiplier: bool, all_instances: bool = fals
 #region Public Helpers
 
 ## Returns true if an instance matching an ID could be found. 
-func has_modifier(id: String, is_multiplier: bool) -> bool:
+func has_modifier(id: StringName, is_multiplier: bool) -> bool:
 	var target_dict = _get_target_dict(is_multiplier)
 	if target_dict.has(id): 
 		return true
@@ -181,7 +182,7 @@ func clear_all_modifiers() -> void:
 #region Flat Modifiers
 
 ## Adds a flat modifier instance.
-func add_flat_modifier(id: String, instance_value: float) -> void:
+func add_flat_modifier(id: StringName, instance_value: float) -> void:
 	add_modifier(id, false, instance_value)
 	flat_modifier_added.emit(id, instance_value)
 
@@ -194,7 +195,7 @@ func add_flat_modifier(id: String, instance_value: float) -> void:
 ## all_instances deletes every instance with that matching ID. Not specifying all_copies deletes only the most recent instance.
 ## specific_value will find the first instance of a matching ID that has a specific value and remove it.
 ## Pair all_instances and specific_value to remove all instances of a matching ID that have a specific value.  
-func remove_flat_modifier(id: String, all_instances: bool = false, specific_amount: float = NAN):
+func remove_flat_modifier(id: StringName, all_instances: bool = false, specific_amount: float = NAN):
 	var value_of_removed_modifier = remove_modifier(id, false, all_instances, specific_amount)
 	flat_modifier_removed.emit(id, value_of_removed_modifier)
 	
@@ -209,7 +210,7 @@ func remove_flat_modifier(id: String, all_instances: bool = false, specific_amou
 #region Multiplier Modifiers
 
 ## Adds a multiplier modifier instance.
-func add_multiplier_modifier(id: String, instance_value: float) -> void:
+func add_multiplier_modifier(id: StringName, instance_value: float) -> void:
 	add_modifier(id, true, instance_value)
 	multiplier_modifier_added.emit(id, instance_value)
 
@@ -222,7 +223,7 @@ func add_multiplier_modifier(id: String, instance_value: float) -> void:
 ## all_instances deletes every instance with that matching ID. Not specifying all_copies deletes only the most recent instance.
 ## specific_value will find the first instance of a matching ID that has a specific value and remove it.
 ## Pair all_instances and specific_value to remove all instances of a matching ID that have a specific value.  
-func remove_multiplier_modifier(id: String, all_instances: bool = false, specific_amount: float = NAN):
+func remove_multiplier_modifier(id: StringName, all_instances: bool = false, specific_amount: float = NAN):
 	var value_of_removed_modifier = remove_modifier(id, true, all_instances, specific_amount)
 	multiplier_modifier_removed.emit(id, value_of_removed_modifier)
 	
@@ -242,7 +243,7 @@ func _init(p_base: float = 1.0):
 	_recalculate()
 
 
-func _cleanup_empty_modifiers(id : String, target_dict : Dictionary[String, Array]):
+func _cleanup_empty_modifiers(id : StringName, target_dict : Dictionary[StringName, Array]):
 	# Don't empty IDs with no instances
 	if target_dict[id].is_empty():
 		target_dict.erase(id)
@@ -263,13 +264,13 @@ func _recalculate() -> void:
 	value_changed.emit(_current_value)
 
 
-func _get_target_dict(is_multiplier : bool) -> Dictionary[String, Array]:
+func _get_target_dict(is_multiplier : bool) -> Dictionary[StringName, Array]:
 	return multiplier_modifiers if is_multiplier else flat_modifiers
 
 
-func _erase_all_instances_of_specific_value(id : String, specific_value: float, target_dict : Dictionary[String, Array]):
+func _erase_all_instances_of_specific_value(id : StringName, specific_value: float, target_dict : Dictionary[StringName, Array]):
 	# This took some figuring out because of all the nesting...
-	# Target_dict is a Dictionary[String, Array]
+	# Target_dict is a Dictionary[StringName, Array]
 	# Inside each array is an array of floats
 	# It looks something like this:
 	# multipliers{"speed_boost" : [5.0, 3.0, 3.0]}
