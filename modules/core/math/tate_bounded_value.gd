@@ -1,4 +1,4 @@
-# modules/core/math/tate_bounded_value.gd
+# tate_lib/modules/core/math/tate_bounded_value.gd
 extends TateResource
 class_name TateBoundedValue
 ## A generic resource that manages a float value within a defined range.
@@ -33,26 +33,21 @@ signal saturated(overflow: float)
 		min_value = v
 		_check_bounds()
 
-## The actual fluctuating state.
+## The actual fluctuating value.
 var value : float = 1.0:
 	set(v):
-		value = v # We allow temporary out-of-bounds for calculation
+		value = v
 		_check_bounds()
 
 #endregion
 
-#region API
+#region Public
 
-func _init(starting_value := 1.0, p_max: float = 1.0, p_min: float = 0.0):
-	max_value = p_max
-	min_value = p_min
-	value = starting_value
-
-## Standard way to decrease the value.
+## Decreases the value.
 func subtract(amount : float) -> void:
 	value -= amount
 
-## Standard way to increase the value.
+## Increases the value.
 func add(amount : float) -> void:
 	value += amount
 
@@ -60,8 +55,13 @@ func add(amount : float) -> void:
 
 #region Private
 
+func _init(starting_value := 1.0, p_max: float = 1.0, p_min: float = 0.0):
+	max_value = p_max
+	min_value = p_min
+	value = starting_value
+
 func _check_bounds() -> void:
-	# Calculate overflow/underflow before clamping
+	# overflow/underflow
 	if value < min_value:
 		var underflow = value - min_value
 		value = min_value

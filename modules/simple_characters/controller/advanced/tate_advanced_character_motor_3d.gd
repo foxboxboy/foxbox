@@ -13,9 +13,32 @@ class_name TateAdvancedCharacterMotor3D
 @export var coyote_time := 0.3
 @export var can_double_jump := false
 
+@export_group("Smoothing")
+## How responsive input is.
+@export var acceleration := 1000.0
+## How quickly the character will slow down.
+## Use lower numbers for a "walking on ice" feel.
+@export var friction := 1500.0
+
+@export_group("Sprint")
+## How quickly the body moves while sprinting.
+@export var sprint_speed := 15.0
+
 var _air_time_elapsed := 0.0
 var _has_jumped := false
 var _has_double_jumped := false
+var _is_sprinting := false
+#var _acceleration := 0.0
+
+
+func _physics_process(delta):
+	_update_movement_advanced(delta)
+	
+	_update_y_velocity(delta)
+	
+	if body.is_on_floor():
+		reset_jump()
+
 
 func _process(delta: float) -> void:
 	if not ground_cast.is_colliding():
@@ -40,6 +63,30 @@ func can_jump():
 		return super.can_jump()
 
 
+func _update_movement():
+	return
+
+
+func _update_movement_advanced(delta):
+	var direction = (-global_basis.z * input_direction.y) + (global_basis.x * input_direction.x)
+	
+	if direction:
+		var target_vector := Vector3(direction.x, 0.0, direction.z)
+		
+		if _is_sprinting:
+			target_vector *= sprint_speed
+		else:
+			target_vector *= speed
+		
+		target_vector += Vector3(0, body.velocity.y, 0)
+		
+		body.velocity = body.velocity.move_toward(target_vector, delta * acceleration)
+	else:
+		body.velocity = body.velocity.move_toward(Vector3(0, body.velocity.y, 0), delta * friction)
+	
+	body.move_and_slide()
+
+
 func jump():
 	if not _jump_pressed:
 		body.velocity.y = jump_strength
@@ -51,3 +98,11 @@ func jump():
 		jumped.emit()
 		
 	_has_jumped = true
+
+
+func start_sprinting():
+	_is_sprinting = true
+
+
+func stop_sprinting():
+	_is_sprinting = false

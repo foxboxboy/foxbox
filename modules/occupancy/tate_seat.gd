@@ -9,13 +9,12 @@ signal occupant_sat(occupant : Node, seat : TateSeat)
 signal occupant_left(occupant : Node, seat : TateSeat)
 signal occupant_changed(occupant : Node, seat : TateSeat)
 
-## )Optional) The node that will be used for position
+## (Optional) The node that will be used for position
 ## and rotation. Leave blank to make this the marker. 
 @export var marker : Node
-## In your project, you'll map these numbers to your Enum
-## 0 = Driver, 1 = Gunner, 2 = Passenger, etc.
-## Leave blank to keep it generic with no role.
-@export var role_id: int = 0
+## The name of this seat
+# OH MY GOD I CAN JUST RENAME THE SEAT NODE
+#@export var role_name: StringName
 
 ## The child occupant currently sittng in this seat..
 var occupant: Node = null

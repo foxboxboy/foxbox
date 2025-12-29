@@ -33,15 +33,14 @@ func add_modifier(tate_modifier: TateModifier, target: Node) -> TateModifierInst
 			existing.time_left = tate_modifier.duration
 			return existing
 			
-		# If STACKING, we ignore 'existing' and proceed to create a new one.
 
-	# 2. Create the New Node Instance
+	# make a new TateModifierInstance if there wasn't an existing instance 
 	var new_node := TateModifierInstance.new()
 	new_node.modifier_data = tate_modifier
 	new_node.target = target
 	new_node.time_left = tate_modifier.duration
 	
-	# Naming logic to prevent "[modifier_name]_2" clutter
+	# prevents "[modifier_name]_2" clutter for stacking
 	if tate_modifier.stack_mode == TateModifier.StackMode.STACKING:
 		new_node.name = str(tate_modifier.modifier_id, "_", Time.get_ticks_msec())
 	else:

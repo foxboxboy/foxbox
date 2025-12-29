@@ -1,4 +1,4 @@
-tates_library/modules/bounded_value
+tate_lib/modules/core
 
 Very rudimentary and abstract classes that are very generic and used elsewhere.
 

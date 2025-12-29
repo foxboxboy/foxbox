@@ -1,4 +1,4 @@
-# modules/core/math/tate_modifiable_stat.gd
+# tate_lib/modules/core/math/tate_modifiable_stat.gd
 extends TateResource
 class_name TateModifiableStat
 ## Changes a number based on two lists of modifiers.
@@ -11,6 +11,12 @@ class_name TateModifiableStat
 ## With the multiplier_modifiers{"speed_boots" : 1.6, "slowed" : -0.7} the final multiplier is:
 ## 1.0 [base] + 0.6 [speed_boots] + (-0.7) [slowed] = 0.9. This is now applied to our amount from before:
 ## 6.0 * 0.9 = 5.4
+
+
+
+## oh my god this was so absolutely bloody annoying to figure out
+## in a clean way that was well documented i could literally make
+## an entire video on this stupid script
 
 
 #region Signals

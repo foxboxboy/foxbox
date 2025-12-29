@@ -12,6 +12,8 @@ enum StackMode { UNIQUE, STACKING, ADDITIVE }
 ## (Optional) the string id associated with this Modifier. 
 ## Leave blank to use the name of the resource file associated
 ## with this TateModifier instance.
+## This is kinda redundant with resource_name but I like how its
+## a StringName instead of a String so too bad!
 @export var modifier_id: StringName:
 	get:
 		if modifier_id.length() > 0: 

@@ -43,8 +43,6 @@ func _physics_process(delta):
 
 
 func _update_movement():
-	#var input_as_3d : Vector3 = -global_basis.z * input_direction
-	#var direction : Vector3 = -global_basis.z * input_as_3d * input_strength
 	var direction = (-global_basis.z * input_direction.y) + (global_basis.x * input_direction.x)
 	
 	if direction:
