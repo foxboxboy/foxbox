@@ -1,0 +1,180 @@
+[gd_scene load_steps=19 format=3 uid="uid://11y3wpyf2xtn"]
+
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/demo/triplanar.png" id="1_p2ig4"]
+[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/demo/gui.tscn" id="1_sgy8u"]
+[ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics_controller/demo/character.tscn" id="1_sod48"]
+[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/demo/pc_input_handler.gd" id="1_y4y1j"]
+[ext_resource type="VoxelGIData" uid="uid://c0wtcwyn7yepw" path="res://modules/simple_characters/physics_controller/demo/lightmap_data.res" id="2_168y3"]
+[ext_resource type="PackedScene" uid="uid://dlv2ps2av3qfk" path="res://modules/simple_characters/physics_controller/demo/ball.tscn" id="6_bta8w"]
+[ext_resource type="PackedScene" uid="uid://ypbxabmghms4" path="res://modules/simple_characters/physics_controller/demo/big_ball.tscn" id="7_jgba5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_168y3"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_i6m7q"]
+sky_material = SubResource("ProceduralSkyMaterial_168y3")
+
+[sub_resource type="Environment" id="Environment_sod48"]
+background_mode = 2
+sky = SubResource("Sky_i6m7q")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4y1j"]
+albedo_texture = ExtResource("1_p2ig4")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jnlhy"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("1_p2ig4")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aq0ug"]
+load_path = "res://.godot/imported/triplanar.png-5b3f9426d7782706415178f3154d5419.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgy8u"]
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_aq0ug")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bta8w"]
+albedo_color = Color(0, 1, 1, 1)
+albedo_texture = ExtResource("1_p2ig4")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jgba5"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("1_p2ig4")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rbnn3"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="PrismMesh" id="PrismMesh_to01j"]
+material = SubResource("StandardMaterial3D_rbnn3")
+left_to_right = 1.0
+size = Vector3(1, 1, 5)
+
+[node name="CharacterPhysicsDemo" type="Node3D"]
+
+[node name="GUI" parent="." instance=ExtResource("1_sgy8u")]
+
+[node name="PCInputHandler" type="Node" parent="."]
+script = ExtResource("1_y4y1j")
+
+[node name="Character" parent="." instance=ExtResource("1_sod48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3422556, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Character/Model" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 1.2688181, 1.4935737, 2)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.18693916, 0.5181305, -0.8346225, 0.32378802, 0.83462244, 0.4456083, 0.92747784, -0.18693909, -0.32378808, 0, 6, -5)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sod48")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+size = Vector3(50, 0.5, 50)
+material = SubResource("StandardMaterial3D_y4y1j")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2.5, 0)
+use_collision = true
+size = Vector3(1, 5, 50)
+material = SubResource("StandardMaterial3D_jnlhy")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 2.5, 0)
+use_collision = true
+size = Vector3(1, 5, 50)
+material = SubResource("StandardMaterial3D_jnlhy")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 25.5)
+use_collision = true
+size = Vector3(50, 5, 1)
+material = SubResource("StandardMaterial3D_jnlhy")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -25.5)
+use_collision = true
+size = Vector3(50, 5, 1)
+material = SubResource("StandardMaterial3D_jnlhy")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89155, 1, 0)
+use_collision = true
+size = Vector3(1, 2, 1)
+material = SubResource("StandardMaterial3D_sgy8u")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4.173584, -8)
+use_collision = true
+radius = 2.0
+height = 10.347168
+material = SubResource("StandardMaterial3D_bta8w")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6)
+use_collision = true
+radius = 2.0
+material = SubResource("StandardMaterial3D_jgba5")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 8)
+use_collision = true
+radius = 2.0
+height = 4.0
+material = SubResource("StandardMaterial3D_jgba5")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 24.5, 2.5, 24.5)
+mesh = SubResource("PrismMesh_to01j")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -24.5, 2.5, 24.5)
+mesh = SubResource("PrismMesh_to01j")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(-1, -8.742278e-08, -3.821371e-15, 0, -4.371139e-08, 1, -8.742278e-08, 1, 4.371139e-08, -24.5, 2.5, -24.5)
+mesh = SubResource("PrismMesh_to01j")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.3113416e-07, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, -1.3113416e-07, -5.7320566e-15, 24.5, 2.5, -24.5)
+mesh = SubResource("PrismMesh_to01j")
+
+[node name="VoxelGI" type="VoxelGI" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+size = Vector3(100, 25, 100)
+data = ExtResource("2_168y3")
+
+[node name="Ball" parent="." instance=ExtResource("6_bta8w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9519064, 0.82427716, 0)
+
+[node name="BigBall" parent="." instance=ExtResource("7_jgba5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 0)
+
+[connection signal="look_input" from="PCInputHandler" to="Character" method="_on_pc_input_handler_look_input"]
+[connection signal="move_input" from="PCInputHandler" to="Character" method="_on_pc_input_handler_move_input"]
+
+[editable path="Character"]
