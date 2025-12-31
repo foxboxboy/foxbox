@@ -1,3 +1,4 @@
+@tool
 ## Head Rotater
 extends Node3D
 
@@ -5,13 +6,19 @@ extends Node3D
 
 @export var head_target: Marker3D
 @export var skeleton_3d: Skeleton3D 
-@export var character : Node3D
+@export var character : TatePhysicsCharacter
 @export var head_bone_name: String = "head"
 
 var head_yaw := 0.0
 
 
 func _process(_delta: float) -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	if Engine.is_editor_hint():
+		get_parent().global_position = character.rigid_body.global_position #+ Vector3(0,-1.138,0)
+		return
+	
+	
 	var head_bone_idx = skeleton_3d.find_bone(head_bone_name)
 	
 	var pitch := head_target.global_rotation.x

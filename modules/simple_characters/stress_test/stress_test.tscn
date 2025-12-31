@@ -1,0 +1,743 @@
+[gd_scene load_steps=5 format=3 uid="uid://0yf3c1gkfxj0"]
+
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic_motor/demo/triplanar.png" id="1_k474t"]
+[ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://modules/simple_characters/physics_motor/demo/world_environment.tscn" id="1_l3dun"]
+[ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics_motor/demo/physics_character.tscn" id="2_fon04"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fon04"]
+albedo_texture = ExtResource("1_k474t")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[node name="StressTest" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_l3dun")]
+
+[node name="Row" type="Node3D" parent="."]
+
+[node name="PhysicsCharacter" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="PhysicsCharacter" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row2" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="PhysicsCharacter" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row3" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="PhysicsCharacter" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row4" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row5" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="PhysicsCharacter" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row5" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="PhysicsCharacter" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row6" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row7" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="PhysicsCharacter" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row7" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row8" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="PhysicsCharacter" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row8" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row9" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="PhysicsCharacter" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row9" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row10" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="PhysicsCharacter" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row10" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row11" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="PhysicsCharacter" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row11" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row12" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+
+[node name="PhysicsCharacter" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row12" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row13" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+
+[node name="PhysicsCharacter" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row13" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row14" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26)
+
+[node name="PhysicsCharacter" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row14" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row15" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28)
+
+[node name="PhysicsCharacter" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row15" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row16" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
+
+[node name="PhysicsCharacter" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row16" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row17" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
+
+[node name="PhysicsCharacter" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row17" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row18" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
+
+[node name="PhysicsCharacter" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row18" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row19" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+
+[node name="PhysicsCharacter" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row19" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="Row20" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="PhysicsCharacter" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5472283, 0)
+
+[node name="PhysicsCharacter2" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5472283, 0)
+
+[node name="PhysicsCharacter3" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5472283, 0)
+
+[node name="PhysicsCharacter4" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5472283, 0)
+
+[node name="PhysicsCharacter5" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter11" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5472283, 0.04207182)
+
+[node name="PhysicsCharacter6" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5472283, 0)
+
+[node name="PhysicsCharacter7" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5472283, 0)
+
+[node name="PhysicsCharacter8" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.5472283, 0)
+
+[node name="PhysicsCharacter9" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5472283, 0)
+
+[node name="PhysicsCharacter10" parent="Row20" instance=ExtResource("2_fon04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5472283, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+use_collision = true
+size = Vector3(50, 1, 50)
+material = SubResource("StandardMaterial3D_fon04")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, -2.262668e-08, 0.9659258, 0.25881904, 8.444392e-08, 0.25881904, -0.9659258, 0, 4, -11)

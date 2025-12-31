@@ -1,12 +1,12 @@
 [gd_scene load_steps=22 format=3 uid="uid://bedvskmd1tusw"]
 
-[ext_resource type="Script" uid="uid://cfr0uqygf4xtu" path="res://modules/simple_characters/demo/character.gd" id="1_i5pi4"]
-[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/demo/triplanar.png" id="1_i6m7q"]
+[ext_resource type="Script" uid="uid://cfr0uqygf4xtu" path="res://modules/simple_characters/basic_motor/demo/character.gd" id="1_i5pi4"]
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic_motor/demo/triplanar.png" id="1_i6m7q"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/mannequin.gltf" id="1_lxaxe"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
-[ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/motor/advanced/tate_advanced_character_motor_3d.gd" id="2_cv082"]
-[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/motor/head_rotater.gd" id="6_5ixkb"]
-[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/demo/gui.tscn" id="7_aq0ug"]
+[ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/basic_motor/advanced/tate_advanced_character_motor_3d.gd" id="2_cv082"]
+[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic_motor/head_rotater.gd" id="6_5ixkb"]
+[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic_motor/demo/gui.tscn" id="7_aq0ug"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aq0ug"]
 

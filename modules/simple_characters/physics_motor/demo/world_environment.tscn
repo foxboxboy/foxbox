@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://yk4rjw3x4ncw"]
+
+[ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://modules/simple_characters/physics_motor/demo/sky/day_sky.tres" id="1_bpng5"]
+
+[sub_resource type="Sky" id="Sky_i6m7q"]
+sky_material = ExtResource("1_bpng5")
+
+[sub_resource type="Environment" id="Environment_sod48"]
+background_mode = 2
+sky = SubResource("Sky_i6m7q")
+tonemap_mode = 2
+ssao_enabled = true
+ssao_intensity = 4.0
+ssil_enabled = true
+sdfgi_energy = 0.215
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_levels/7 = 1.0
+glow_normalized = true
+glow_blend_mode = 0
+fog_sun_scatter = 0.09
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0034
+volumetric_fog_anisotropy = 0.77
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_sod48")

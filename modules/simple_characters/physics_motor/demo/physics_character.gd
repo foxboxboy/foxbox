@@ -48,6 +48,8 @@ var input_strength := 0.0:
 #region Ready & Process
 
 func _ready() -> void:
+	#process_mode = Node.PROCESS_MODE_DISABLED
+	
 	assert(physics_motor != null, "ERROR: No physics_motor was assigned to character. "+str(get_path()))
 
 

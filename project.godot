@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Tates Framework"
-run/main_scene="uid://bedvskmd1tusw"
+run/main_scene="uid://0yf3c1gkfxj0"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://bvd634geggfmh"
 
 [autoload]
 
 Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
+
+[display]
+
+window/vsync/vsync_mode=0
 
 [editor_plugins]
 
