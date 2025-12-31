@@ -22,7 +22,7 @@ nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
-meshes/generate_lods=false
+meshes/generate_lods=true
 meshes/create_shadow_meshes=true
 meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
@@ -40,11 +40,11 @@ materials/extract_path=""
 _subresources={
 "animations": {
 "test_move_all_limbs": {
-"save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://modules/simple_characters/animations/test_move_all_limbs.res",
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://rht5qiwjk6pg",
-"settings/loop_mode": 0,
+"save_to_file/path": "",
+"settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",

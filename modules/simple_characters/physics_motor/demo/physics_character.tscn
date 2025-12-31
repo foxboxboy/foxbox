@@ -31,6 +31,22 @@ shoulder_camera_marker = NodePath("CameraPivot/CameraArm/ShoulderCameraMarker")
 first_person_camera_marker = NodePath("CameraPivot/FirstPersonCameraMarker")
 camera_pivot = NodePath("CameraPivot")
 
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2008096, 0)
+root_bone = &"collarbone_r"
+tip_bone = &"hand_r"
+target_node = NodePath("../../../../../HeadTarget/ItemSocket")
+script = ExtResource("7_e1aye")
+is_active = false
+
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2008096, 0)
+root_bone = &"bicep_l"
+tip_bone = &"hand_l"
+target_node = NodePath("../../../../../HeadTarget/LeftHandTarget")
+script = ExtResource("7_e1aye")
+is_active = false
+
 [node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "floor_cast")]
 script = ExtResource("1_lbsc5")
 forward_marker = NodePath("../ForwardMarker")
@@ -76,31 +92,17 @@ target_position = Vector3(0, -0.2, 0)
 [node name="Torso" type="Marker3D" parent="."]
 top_level = true
 
-[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character") instance=ExtResource("1_egq3l")]
+[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "anim_player") instance=ExtResource("1_egq3l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1383096, 0)
 script = ExtResource("4_wb0ck")
 head_target = NodePath("../../HeadTarget")
 skeleton_3d = NodePath("armature/Skeleton3D")
 character = NodePath("../..")
+anim_player = NodePath("AnimationPlayer")
 
 [node name="Skeleton3D" parent="Torso/Model/armature" index="0"]
-bones/6/position = Vector3(0, 0.1875, -0.20404315)
 bones/6/rotation = Quaternion(0, 0, -0.087155744, 0.9961947)
-bones/6/scale = Vector3(0.99999976, 0.99999976, 1)
 bones/10/rotation = Quaternion(0, 0, 0.087155744, 0.9961947)
-bones/13/rotation = Quaternion(0, 0, 0.9961947, 0.08715574)
-
-[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="1"]
-root_bone = &"collarbone_r"
-tip_bone = &"hand_r"
-target_node = NodePath("../../../../../HeadTarget/ItemSocket")
-script = ExtResource("7_e1aye")
-
-[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="2"]
-root_bone = &"bicep_l"
-tip_bone = &"hand_l"
-target_node = NodePath("../../../../../HeadTarget/LeftHandTarget")
-script = ExtResource("7_e1aye")
 
 [node name="AnimationPlayer" parent="Torso/Model" index="1"]
 autoplay = "test_move_all_limbs"
