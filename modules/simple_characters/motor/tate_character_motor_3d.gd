@@ -30,7 +30,7 @@ func _ready() -> void:
 		elif get_parent() is CharacterBody3D:
 			body = get_parent()
 		else:
-			printerr("ERROR: No physics body was assigned nor could be found for TateCharacterMotor. ",get_path())
+			push_error("ERROR: No physics body was assigned nor could be found for TateCharacterMotor. ",get_path())
 
 
 func _physics_process(delta):

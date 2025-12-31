@@ -3,10 +3,14 @@
 [ext_resource type="Script" uid="uid://cfr0uqygf4xtu" path="res://modules/simple_characters/demo/character.gd" id="1_i5pi4"]
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/demo/triplanar.png" id="1_i6m7q"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/mannequin.gltf" id="1_lxaxe"]
-[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/demo/pc_input_handler.gd" id="2_81bif"]
-[ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/controller/advanced/tate_advanced_character_motor_3d.gd" id="2_cv082"]
-[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/controller/model_handler.gd" id="6_5ixkb"]
+[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
+[ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/motor/advanced/tate_advanced_character_motor_3d.gd" id="2_cv082"]
+[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/motor/head_rotater.gd" id="6_5ixkb"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/demo/gui.tscn" id="7_aq0ug"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aq0ug"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_r0tlq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ixkb"]
 albedo_texture = ExtResource("1_i6m7q")
@@ -69,11 +73,21 @@ size = Vector2(0.1, 0.1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i5pi4"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_aq0ug"]
+[node name="CharacterDemo" type="Node3D"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_r0tlq"]
+[node name="WorldCamera" type="Camera3D" parent="."]
+transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 8.881784e-16, -4.371139e-08, -8, 4, 0)
 
-[node name="Node" type="Node"]
+[node name="GUI" parent="." instance=ExtResource("7_aq0ug")]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_aq0ug")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_r0tlq")
 
 [node name="Environment" type="Node" parent="."]
 
@@ -178,20 +192,6 @@ script = ExtResource("6_5ixkb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
 bone_name = "head"
 bone_idx = 3
-
-[node name="WorldCamera" type="Camera3D" parent="."]
-transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 0, -4.371139e-08, -8, 4, 0)
-
-[node name="GUI" parent="." instance=ExtResource("7_aq0ug")]
-
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-shape = SubResource("SphereShape3D_aq0ug")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-mesh = SubResource("SphereMesh_r0tlq")
 
 [connection signal="free_cam_pressed" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_free_cam_pressed"]
 [connection signal="free_cam_released" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_free_cam_released"]

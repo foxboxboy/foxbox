@@ -1,7 +1,6 @@
 extends Node3D
 
-## Rotates to give the illusion the head is only moving.
-## Updates the neck.
+## Rotates the head bone.
 
 @onready var head_bone_attachment: BoneAttachment3D = $armature/Skeleton3D/HeadBoneAttachment
 @onready var head: Node3D = $"../../Head"
@@ -11,8 +10,6 @@ extends Node3D
 
 @export var head_bone_name: String = "head"
 
-#@export var head_offset := Vector3(0,0.5,0)
-
 var head_yaw := 0.0
 
 
@@ -20,17 +17,9 @@ func _process(_delta: float) -> void:
 	var head_bone_idx = skeleton_3d.find_bone(head_bone_name)
 	
 	var pitch := -head.global_rotation.x
-	#var yaw := head.global_rotation.y
-	
-	#var yaw_limit := deg_to_rad(45)
 	
 	var yaw = -(character.get_head_torso_angle_difference())
 	
 	var final_basis = Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, pitch)
 	
-	
 	skeleton_3d.set_bone_pose_rotation(head_bone_idx, Quaternion(final_basis))
-	
-	#head_bone_attachment.rotation.x = -head.rotation.x
-	#head_bone_attachment.global_rotation.y = head.global_rotation.y
-	#head_bone_attachment.rotate_y(deg_to_rad(180))

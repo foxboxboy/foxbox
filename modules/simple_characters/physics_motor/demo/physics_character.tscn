@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://biwcdlvfa14ji"]
+
+[ext_resource type="Script" uid="uid://c76c7wlpqtkiq" path="res://modules/simple_characters/physics_motor/demo/physics_character.gd" id="1_6xgr2"]
+[ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/mannequin.gltf" id="1_egq3l"]
+[ext_resource type="Script" uid="uid://cx1mwqarxaif1" path="res://modules/simple_characters/physics_motor/tate_physics_character_motor_3d.gd" id="1_lbsc5"]
+[ext_resource type="Script" uid="uid://bkdays5b1q8f3" path="res://modules/camera_arm/camera_arm.gd" id="3_xpeq2"]
+[ext_resource type="Script" uid="uid://jkd7cu4a7nx0" path="res://modules/simple_characters/physics_motor/demo/head_rotater.gd" id="4_wb0ck"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6xgr2"]
+friction = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lbsc5"]
+radius = 0.5288086
+height = 2.1948242
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xpeq2"]
+
+[node name="PhysicsCharacter" type="RigidBody3D" node_paths=PackedStringArray("head_target_marker", "torso", "physics_motor", "rigid_body", "forward_marker", "shoulder_camera_marker", "first_person_camera_marker", "camera_pivot")]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 62.0
+physics_material_override = SubResource("PhysicsMaterial_6xgr2")
+script = ExtResource("1_6xgr2")
+head_target_marker = NodePath("HeadTarget")
+torso = NodePath("Torso")
+physics_motor = NodePath("PhysicsMotor")
+rigid_body = NodePath(".")
+forward_marker = NodePath("ForwardMarker")
+shoulder_camera_marker = NodePath("CameraPivot/CameraArm/ShoulderCameraMarker")
+first_person_camera_marker = NodePath("CameraPivot/FirstPersonCameraMarker")
+camera_pivot = NodePath("CameraPivot")
+
+[node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "floor_cast")]
+script = ExtResource("1_lbsc5")
+forward_marker = NodePath("../ForwardMarker")
+rigid_body = NodePath("..")
+floor_cast = NodePath("../FloorCast")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09741211, 0)
+shape = SubResource("CapsuleShape3D_lbsc5")
+
+[node name="ForwardMarker" type="Marker3D" parent="."]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CameraArm" type="SpringArm3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+script = ExtResource("3_xpeq2")
+
+[node name="ShoulderCameraMarker" type="Marker3D" parent="CameraPivot/CameraArm"]
+
+[node name="FirstPersonCameraMarker" type="Marker3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999998, 0)
+
+[node name="HeadTarget" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="FloorCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
+target_position = Vector3(0, -0.2, 0)
+
+[node name="Character" type="Node3D" parent="."]
+
+[node name="Torso" type="Marker3D" parent="."]
+top_level = true
+
+[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character") instance=ExtResource("1_egq3l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1383096, 0)
+script = ExtResource("4_wb0ck")
+head_target = NodePath("../../HeadTarget")
+skeleton_3d = NodePath("armature/Skeleton3D")
+character = NodePath("../..")
+
+[node name="Skeleton3D" parent="Torso/Model/armature" index="0"]
+bones/6/rotation = Quaternion(0, 0, -0.087155744, 0.9961947)
+bones/10/rotation = Quaternion(0, 0, 0.087155744, 0.9961947)
+bones/13/rotation = Quaternion(0, 0, 0.9961947, 0.08715574)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+shape = SubResource("SphereShape3D_xpeq2")
+
+[editable path="Torso/Model"]
