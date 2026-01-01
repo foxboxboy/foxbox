@@ -15,6 +15,7 @@ var head_bone_idx : int
 func _ready() -> void:
 	head_bone_idx = skeleton_3d.find_bone(head_bone_name)
 
+
 func _process(_delta: float) -> void:
 	#if Engine.is_editor_hint():
 	#	get_parent().global_position = character.rigid_body.global_position #+ Vector3(0,-1.138,0)

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dx2w7y5jdb1lw"
-path="res://.godot/imported/tommy_gun.gltf-7876633a062700a73c6fd1333448195c.scn"
+path="res://.godot/imported/tommy_gun.gltf-d72bf064dae66c9a715e6fcf179b46da.scn"
 
 [deps]
 
-source_file="res://modules/simple_characters/physics_motor/demo/gun/tommy_gun.gltf"
-dest_files=["res://.godot/imported/tommy_gun.gltf-7876633a062700a73c6fd1333448195c.scn"]
+source_file="res://modules/simple_characters/physics/demo/gun/tommy_gun.gltf"
+dest_files=["res://.godot/imported/tommy_gun.gltf-d72bf064dae66c9a715e6fcf179b46da.scn"]
 
 [params]
 

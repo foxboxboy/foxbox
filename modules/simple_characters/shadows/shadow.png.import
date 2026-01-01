@@ -2,21 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7b2l5ximbsxi"
-path.s3tc="res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.s3tc.ctex"
-path.etc2="res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.etc2.ctex"
+uid="uid://osuyarr7ppc4"
+path.s3tc="res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.s3tc.ctex"
+path.etc2="res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "9093885ece49b73707e88d4b4442e474"
-}
 
 [deps]
 
-source_file="res://modules/simple_characters/physics_motor/demo/gun/sniper_rifle_1.png"
-dest_files=["res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.s3tc.ctex", "res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.etc2.ctex"]
+source_file="res://modules/simple_characters/shadows/shadow.png"
+dest_files=["res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.s3tc.ctex", "res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.etc2.ctex"]
 
 [params]
 

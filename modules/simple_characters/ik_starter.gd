@@ -1,10 +1,11 @@
 #@tool
 extends SkeletonIK3D
 
-@export var is_active := true
+@export var should_start := true
 
 func _ready() -> void:
-	if is_active:
+	
+	if should_start:
 		start()
 	else:
 		stop()

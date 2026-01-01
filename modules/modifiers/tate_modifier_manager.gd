@@ -1,5 +1,5 @@
 # tates_lib/modifiers/tate_modifier_manager.gd
-extends Node
+extends TateComponent
 class_name TateModifierManager
 ## Handles the creation and collision logic of Modifier Nodes.
 

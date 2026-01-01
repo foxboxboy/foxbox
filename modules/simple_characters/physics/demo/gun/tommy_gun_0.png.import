@@ -2,22 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://osuyarr7ppc4"
-path.s3tc="res://.godot/imported/shadow.png-ac2cd16b5f6c201708f9403dde59d1e4.s3tc.ctex"
-path.etc2="res://.godot/imported/shadow.png-ac2cd16b5f6c201708f9403dde59d1e4.etc2.ctex"
+uid="uid://3nm4vvffx0sk"
+path="res://.godot/imported/tommy_gun_0.png-f997262e4ac1c960f93c172ae4e3bd88.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
+}
+generator_parameters={
+"md5": "25f8f96e354792b02fbbda000819a805"
 }
 
 [deps]
 
-source_file="res://modules/simple_characters/physics_motor/demo/shadow.png"
-dest_files=["res://.godot/imported/shadow.png-ac2cd16b5f6c201708f9403dde59d1e4.s3tc.ctex", "res://.godot/imported/shadow.png-ac2cd16b5f6c201708f9403dde59d1e4.etc2.ctex"]
+source_file="res://modules/simple_characters/physics/demo/gun/tommy_gun_0.png"
+dest_files=["res://.godot/imported/tommy_gun_0.png-f997262e4ac1c960f93c172ae4e3bd88.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

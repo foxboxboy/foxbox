@@ -1,4 +1,4 @@
-extends Node
+extends TateComponent
 class_name TateDemoKnight
 
 signal health_updated(current: float, max_val: float)

@@ -1,4 +1,4 @@
-extends Node
+extends TateComponent
 class_name UnitStatHandler
 
 signal speed_stat_value_changed(new_value)

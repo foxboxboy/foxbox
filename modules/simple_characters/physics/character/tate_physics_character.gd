@@ -22,18 +22,38 @@ class_name TatePhysicsCharacter
 @export var max_head_pitch := 90.0
 
 
+@export_group("Shadow")
+
+@export var shadow_decal_scene: PackedScene
+@export var shadow_simple_scene: PackedScene
+
+@export var shadow_simple_y_offset : float = 0.025
+@export var shadow_decal_y_offset : float = -0.975
+
+@export var shadow_type := ShadowQuality.DISABLED:
+	set = _set_shadow_quality
+
+
+
+@export_group("Visual Optimizer")
+
+@export var visual_optimizer : TateVisualOptimizer
+
+
 var head_target_pitch : float
 var head_target_yaw : float
 
 #var last_relative_position := Vector2.ZERO
 var input_direction := Vector2.ZERO:
-	get:
-		return physics_motor.input_direction
 	set(new_value):
-		physics_motor.input_direction = new_value.normalized()
+		var new_value_normalized := new_value.normalized()
+		physics_motor.input_direction = new_value_normalized
 		
-		if has_move_input():
+		# NOTICE has_move_input() optimization
+		if (input_direction.x != 0 or input_direction.y != 0):
 			rotate_head()
+		
+		input_direction = new_value_normalized
 
 var input_strength := 0.0:
 	get:
@@ -41,7 +61,18 @@ var input_strength := 0.0:
 	set(new_value):
 		physics_motor.input_strength = new_value
 
+enum ShadowQuality{
+	## No shadow will be shown under this character.
+	DISABLED,
+	## A simple mesh instance with a black circle will
+	## be shown. 
+	SIMPLE,
+	## A more advanced decal will be used to draw the
+	## shadow.
+	DECAL,
+}
 
+var shadow: Node
 
 
 
@@ -50,74 +81,58 @@ var input_strength := 0.0:
 #region Ready & Process
 
 func _ready() -> void:
-	#physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
-	#rigid_body.freeze = true
-	
 	assert(physics_motor != null, "ERROR: No physics_motor was assigned to character. "+str(get_path()))
 
 
 func _physics_process(_delta: float) -> void:
-#	torso.global_position = rigid_body.global_position
+	# NOTICE has_move_input() optimization
+	if input_direction.x != 0 or input_direction.y != 0:
+		forward_marker.global_rotation.y = head_target_marker.global_rotation.y
+
+
+func _process(_delta: float) -> void:
 	
-	forward_marker.global_rotation.y = head_target_marker.global_rotation.y
-
-
-
-@onready var anim_player: AnimationPlayer = $Torso/Model/AnimationPlayer
-@onready var item_socket: Marker3D = $HeadTarget/ItemSocket
-@onready var shadow: Node3D = $Shadow
-
-
-func _process(delta: float) -> void:
-	var camera := get_viewport().get_camera_3d()
-	if not camera:
-		return
-	var dist_sq = global_position.distance_squared_to(camera.global_position)
-	
-	
-	## NOTICE
-	## Avoid using SQRT, it's not needed since we can do the calculation before
-	## hand. If you want say 100, make the distance 100*100 = 10000.
-	if dist_sq > 1:
-		if model.process_mode != Node.PROCESS_MODE_DISABLED:
-			model.process_mode = Node.PROCESS_MODE_DISABLED
-			
+	if visual_optimizer:
+		if visual_optimizer.is_far:
+			return
 		
-		#if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL:
-			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
-	
-			item_socket.hide()
-			shadow.hide()
-	
-		
-		var fps_fraction := 32
-		if Engine.get_process_frames() % fps_fraction == get_instance_id() % fps_fraction:
-			# 3. Manually push the animation forward by 4 frames worth of time
-			# We skip the math for the previous 3 frames and just teleport to the new pose
-			anim_player.advance(delta * fps_fraction)
-
-	
-	else:
-		if model.process_mode != Node.PROCESS_MODE_INHERIT:
-			#physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
-			#physics_motor.set_physics_process(true)
-			model.process_mode = Node.PROCESS_MODE_INHERIT
-		
-		#if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS:
-			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS
-			
-			item_socket.show()
-			shadow.show()
-		
-		if is_physics_processing() and has_move_input():
-			sync_torso_rotation_to_head()
-		#if not is_physics_processing():
-			#set_physics_process(true)
-	
+	# NOTICE has_move_input() optimization
+	if is_physics_processing() and (input_direction.x != 0 or input_direction.y != 0):
+		sync_torso_rotation_to_head()
 
 
 
 #endregion
+
+
+
+
+
+#region Multiplayer
+
+func set_network_role(is_authority: bool):
+	## SERVER
+	if is_authority:
+		# turn on physics & logic
+		physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
+		physics_motor.ground_cast.enabled = true
+		physics_motor.jump_cast.enabled = true
+		set_physics_process(true)
+
+	## CLIENT
+	else:
+		physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
+		physics_motor.ground_cast.enabled = false
+		physics_motor.jump_cast.enabled = false
+		set_physics_process(false)
+
+		# NOTICE
+		# make body purely visual/kinematic so it doesn't fight the sync
+		rigid_body.freeze = true
+
+#endregion
+
+
 
 
 
@@ -130,9 +145,11 @@ func rotate_head_relative(relative: Vector2) -> void:
 	
 	head_target_yaw = _get_next_yaw(relative)
 	
-	rotate_camera_pivot()
+	if camera_pivot:
+		rotate_camera_pivot()
 	
-	if has_move_input():
+	# NOTICE has_move_input() optimization
+	if (input_direction.x != 0 or input_direction.y != 0):
 		rotate_head()
 	
 	rotate_body_with_head()
@@ -191,11 +208,11 @@ func sync_torso_rotation_to_head():
 
 
 func look_at_direction(direction: Vector3) -> void:
-	# Convert a 3D direction into the Pitch and Yaw your Motor expects
+	# convert to Pitch and Yaw for motor
 	var horizontal_dir = Vector3(direction.x, 0, direction.z).normalized()
 	head_target_yaw = atan2(horizontal_dir.x, horizontal_dir.z)
 
-	# Calculate pitch based on the Y component
+	# calculate pitch
 	head_target_pitch = asin(clamp(-direction.y, -1.0, 1.0))
 
 	rotate_head()
@@ -233,8 +250,29 @@ func _get_next_yaw(relative: Vector2) -> float:
 	return wrapf(head_target_yaw - (relative.x * look_sensitivity), -PI, PI)
 
 
+func _set_shadow_quality(new_shadow_quality : ShadowQuality) -> void:
+	shadow_type = new_shadow_quality
+	
+	if shadow:
+		shadow.queue_free()
+	
+	if shadow_type == ShadowQuality.SIMPLE:
+		assert(shadow_simple_scene != null, "ERROR: No shadow_simple_scene assigned")
+		
+		shadow = shadow_simple_scene.instantiate()
+		shadow.position.y = shadow_simple_y_offset
+		add_child(shadow)
+	
+	if shadow_type == ShadowQuality.DECAL:
+		assert(shadow_decal_scene != null, "ERROR: No shadow_decal_scene assigned")
+		
+		shadow = shadow_decal_scene.instantiate()
+		shadow.position.y = shadow_decal_y_offset
+		add_child(shadow)
+
+
 func has_move_input() -> bool:
-	return input_direction.length() != 0
+	return input_direction.x != 0 or input_direction.y != 0
 
 
 #endregion

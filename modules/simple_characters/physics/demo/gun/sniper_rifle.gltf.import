@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://da8lqtbnak0i"
-path="res://.godot/imported/sniper_rifle.gltf-2d0eed52c00e9af1cfaf30f7e2d33dbd.scn"
+path="res://.godot/imported/sniper_rifle.gltf-c73d71af492c91007c6ac7671fbb7226.scn"
 
 [deps]
 
-source_file="res://modules/simple_characters/physics_motor/demo/gun/sniper_rifle.gltf"
-dest_files=["res://.godot/imported/sniper_rifle.gltf-2d0eed52c00e9af1cfaf30f7e2d33dbd.scn"]
+source_file="res://modules/simple_characters/physics/demo/gun/sniper_rifle.gltf"
+dest_files=["res://.godot/imported/sniper_rifle.gltf-c73d71af492c91007c6ac7671fbb7226.scn"]
 
 [params]
 

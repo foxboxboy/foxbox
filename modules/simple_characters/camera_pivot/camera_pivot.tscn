@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cajgsd7cqowsa"]
+
+[ext_resource type="Script" uid="uid://bkdays5b1q8f3" path="res://modules/camera_arm/camera_arm.gd" id="1_q4t6f"]
+
+[node name="CameraPivot" type="Marker3D"]
+
+[node name="CameraArm" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+script = ExtResource("1_q4t6f")
+
+[node name="ShoulderCameraMarker" type="Marker3D" parent="CameraArm"]
+
+[node name="FirstPersonCameraMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999998, 0)
