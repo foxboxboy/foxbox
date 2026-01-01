@@ -2,6 +2,8 @@
 extends TateComponent3D
 class_name TatePhysicsCharacter
 
+@onready var model: Node3D = $Torso/Model
+
 @export_group("Components")
 @export var head_target_marker: Marker3D
 @export var torso : Node3D
@@ -54,13 +56,37 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	torso.global_position = rigid_body.global_position
+#	torso.global_position = rigid_body.global_position
 	
 	forward_marker.global_rotation.y = head_target_marker.global_rotation.y
 
 
+
+
+
 func _process(_delta: float) -> void:
-	if has_move_input():
+	var camera := get_viewport().get_camera_3d()
+	if not camera:
+		return
+	var dist_sq = global_position.distance_squared_to(camera.global_position)
+	
+	## NOTICE THIS CURRENTLY ISN'T DOING ANYTHING (the distance is really big)
+	## Avoid using SQRT, it's not needed since we can do the calculation before
+	## hand. If you want say 100, make the distance 100*100 = 10000.
+	if dist_sq > 250:
+		if model.process_mode != Node.PROCESS_MODE_DISABLED:
+			model.process_mode = Node.PROCESS_MODE_DISABLED
+			
+		#if is_physics_processing():
+			#set_physics_process(false)
+	else:
+		if model.process_mode != Node.PROCESS_MODE_INHERIT:
+			model.process_mode = Node.PROCESS_MODE_INHERIT
+
+		#if not is_physics_processing():
+			#set_physics_process(true)
+	
+	if is_physics_processing() and has_move_input():
 		sync_torso_rotation_to_head()
 
 

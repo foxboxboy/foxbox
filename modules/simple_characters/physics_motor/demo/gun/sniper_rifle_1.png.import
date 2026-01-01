@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://7b2l5ximbsxi"
 path.s3tc="res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.s3tc.ctex"
+path.etc2="res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://modules/simple_characters/physics_motor/demo/gun/sniper_rifle_1.png"
-dest_files=["res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.s3tc.ctex"]
+dest_files=["res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.s3tc.ctex", "res://.godot/imported/sniper_rifle_1.png-af395d61365a08f6230d80c60ffcb619.etc2.ctex"]
 
 [params]
 

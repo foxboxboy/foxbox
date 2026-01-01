@@ -3,7 +3,7 @@ extends SkeletonIK3D
 
 @export var is_active := true
 
-func _process(_delta: float) -> void:
+func _ready() -> void:
 	if is_active:
 		start()
 	else:

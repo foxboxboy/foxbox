@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/mannequin.gltf" id="1_lxaxe"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
 [ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/basic_motor/advanced/tate_advanced_character_motor_3d.gd" id="2_cv082"]
-[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic_motor/head_rotater.gd" id="6_5ixkb"]
+[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic_motor/model.gd" id="6_5ixkb"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic_motor/demo/gui.tscn" id="7_aq0ug"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aq0ug"]
@@ -77,6 +77,11 @@ size = Vector2(0.1, 0.1)
 
 [node name="WorldCamera" type="Camera3D" parent="."]
 transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 8.881784e-16, -4.371139e-08, -8, 4, 0)
+
+[node name="HeadBoneAttachment" type="BoneAttachment3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
+bone_name = "head"
+bone_idx = 3
 
 [node name="GUI" parent="." instance=ExtResource("7_aq0ug")]
 
@@ -188,10 +193,9 @@ top_level = true
 transform = Transform3D(-1, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742278e-08, 0, -0.99999994, 0, -0.1, 0)
 script = ExtResource("6_5ixkb")
 
-[node name="HeadBoneAttachment" type="BoneAttachment3D" parent="Character/CharacterBody3D/Node3D/Torso/Mannequin/armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
-bone_name = "head"
-bone_idx = 3
+[node name="Skeleton3D" parent="Character/CharacterBody3D/Node3D/Torso/Mannequin/armature" index="0"]
+bones/6/rotation = Quaternion(0, 0, -0.087155744, 0.9961947)
+bones/10/rotation = Quaternion(0, 0, 0.087155744, 0.9961947)
 
 [connection signal="free_cam_pressed" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_free_cam_pressed"]
 [connection signal="free_cam_released" from="Character/PCInputHandler" to="Character" method="_on_pc_input_handler_free_cam_released"]
