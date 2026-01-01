@@ -73,21 +73,28 @@ func _process(_delta: float) -> void:
 	## NOTICE THIS CURRENTLY ISN'T DOING ANYTHING (the distance is really big)
 	## Avoid using SQRT, it's not needed since we can do the calculation before
 	## hand. If you want say 100, make the distance 100*100 = 10000.
+	physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
 	if dist_sq > 250:
 		if model.process_mode != Node.PROCESS_MODE_DISABLED:
+			#physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
+			#physics_motor.set_physics_process(false)
 			model.process_mode = Node.PROCESS_MODE_DISABLED
-			
+		
+		
 		#if is_physics_processing():
 			#set_physics_process(false)
 	else:
 		if model.process_mode != Node.PROCESS_MODE_INHERIT:
+			#physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
+			#physics_motor.set_physics_process(true)
 			model.process_mode = Node.PROCESS_MODE_INHERIT
 
+		if is_physics_processing() and has_move_input():
+			sync_torso_rotation_to_head()
 		#if not is_physics_processing():
 			#set_physics_process(true)
 	
-	if is_physics_processing() and has_move_input():
-		sync_torso_rotation_to_head()
+
 
 
 #endregion
