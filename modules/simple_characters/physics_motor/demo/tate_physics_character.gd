@@ -64,6 +64,8 @@ func _physics_process(_delta: float) -> void:
 
 
 @onready var anim_player: AnimationPlayer = $Torso/Model/AnimationPlayer
+@onready var item_socket: Marker3D = $HeadTarget/ItemSocket
+@onready var shadow: Node3D = $Shadow
 
 
 func _process(delta: float) -> void:
@@ -79,10 +81,15 @@ func _process(delta: float) -> void:
 	if dist_sq > 1:
 		if model.process_mode != Node.PROCESS_MODE_DISABLED:
 			model.process_mode = Node.PROCESS_MODE_DISABLED
+			
 		
-		if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL:
+		#if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL:
 			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
 	
+			item_socket.hide()
+			shadow.hide()
+	
+		
 		var fps_fraction := 32
 		if Engine.get_process_frames() % fps_fraction == get_instance_id() % fps_fraction:
 			# 3. Manually push the animation forward by 4 frames worth of time
@@ -96,9 +103,11 @@ func _process(delta: float) -> void:
 			#physics_motor.set_physics_process(true)
 			model.process_mode = Node.PROCESS_MODE_INHERIT
 		
-		if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS:
+		#if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS:
 			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS
-			print(anim_player.callback_mode_process)
+			
+			item_socket.show()
+			shadow.show()
 		
 		if is_physics_processing() and has_move_input():
 			sync_torso_rotation_to_head()
