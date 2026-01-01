@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvd634geggfmh"
-path.s3tc="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.ctex"
-path.etc2="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.etc2.ctex"
+uid="uid://cpkivky4ygxy0"
+path.s3tc="res://.godot/imported/shooting_star_sampler.png-89eb1b6af542c3d19c28d2c21f0da84c.s3tc.ctex"
+path.etc2="res://.godot/imported/shooting_star_sampler.png-89eb1b6af542c3d19c28d2c21f0da84c.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=["res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.ctex", "res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.etc2.ctex"]
+source_file="res://modules/world_environments/stylized_sky_shader/shooting_star_sampler.png"
+dest_files=["res://.godot/imported/shooting_star_sampler.png-89eb1b6af542c3d19c28d2c21f0da84c.s3tc.ctex", "res://.godot/imported/shooting_star_sampler.png-89eb1b6af542c3d19c28d2c21f0da84c.etc2.ctex"]
 
 [params]
 

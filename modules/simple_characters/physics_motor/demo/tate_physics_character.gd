@@ -50,7 +50,8 @@ var input_strength := 0.0:
 #region Ready & Process
 
 func _ready() -> void:
-	#process_mode = Node.PROCESS_MODE_DISABLED
+	#physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
+	#rigid_body.freeze = true
 	
 	assert(physics_motor != null, "ERROR: No physics_motor was assigned to character. "+str(get_path()))
 
@@ -62,33 +63,43 @@ func _physics_process(_delta: float) -> void:
 
 
 
+@onready var anim_player: AnimationPlayer = $Torso/Model/AnimationPlayer
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var camera := get_viewport().get_camera_3d()
 	if not camera:
 		return
 	var dist_sq = global_position.distance_squared_to(camera.global_position)
 	
-	## NOTICE THIS CURRENTLY ISN'T DOING ANYTHING (the distance is really big)
+	
+	## NOTICE
 	## Avoid using SQRT, it's not needed since we can do the calculation before
 	## hand. If you want say 100, make the distance 100*100 = 10000.
-	physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
-	if dist_sq > 250:
+	if dist_sq > 1:
 		if model.process_mode != Node.PROCESS_MODE_DISABLED:
-			#physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
-			#physics_motor.set_physics_process(false)
 			model.process_mode = Node.PROCESS_MODE_DISABLED
 		
-		
-		#if is_physics_processing():
-			#set_physics_process(false)
+		if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL:
+			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
+	
+		var fps_fraction := 32
+		if Engine.get_process_frames() % fps_fraction == get_instance_id() % fps_fraction:
+			# 3. Manually push the animation forward by 4 frames worth of time
+			# We skip the math for the previous 3 frames and just teleport to the new pose
+			anim_player.advance(delta * fps_fraction)
+
+	
 	else:
 		if model.process_mode != Node.PROCESS_MODE_INHERIT:
 			#physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
 			#physics_motor.set_physics_process(true)
 			model.process_mode = Node.PROCESS_MODE_INHERIT
-
+		
+		if anim_player.callback_mode_process != AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS:
+			anim_player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS
+			print(anim_player.callback_mode_process)
+		
 		if is_physics_processing() and has_move_input():
 			sync_torso_rotation_to_head()
 		#if not is_physics_processing():

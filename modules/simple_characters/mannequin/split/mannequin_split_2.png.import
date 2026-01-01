@@ -2,18 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvd634geggfmh"
-path.s3tc="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.ctex"
-path.etc2="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.etc2.ctex"
+uid="uid://bw2u4jxad0onw"
+path.s3tc="res://.godot/imported/mannequin_split_2.png-dbc5b7a7bfcf805a4ad51b0979ae6aa2.s3tc.ctex"
+path.etc2="res://.godot/imported/mannequin_split_2.png-dbc5b7a7bfcf805a4ad51b0979ae6aa2.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "204d936ceda2d7bd9f24bb4ec3538964"
+}
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=["res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.ctex", "res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.etc2.ctex"]
+source_file="res://modules/simple_characters/mannequin/split/mannequin_split_2.png"
+dest_files=["res://.godot/imported/mannequin_split_2.png-dbc5b7a7bfcf805a4ad51b0979ae6aa2.s3tc.ctex", "res://.godot/imported/mannequin_split_2.png-dbc5b7a7bfcf805a4ad51b0979ae6aa2.etc2.ctex"]
 
 [params]
 

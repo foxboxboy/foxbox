@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg3m5qnyxjev4"]
+
+[ext_resource type="Material" uid="uid://m80rmki4fbox" path="res://modules/world_environments/stylized_sky_shader/night_sky.tres" id="1_octoo"]
+
+[sub_resource type="Sky" id="Sky_ieg05"]
+sky_material = ExtResource("1_octoo")
+
+[sub_resource type="Environment" id="Environment_1eoep"]
+background_mode = 2
+sky = SubResource("Sky_ieg05")
+ambient_light_source = 2
+ambient_light_color = Color(0.45098, 0.333333, 0.309804, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.2
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_1eoep")

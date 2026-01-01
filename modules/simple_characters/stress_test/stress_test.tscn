@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://0yf3c1gkfxj0"]
 
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic_motor/demo/triplanar.png" id="1_k474t"]
-[ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://modules/simple_characters/physics_motor/demo/world_environment.tscn" id="1_l3dun"]
+[ext_resource type="PackedScene" uid="uid://bl46ajiolcqtg" path="res://modules/world_environments/mobile_world_environment.tscn" id="1_xobiw"]
 [ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics_motor/demo/physics_character.tscn" id="2_fon04"]
 [ext_resource type="Script" uid="uid://w8fle4xlfa75" path="res://modules/simple_characters/stress_test/fps_label.gd" id="4_xobiw"]
 
@@ -13,7 +13,7 @@ texture_filter = 0
 
 [node name="StressTest" type="Node3D"]
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("1_l3dun")]
+[node name="MobileWorldEnvironment" parent="." instance=ExtResource("1_xobiw")]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
