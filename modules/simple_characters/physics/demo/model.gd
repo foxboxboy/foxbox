@@ -9,6 +9,8 @@ extends Node3D
 @export var character : TatePhysicsCharacter
 @export var head_bone_name: String = "head"
 
+@export var mesh : MeshInstance3D
+
 var head_bone_idx : int
 
 
@@ -28,3 +30,11 @@ func _process(_delta: float) -> void:
 	var final_basis = Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, pitch)
 	
 	skeleton_3d.set_bone_pose_rotation(head_bone_idx, Quaternion(final_basis))
+
+
+func hide_mesh():
+	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
+
+
+func show_mesh():
+	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON

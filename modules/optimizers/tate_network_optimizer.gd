@@ -1,5 +1,9 @@
 extends TateComponent
 class_name TateNetworkOptimizer
+## Looks for a method called "set_network_role"
+## in its target components.
+
+## This script might be redundant.
 
 @export var target_components: Array[Node] = []
 

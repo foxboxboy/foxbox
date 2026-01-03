@@ -2,6 +2,7 @@
 extends TateComponent3D
 class_name TatePhysicsCharacter
 
+## WARNING remove or refactor this later this is pretty stupid
 @onready var model: Node3D = $Torso/Model
 
 @export_group("Components")

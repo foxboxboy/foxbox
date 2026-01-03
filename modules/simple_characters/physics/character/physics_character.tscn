@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://biwcdlvfa14ji"]
 
 [ext_resource type="Script" uid="uid://c76c7wlpqtkiq" path="res://modules/simple_characters/physics/character/tate_physics_character.gd" id="1_6xgr2"]
-[ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin.gltf" id="1_egq3l"]
+[ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="1_egq3l"]
 [ext_resource type="Script" uid="uid://cx1mwqarxaif1" path="res://modules/simple_characters/physics/physics_motor/tate_physics_character_motor_3d.gd" id="1_lbsc5"]
 [ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/simple_characters/shadows/shadow_decal.tscn" id="2_cv4t6"]
 [ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/simple_characters/shadows/shadow_simple.tscn" id="3_tpx2h"]
@@ -18,7 +18,7 @@ friction = 0.0
 radius = 0.5288086
 height = 2.1948242
 
-[node name="PhysicsCharacter" type="RigidBody3D" node_paths=PackedStringArray("head_target_marker", "torso", "physics_motor", "rigid_body", "forward_marker", "shoulder_camera_marker", "first_person_camera_marker", "camera_pivot", "visual_optimizer")]
+[node name="PhysicsCharacter" type="RigidBody3D" node_paths=PackedStringArray("head_target_marker", "torso", "physics_motor", "rigid_body", "forward_marker", "visual_optimizer")]
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -31,9 +31,6 @@ torso = NodePath("Torso")
 physics_motor = NodePath("PhysicsMotor")
 rigid_body = NodePath(".")
 forward_marker = NodePath("ForwardMarker")
-shoulder_camera_marker = NodePath("")
-first_person_camera_marker = NodePath("")
-camera_pivot = NodePath("")
 shadow_decal_scene = ExtResource("2_cv4t6")
 shadow_simple_scene = ExtResource("3_tpx2h")
 visual_optimizer = NodePath("TateVisualOptimizer")
@@ -50,17 +47,17 @@ nodes_to_hide = [NodePath("../HeadTarget/ItemSocket")]
 anim_players = [NodePath("../Torso/Model/AnimationPlayer")]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
-remote_path = NodePath("../Torso")
-update_rotation = false
-update_scale = false
-
 [node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast", "ground_cast")]
 script = ExtResource("1_lbsc5")
 forward_marker = NodePath("../ForwardMarker")
 rigid_body = NodePath("..")
 jump_cast = NodePath("../JumpCast")
 ground_cast = NodePath("../GroundCast")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+remote_path = NodePath("../Torso")
+update_rotation = false
+update_scale = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0974121, 0)
@@ -69,10 +66,10 @@ shape = SubResource("CapsuleShape3D_lbsc5")
 [node name="ForwardMarker" type="Marker3D" parent="."]
 
 [node name="HeadTarget" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1483333, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="ItemSocket" type="Marker3D" parent="HeadTarget"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, -0.78778696, -0.587)
 
 [node name="blockbench_export" parent="HeadTarget/ItemSocket" instance=ExtResource("7_ql4s1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07821858)
@@ -94,12 +91,13 @@ top_level = true
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Torso"]
 enable_node_path = NodePath("../Model/AnimationPlayer")
 
-[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character") instance=ExtResource("1_egq3l")]
+[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("1_egq3l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1383096, 0)
 script = ExtResource("4_wb0ck")
 head_target = NodePath("../../HeadTarget")
 skeleton_3d = NodePath("armature/Skeleton3D")
 character = NodePath("../..")
+mesh = NodePath("armature/Skeleton3D/armature")
 
 [node name="Skeleton3D" parent="Torso/Model/armature" index="0"]
 bones/5/scale = Vector3(0.99999976, 0.9999998, 0.9999999)
@@ -121,8 +119,5 @@ root_bone = &"bicep_l"
 tip_bone = &"hand_l"
 target_node = NodePath("../../../../../HeadTarget/LeftHandTarget")
 script = ExtResource("7_e1aye")
-
-[node name="AnimationPlayer" parent="Torso/Model" index="1"]
-autoplay = "test_move_all_limbs"
 
 [editable path="Torso/Model"]
