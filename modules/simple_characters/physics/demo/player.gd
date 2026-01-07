@@ -3,7 +3,7 @@ extends Node
 @export var character : TatePhysicsCharacter
 @export var camera : Camera3D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	camera.global_position = character.first_person_camera_marker.global_position
 	camera.global_rotation = character.first_person_camera_marker.global_rotation
 	
@@ -17,7 +17,11 @@ func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 
 func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 	character.input_direction = input_direction
-	character.input_strength = 1.0
+	
+	if input_direction.length() == 0.0:
+		character.input_strength = 0.0
+	else:
+		character.input_strength = 1.0
 
 
 func _on_pc_input_controller_jump_pressed() -> void:

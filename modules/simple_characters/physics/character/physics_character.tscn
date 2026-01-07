@@ -47,12 +47,11 @@ nodes_to_hide = [NodePath("../HeadTarget/ItemSocket")]
 anim_players = [NodePath("../Torso/Model/AnimationPlayer")]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast", "ground_cast")]
+[node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast")]
 script = ExtResource("1_lbsc5")
 forward_marker = NodePath("../ForwardMarker")
 rigid_body = NodePath("..")
 jump_cast = NodePath("../JumpCast")
-ground_cast = NodePath("../GroundCast")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
 remote_path = NodePath("../Torso")
@@ -66,20 +65,16 @@ shape = SubResource("CapsuleShape3D_lbsc5")
 [node name="ForwardMarker" type="Marker3D" parent="."]
 
 [node name="HeadTarget" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2050104, 0)
 
 [node name="ItemSocket" type="Marker3D" parent="HeadTarget"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, -0.78778696, -0.587)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
 
 [node name="blockbench_export" parent="HeadTarget/ItemSocket" instance=ExtResource("7_ql4s1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07821858)
 
 [node name="LeftHandTarget" type="Marker3D" parent="HeadTarget"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22930825, 0.113185644, -0.8376268)
-
-[node name="GroundCast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
-target_position = Vector3(0, -0.5, 0)
 
 [node name="JumpCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)

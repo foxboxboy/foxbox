@@ -2,7 +2,7 @@ extends Node3D
 
 ## Rotates the head bone.
 
-@onready var head_bone_attachment: BoneAttachment3D = $armature/Skeleton3D/HeadBoneAttachment
+#@onready var head_bone_attachment: BoneAttachment3D = $armature/Skeleton3D/HeadBoneAttachment
 @onready var head: Node3D = $"../../Head"
 
 @onready var skeleton_3d: Skeleton3D = $armature/Skeleton3D

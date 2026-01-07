@@ -20,7 +20,7 @@ class_name TatePhysicsCharacter
 @export_group("Look")
 @export var look_sensitivity := 0.0015
 @export var vertical_sensitivity := 0.5
-@export var max_head_pitch := 90.0
+@export var max_head_pitch := 89.0
 
 
 @export_group("Shadow")
@@ -57,9 +57,8 @@ var input_direction := Vector2.ZERO:
 		input_direction = new_value_normalized
 
 var input_strength := 0.0:
-	get:
-		return physics_motor.input_strength
 	set(new_value):
+		input_strength = clampf(new_value, 0.0, 1.0)
 		physics_motor.input_strength = new_value
 
 enum ShadowQuality{
@@ -79,13 +78,19 @@ var shadow: Node
 
 
 
+
+
+
+
 #region Ready & Process
 
 func _ready() -> void:
+	
 	assert(physics_motor != null, "ERROR: No physics_motor was assigned to character. "+str(get_path()))
 
 
 func _physics_process(_delta: float) -> void:
+	
 	# NOTICE has_move_input() optimization
 	if input_direction.x != 0 or input_direction.y != 0:
 		forward_marker.global_rotation.y = head_target_marker.global_rotation.y
@@ -116,14 +121,14 @@ func set_network_role(is_authority: bool):
 	if is_authority:
 		# turn on physics & logic
 		physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
-		physics_motor.ground_cast.enabled = true
 		physics_motor.jump_cast.enabled = true
 		set_physics_process(true)
+		
+		rigid_body.freeze = false
 
 	## CLIENT
 	else:
 		physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
-		physics_motor.ground_cast.enabled = false
 		physics_motor.jump_cast.enabled = false
 		set_physics_process(false)
 
