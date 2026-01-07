@@ -1,5 +1,5 @@
 #tate_lib/modules/simple_shop/tate_purchase_option_menu.gd
-extends TateComponentUI
+extends TateControl
 class_name TatePurchaseOptionMenu
 ## Manages a list of purchase option slots as children in a container.
 

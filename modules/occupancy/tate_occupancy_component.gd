@@ -1,5 +1,5 @@
 # tates_lib/modules/occupancy/tate_occupancy_component.gd
-extends TateComponent
+extends TateNode
 class_name TateOccupancyComponent
 
 ## Emitted when someone enters a seat.

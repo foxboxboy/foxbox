@@ -1,5 +1,5 @@
 #tate_lib/modules/simple_shop/tate_purchase_option_slot.gd
-extends TateComponentUI
+extends TateControl
 class_name TatePurchaseOptionSlot
 ## A single visual card representing a purchase option.
 

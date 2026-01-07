@@ -1,5 +1,5 @@
 # tates_lib/modules/modifiers/tate_modifier_manager.gd
-extends TateComponent
+extends TateNode
 #class_name TateModifierManager
 
 # Inner class for type-safe tracking

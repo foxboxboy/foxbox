@@ -1,6 +1,6 @@
 @abstract
 # tates_lib/modules/core/motors/tate_motor_3d.gd
-extends TateComponent3D
+extends TateNode3D
 class_name TateMotor3D
 
 ## The raw direction we want to move.

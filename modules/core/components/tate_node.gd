@@ -1,3 +1,3 @@
 extends Node
-class_name TateComponent
+class_name TateNode
 ## Dummy node for organization purposes provided by TateLib.

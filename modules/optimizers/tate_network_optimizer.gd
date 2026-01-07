@@ -1,4 +1,4 @@
-extends TateComponent
+extends TateNode
 class_name TateNetworkOptimizer
 ## Looks for a method called "set_network_role"
 ## in its target components.

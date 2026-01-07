@@ -1,4 +1,4 @@
-extends TateComponent3D
+extends TateNode3D
 class_name TateCameraArm
 ## Zooms in or out depending on input to a maxiumum amount based on sensitivity
 

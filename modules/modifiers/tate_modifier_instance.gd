@@ -1,5 +1,5 @@
 # tates_lib/modifiers/tate_modifier_instance.gd
-extends TateComponent
+extends TateNode
 class_name TateModifierInstance
 ## A physical instance of a modifier.
 

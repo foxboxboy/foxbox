@@ -1,4 +1,4 @@
-extends TateComponent3D
+extends TateNode3D
 class_name TatePhysicsEntity3D
 
 enum MaterialType { WOOD, METAL, FLESH, PLASTIC, HOLLOW_METAL }

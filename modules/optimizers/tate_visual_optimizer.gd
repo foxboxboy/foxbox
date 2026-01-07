@@ -1,4 +1,4 @@
-extends TateComponent
+extends TateNode
 class_name TateVisualOptimizer
 
 

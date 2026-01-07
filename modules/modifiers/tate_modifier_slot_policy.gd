@@ -8,7 +8,7 @@
 ## and it probably won't make sense to me in 1 week but if you
 ## have some dumb weird behavior with the slots investigate there 
 
-extends TateComponent
+extends TateNode
 class_name TateModifierSlotPolicy
 ## Handles "slots" in a TateModifierManager 
 ## (ex: 1 Weapon slot, 3 Upgrade slots).

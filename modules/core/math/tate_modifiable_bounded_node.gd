@@ -1,5 +1,5 @@
 # modules/core/math/tate_modifiable_bounded_node.gd
-extends TateComponent
+extends TateNode
 class_name TateModifiableBoundedNode
 
 signal updated(current: float, max_val: float)

@@ -1,4 +1,4 @@
-extends TateComponent
+extends TateNode
 class_name TatePhysicsCharacterMotor3D
 ## Simple character controller for physics based 3D movement.
 ## Done via a proportional–integral–derivative (PID) controller.

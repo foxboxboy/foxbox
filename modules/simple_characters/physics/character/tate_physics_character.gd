@@ -1,5 +1,5 @@
 ## Physics Character
-extends TateComponent3D
+extends TateNode3D
 class_name TatePhysicsCharacter
 
 ## WARNING remove or refactor this later this is pretty stupid

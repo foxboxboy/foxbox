@@ -1,5 +1,5 @@
 # tates_lib/modules/occupancy/tate_seat.gd
-extends TateComponent
+extends TateNode
 class_name TateSeat
 ## Provides a way of reparenting a single node and update its
 ## transform. Literally just a seat.

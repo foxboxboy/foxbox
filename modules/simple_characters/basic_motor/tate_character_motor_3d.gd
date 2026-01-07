@@ -23,7 +23,6 @@ var _jump_pressed := false
 
 
 func _ready() -> void:
-	
 	if body == null:
 		if is_instance_of(self, CharacterBody3D):
 			body = get_node(".")
