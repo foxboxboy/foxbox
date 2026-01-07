@@ -7,7 +7,7 @@ extends TateResource
 ## on a target. It serves as a bridge between high-level game rules 
 ## (Cards/Upgrades) and low-level entity data.
 
-enum StackMode { UNIQUE, STACKING, ADDITIVE }
+enum StackMode { UNIQUE, ADDITIVE, MULTIPLE_INSTANCES }
 
 ## (Optional) the string id associated with this Modifier. 
 ## Leave blank to use the name of the resource file associated
@@ -24,9 +24,9 @@ enum StackMode { UNIQUE, STACKING, ADDITIVE }
 ## How the modifier will be applied.
 ## StackMode.UNIQUE = Prevents "Log Bloat" and duplicate logic. 
 ## It ensures only one instance of an ID exists.
-## StackMode.STACKING = Allows multiple independent instances 
+## StackMode.MULTIPLE_INSTANCES = Allows multiple independent instances 
 ## of the same modifier to run their own timers.
-## StackMode.ADDIDITIVE = Keeps the UI clean by having only one 
+## StackMode.ADDITIVE = Keeps the UI clean by having only one 
 ## icon, but allows the "Intensity" of the modifier to grow.
 @export var stack_mode: StackMode = StackMode.UNIQUE
 
@@ -43,8 +43,8 @@ func remove(target: Node) -> void:
 	_on_remove(target)
  
 ## Logic to run when the TateModifierInstance's stack is increased.
-func reapply(target: Node):
-	_on_reapply(target)
+func reapply(target: Node, stack : int):
+	_on_reapply(target, stack)
 
 # Virtual methods for implementation
 ## Change this for everything that extends TateModifier
@@ -52,7 +52,7 @@ func _on_execute(_target: Node) -> void: pass
 ## Change this for everything that extends TateModifier
 func _on_remove(_target: Node) -> void: pass
 ## Change this for everything that extends TateModifier
-func _on_reapply(_target: Node) -> void: pass
+func _on_reapply(_target: Node, _stack: int = 1) -> void: pass
 
 func _get_resource_name():
 	return resource_path.get_file().trim_suffix('.tres')

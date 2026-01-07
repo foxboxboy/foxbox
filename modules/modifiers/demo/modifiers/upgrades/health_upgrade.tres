@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_sxyp8")
-stack_mode = 1
+stack_mode = 2
 metadata/_custom_type_script = "uid://b8p6awm8ppens"

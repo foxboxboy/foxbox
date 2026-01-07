@@ -12,5 +12,5 @@ func _on_execute(target: Node) -> void:
 
 
 func _on_remove(_target : Node) -> void:
-	pass#if target is TateDemoKnight:
-		#target.weapon_socket.get_child(0).queue_free()
+	if _target is TateDemoKnight:
+		_target.weapon_socket.get_child(0).queue_free()

@@ -47,7 +47,7 @@ func try_add(mod: TateModifier, target: Node) -> bool:
 		#if push_out_oldest:
 		var oldest = slots.pop_back()
 		if is_instance_valid(oldest):
-			oldest.queue_free()
+			manager.remove_instance(oldest)
 		#else:
 			# If we can't push out, we must undo what the manager did
 		#	slots.erase(node)
