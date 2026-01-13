@@ -21,6 +21,7 @@ Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [display]
 
+window/size/mode=3
 window/vsync/vsync_mode=0
 
 [editor_plugins]
@@ -89,4 +90,3 @@ free_cam={
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_3d=1
