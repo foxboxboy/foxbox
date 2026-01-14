@@ -68,7 +68,9 @@ func _update_movement():
 
 
 func _update_movement_advanced(delta):
-	var direction = (-global_basis.z * input_direction.y) + (global_basis.x * input_direction.x)
+	var direction = (-forward_marker.global_basis.z * input_direction.y) + (forward_marker.global_basis.x * input_direction.x)
+	direction = direction * input_strength
+	
 	
 	if direction:
 		var target_vector := Vector3(direction.x, 0.0, direction.z)

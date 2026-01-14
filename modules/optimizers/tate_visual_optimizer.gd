@@ -37,13 +37,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# 1. Get Camera (Cached if possible, or fetched)
 	if not _camera or not is_instance_valid(_camera):
 		_camera = get_viewport().get_camera_3d()
 		if not _camera: return
 
-	# 2. Distance Check
-	# We use global_position of the PARENT (the Unit)
 	var dist_sq = get_parent().global_position.distance_squared_to(_camera.global_position)
 
 	if dist_sq > _lod_distance_sq:
@@ -59,16 +56,14 @@ func _process(delta: float) -> void:
 func _go_to_sleep():
 	is_far = true
 
-	# Disable heavy processing on the model (Skeleton updates)
 	if visual_root:
 		visual_root.process_mode = Node.PROCESS_MODE_DISABLED
-		#visual_root.visible = false # Optional: Hide completely if very far
+		#visual_root.visible = false # hide completely if very far
 
-	# Hide details (Shadows, sockets)
 	for node in nodes_to_hide:
 		if node: node.visible = false
 
-# Switch animations to manual
+	# make animations manual
 	for anim in anim_players:
 		anim.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
 
@@ -88,12 +83,11 @@ func _wake_up():
 
 
 func _process_far_mode(delta: float):
-
-	# The "Stutter" Update
+	# "stutter" Update
 	if anim_players.is_empty(): return
 
-	# Only update animations once every 'throttle_fps' frames
-	# Using instance_id ensures all 200 units don't update on the same frame
+	# only update animations once every 'throttle_fps' frames
+	# using instance_id ensures all 200 units don't update on the same frame
 	if Engine.get_process_frames() % throttle_fps == get_instance_id() % throttle_fps:
 		for anim in anim_players:
 			anim.advance(delta * throttle_fps)

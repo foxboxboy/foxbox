@@ -1,5 +1,5 @@
 extends Node3D
-
+class_name TateCharacterModel
 ## Rotates the head bone and provides simple API to work with an imported character model.
 
 @export var head_target: Marker3D
@@ -17,6 +17,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	return
 	#if Engine.is_editor_hint():
 	#	get_parent().global_position = character.rigid_body.global_position #+ Vector3(0,-1.138,0)
 	#	return

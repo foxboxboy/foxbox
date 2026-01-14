@@ -28,7 +28,7 @@ func update_network_role():
 	if notify_root:
 		var parent = get_parent()
 		
-		assert(parent.has_method("set_network_role"),"ERROR: TateNetworkOptimizer\
+		assert(parent.has_method("set_network_role"),"ERROR: TateNetworkOptimizer
 		could not find method set_network_role on its parent "+str(parent.get_path()))
 		
 		if parent.has_method("set_network_role"):
@@ -40,7 +40,7 @@ func update_network_role():
 		if not component:
 			continue
 		
-		assert(component.has_method("set_network_role"),"ERROR: TateNetworkOptimizer\
+		assert(component.has_method("set_network_role"),"ERROR: TateNetworkOptimizer
 		could not find method set_network_role on component "+str(component.get_path()))
 		
 		if component.has_method("set_network_role"):

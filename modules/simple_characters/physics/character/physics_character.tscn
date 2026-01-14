@@ -65,6 +65,10 @@ shape = SubResource("CapsuleShape3D_lbsc5")
 
 [node name="ForwardMarker" type="Marker3D" parent="."]
 
+[node name="JumpCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
+target_position = Vector3(0, -0.2, 0)
+
 [node name="HeadTarget" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2050104, 0)
 
@@ -76,10 +80,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07821858)
 
 [node name="LeftHandTarget" type="Marker3D" parent="HeadTarget"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22930825, 0.113185644, -0.8376268)
-
-[node name="JumpCast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
-target_position = Vector3(0, -0.2, 0)
 
 [node name="Torso" type="Marker3D" parent="."]
 top_level = true

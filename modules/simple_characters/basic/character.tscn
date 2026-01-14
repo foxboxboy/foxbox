@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://lj85u0xjwhty"]
+
+[ext_resource type="Script" uid="uid://b7ayeeruost6d" path="res://modules/optimizers/tate_network_optimizer.gd" id="1_2xx2a"]
+[ext_resource type="Script" uid="uid://cdxm701821024" path="res://modules/simple_characters/basic/tate_character.gd" id="1_7toh7"]
+[ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/basic/advanced/tate_advanced_character_motor_3d.gd" id="1_e87n2"]
+[ext_resource type="Script" uid="uid://c4uoa6ox4wo60" path="res://modules/optimizers/tate_visual_optimizer.gd" id="2_04e00"]
+[ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="2_7toh7"]
+[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/simple_characters/shadows/shadow_decal.tscn" id="2_23br8"]
+[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/simple_characters/shadows/shadow_simple.tscn" id="3_d74vn"]
+[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="4_e87n2"]
+[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic/tate_character_model.gd" id="6_e87n2"]
+[ext_resource type="Script" uid="uid://b4j4o4aq3yipm" path="res://modules/simple_characters/ik_starter.gd" id="7_23br8"]
+[ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="8_d74vn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
+radius = 0.5288086
+height = 2.1948242
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("character_model", "head_target_marker", "torso", "motor", "body", "forward_marker", "shoulder_camera_marker", "first_person_camera_marker", "camera_pivot", "visual_optimizer")]
+script = ExtResource("1_7toh7")
+character_model = NodePath("Torso/Model")
+head_target_marker = NodePath("HeadTarget")
+torso = NodePath("Torso")
+motor = NodePath("TateAdvancedCharacterMotor3D")
+body = NodePath(".")
+forward_marker = NodePath("ForwardMarker")
+shoulder_camera_marker = NodePath("CameraPivot/CameraArm/ShoulderCameraMarker")
+first_person_camera_marker = NodePath("Torso/Model/armature/Skeleton3D/HeadAttachment/Marker3D")
+camera_pivot = NodePath("CameraPivot")
+shadow_decal_scene = ExtResource("2_23br8")
+shadow_simple_scene = ExtResource("3_d74vn")
+visual_optimizer = NodePath("TateVisualOptimizer")
+
+[node name="CameraPivot" parent="." instance=ExtResource("2_7toh7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0974121, 0)
+shape = SubResource("CapsuleShape3D_e87n2")
+
+[node name="TateAdvancedCharacterMotor3D" type="Node" parent="." node_paths=PackedStringArray("ground_cast", "forward_marker", "body")]
+script = ExtResource("1_e87n2")
+ground_cast = NodePath("../JumpCast")
+forward_marker = NodePath("../ForwardMarker")
+body = NodePath("..")
+metadata/_custom_type_script = "uid://qbedm6c0d168"
+
+[node name="TateNetworkOptimizer" type="Node" parent="."]
+script = ExtResource("1_2xx2a")
+notify_root = false
+metadata/_custom_type_script = "uid://b7ayeeruost6d"
+
+[node name="TateVisualOptimizer" type="Node" parent="." node_paths=PackedStringArray("visual_root", "nodes_to_hide", "anim_players")]
+script = ExtResource("2_04e00")
+visual_root = NodePath("../Torso")
+nodes_to_hide = [NodePath("../HeadTarget/ItemSocket")]
+anim_players = [null]
+metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
+
+[node name="JumpCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
+target_position = Vector3(0, -0.2, 0)
+
+[node name="TorsoUpdater" type="RemoteTransform3D" parent="."]
+remote_path = NodePath("../Torso")
+update_rotation = false
+update_scale = false
+
+[node name="ForwardMarker" type="Marker3D" parent="."]
+
+[node name="HeadTarget" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2050104, 0)
+
+[node name="ItemSocket" type="Marker3D" parent="HeadTarget"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
+
+[node name="blockbench_export" parent="HeadTarget/ItemSocket" instance=ExtResource("4_e87n2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07821858)
+
+[node name="LeftHandTarget" type="Marker3D" parent="HeadTarget"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22930825, 0.113185644, -0.8376268)
+
+[node name="ChestRotator" type="RemoteTransform3D" parent="HeadTarget"]
+remote_path = NodePath("../../Torso/Model/armature/Skeleton3D/ChestAttachment")
+update_position = false
+
+[node name="Torso" type="Marker3D" parent="."]
+top_level = true
+
+[node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="Torso"]
+enable_node_path = NodePath("../Model/AnimationPlayer")
+
+[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("8_d74vn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1383096, 0)
+script = ExtResource("6_e87n2")
+head_target = NodePath("../../HeadTarget")
+skeleton_3d = NodePath("armature/Skeleton3D")
+character = NodePath("../..")
+mesh = NodePath("armature/Skeleton3D/armature")
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
+root_bone = &"collarbone_r"
+tip_bone = &"hand_r"
+target_node = NodePath("../../../../../HeadTarget/ItemSocket")
+script = ExtResource("7_23br8")
+
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
+root_bone = &"bicep_l"
+tip_bone = &"hand_l"
+target_node = NodePath("../../../../../HeadTarget/LeftHandTarget")
+script = ExtResource("7_23br8")
+
+[node name="ChestAttachment" type="BoneAttachment3D" parent="Torso/Model/armature/Skeleton3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0)
+bone_name = "chest"
+bone_idx = 2
+override_pose = true
+
+[node name="HeadAttachment" type="BoneAttachment3D" parent="Torso/Model/armature/Skeleton3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
+bone_name = "head"
+bone_idx = 3
+
+[node name="Marker3D" type="Marker3D" parent="Torso/Model/armature/Skeleton3D/HeadAttachment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21418476, 0)
+
+[editable path="CameraPivot"]
+[editable path="Torso/Model"]

@@ -1,4 +1,4 @@
-extends TateMotor3D
+extends TateNode
 class_name TateCharacterMotor3D
 ## Moves itself based on an input direction and the strength of the input. 
 ## Built in speed and jump_strength to control how fast the body moves and
@@ -6,6 +6,7 @@ class_name TateCharacterMotor3D
 
 signal jumped
 
+@export var forward_marker : Marker3D
 ## The body that will be acted upon. If unspecified, the node this is attached to will become the body.
 @export var body : CharacterBody3D
 ## How fast the body will move.
@@ -15,9 +16,9 @@ signal jumped
 @export var gravity_multiplier := 2.5
 
 ## Direction the body will move when given input.
-#var input_direction := Vector2.ZERO
+var input_direction := Vector2.ZERO
 ## How strong the input is, useful for joysticks.
-#var input_strength := 1.0
+var input_strength := 1.0
 
 var _jump_pressed := false
 
@@ -42,7 +43,8 @@ func _physics_process(delta):
 
 
 func _update_movement():
-	var direction = (-global_basis.z * input_direction.y) + (global_basis.x * input_direction.x)
+	var direction = (-body.global_basis.z * input_direction.y) + (body.global_basis.x * input_direction.x)
+	direction = direction * input_strength
 	
 	if direction:
 		body.velocity.x = direction.x * speed

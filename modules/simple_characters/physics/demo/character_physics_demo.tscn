@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://11y3wpyf2xtn"]
 
-[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic_motor/demo/triplanar.png" id="1_p2ig4"]
-[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic_motor/demo/gui.tscn" id="1_sgy8u"]
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_p2ig4"]
+[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic/demo/gui.tscn" id="1_sgy8u"]
 [ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics/character/physics_character.tscn" id="1_sod48"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="1_y4y1j"]
 [ext_resource type="VoxelGIData" uid="uid://c0wtcwyn7yepw" path="res://modules/simple_characters/physics/demo/lightmap_data.res" id="2_168y3"]

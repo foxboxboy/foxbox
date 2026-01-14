@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bs6kx0ci2knim"]
 
-[ext_resource type="Script" uid="uid://die7s45i1ke6g" path="res://modules/simple_characters/basic_motor/demo/gui.gd" id="1_1lq7s"]
+[ext_resource type="Script" uid="uid://die7s45i1ke6g" path="res://modules/simple_characters/basic/demo/gui.gd" id="1_1lq7s"]
 
 [node name="GUI" type="Control"]
 process_mode = 3

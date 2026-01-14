@@ -1,20 +1,19 @@
-## Physics Character
 extends TateNode3D
-class_name TatePhysicsCharacter
+class_name TateCharacter
 
 ## WARNING remove or refactor this later this is pretty stupid
-@onready var model: Node3D = $Torso/Model
+@export var character_model : TateCharacterModel
 
 @export_group("Components")
 @export var head_target_marker: Marker3D
 @export var torso : Node3D
-@export var physics_motor: TatePhysicsCharacterMotor3D
-@export var rigid_body : RigidBody3D
+@export var motor: TateAdvancedCharacterMotor3D
+@export var body : CharacterBody3D
 @export var forward_marker : Marker3D
 
 @export_group("Camera Markers")
 @export var shoulder_camera_marker : Marker3D
-@export var first_person_camera_marker : Marker3D
+@export var first_person_camera_marker : Node3D
 @export var camera_pivot : Marker3D
 
 @export_group("Look")
@@ -48,7 +47,7 @@ var head_target_yaw : float
 var input_direction := Vector2.ZERO:
 	set(new_value):
 		var new_value_normalized := new_value.normalized()
-		physics_motor.input_direction = new_value_normalized
+		motor.input_direction = new_value_normalized
 		
 		# NOTICE has_move_input() optimization
 		if (input_direction.x != 0 or input_direction.y != 0):
@@ -59,7 +58,7 @@ var input_direction := Vector2.ZERO:
 var input_strength := 0.0:
 	set(new_value):
 		input_strength = clampf(new_value, 0.0, 1.0)
-		physics_motor.input_strength = new_value
+		motor.input_strength = new_value
 
 enum ShadowQuality{
 	## No shadow will be shown under this character.
@@ -86,25 +85,27 @@ var shadow: Node
 
 func _ready() -> void:
 	
-	assert(physics_motor != null, "ERROR: No physics_motor was assigned to character. "+str(get_path()))
+	assert(motor != null, "ERROR: No motor was assigned to character. "+str(get_path()))
 
 
 func _physics_process(_delta: float) -> void:
-	
+	pass
 	# NOTICE has_move_input() optimization
-	if input_direction.x != 0 or input_direction.y != 0:
-		forward_marker.global_rotation.y = head_target_marker.global_rotation.y
+	#if true:#has_move_input():
+		#sync_torso_rotation_to_head()
+		#forward_marker.global_rotation.y = head_target_marker.global_rotation.y
 
 
 func _process(_delta: float) -> void:
-	
+	#return
 	if visual_optimizer:
 		if visual_optimizer.is_far:
 			return
 		
 	# NOTICE has_move_input() optimization
-	if is_physics_processing() and (input_direction.x != 0 or input_direction.y != 0):
+	if true:#has_move_input():
 		sync_torso_rotation_to_head()
+		forward_marker.global_rotation.y = head_target_marker.global_rotation.y
 
 
 
@@ -120,21 +121,18 @@ func set_network_role(is_authority: bool):
 	## SERVER
 	if is_authority:
 		# turn on physics & logic
-		physics_motor.process_mode = Node.PROCESS_MODE_INHERIT
-		physics_motor.jump_cast.enabled = true
+		motor.process_mode = Node.PROCESS_MODE_INHERIT
+		motor.jump_cast.enabled = true
 		set_physics_process(true)
 		
-		rigid_body.freeze = false
 
 	## CLIENT
 	else:
-		physics_motor.process_mode = Node.PROCESS_MODE_DISABLED
-		physics_motor.jump_cast.enabled = false
+		motor.process_mode = Node.PROCESS_MODE_DISABLED
+		motor.jump_cast.enabled = false
 		set_physics_process(false)
 
-		# NOTICE
-		# make body purely visual/kinematic so it doesn't fight the sync
-		rigid_body.freeze = true
+
 
 #endregion
 
@@ -155,15 +153,20 @@ func rotate_head_relative(relative: Vector2) -> void:
 		rotate_camera_pivot()
 	
 	# NOTICE has_move_input() optimization
-	if (input_direction.x != 0 or input_direction.y != 0):
+	if true:#has_move_input():
 		rotate_head()
 	
 	rotate_body_with_head()
 
 
 func try_to_jump() -> void:
-	if physics_motor.can_jump():
-		physics_motor.jump()
+	if motor.can_jump():
+		motor.jump()
+
+
+func reset_jump() -> void:
+	motor.reset_jump()
+
 
 #endregion
 
@@ -189,6 +192,7 @@ func rotate_head():
 
 # WARNING I don't think this is actually doing anything..?
 func rotate_body_with_head():
+	return
 	var head_torso_angle_difference := get_head_torso_angle_difference()
 	var yaw_limit := deg_to_rad(45)
 	var torso_turn_around := 0.0
@@ -207,10 +211,10 @@ func rotate_body_with_head():
 
 
 func sync_torso_rotation_to_head():
-	var strafe_amount := -physics_motor.input_direction.x
-	var target_angle := head_target_marker.rotation.y + PI/2 + strafe_amount * PI/4
+	var strafe_amount := -motor.input_direction.x * PI/4
+	var target_angle := head_target_marker.rotation.y + strafe_amount
 	var rotation_speed_multiplier := 0.02
-	var rotation_speed : float = clamp(rigid_body.linear_velocity.length() * rotation_speed_multiplier, 0.0, 0.9)
+	var rotation_speed : float = clamp(body.velocity.length() * rotation_speed_multiplier, 0.0, 0.9)
 	torso.rotation.y = lerp_angle(torso.rotation.y, target_angle, rotation_speed)
 
 
@@ -236,7 +240,7 @@ func look_at_direction(direction: Vector3) -> void:
 #region Helpers
 
 func is_moving() -> bool:
-	return rigid_body.linear_velocity.length() > 0.01
+	return body.velocity.length() > 0.01
 
 
 func get_head_torso_angle_difference() -> float:

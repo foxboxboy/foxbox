@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://0yf3c1gkfxj0"]
 
-[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic_motor/demo/triplanar.png" id="1_k474t"]
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_k474t"]
 [ext_resource type="PackedScene" uid="uid://bl46ajiolcqtg" path="res://modules/world_environments/mobile_world_environment.tscn" id="1_xobiw"]
 [ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics/character/physics_character.tscn" id="2_fon04"]
 [ext_resource type="Script" uid="uid://w8fle4xlfa75" path="res://modules/simple_characters/stress_test/info_label.gd" id="4_xobiw"]
