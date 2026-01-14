@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_i6m7q"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
 [ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://modules/simple_characters/basic/character.tscn" id="2_hbwi6"]
-[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/physics/demo/player.gd" id="7_3ryqn"]
+[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/controller/player.gd" id="7_3ryqn"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic/demo/gui.tscn" id="7_aq0ug"]
 [ext_resource type="Script" uid="uid://sm3rcjmnapxs" path="res://modules/simple_characters/physics/demo/moving_cube.gd" id="8_phf47"]
 [ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://modules/world_environments/stylized_world_environment.tscn" id="9_5anb6"]
@@ -100,6 +100,17 @@ volumetric_fog_anisotropy = 0.77
 [node name="CharacterDemo" type="Node3D"]
 
 [node name="GUI" parent="." instance=ExtResource("7_aq0ug")]
+
+[node name="Player" type="Node" parent="." node_paths=PackedStringArray("character", "camera")]
+script = ExtResource("7_3ryqn")
+character = NodePath("../Character")
+camera = NodePath("Camera3D")
+
+[node name="PCInputController" type="Node" parent="Player"]
+script = ExtResource("2_81bif")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.25881907, -1, 1.1313341e-08, -4.222196e-08, 3.2688181, 1.4935737, 1)
 
 [node name="Character" parent="." instance=ExtResource("2_hbwi6")]
 
@@ -241,17 +252,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" parent="CSGCombiner3D" instance=ExtResource("9_5anb6")]
 environment = SubResource("Environment_llb37")
-
-[node name="Player" type="Node" parent="." node_paths=PackedStringArray("character", "camera")]
-script = ExtResource("7_3ryqn")
-character = NodePath("../Character")
-camera = NodePath("Camera3D")
-
-[node name="PCInputController" type="Node" parent="Player"]
-script = ExtResource("2_81bif")
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.25881907, -1, 1.1313341e-08, -4.222196e-08, 3.2688181, 1.4935737, 1)
 
 [connection signal="jump_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_pressed"]
 [connection signal="jump_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_released"]

@@ -18,8 +18,6 @@ class_name TatePhysicsCharacter
 @export var camera_pivot : Marker3D
 
 @export_group("Look")
-@export var look_sensitivity := 0.0015
-@export var vertical_sensitivity := 0.5
 @export var max_head_pitch := 89.0
 
 
@@ -97,7 +95,6 @@ func _physics_process(_delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
-	
 	if visual_optimizer:
 		if visual_optimizer.is_far:
 			return
@@ -189,6 +186,8 @@ func rotate_head():
 
 # WARNING I don't think this is actually doing anything..?
 func rotate_body_with_head():
+	return
+	
 	var head_torso_angle_difference := get_head_torso_angle_difference()
 	var yaw_limit := deg_to_rad(45)
 	var torso_turn_around := 0.0
@@ -247,14 +246,14 @@ func get_head_torso_angle_difference() -> float:
 
 
 func _get_head_pitch(relative: Vector2) -> float:
-	var new_pitch := head_target_pitch - (-relative.y * look_sensitivity * vertical_sensitivity)
+	var new_pitch := head_target_pitch - (-relative.y)
 	var _max_pitch := deg_to_rad(max_head_pitch)
 	var _min_pitch := deg_to_rad(-max_head_pitch)
 	return clamp(new_pitch, _min_pitch, _max_pitch)
 
 
 func _get_next_yaw(relative: Vector2) -> float:
-	return wrapf(head_target_yaw - (relative.x * look_sensitivity), -PI, PI)
+	return wrapf(head_target_yaw - (relative.x), -PI, PI)
 
 
 func _set_shadow_quality(new_shadow_quality : ShadowQuality) -> void:

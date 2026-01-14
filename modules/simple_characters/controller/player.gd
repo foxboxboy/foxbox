@@ -1,19 +1,25 @@
 extends Node
 
-@export var character : Node
+@export var character : Node3D
 @export var camera : Camera3D
 
+@export var look_sensitivity := 0.0015
+@export var vertical_sensitivity := 0.5
+
 func _process(_delta: float) -> void:
-	camera.global_position = character.first_person_camera_marker.global_position
-	camera.global_rotation = character.first_person_camera_marker.global_rotation
+	#camera.global_position = character.first_person_camera_marker.global_position
+	#camera.global_rotation = character.first_person_camera_marker.global_rotation
 	
 	# this is used for the shoulder cam
-	#camera.global_position = character.shoulder_camera_marker.global_position
-	#camera.global_rotation = character.shoulder_camera_marker.global_rotation
+	camera.global_position = character.shoulder_camera_marker.global_position
+	camera.global_rotation = character.shoulder_camera_marker.global_rotation
 	
-	character.character_model.hide_mesh()
+	#character.character_model.show_meshes()
 
 func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
+	mouse_relative *= look_sensitivity
+	mouse_relative.y *= vertical_sensitivity
+	
 	character.rotate_head_relative(mouse_relative)
 
 func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:

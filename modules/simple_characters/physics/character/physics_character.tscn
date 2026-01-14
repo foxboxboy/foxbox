@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c76c7wlpqtkiq" path="res://modules/simple_characters/physics/character/tate_physics_character.gd" id="1_6xgr2"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="1_egq3l"]
 [ext_resource type="Script" uid="uid://cx1mwqarxaif1" path="res://modules/simple_characters/physics/physics_motor/tate_physics_character_motor_3d.gd" id="1_lbsc5"]
-[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/simple_characters/shadows/shadow_decal.tscn" id="2_cv4t6"]
-[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/simple_characters/shadows/shadow_simple.tscn" id="3_tpx2h"]
+[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/entity_shadows/shadow_decal.tscn" id="2_cv4t6"]
+[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/entity_shadows/shadow_simple.tscn" id="3_tpx2h"]
 [ext_resource type="Script" uid="uid://jkd7cu4a7nx0" path="res://modules/simple_characters/physics/demo/model.gd" id="4_wb0ck"]
 [ext_resource type="Script" uid="uid://b4j4o4aq3yipm" path="res://modules/simple_characters/ik_starter.gd" id="7_e1aye"]
 [ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="7_ql4s1"]
@@ -45,7 +45,7 @@ metadata/_custom_type_script = "uid://b7ayeeruost6d"
 script = ExtResource("9_xw45d")
 visual_root = NodePath("../Torso/Model")
 nodes_to_hide = [NodePath("../HeadTarget/ItemSocket")]
-anim_players = [NodePath("../Torso/Model/AnimationPlayer")]
+anim_players = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
 [node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast")]

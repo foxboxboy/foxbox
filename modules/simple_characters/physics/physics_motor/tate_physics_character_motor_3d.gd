@@ -49,7 +49,7 @@ var input_direction := Vector2.ZERO
 ## A number between 0 and 1 of how strong the input is.
 var input_strength := 0.0
 ## The PID controller used by this character.
-var _pid := Pid3D.new(60.0, 0.1, 1.0)
+var _pid := TatePid3D.new(60.0, 0.1, 1.0)
 
 var has_jumped := false
 

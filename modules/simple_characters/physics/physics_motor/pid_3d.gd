@@ -1,6 +1,6 @@
 # thank you to https://youtu.be/zTp7bWnlicY
 extends RefCounted
-class_name Pid3D
+class_name TatePid3D
 
 ## Proportional. Further you are from the target, the harder you push.
 ## Increase for snappiness/responsiveness.

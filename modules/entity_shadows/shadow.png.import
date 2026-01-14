@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://osuyarr7ppc4"
-path.s3tc="res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.s3tc.ctex"
-path.etc2="res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.etc2.ctex"
+path.s3tc="res://.godot/imported/shadow.png-2bd1a07bc43b23a20759865f164a589c.s3tc.ctex"
+path.etc2="res://.godot/imported/shadow.png-2bd1a07bc43b23a20759865f164a589c.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://modules/simple_characters/shadows/shadow.png"
-dest_files=["res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.s3tc.ctex", "res://.godot/imported/shadow.png-2476881a990d9bf4b7b4b4cf93a65969.etc2.ctex"]
+source_file="res://modules/entity_shadows/shadow.png"
+dest_files=["res://.godot/imported/shadow.png-2bd1a07bc43b23a20759865f164a589c.s3tc.ctex", "res://.godot/imported/shadow.png-2bd1a07bc43b23a20759865f164a589c.etc2.ctex"]
 
 [params]
 

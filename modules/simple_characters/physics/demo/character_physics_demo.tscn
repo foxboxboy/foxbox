@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://biwcdlvfa14ji" path="res://modules/simple_characters/physics/character/physics_character.tscn" id="1_sod48"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="1_y4y1j"]
 [ext_resource type="VoxelGIData" uid="uid://c0wtcwyn7yepw" path="res://modules/simple_characters/physics/demo/lightmap_data.res" id="2_168y3"]
-[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/physics/demo/player.gd" id="2_f2hq1"]
+[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/controller/player.gd" id="2_f2hq1"]
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="5_tprj1"]
 [ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://modules/world_environments/stylized_world_environment.tscn" id="5_wwol3"]
 [ext_resource type="PackedScene" uid="uid://dlv2ps2av3qfk" path="res://modules/simple_characters/physics/demo/ball.tscn" id="6_bta8w"]

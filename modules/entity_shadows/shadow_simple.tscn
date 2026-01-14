@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bnyro307c3r5w"]
 
-[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://modules/simple_characters/shadows/shadow.png" id="1_m1gmk"]
+[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://modules/entity_shadows/shadow.png" id="1_m1gmk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q8nd"]
 transparency = 1
