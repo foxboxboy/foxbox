@@ -1,5 +1,5 @@
 # tate_lib/modules/core/math/tate_modifiable_stat.gd
-extends TateRefCounted
+extends TateResource
 class_name TateModifiableStat
 ## Changes a number based on two lists of modifiers.
 ##
