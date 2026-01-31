@@ -7,7 +7,17 @@ extends TateResource
 ## on a target. It serves as a bridge between high-level game rules 
 ## (Cards/Upgrades) and low-level entity data.
 
-enum StackMode { UNIQUE, ADDITIVE, MULTIPLE_INSTANCES }
+enum StackMode { 
+	## Prevents "Log Bloat" and duplicate logic. 
+	## It ensures only one instance of an ID exists.
+	UNIQUE, 
+	## Keeps the UI clean by having only one 
+	## icon, but allows the "Intensity" of the modifier to grow.
+	ADDITIVE, 
+	## Allows multiple independent instances 
+	## of the same modifier to run their own timers.
+	MULTIPLE_INSTANCES 
+}
 
 ## (Optional) the string id associated with this Modifier. 
 ## Leave blank to use the name of the resource file associated
@@ -22,12 +32,6 @@ enum StackMode { UNIQUE, ADDITIVE, MULTIPLE_INSTANCES }
 			return _get_resource_name()
 
 ## How the modifier will be applied.
-## StackMode.UNIQUE = Prevents "Log Bloat" and duplicate logic. 
-## It ensures only one instance of an ID exists.
-## StackMode.MULTIPLE_INSTANCES = Allows multiple independent instances 
-## of the same modifier to run their own timers.
-## StackMode.ADDITIVE = Keeps the UI clean by having only one 
-## icon, but allows the "Intensity" of the modifier to grow.
 @export var stack_mode: StackMode = StackMode.UNIQUE
 
 ## How long this effect will last. Leave as -1 for indefinite.
