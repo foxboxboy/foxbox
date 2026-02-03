@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TatePurchaseOption" load_steps=5 format=3 uid="uid://drk6fo7icv652"]
+[gd_resource type="Resource" script_class="TatePurchaseOption" format=3 uid="uid://drk6fo7icv652"]
 
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_gvxeu"]
 [ext_resource type="Script" uid="uid://ntj77fn18uh6" path="res://modules/core/resources/tate_string_name_resource.gd" id="2_n4gbv"]

@@ -1,14 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cajgsd7cqowsa"]
+[gd_scene format=3 uid="uid://cajgsd7cqowsa"]
 
+[ext_resource type="Script" uid="uid://d364phsbiddk8" path="res://modules/simple_characters/camera_pivot/tate_character_camera_pivot.gd" id="1_nmc7c"]
 [ext_resource type="Script" uid="uid://bkdays5b1q8f3" path="res://modules/camera_arm/tate_camera_arm.gd" id="1_q4t6f"]
 
-[node name="CameraPivot" type="Marker3D"]
+[node name="CameraPivot" type="Marker3D" unique_id=1380073160 node_paths=PackedStringArray("shoulder_camera_pivot", "first_person_camera_pivot")]
+script = ExtResource("1_nmc7c")
+shoulder_camera_pivot = NodePath("CameraArm/ShoulderCameraMarker")
+first_person_camera_pivot = NodePath("FirstPersonCameraMarker")
 
-[node name="CameraArm" type="SpringArm3D" parent="."]
+[node name="CameraArm" type="SpringArm3D" parent="." unique_id=794924454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
 script = ExtResource("1_q4t6f")
 
-[node name="ShoulderCameraMarker" type="Marker3D" parent="CameraArm"]
+[node name="ShoulderCameraMarker" type="Marker3D" parent="CameraArm" unique_id=144182632]
 
-[node name="FirstPersonCameraMarker" type="Marker3D" parent="."]
+[node name="FirstPersonCameraMarker" type="Marker3D" parent="." unique_id=1841413346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999998, 0)

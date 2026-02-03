@@ -1,10 +1,10 @@
 extends TateNode3D
 class_name TateCharacterModel
-## Rotates the head bone and provides simple API to work with an imported character model.
+## Rotates the stomach bone and provides simple API to work with an imported character model.
 
 
 @export_group("Bone Names")
-@export var head_bone_name: String = "head"
+@export var stomach_bone_name: String = "stomach"
 @export var left_hand_root_bone_name: = "bicep_l"
 @export var left_hand_tip_bone_name: = "hand_l"
 @export var right_hand_root_bone_name: = "bicep_r"
@@ -12,15 +12,15 @@ class_name TateCharacterModel
 
 
 @export_group("Targets")
-@export var character: TateCharacter
+#@export var character: TateCharacter
 
-@export var _aim_target: Marker3D
+#@export var _aim_target: Marker3D
 @export var left_hand_target : Marker3D
 @export var right_hand_target : Marker3D
 
 
 var _skeleton: Skeleton3D
-var _head_bone_index : int
+var _stomach_bone_index : int
 var _meshes : Array[MeshInstance3D] = []
 var _meshes_shown := true
 
@@ -28,9 +28,13 @@ var _left_hand_ik : SkeletonIK3D
 var _right_hand_ik : SkeletonIK3D
 
 
+var pitch : float = 0.0
+var yaw : float = 0.0
+
+
 func _ready() -> void:
 	_skeleton = _get_first_skeleton()
-	_head_bone_index = _skeleton.find_bone(head_bone_name)
+	_stomach_bone_index = _skeleton.find_bone(stomach_bone_name)
 	_meshes = _get_all_meshes()
 	
 	_check_warnings()
@@ -38,18 +42,17 @@ func _ready() -> void:
 
 
 func _process(_delta):
+	#var pitch := _aim_target.global_rotation.x #+ deg_to_rad(45)
 	
-	var pitch := _aim_target.global_rotation.x + deg_to_rad(45)
-	
-	var yaw = -(character.get_aim_torso_angle_difference())
+	#var yaw = -(character.get_aim_torso_angle_difference())
 	
 	var final_basis = Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, pitch)
 	
-	_skeleton.set_bone_pose_rotation(_head_bone_index, Quaternion(final_basis))
+	_skeleton.set_bone_pose_rotation(_stomach_bone_index, Quaternion(final_basis))
 
 
-func assign_aim_target(target_node: Marker3D):
-	_aim_target = target_node
+#func assign_aim_target(target_node: Marker3D):
+#	_aim_target = target_node
 
 
 func hide_meshes():
@@ -99,11 +102,11 @@ func _setup_ik() -> void:
 
 
 func _check_warnings() -> void:
-	if not _aim_target: 
-		push_warning("WARNING: no _aim_target assigned under TateCharacterModel: ",get_path())
-	if _head_bone_index == -1:
-		push_warning("WARNING: no head bone with name <",
-		head_bone_name,"> could not be found under TateCharacterModel: ", get_path())
+	#if not _aim_target: 
+	#	push_warning("WARNING: no _aim_target assigned under TateCharacterModel: ",get_path())
+	if _stomach_bone_index == -1:
+		push_warning("WARNING: no stomach bone with name <",
+		stomach_bone_name,"> could not be found under TateCharacterModel: ", get_path())
 	
 
 
@@ -116,6 +119,12 @@ func _get_all_meshes(_under_node : Node = self, _array : Array[MeshInstance3D] =
 			_array.append(child)
 	
 	return _array
+
+
+func show_item():
+	var item = right_hand_target.get_child(0).get_child(0)
+	if item is MeshInstance3D:
+		item.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 
 
 func _get_first_skeleton(_under_node : Node = self) -> Skeleton3D:

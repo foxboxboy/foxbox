@@ -25,7 +25,6 @@ Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
 
 [display]
 
-window/size/mode=3
 window/vsync/vsync_mode=0
 
 [editor_plugins]

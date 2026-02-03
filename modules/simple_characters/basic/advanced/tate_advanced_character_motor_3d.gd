@@ -68,7 +68,9 @@ func _update_movement():
 
 
 func _update_movement_advanced(delta):
-	var direction = (-forward_marker.global_basis.z * input_direction.y) + (forward_marker.global_basis.x * input_direction.x)
+	var forward := -body.basis.z #var direction = (-forward_marker.global_basis.z * input_direction.y) + (forward_marker.global_basis.x * input_direction.x)
+	var right := body.basis.x
+	var direction = (forward * input_direction.y) + (right * input_direction.x)
 	direction = direction * input_strength
 	
 	

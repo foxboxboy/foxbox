@@ -6,7 +6,6 @@ class_name TateCharacterMotor3D
 
 signal jumped
 
-@export var forward_marker : Marker3D
 ## The body that will be acted upon. If unspecified, the node this is attached to will become the body.
 @export var body : CharacterBody3D
 ## How fast the body will move.

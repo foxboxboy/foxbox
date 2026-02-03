@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bd5g3v65ulm7d"]
+
+[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic/tate_character_model.gd" id="1_b7p6l"]
+[ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
+[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="3_8qexx"]
+
+[sub_resource type="Animation" id="Animation_23br8"]
+resource_name = "crawl"
+
+[sub_resource type="Animation" id="Animation_d74vn"]
+resource_name = "crouch"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4o1tk"]
+_data = {
+&"crawl": SubResource("Animation_23br8"),
+&"crouch": SubResource("Animation_d74vn")
+}
+
+[node name="Model" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target")]
+script = ExtResource("1_b7p6l")
+left_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/LeftHandTarget")
+right_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget")
+
+[node name="blockbench_export" parent="." unique_id=1988255908 instance=ExtResource("2_7oa71")]
+
+[node name="Head" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="1" unique_id=666230453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
+bone_name = "head"
+bone_idx = 3
+
+[node name="Hands" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head" unique_id=1552049492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41797316, 0)
+
+[node name="LeftHandTarget" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head/Hands" unique_id=375764021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25618154, 0, -0.9395673)
+
+[node name="RightHandTarget" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head/Hands" unique_id=1333593333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
+
+[node name="blockbench_export" parent="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget" unique_id=497224198 instance=ExtResource("3_8qexx")]
+
+[node name="tommy_gun" parent="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget/blockbench_export" index="0"]
+layers = 1048573
+
+[node name="CameraPivot" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head" unique_id=539831346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
+
+[node name="Chest" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="2" unique_id=860416782]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0)
+bone_name = "chest"
+bone_idx = 2
+
+[node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="blockbench_export" unique_id=945037561]
+enable_node_path = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="blockbench_export" unique_id=813080296]
+libraries/ = SubResource("AnimationLibrary_4o1tk")
+
+[editable path="blockbench_export"]
+[editable path="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget/blockbench_export"]
