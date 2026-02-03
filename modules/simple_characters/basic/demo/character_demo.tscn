@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_i6m7q"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
-[ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://modules/simple_characters/basic/character.tscn" id="2_hbwi6"]
+[ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://modules/simple_characters/basic/character/character.tscn" id="2_hbwi6"]
 [ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/controller/player.gd" id="7_3ryqn"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic/demo/gui.tscn" id="7_aq0ug"]
 [ext_resource type="Script" uid="uid://sm3rcjmnapxs" path="res://modules/simple_characters/physics/demo/moving_cube.gd" id="8_phf47"]
