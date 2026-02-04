@@ -2,25 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5ls60xxi83pv"
-path.s3tc="res://.godot/imported/sniper_rifle_0.png-ce74bbb22d9284f303f0daa33da7da4a.s3tc.ctex"
-path.etc2="res://.godot/imported/sniper_rifle_0.png-ce74bbb22d9284f303f0daa33da7da4a.etc2.ctex"
+uid="uid://3nm4vvffx0sk"
+path="res://.godot/imported/tommy_gun_0.png-f998fc249a11d3068b5ba1c66cd88137.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
-"md5": "dbbf1f5bb61046aac7faf415dc2c6aa0"
+"md5": "25f8f96e354792b02fbbda000819a805"
 }
 
 [deps]
 
-source_file="res://modules/simple_characters/physics/demo/gun/sniper_rifle_0.png"
-dest_files=["res://.godot/imported/sniper_rifle_0.png-ce74bbb22d9284f303f0daa33da7da4a.s3tc.ctex", "res://.godot/imported/sniper_rifle_0.png-ce74bbb22d9284f303f0daa33da7da4a.etc2.ctex"]
+source_file="res://modules/simple_characters/physics_character/demo/gun/tommy_gun_0.png"
+dest_files=["res://.godot/imported/tommy_gun_0.png-f998fc249a11d3068b5ba1c66cd88137.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

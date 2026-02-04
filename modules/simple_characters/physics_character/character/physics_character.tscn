@@ -1,12 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://biwcdlvfa14ji"]
+[gd_scene format=3 uid="uid://biwcdlvfa14ji"]
 
-[ext_resource type="Script" uid="uid://c76c7wlpqtkiq" path="res://modules/simple_characters/physics/character/tate_physics_character.gd" id="1_6xgr2"]
+[ext_resource type="Script" uid="uid://c76c7wlpqtkiq" path="res://modules/simple_characters/physics_character/character/tate_physics_character.gd" id="1_6xgr2"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="1_egq3l"]
-[ext_resource type="Script" uid="uid://cx1mwqarxaif1" path="res://modules/simple_characters/physics/physics_motor/tate_physics_character_motor_3d.gd" id="1_lbsc5"]
+[ext_resource type="Script" uid="uid://cx1mwqarxaif1" path="res://modules/simple_characters/physics_character/physics_motor/tate_physics_character_motor_3d.gd" id="1_lbsc5"]
 [ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/entity_shadows/shadow_decal.tscn" id="2_cv4t6"]
 [ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/entity_shadows/shadow_simple.tscn" id="3_tpx2h"]
-[ext_resource type="Script" uid="uid://jkd7cu4a7nx0" path="res://modules/simple_characters/physics/demo/model.gd" id="4_wb0ck"]
-[ext_resource type="Script" uid="uid://b4j4o4aq3yipm" path="res://modules/simple_characters/ik_starter.gd" id="7_e1aye"]
+[ext_resource type="Script" uid="uid://jkd7cu4a7nx0" path="res://modules/simple_characters/physics_character/demo/model.gd" id="4_wb0ck"]
+[ext_resource type="Script" uid="uid://b4j4o4aq3yipm" path="res://modules/simple_characters/physics_character/character/ik_starter.gd" id="7_e1aye"]
 [ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="7_ql4s1"]
 [ext_resource type="PackedScene" uid="uid://ducykhwakd1jc" path="res://modules/pixel_plushie/characters/calico/calico_merged.gltf" id="8_ebdf7"]
 [ext_resource type="Script" uid="uid://b7ayeeruost6d" path="res://modules/optimizers/tate_network_optimizer.gd" id="8_k8a3u"]
@@ -19,7 +19,7 @@ friction = 0.0
 radius = 0.5288086
 height = 2.1948242
 
-[node name="PhysicsCharacter" type="RigidBody3D" node_paths=PackedStringArray("head_target_marker", "torso", "physics_motor", "rigid_body", "forward_marker", "visual_optimizer")]
+[node name="PhysicsCharacter" type="RigidBody3D" unique_id=826909088 node_paths=PackedStringArray("head_target_marker", "torso", "physics_motor", "rigid_body", "forward_marker", "visual_optimizer")]
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -36,58 +36,58 @@ shadow_decal_scene = ExtResource("2_cv4t6")
 shadow_simple_scene = ExtResource("3_tpx2h")
 visual_optimizer = NodePath("TateVisualOptimizer")
 
-[node name="TateNetworkOptimizer" type="Node" parent="." node_paths=PackedStringArray("target_components")]
+[node name="TateNetworkOptimizer" type="Node" parent="." unique_id=760067287 node_paths=PackedStringArray("target_components")]
 script = ExtResource("8_k8a3u")
 target_components = [NodePath("..")]
 metadata/_custom_type_script = "uid://b7ayeeruost6d"
 
-[node name="TateVisualOptimizer" type="Node" parent="." node_paths=PackedStringArray("visual_root", "nodes_to_hide", "anim_players")]
+[node name="TateVisualOptimizer" type="Node" parent="." unique_id=1366155825 node_paths=PackedStringArray("visual_root", "nodes_to_hide", "anim_players")]
 script = ExtResource("9_xw45d")
 visual_root = NodePath("../Torso/Model")
 nodes_to_hide = [NodePath("../HeadTarget/ItemSocket")]
 anim_players = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[node name="PhysicsMotor" type="Node" parent="." node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast")]
+[node name="PhysicsMotor" type="Node" parent="." unique_id=1424453344 node_paths=PackedStringArray("forward_marker", "rigid_body", "jump_cast")]
 script = ExtResource("1_lbsc5")
 forward_marker = NodePath("../ForwardMarker")
 rigid_body = NodePath("..")
 jump_cast = NodePath("../JumpCast")
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." unique_id=790484781]
 remote_path = NodePath("../Torso")
 update_rotation = false
 update_scale = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1114604311]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0974121, 0)
 shape = SubResource("CapsuleShape3D_lbsc5")
 
-[node name="ForwardMarker" type="Marker3D" parent="."]
+[node name="ForwardMarker" type="Marker3D" parent="." unique_id=1225735242]
 
-[node name="JumpCast" type="RayCast3D" parent="."]
+[node name="JumpCast" type="RayCast3D" parent="." unique_id=450058686]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
 target_position = Vector3(0, -0.2, 0)
 
-[node name="HeadTarget" type="Marker3D" parent="."]
+[node name="HeadTarget" type="Marker3D" parent="." unique_id=690248850]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2050104, 0)
 
-[node name="ItemSocket" type="Marker3D" parent="HeadTarget"]
+[node name="ItemSocket" type="Marker3D" parent="HeadTarget" unique_id=2068581043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
 
-[node name="blockbench_export" parent="HeadTarget/ItemSocket" instance=ExtResource("7_ql4s1")]
+[node name="blockbench_export" parent="HeadTarget/ItemSocket" unique_id=85879938 instance=ExtResource("7_ql4s1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07821858)
 
-[node name="LeftHandTarget" type="Marker3D" parent="HeadTarget"]
+[node name="LeftHandTarget" type="Marker3D" parent="HeadTarget" unique_id=1054487235]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22930825, 0.113185644, -0.8376268)
 
-[node name="Torso" type="Marker3D" parent="."]
+[node name="Torso" type="Marker3D" parent="." unique_id=902076940]
 top_level = true
 
-[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Torso"]
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Torso" unique_id=121182727]
 enable_node_path = NodePath("../Model/AnimationPlayer")
 
-[node name="blockbench_export" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("8_ebdf7")]
+[node name="blockbench_export" parent="Torso" unique_id=1242757603 node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("8_ebdf7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13646764, 0)
 script = ExtResource("4_wb0ck")
 head_target = NodePath("../../HeadTarget")
@@ -95,21 +95,21 @@ skeleton_3d = NodePath("armature/Skeleton3D")
 character = NodePath("../..")
 mesh = NodePath("armature/Skeleton3D/armature")
 
-[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/blockbench_export/armature/Skeleton3D" index="1"]
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/blockbench_export/armature/Skeleton3D" index="1" unique_id=1865576078]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
 root_bone = &"collarbone_r"
 tip_bone = &"hand_r"
 target_node = NodePath("../../../../../HeadTarget/ItemSocket")
 script = ExtResource("7_e1aye")
 
-[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/blockbench_export/armature/Skeleton3D" index="2"]
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/blockbench_export/armature/Skeleton3D" index="2" unique_id=515320721]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
 root_bone = &"bicep_l"
 tip_bone = &"hand_l"
 target_node = NodePath("../../../../../HeadTarget/LeftHandTarget")
 script = ExtResource("7_e1aye")
 
-[node name="Model" parent="Torso" node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("1_egq3l")]
+[node name="Model" parent="Torso" unique_id=337876240 node_paths=PackedStringArray("head_target", "skeleton_3d", "character", "mesh") instance=ExtResource("1_egq3l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1383096, 0)
 visible = false
 script = ExtResource("4_wb0ck")
@@ -118,14 +118,14 @@ skeleton_3d = NodePath("armature/Skeleton3D")
 character = NodePath("../..")
 mesh = NodePath("armature/Skeleton3D/armature")
 
-[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="0"]
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" parent_id_path=PackedInt32Array(337876240, 20489093) index="0" unique_id=273300381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
 root_bone = &"collarbone_r"
 tip_bone = &"hand_r"
 target_node = NodePath("../../../../../HeadTarget/ItemSocket")
 script = ExtResource("7_e1aye")
 
-[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" index="1"]
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Torso/Model/armature/Skeleton3D" parent_id_path=PackedInt32Array(337876240, 20489093) index="1" unique_id=632590574]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3391192, 0)
 root_bone = &"bicep_l"
 tip_bone = &"hand_l"

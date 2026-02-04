@@ -2,21 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7b2l5ximbsxi"
-path.s3tc="res://.godot/imported/sniper_rifle_1.png-469ee6f42d595ce54e094e01c79600a4.s3tc.ctex"
-path.etc2="res://.godot/imported/sniper_rifle_1.png-469ee6f42d595ce54e094e01c79600a4.etc2.ctex"
+uid="uid://b5ls60xxi83pv"
+path.s3tc="res://.godot/imported/sniper_rifle_0.png-e15773a98536b0e2ea9b862f82cb7b09.s3tc.ctex"
+path.etc2="res://.godot/imported/sniper_rifle_0.png-e15773a98536b0e2ea9b862f82cb7b09.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "9093885ece49b73707e88d4b4442e474"
+"md5": "dbbf1f5bb61046aac7faf415dc2c6aa0"
 }
 
 [deps]
 
-source_file="res://modules/simple_characters/physics/demo/gun/sniper_rifle_1.png"
-dest_files=["res://.godot/imported/sniper_rifle_1.png-469ee6f42d595ce54e094e01c79600a4.s3tc.ctex", "res://.godot/imported/sniper_rifle_1.png-469ee6f42d595ce54e094e01c79600a4.etc2.ctex"]
+source_file="res://modules/simple_characters/physics_character/demo/gun/sniper_rifle_0.png"
+dest_files=["res://.godot/imported/sniper_rifle_0.png-e15773a98536b0e2ea9b862f82cb7b09.s3tc.ctex", "res://.godot/imported/sniper_rifle_0.png-e15773a98536b0e2ea9b862f82cb7b09.etc2.ctex"]
 
 [params]
 

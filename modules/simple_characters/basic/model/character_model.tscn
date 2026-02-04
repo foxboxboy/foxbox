@@ -16,7 +16,7 @@ _data = {
 &"crouch": SubResource("Animation_d74vn")
 }
 
-[node name="Model" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target")]
+[node name="CharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target")]
 script = ExtResource("1_b7p6l")
 left_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/LeftHandTarget")
 right_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget")

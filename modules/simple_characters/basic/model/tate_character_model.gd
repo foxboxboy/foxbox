@@ -2,6 +2,8 @@ extends TateNode3D
 class_name TateCharacterModel
 ## Rotates the stomach bone and provides simple API to work with an imported character model.
 
+# NOTE: This needs to be refactored! It is using the deprecated IK
+# and the fact it spawns the IK via code is something I don't like
 
 @export_group("Bone Names")
 @export var stomach_bone_name: String = "stomach"

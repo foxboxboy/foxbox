@@ -1,4 +1,4 @@
-simple_characters/physics
+simple_characters/physics_character
 
 EXPERIMENTAL
 
