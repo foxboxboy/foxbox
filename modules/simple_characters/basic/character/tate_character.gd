@@ -9,11 +9,11 @@ class_name TateCharacter
 @export var character_model : TateCharacterModel
 @export var camera_pivot : TateCharacterCameraPivot
 @export var view_model_container : SubViewportContainer
+@export var character_animator : TateCharacterAnimator
 
 @export_group("Visuals Interpolation")
 @export var max_head_pitch := 89.0
-@export var visuals_sync_speed := 0.02
-@export var lean_into_turn_amount := PI/4
+
 
 @export_group("Visual Optimizer")
 ## @experimental
@@ -52,6 +52,10 @@ func _ready() -> void:
 	assert(motor != null, "ERROR: No motor was assigned to character. "+str(get_path()))
 	
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
+	
+	if character_animator:
+		if not character_animator.character:
+			character_animator.character = self
 
 
 func _process(_delta: float) -> void:
@@ -59,8 +63,8 @@ func _process(_delta: float) -> void:
 		if visual_optimizer.is_far:
 			return
 	
-	
-	_update_visuals()
+	character_animator.update_visuals()
+	_update_freecam()
 
 #endregion
 
@@ -94,6 +98,13 @@ func set_network_role(is_authority: bool) -> void:
 
 
 #region Camera & ViewModel
+
+
+func _update_freecam() -> void:
+	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
+		_free_look_offset = 0.0
+		camera_pivot.rotation.y = _free_look_offset
+
 
 func get_first_person_camera_pivot() -> Marker3D:
 	if camera_pivot:
@@ -189,27 +200,6 @@ func _process_yaw(relative_x: float) -> void:
 
 
 #region Helpers
-
-func _update_visuals() -> void:
-	var strafe_amount := -input_direction.x * lean_into_turn_amount
-	var rotation_speed : float = clamp(physics_body.velocity.length() * visuals_sync_speed, 0.1, 0.9)
-	
-	visuals_pivot.rotation.y = lerp_angle(visuals_pivot.rotation.y, strafe_amount, rotation_speed)
-	visuals_pivot.rotation.z = lerp_angle(visuals_pivot.rotation.z, 0.05 * strafe_amount, rotation_speed)
-	
-	if not is_free_looking:
-		character_model.pitch = camera_pivot.rotation.x
-	character_model.yaw = -get_aim_torso_angle_difference()
-	
-	_update_freecam()
-
-
-func _update_freecam() -> void:
-	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
-		_free_look_offset = 0.0
-		camera_pivot.rotation.y = _free_look_offset
-
-
 
 func is_moving() -> bool:
 	return physics_body.velocity.length() > 0.01

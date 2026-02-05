@@ -7,15 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="2_7toh7"]
 [ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/entity_shadows/shadow_decal.tscn" id="2_23br8"]
 [ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/entity_shadows/shadow_simple.tscn" id="3_d74vn"]
-[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="4_e87n2"]
+[ext_resource type="PackedScene" uid="uid://bj1nff6s3bdgk" path="res://modules/simple_characters/basic/view_model/view_model_container.tscn" id="8_d5u0s"]
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://modules/simple_characters/basic/model/character_model.tscn" id="9_7toh7"]
 [ext_resource type="Script" uid="uid://bs7mgoq20h4hj" path="res://modules/entity_shadows/tate_entity_shadow.gd" id="10_gsbvt"]
+[ext_resource type="Script" uid="uid://ctoajl3u4l5gp" path="res://modules/simple_characters/animaton_controller/tate_character_animator.gd" id="11_oa6m8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
 radius = 0.5288086
 height = 2.1948242
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "visual_optimizer")]
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "character_animator", "visual_optimizer")]
 script = ExtResource("1_7toh7")
 physics_body = NodePath(".")
 motor = NodePath("Motor")
@@ -23,6 +24,7 @@ visuals_pivot = NodePath("VisualsPivot")
 character_model = NodePath("VisualsPivot/CharacterModel")
 camera_pivot = NodePath("CameraPivot")
 view_model_container = NodePath("ViewModelContainer")
+character_animator = NodePath("TateCharacterAnimator")
 visual_optimizer = NodePath("TateVisualOptimizer")
 
 [node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]
@@ -53,29 +55,7 @@ target_position = Vector3(0, -0.2, 0)
 
 [node name="CharacterModel" parent="VisualsPivot" unique_id=366441859 instance=ExtResource("9_7toh7")]
 
-[node name="ViewModelContainer" type="SubViewportContainer" parent="." unique_id=693444013]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="ViewModelContainer" unique_id=294477496]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="ViewModelContainer/SubViewport" unique_id=304716708]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9500002, 0)
-cull_mask = 2
-
-[node name="blockbench_export" parent="ViewModelContainer/SubViewport/Camera3D" unique_id=1949932175 instance=ExtResource("4_e87n2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49809963, -0.47087896, -1)
-
-[node name="tommy_gun" parent="ViewModelContainer/SubViewport/Camera3D/blockbench_export" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.11676514, -0.1440599, 0.20994318)
-layers = 2
+[node name="ViewModelContainer" parent="." unique_id=1745782606 instance=ExtResource("8_d5u0s")]
 
 [node name="TateNetworkOptimizer" type="Node" parent="." unique_id=1085349742]
 script = ExtResource("1_2xx2a")
@@ -88,4 +68,7 @@ visual_root = NodePath("../VisualsPivot")
 nodes_to_hide = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[editable path="ViewModelContainer/SubViewport/Camera3D/blockbench_export"]
+[node name="TateCharacterAnimator" type="Node" parent="." unique_id=1239077209 node_paths=PackedStringArray("character")]
+script = ExtResource("11_oa6m8")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://ctoajl3u4l5gp"
