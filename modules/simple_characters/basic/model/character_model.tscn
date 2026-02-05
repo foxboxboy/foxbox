@@ -50,6 +50,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0)
 bone_name = "chest"
 bone_idx = 2
 
+[node name="LeftHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="3" unique_id=967513527]
+setting_count = 1
+settings/0/target_node = NodePath("../Head/Hands/LeftHandTarget")
+settings/0/root_bone_name = "bicep_l"
+settings/0/root_bone = 6
+settings/0/end_bone_name = "hand_l"
+settings/0/end_bone = 8
+settings/0/extend_end_bone = false
+settings/0/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = null
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = null
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = null
+
+[node name="RightHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="4" unique_id=190593907]
+setting_count = 1
+settings/0/target_node = NodePath("../Head/Hands/RightHandTarget")
+settings/0/root_bone_name = "bicep_r"
+settings/0/root_bone = 10
+settings/0/end_bone_name = "hand_r"
+settings/0/end_bone = 12
+settings/0/extend_end_bone = false
+settings/0/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = null
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = null
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = null
+
 [node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="blockbench_export" unique_id=945037561]
 enable_node_path = NodePath("../AnimationPlayer")
 

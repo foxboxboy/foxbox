@@ -5,18 +5,7 @@ class_name TateCharacterModel
 # NOTE: This needs to be refactored! It is using the deprecated IK
 # and the fact it spawns the IK via code is something I don't like
 
-@export_group("Bone Names")
 @export var stomach_bone_name: String = "stomach"
-@export var left_hand_root_bone_name: = "bicep_l"
-@export var left_hand_tip_bone_name: = "hand_l"
-@export var right_hand_root_bone_name: = "bicep_r"
-@export var right_hand_tip_bone_name: = "hand_r"
-
-
-@export_group("Targets")
-#@export var character: TateCharacter
-
-#@export var _aim_target: Marker3D
 @export var left_hand_target : Marker3D
 @export var right_hand_target : Marker3D
 
@@ -40,7 +29,6 @@ func _ready() -> void:
 	_meshes = _get_all_meshes()
 	
 	_check_warnings()
-	_setup_ik()
 
 
 func _process(_delta):
@@ -81,26 +69,6 @@ func start_ik() -> void:
 func stop_ik() -> void:
 	_left_hand_ik.stop()
 	_right_hand_ik.stop()
-
-
-func _setup_ik() -> void:
-	_left_hand_ik = SkeletonIK3D.new()
-	_left_hand_ik.root_bone = left_hand_root_bone_name
-	_left_hand_ik.tip_bone = left_hand_tip_bone_name
-	_left_hand_ik.target_node = left_hand_target.get_path()
-	
-	_skeleton.add_child(_left_hand_ik)
-	
-	
-	_right_hand_ik = SkeletonIK3D.new()
-	_right_hand_ik.root_bone = right_hand_root_bone_name
-	_right_hand_ik.tip_bone = right_hand_tip_bone_name
-	_right_hand_ik.target_node = right_hand_target.get_path()
-	
-	_skeleton.add_child(_right_hand_ik)
-	
-	start_ik()
-	
 
 
 func _check_warnings() -> void:
