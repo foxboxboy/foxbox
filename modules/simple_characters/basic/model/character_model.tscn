@@ -4,27 +4,27 @@
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="3_8qexx"]
 
+[sub_resource type="Animation" id="Animation_23br8"]
+resource_name = "crawl"
+
+[sub_resource type="Animation" id="Animation_d74vn"]
+resource_name = "crouch"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4o1tk"]
+_data = {
+&"crawl": SubResource("Animation_23br8"),
+&"crouch": SubResource("Animation_d74vn")
+}
+
 [node name="CharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target")]
 script = ExtResource("1_b7p6l")
 left_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/LeftHandTarget")
 right_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget")
 
-[node name="blockbench_export" parent="." unique_id=154152829 instance=ExtResource("2_7oa71")]
+[node name="blockbench_export" parent="." unique_id=1988255908 instance=ExtResource("2_7oa71")]
 
-[node name="Skeleton3D" parent="blockbench_export/armature" parent_id_path=PackedInt32Array(154152829, 967491093) index="0" unique_id=704925268]
-bones/0/position = Vector3(0, 0.75, 0)
-bones/0/rotation = Quaternion(0, -0.021814886, 0, 0.9997621)
-bones/3/rotation = Quaternion(0, 0.008726535, 0, 0.9999619)
-bones/6/rotation = Quaternion(0.21959315, 0.09095845, 0.37171656, 0.8974031)
-bones/10/rotation = Quaternion(-0.21959315, 0.09095845, -0.37171656, 0.8974031)
-bones/11/rotation = Quaternion(-0.13052619, 0, 0, 0.9914449)
-bones/13/rotation = Quaternion(0, -0.5, 0.86602545, 0)
-bones/14/rotation = Quaternion(0.5, 0, 0, 0.8660254)
-bones/16/rotation = Quaternion(0, 0.23768587, 0.9713421, -7.4505797e-09)
-bones/17/rotation = Quaternion(0.087155744, 0, 0, 0.9961947)
-
-[node name="Head" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="1" unique_id=666230453]
-transform = Transform3D(0.99965733, 0, -0.026176946, 0, 1, 0, 0.026176946, 0, 0.99965733, 0, 1.5, 0)
+[node name="Head" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="1" unique_id=666230453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
 bone_name = "head"
 bone_idx = 3
 
@@ -45,12 +45,12 @@ layers = 1048573
 [node name="CameraPivot" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head" unique_id=539831346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
 
-[node name="Chest" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="2" unique_id=860416782]
-transform = Transform3D(0.99904823, 0, -0.043619383, 0, 1, 0, 0.043619383, 0, 0.99904823, 0, 1.1875, 0)
+[node name="Chest" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="2" unique_id=860416782]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0)
 bone_name = "chest"
 bone_idx = 2
 
-[node name="LeftHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" index="3" unique_id=967513527]
+[node name="LeftHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="3" unique_id=967513527]
 setting_count = 1
 settings/0/target_node = NodePath("../Head/Hands/LeftHandTarget")
 settings/0/root_bone_name = "bicep_l"
@@ -66,7 +66,7 @@ settings/0/joints/1/limitation = null
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
 
-[node name="RightHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" index="4" unique_id=190593907]
+[node name="RightHandIK" type="CCDIK3D" parent="blockbench_export/armature/Skeleton3D" parent_id_path=PackedInt32Array(1988255908, 20489093) index="4" unique_id=190593907]
 setting_count = 1
 settings/0/target_node = NodePath("../Head/Hands/RightHandTarget")
 settings/0/root_bone_name = "bicep_r"
@@ -82,11 +82,11 @@ settings/0/joints/1/limitation = null
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
 
-[node name="AnimationPlayer" parent="blockbench_export" index="1" unique_id=2028144289]
-autoplay = &"walk"
-
 [node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="blockbench_export" unique_id=945037561]
 enable_node_path = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="blockbench_export" unique_id=813080296]
+libraries/ = SubResource("AnimationLibrary_4o1tk")
 
 [editable path="blockbench_export"]
 [editable path="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget/blockbench_export"]

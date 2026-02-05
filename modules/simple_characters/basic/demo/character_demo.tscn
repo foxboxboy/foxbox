@@ -113,7 +113,7 @@ script = ExtResource("2_81bif")
 transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.25881907, -1, 1.1313341e-08, -4.222196e-08, 3.2688181, 1.4935737, 1)
 cull_mask = 1048573
 
-[node name="Character" parent="." unique_id=1677576452 instance=ExtResource("2_hbwi6")]
+[node name="Character" parent="." unique_id=49430640 instance=ExtResource("2_hbwi6")]
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=643502213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)
