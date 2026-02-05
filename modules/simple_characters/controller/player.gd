@@ -15,11 +15,15 @@ func _process(_delta: float) -> void:
 	shoulder_camera_pivot = character.get_shoulder_camera_pivot()
 	
 	
-	if first_person_camera_pivot:
-		camera.global_position = first_person_camera_pivot.global_position
-		camera.global_rotation = first_person_camera_pivot.global_rotation
-		character.show_view_model()
-		character.hide_character_model()
+	#if first_person_camera_pivot:
+	#	camera.global_position = first_person_camera_pivot.global_position
+	#	camera.global_rotation = first_person_camera_pivot.global_rotation
+	#	character.show_view_model()
+	#	character.hide_character_model()
+	
+	camera.global_position = shoulder_camera_pivot.global_position
+	camera.global_position = shoulder_camera_pivot.global_position
+	
 	#camera.global_position = character.first_person_camera_marker.global_position
 	#camera.global_rotation = character.first_person_camera_marker.global_rotation
 	
