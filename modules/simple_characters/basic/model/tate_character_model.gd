@@ -15,10 +15,6 @@ var _stomach_bone_index : int
 var _meshes : Array[MeshInstance3D] = []
 var _meshes_shown := true
 
-var _left_hand_ik : SkeletonIK3D
-var _right_hand_ik : SkeletonIK3D
-
-
 var pitch : float = 0.0
 var yaw : float = 0.0
 
@@ -30,20 +26,39 @@ func _ready() -> void:
 	
 	_check_warnings()
 
-
-func _process(_delta):
-	#var pitch := _aim_target.global_rotation.x #+ deg_to_rad(45)
+func _process(delta):
+	#$blockbench_export/AnimationPlayer.play("")
+	$blockbench_export/AnimationPlayer.speed_scale = 1.5
 	
-	#var yaw = -(character.get_aim_torso_angle_difference())
+# 1. Get Indices
+	var spine_idx = _stomach_bone_index
+	var parent_idx = _skeleton.get_bone_parent(spine_idx) # Get the Hips/Pelvis
+
+	# 2. Calculate the ANIMATED Global Position manually
+	# We do this to bypass the "Frozen" override on the spine
 	
-	var final_basis = Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, pitch)
+	# Get Parent Global (The Hips are moving up/down from the walk cycle)
+	var parent_global = _skeleton.get_bone_global_pose(parent_idx)
 	
-	_skeleton.set_bone_pose_rotation(_stomach_bone_index, Quaternion(final_basis))
-
-
-#func assign_aim_target(target_node: Marker3D):
-#	_aim_target = target_node
-
+	# Get Spine Local (The offset from Hips to Spine defined in the animation)
+	# get_bone_pose() always returns the clean Animation data!
+	var spine_local = _skeleton.get_bone_pose(spine_idx)
+	
+	# Combine them to find where the spine SHOULD be right now
+	var animated_global_origin = (parent_global * spine_local).origin
+	
+	# 3. Calculate Rotation (Same as before)
+	# We use Global Rest for rotation to keep aim steady and avoid twisting loops
+	var rest_global = _skeleton.get_bone_global_rest(spine_idx)
+	var aim_quat = Quaternion.from_euler(Vector3(pitch, yaw, 0))
+	var final_basis = Basis(aim_quat) * rest_global.basis
+	
+	# 4. Apply Override
+	# Use 'final_basis' for Rotation (Your Aim)
+	# Use 'animated_global_origin' for Position (The Walk Cycle Bounce)
+	var target_transform = Transform3D(final_basis, animated_global_origin)
+	
+	_skeleton.set_bone_global_pose_override(spine_idx, target_transform, 1.0, true)
 
 func hide_meshes():
 	if _meshes_shown == false:
@@ -59,16 +74,6 @@ func show_meshes():
 	for mesh in _meshes:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	_meshes_shown = true
-
-
-func start_ik() -> void:
-	_left_hand_ik.start()
-	_right_hand_ik.start()
-
-
-func stop_ik() -> void:
-	_left_hand_ik.stop()
-	_right_hand_ik.stop()
 
 
 func _check_warnings() -> void:

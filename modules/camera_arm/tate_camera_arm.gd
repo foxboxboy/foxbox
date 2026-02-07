@@ -8,12 +8,13 @@ signal spring_length_changed(new_spring_length)
 @export var sensitivity := 1.0
 @export var default_lerp_speed := 0.05
 @export var spring_arm : SpringArm3D
+@export var target_spring_length := 5.0
+
 
 var lerp_speed := 0.05
 
 ## Determines if the camera can be zoomed in and out
 var is_active := true
-var _target_spring_length := 5.0
 
 
 func _ready():
@@ -57,10 +58,10 @@ func get_zoom_percentage() -> float:
 
 
 func _update_spring_length():
-	spring_arm.spring_length = lerpf(spring_arm.spring_length,_target_spring_length,lerp_speed)
+	spring_arm.spring_length = lerpf(spring_arm.spring_length,target_spring_length,lerp_speed)
 	emit_signal("spring_length_changed", spring_arm.spring_length)
 
 
 func change_zoom(amount : float):
-	_target_spring_length = _target_spring_length + amount
-	_target_spring_length = clamp(_target_spring_length,0.0, max_zoom)
+	target_spring_length = target_spring_length + amount
+	target_spring_length = clamp(target_spring_length,0.0, max_zoom)

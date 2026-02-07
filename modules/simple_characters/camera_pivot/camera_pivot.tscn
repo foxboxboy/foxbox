@@ -11,6 +11,7 @@ first_person_camera_pivot = NodePath("FirstPersonCameraMarker")
 [node name="CameraArm" type="SpringArm3D" parent="." unique_id=794924454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
 script = ExtResource("1_q4t6f")
+target_spring_length = 3.0
 
 [node name="ShoulderCameraMarker" type="Marker3D" parent="CameraArm" unique_id=144182632]
 
