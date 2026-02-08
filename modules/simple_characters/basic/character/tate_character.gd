@@ -53,9 +53,9 @@ func _ready() -> void:
 	
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
-	if character_animator:
-		if not character_animator.character:
-			character_animator.character = self
+	#if character_animator:
+	#	if not character_animator.character:
+	#		character_animator.character = self
 
 
 func _process(_delta: float) -> void:
@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 		if visual_optimizer.is_far:
 			return
 	
-	character_animator.update_visuals()
+	character_model.update_visuals(input_direction, get_speed(), _aim_target_pitch, get_aim_torso_angle_difference())
 	_update_freecam()
 
 #endregion
@@ -97,7 +97,7 @@ func set_network_role(is_authority: bool) -> void:
 
 
 
-#region Camera & ViewModel
+#region Camera & Models
 
 
 func _update_freecam() -> void:
@@ -201,16 +201,21 @@ func _process_yaw(relative_x: float) -> void:
 
 #region Helpers
 
+
+func get_speed() -> float:
+	return physics_body.velocity.length()
+
+
 func is_moving() -> bool:
 	return physics_body.velocity.length() > 0.01
 
 
 func get_aim_torso_angle_difference() -> float:
-	var angle := visuals_pivot.global_rotation.y - self.global_rotation.y
+	var angle := character_model.global_rotation.y - self.global_rotation.y
 	# Between -180 and +180
 	angle = wrapf(angle, -PI, PI) 
 	angle = angle
-	return(angle)
+	return(-angle)
 
 
 func has_move_input() -> bool:

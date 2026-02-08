@@ -5,11 +5,8 @@
 [ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/basic/motor/tate_advanced_character_motor_3d.gd" id="1_e87n2"]
 [ext_resource type="Script" uid="uid://c4uoa6ox4wo60" path="res://modules/optimizers/tate_visual_optimizer.gd" id="2_04e00"]
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="2_7toh7"]
-[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://modules/entity_shadows/shadow_decal.tscn" id="2_23br8"]
-[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://modules/entity_shadows/shadow_simple.tscn" id="3_d74vn"]
 [ext_resource type="PackedScene" uid="uid://bj1nff6s3bdgk" path="res://modules/simple_characters/basic/view_model/view_model_container.tscn" id="8_d5u0s"]
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://modules/simple_characters/basic/model/character_model.tscn" id="9_7toh7"]
-[ext_resource type="Script" uid="uid://bs7mgoq20h4hj" path="res://modules/entity_shadows/tate_entity_shadow.gd" id="10_gsbvt"]
 [ext_resource type="Script" uid="uid://ctoajl3u4l5gp" path="res://modules/simple_characters/animaton_controller/tate_character_animator.gd" id="11_oa6m8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
@@ -31,14 +28,8 @@ visual_optimizer = NodePath("TateVisualOptimizer")
 script = ExtResource("1_e87n2")
 ground_cast = NodePath("../JumpCast")
 body = NodePath("..")
+speed = 6.0
 metadata/_custom_type_script = "uid://qbedm6c0d168"
-
-[node name="Shadow" type="Node3D" parent="." unique_id=42977636]
-script = ExtResource("10_gsbvt")
-shadow_type = 2
-shadow_advanced_scene = ExtResource("2_23br8")
-shadow_simple_scene = ExtResource("3_d74vn")
-metadata/_custom_type_script = "uid://bs7mgoq20h4hj"
 
 [node name="CameraPivot" parent="." unique_id=480003097 instance=ExtResource("2_7toh7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -68,7 +59,6 @@ visual_root = NodePath("../VisualsPivot")
 nodes_to_hide = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[node name="TateCharacterAnimator" type="Node" parent="." unique_id=1239077209 node_paths=PackedStringArray("character")]
+[node name="TateCharacterAnimator" type="Node" parent="." unique_id=1239077209]
 script = ExtResource("11_oa6m8")
-character = NodePath("..")
 metadata/_custom_type_script = "uid://ctoajl3u4l5gp"

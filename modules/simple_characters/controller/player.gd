@@ -14,26 +14,22 @@ func _process(_delta: float) -> void:
 	first_person_camera_pivot = character.get_first_person_camera_pivot()
 	shoulder_camera_pivot = character.get_shoulder_camera_pivot()
 	
-	
-	#if first_person_camera_pivot:
-	#	camera.global_position = first_person_camera_pivot.global_position
-	#	camera.global_rotation = first_person_camera_pivot.global_rotation
-	#	character.show_view_model()
-	#	character.hide_character_model()
-	
+	do_third_person()
+
+
+func do_first_person():
+	camera.global_position = first_person_camera_pivot.global_position
+	camera.global_rotation = first_person_camera_pivot.global_rotation
+	character.show_view_model()
+	character.hide_character_model()
+
+
+func do_third_person():
 	camera.global_position = shoulder_camera_pivot.global_position
 	camera.global_rotation = shoulder_camera_pivot.global_rotation
 	character.hide_view_model()
 	character.show_character_model()
-	
-	#character.model.hide_meshes()
-	#character.model.show_item()
-	
-	# this is used for the shoulder cam
-	#camera.global_position = character.shoulder_camera_marker.global_position
-	#camera.global_rotation = character.shoulder_camera_marker.global_rotation
-	
-	#character.model.show_meshes()
+
 
 func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 	mouse_relative *= look_sensitivity

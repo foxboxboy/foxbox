@@ -2,34 +2,94 @@
 
 [ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic/model/tate_character_model.gd" id="1_b7p6l"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
+[ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://modules/entity_shadows/shadow.tscn" id="2_awko8"]
 [ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="3_8qexx"]
 
-[sub_resource type="Animation" id="Animation_23br8"]
-resource_name = "crawl"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_njgnm"]
+animation = &"crouch_idle"
 
-[sub_resource type="Animation" id="Animation_d74vn"]
-resource_name = "crouch"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kfsx8"]
+animation = &"crouch_walk"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4o1tk"]
-_data = {
-&"crawl": SubResource("Animation_23br8"),
-&"crouch": SubResource("Animation_d74vn")
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xghva"]
+animation = &"crouch_walk_back"
 
-[node name="CharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target")]
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_a36b3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_njgnm")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_kfsx8")
+blend_point_1/pos = 0.5
+blend_point_2/node = SubResource("AnimationNodeAnimation_xghva")
+blend_point_2/pos = -0.5
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dlmmi"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_awko8"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ly1yk"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_05jrh"]
+animation = &"walk"
+play_mode = 1
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_njgnm"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_dlmmi")
+blend_point_0/pos = 0.5
+blend_point_1/node = SubResource("AnimationNodeAnimation_awko8")
+blend_point_1/pos = 0.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_ly1yk")
+blend_point_2/pos = 1.0
+blend_point_3/node = SubResource("AnimationNodeAnimation_05jrh")
+blend_point_3/pos = -0.5
+value_label = "speed"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dlmmi"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_awko8"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_kfsx8"]
+states/crouch/node = SubResource("AnimationNodeBlendSpace1D_a36b3")
+states/crouch/position = Vector2(601, 213)
+states/stand/node = SubResource("AnimationNodeBlendSpace1D_njgnm")
+states/stand/position = Vector2(583, 86)
+transitions = ["crouch", "stand", SubResource("AnimationNodeStateMachineTransition_dlmmi"), "stand", "crouch", SubResource("AnimationNodeStateMachineTransition_awko8")]
+graph_offset = Vector2(-349, -37)
+
+[node name="CharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("left_hand_target", "right_hand_target", "left_hand_ik", "right_hand_ik", "anim_tree")]
 script = ExtResource("1_b7p6l")
-stomach_bone_name = null
 left_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/LeftHandTarget")
 right_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget")
+left_hand_ik = NodePath("blockbench_export/armature/Skeleton3D/LeftHandIK")
+right_hand_ik = NodePath("blockbench_export/armature/Skeleton3D/RightHandIK")
+anim_tree = NodePath("blockbench_export/AnimationTree")
 
-[node name="blockbench_export" parent="." unique_id=1468988884 instance=ExtResource("2_7oa71")]
+[node name="Shadow" parent="." unique_id=1028479081 instance=ExtResource("2_awko8")]
+top_level = true
 
-[node name="Skeleton3D" parent="blockbench_export/armature" parent_id_path=PackedInt32Array(1468988884, 1181711046) index="0" unique_id=953510153]
-bones/6/rotation = Quaternion(0, 0, -0.087155744, 0.9961947)
-bones/10/rotation = Quaternion(0, 0, 0.087155744, 0.9961947)
+[node name="blockbench_export" parent="." unique_id=2107969224 instance=ExtResource("2_7oa71")]
+
+[node name="Skeleton3D" parent="blockbench_export/armature" parent_id_path=PackedInt32Array(2107969224, 1166379854) index="0" unique_id=259290427]
+bones/0/position = Vector3(0, 0.64440036, 0.1875)
+bones/0/rotation = Quaternion(0, -0.016800953, 0, 0.9998589)
+bones/1/rotation = Quaternion(-0.16722804, 0, 0, 0.98591834)
+bones/2/position = Vector3(0, 0.25168836, 0)
+bones/3/rotation = Quaternion(0.13400957, 0, 0, 0.9909801)
+bones/5/rotation = Quaternion(0.05220924, 0.086038165, 0.85057145, 0.51613945)
+bones/6/rotation = Quaternion(-0.1827064, -0.08811381, 0.33196446, 0.9212242)
+bones/9/rotation = Quaternion(0.05220924, -0.086038165, -0.85057145, 0.51613945)
+bones/10/rotation = Quaternion(-0.1827064, 0.08811381, -0.33196446, 0.9212242)
+bones/13/rotation = Quaternion(0.003341021, -0.07431749, 0.9969681, 0.022813879)
+bones/14/rotation = Quaternion(0.7284114, 0, 0, 0.6851401)
+bones/16/rotation = Quaternion(0.011059891, -0.3729726, 0.9275532, -0.020354357)
+bones/17/rotation = Quaternion(0.63623065, 0, 0, 0.771499)
 
 [node name="Head" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="1" unique_id=666230453]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6875, 0)
+transform = Transform3D(0.9994355, 0.002256263, -0.033521313, 0, 0.9977425, 0.067156374, 0.03359716, -0.067118466, 0.9971792, 0.0062503833, 1.3645334, 0.0015659928)
 bone_name = "head"
 bone_idx = 3
 
@@ -43,15 +103,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25618154, 0, -0.9395673)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
 
 [node name="blockbench_export" parent="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget" unique_id=497224198 instance=ExtResource("3_8qexx")]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, -0.0015138537, 0.011073828, 0.03429979)
 
 [node name="tommy_gun" parent="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget/blockbench_export" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 layers = 1048573
 
 [node name="CameraPivot" type="Marker3D" parent="blockbench_export/armature/Skeleton3D/Head" unique_id=539831346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
 
 [node name="Chest" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="2" unique_id=860416782]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0)
+transform = Transform3D(0.9994355, 0.011078539, -0.031718057, 0, 0.94406956, 0.3297463, 0.03359716, -0.32956016, 0.94353664, 0.0027883395, 1.0695117, 0.10455354)
 bone_name = "chest"
 bone_idx = 2
 
@@ -87,14 +149,21 @@ settings/0/joints/1/limitation = null
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
 
-[node name="AnimationPlayer" parent="blockbench_export" index="1" unique_id=781031453]
+[node name="AnimationPlayer" parent="blockbench_export" index="1" unique_id=1508635870]
 autoplay = &"walk"
 
 [node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="blockbench_export" unique_id=945037561]
 enable_node_path = NodePath("../AnimationPlayer")
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="blockbench_export" unique_id=813080296]
-libraries/ = SubResource("AnimationLibrary_4o1tk")
+[node name="AnimationTree" type="AnimationTree" parent="blockbench_export" unique_id=1163045861]
+tree_root = SubResource("AnimationNodeStateMachine_kfsx8")
+anim_player = NodePath("../AnimationPlayer")
+parameters/crouch/blend_position = 0.38506758
+parameters/stand/blend_position = 0.22633743
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." unique_id=1462768264]
+remote_path = NodePath("../Shadow")
+update_rotation = false
 
 [editable path="blockbench_export"]
 [editable path="blockbench_export/armature/Skeleton3D/Head/Hands/RightHandTarget/blockbench_export"]

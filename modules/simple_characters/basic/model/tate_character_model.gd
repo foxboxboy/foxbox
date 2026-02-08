@@ -8,6 +8,8 @@ class_name TateCharacterModel
 @export var stomach_bone_name: String = "stomach"
 @export var left_hand_target : Marker3D
 @export var right_hand_target : Marker3D
+@export var left_hand_ik : CCDIK3D
+@export var right_hand_ik : CCDIK3D
 
 
 var _skeleton: Skeleton3D
@@ -26,13 +28,19 @@ func _ready() -> void:
 	
 	_check_warnings()
 
-func _process(delta):
-	#$blockbench_export/AnimationPlayer.play("")
-	$blockbench_export/AnimationPlayer.speed_scale = 1.5
+func _process(_delta):
+	#$blockbench_export/AnimationPlayer.play("run")
+	#$blockbench_export/AnimationPlayer.speed_scale = 1.0
 	
-# 1. Get Indices
+	var pitch_offset := -0.0
+	
+	# 1. Get Indices
 	var spine_idx = _stomach_bone_index
 	var parent_idx = _skeleton.get_bone_parent(spine_idx) # Get the Hips/Pelvis
+
+
+	#wleft_hand_ik.active = false
+	#right_hand_ik.active = false
 
 	# 2. Calculate the ANIMATED Global Position manually
 	# We do this to bypass the "Frozen" override on the spine
@@ -50,7 +58,7 @@ func _process(delta):
 	# 3. Calculate Rotation (Same as before)
 	# We use Global Rest for rotation to keep aim steady and avoid twisting loops
 	var rest_global = _skeleton.get_bone_global_rest(spine_idx)
-	var aim_quat = Quaternion.from_euler(Vector3(pitch, yaw, 0))
+	var aim_quat = Quaternion.from_euler(Vector3(pitch + deg_to_rad(pitch_offset), yaw, 0))
 	var final_basis = Basis(aim_quat) * rest_global.basis
 	
 	# 4. Apply Override
@@ -113,3 +121,46 @@ func _get_first_skeleton(_under_node : Node = self) -> Skeleton3D:
 				return result
 	
 	return null
+
+
+@export var visuals_sync_speed := 0.02
+@export var lean_into_turn_amount := PI/4
+
+
+func update_visuals(input_direction: Vector2, speed: float, pitch: float, yaw: float) -> void:
+	# 1. Handle Leaning (Internal Logic)
+	var strafe_amount := -input_direction.x * lean_into_turn_amount
+	var rotation_speed : float = clamp(speed * visuals_sync_speed, 0.1, 0.9)
+	
+	# We assume this script is ON the mesh or pivot, so we rotate 'self' or 'parent'
+	# If this script is on the Model, and the Model is child of Pivot:
+	rotation.y = lerp_angle(rotation.y, strafe_amount, rotation_speed)
+	rotation.z = lerp_angle(rotation.z, 0.05 * strafe_amount, rotation_speed)
+	
+	# 2. Handle Aiming (Data passed in)
+	self.pitch = pitch
+	self.yaw = yaw
+	
+	
+	update_animations(Vector3(input_direction.x,0.0,input_direction.y),false)
+
+
+
+@export var anim_tree : AnimationTree
+@onready var state_machine = anim_tree.get("parameters/playback")
+
+func update_animations(velocity: Vector3, is_crouching: bool):
+	# 1. Calculate horizontal speed (ignore jumping/falling speed)
+	var horizontal_vel = Vector2(velocity.x, velocity.z)
+	var speed = horizontal_vel.length() * 0.5
+	
+	# 2. Drive the State Machine
+	if is_crouching:
+		state_machine.travel("crouch")
+		# Update the Crouch BlendSpace value
+		anim_tree.set("parameters/crouch/blend_position", speed)
+	else:
+		state_machine.travel("stand")
+		# Update the Stand BlendSpace value
+		anim_tree.set("parameters/stand/blend_position", speed)
+		
