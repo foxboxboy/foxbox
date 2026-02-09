@@ -2,17 +2,17 @@ extends TateNode3D
 class_name TateCharacterModel
 ## Rotates the spine bone and provides simple API to work with an imported character model.
 
-@export_category("Components")
+@export_group("Components")
 @export var character_animation_tree : TateCharacterAnimationTree 
 
-@export_category("Bones")
+@export_group("Bones")
 @export var spine_bone_name: String = "spine"
 @export var left_hand_target : Marker3D
 @export var right_hand_target : Marker3D
 @export var left_hand_ik : CCDIK3D
 @export var right_hand_ik : CCDIK3D
 
-@export_category("Leaning")
+@export_group("Leaning")
 @export var visuals_sync_speed := 0.02
 @export var lean_into_turn_amount := PI/4
 @export var animation_spine_pitch_offset : float = 0.0
