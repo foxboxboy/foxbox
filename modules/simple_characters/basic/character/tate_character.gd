@@ -2,6 +2,8 @@ extends TateNode3D
 class_name TateCharacter
 # A big bowl of spaghetti...
 
+signal pose_changed(new_pose : Pose, old_pose : Pose)
+
 @export_group("Components")
 @export var physics_body : CharacterBody3D
 @export var motor: TateAdvancedCharacterMotor3D
@@ -9,18 +11,17 @@ class_name TateCharacter
 @export var character_model : TateCharacterModel
 @export var camera_pivot : TateCharacterCameraPivot
 @export var view_model_container : SubViewportContainer
-@export var character_animator : TateCharacterAnimator
+@export var head_clearance_sensor : ShapeCast3D
+@export var character_hitbox : TateCharacterHitbox
 
-@export_group("Visuals Interpolation")
+@export_group("Movement Settings")
+@export var walk_speed : float = 5.0
+@export var sprint_speed : float = 10.0
 @export var max_head_pitch := 89.0
-
 
 @export_group("Visual Optimizer")
 ## @experimental
 @export var visual_optimizer : TateVisualOptimizer
-
-
-
 
 
 var _aim_target_pitch : float
@@ -32,13 +33,17 @@ var is_free_looking := false
 var input_direction := Vector2.ZERO:
 	set = set_input
 
-
 var input_strength := 0.0:
 	set(new_value):
 		input_strength = clampf(new_value, 0.0, 1.0)
 		motor.input_strength = new_value
 
+var current_pose : Pose = Pose.STANDING : set = set_pose
 
+enum Pose {
+	STANDING,
+	CROUCHING,
+}
 
 
 
@@ -53,18 +58,18 @@ func _ready() -> void:
 	
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
-	#if character_animator:
-	#	if not character_animator.character:
-	#		character_animator.character = self
+	character_model.stand()
 
 
 func _process(_delta: float) -> void:
+	
 	if visual_optimizer:
 		if visual_optimizer.is_far:
 			return
 	
-	character_model.update_visuals(input_direction, get_speed(), _aim_target_pitch, get_aim_torso_angle_difference())
+	_update_character_model()
 	_update_freecam()
+
 
 #endregion
 
@@ -93,6 +98,39 @@ func set_network_role(is_authority: bool) -> void:
 
 
 
+
+
+
+#region Poses
+
+## Returns true if the pose was successfuly changed
+func set_pose(new_pose : Pose) -> bool:
+	if new_pose == current_pose: return false
+	
+	if new_pose == Pose.STANDING and not can_stand_up():
+		print(head_clearance_sensor.get_collider(0))
+		return false
+	
+	var old_pose := current_pose
+	current_pose = new_pose
+	
+	match new_pose:
+		Pose.STANDING:
+			character_model.stand()
+			character_hitbox.stand()
+		Pose.CROUCHING:
+			character_model.crouch()
+			character_hitbox.crouch()
+	
+	pose_changed.emit(new_pose,old_pose)
+	
+	return true
+
+
+func can_stand_up() -> bool:
+	head_clearance_sensor.target_position = Vector3.ZERO
+	head_clearance_sensor.force_shapecast_update()
+	return not head_clearance_sensor.is_colliding()
 
 
 
@@ -202,8 +240,16 @@ func _process_yaw(relative_x: float) -> void:
 #region Helpers
 
 
-func get_speed() -> float:
+func get_current_horizontal_speed() -> float:
+	return Vector3(physics_body.velocity.x, 0.0, physics_body.velocity.z).length()
+
+
+func get_current_speed() -> float:
 	return physics_body.velocity.length()
+
+
+func get_speed_percentage() -> float:
+	return get_current_speed() / sprint_speed
 
 
 func is_moving() -> bool:
@@ -220,5 +266,16 @@ func get_aim_torso_angle_difference() -> float:
 
 func has_move_input() -> bool:
 	return input_direction.x != 0 or input_direction.y != 0
+
+
+func _update_character_model():
+	character_model.update_visuals(input_direction, get_current_horizontal_speed())
+	
+	if not is_free_looking:
+		character_model.pitch = _aim_target_pitch
+	
+	character_model.yaw = get_aim_torso_angle_difference()
+	character_model.set_move_speed(get_current_horizontal_speed() / sprint_speed)
+
 
 #endregion

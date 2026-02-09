@@ -17,6 +17,17 @@ func _process(_delta: float) -> void:
 	do_third_person()
 
 
+# i would put this in the input controlers but oh my god i am lazy
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.pressed and not event.echo:
+			if event.keycode == KEY_C:
+				if character.current_pose != TateCharacter.Pose.CROUCHING:
+					character.set_pose(TateCharacter.Pose.CROUCHING)
+				else:
+					character.set_pose(TateCharacter.Pose.STANDING)
+
+
 func do_first_person():
 	camera.global_position = first_person_camera_pivot.global_position
 	camera.global_rotation = first_person_camera_pivot.global_rotation
@@ -36,6 +47,7 @@ func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 	mouse_relative.y *= vertical_sensitivity
 	
 	character.rotate_head_relative(mouse_relative)
+
 
 func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 	character.input_direction = input_direction

@@ -5,15 +5,17 @@
 [ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://modules/simple_characters/basic/motor/tate_advanced_character_motor_3d.gd" id="1_e87n2"]
 [ext_resource type="Script" uid="uid://c4uoa6ox4wo60" path="res://modules/optimizers/tate_visual_optimizer.gd" id="2_04e00"]
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="2_7toh7"]
+[ext_resource type="Script" uid="uid://c1qqhyvin62tl" path="res://modules/simple_characters/basic/hitbox/tate_character_hitbox.gd" id="4_oy2pm"]
 [ext_resource type="PackedScene" uid="uid://bj1nff6s3bdgk" path="res://modules/simple_characters/basic/view_model/view_model_container.tscn" id="8_d5u0s"]
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://modules/simple_characters/basic/model/character_model.tscn" id="9_7toh7"]
-[ext_resource type="Script" uid="uid://ctoajl3u4l5gp" path="res://modules/simple_characters/animaton_controller/tate_character_animator.gd" id="11_oa6m8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
 radius = 0.5288086
 height = 2.1948242
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "character_animator", "visual_optimizer")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_oy2pm"]
+
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "visual_optimizer")]
 script = ExtResource("1_7toh7")
 physics_body = NodePath(".")
 motor = NodePath("Motor")
@@ -21,7 +23,8 @@ visuals_pivot = NodePath("VisualsPivot")
 character_model = NodePath("VisualsPivot/CharacterModel")
 camera_pivot = NodePath("CameraPivot")
 view_model_container = NodePath("ViewModelContainer")
-character_animator = NodePath("TateCharacterAnimator")
+head_clearance_sensor = NodePath("HeadClearanceSensor")
+character_hitbox = NodePath("CharacterHitbox")
 visual_optimizer = NodePath("TateVisualOptimizer")
 
 [node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]
@@ -34,9 +37,11 @@ metadata/_custom_type_script = "uid://qbedm6c0d168"
 [node name="CameraPivot" parent="." unique_id=480003097 instance=ExtResource("2_7toh7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=236041623]
+[node name="CharacterHitbox" type="CollisionShape3D" parent="." unique_id=236041623 node_paths=PackedStringArray("collision_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0974121, 0)
 shape = SubResource("CapsuleShape3D_e87n2")
+script = ExtResource("4_oy2pm")
+collision_shape = NodePath(".")
 
 [node name="JumpCast" type="RayCast3D" parent="." unique_id=1373258311]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100000024, 0)
@@ -59,6 +64,7 @@ visual_root = NodePath("../VisualsPivot")
 nodes_to_hide = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
-[node name="TateCharacterAnimator" type="Node" parent="." unique_id=1239077209]
-script = ExtResource("11_oa6m8")
-metadata/_custom_type_script = "uid://ctoajl3u4l5gp"
+[node name="HeadClearanceSensor" type="ShapeCast3D" parent="." unique_id=142927917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+shape = SubResource("SphereShape3D_oy2pm")
+target_position = Vector3(0, 0, 0)
