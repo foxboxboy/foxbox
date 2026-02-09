@@ -118,9 +118,11 @@ func set_pose(new_pose : Pose) -> bool:
 		Pose.STANDING:
 			character_model.stand()
 			character_hitbox.stand()
+			camera_pivot.stand()
 		Pose.CROUCHING:
 			character_model.crouch()
 			character_hitbox.crouch()
+			camera_pivot.crouch()
 	
 	pose_changed.emit(new_pose,old_pose)
 	
