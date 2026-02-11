@@ -32,6 +32,13 @@ uv1_triplanar = true
 uv1_world_triplanar = true
 texture_filter = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llb37"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("1_i6m7q")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7rtu"]
 transparency = 1
 albedo_color = Color(1, 1, 1, 0)
@@ -52,13 +59,6 @@ texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kityc"]
 albedo_color = Color(0, 1, 1, 1)
-albedo_texture = ExtResource("1_i6m7q")
-uv1_triplanar = true
-uv1_world_triplanar = true
-texture_filter = 0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llb37"]
-albedo_color = Color(1, 0, 0, 1)
 albedo_texture = ExtResource("1_i6m7q")
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -184,6 +184,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -21.75)
 use_collision = true
 size = Vector3(50, 0.2, 6.5)
 material = SubResource("StandardMaterial3D_phf47")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1949518306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.35, 8)
+use_collision = true
+size = Vector3(5, 0.8, 3)
+material = SubResource("StandardMaterial3D_llb37")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1388777927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2.5, 0)

@@ -23,11 +23,12 @@ class_name TateAdvancedCharacterMotor3D
 @export_group("Sprint")
 ## How quickly the body moves while sprinting.
 @export var sprint_speed := 15.0
+@export var stop_sprinting_threshold := 0.3
 
 var _air_time_elapsed := 0.0
 var _has_jumped := false
 var _has_double_jumped := false
-var _is_sprinting := false
+var is_sprinting := false
 #var _acceleration := 0.0
 
 
@@ -74,11 +75,13 @@ func _update_movement_advanced(delta):
 	var direction = (forward * input_direction.y) + (right * input_direction.x)
 	direction = direction * input_strength
 	
+	if body.velocity.length() < stop_sprinting_threshold:
+		is_sprinting = false
 	
 	if direction:
 		var target_vector := Vector3(direction.x, 0.0, direction.z)
 		
-		if _is_sprinting:
+		if is_sprinting:
 			target_vector *= sprint_speed
 		else:
 			target_vector *= speed
@@ -108,11 +111,11 @@ func jump(multiplier := 1.0):
 
 
 func start_sprinting():
-	_is_sprinting = true
+	is_sprinting = true
 
 
 func stop_sprinting():
-	_is_sprinting = false
+	is_sprinting = false
 
 
 

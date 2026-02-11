@@ -26,7 +26,7 @@ filter_enabled = true
 filters = ["armature/Skeleton3D:bicep_l", "armature/Skeleton3D:bicep_r", "armature/Skeleton3D:collarbone_l", "armature/Skeleton3D:collarbone_r", "armature/Skeleton3D:forearm_l", "armature/Skeleton3D:forearm_r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_kfsx8"]
-graph_offset = Vector2(-787.34766, 104.3129)
+graph_offset = Vector2(-857.5405, 63.15445)
 nodes/BaseMovement/node = ExtResource("5_ly1yk")
 nodes/BaseMovement/position = Vector2(-280, 120)
 nodes/UpperBody/node = SubResource("AnimationNodeStateMachine_njgnm")
@@ -43,18 +43,15 @@ right_hand_target = NodePath("blockbench_export/armature/Skeleton3D/Head/Hands/R
 left_hand_ik = NodePath("blockbench_export/armature/Skeleton3D/LeftHandIK")
 right_hand_ik = NodePath("blockbench_export/armature/Skeleton3D/RightHandIK")
 
-[node name="blockbench_export" parent="." unique_id=1153623993 instance=ExtResource("2_7oa71")]
+[node name="blockbench_export" parent="." unique_id=1286669867 instance=ExtResource("2_7oa71")]
 
-[node name="Skeleton3D" parent="blockbench_export/armature" parent_id_path=PackedInt32Array(1153623993, 344275971) index="0" unique_id=822977222]
-bones/1/rotation = Quaternion(-0.15212339, 0, 0, 0.98836154)
-bones/2/rotation = Quaternion(-0.17364818, 0, 0, 0.9848077)
-bones/6/rotation = Quaternion(0, 0, -0.13052619, 0.9914449)
-bones/10/rotation = Quaternion(0, 0, 0.13052619, 0.9914449)
+[node name="Skeleton3D" parent="blockbench_export/armature" parent_id_path=PackedInt32Array(1286669867, 52128012) index="0" unique_id=1726183455]
+bones/3/rotation = Quaternion(-0.065403126, 0, 0, 0.99785894)
 bones/13/rotation = Quaternion(0.00091544574, -0.065670565, 0.9893582, 0.12983404)
 bones/16/rotation = Quaternion(-0.00091544574, -0.065670565, 0.9893582, -0.12983404)
 
 [node name="Head" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="1" unique_id=666230453]
-transform = Transform3D(1, 0, 0, 0, 0.7933533, 0.6087614, 0, -0.6087614, 0.7933533, 0, 1.4863521, -0.2654144)
+transform = Transform3D(1, 0, 0, 0, 0.9914449, 0.13052619, 0, -0.13052619, 0.9914449, 0, 1.5625, 0)
 bone_name = "head"
 bone_idx = 3
 
@@ -78,7 +75,7 @@ layers = 1048573
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
 
 [node name="Chest" type="BoneAttachment3D" parent="blockbench_export/armature/Skeleton3D" index="2" unique_id=860416782]
-transform = Transform3D(1, 0, 0, 0, 0.7933533, 0.6087614, 0, -0.6087614, 0.7933533, 0, 1.2384292, -0.07517645)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 bone_name = "chest"
 bone_idx = 2
 

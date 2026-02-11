@@ -25,6 +25,11 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 ## @experimental
 @export var visual_optimizer : TateVisualOptimizer
 
+var current_speed : float:
+	get: return motor.speed
+	set(new_value):
+		motor.speed = new_value
+		current_speed = new_value
 
 var _aim_target_pitch : float
 var _max_head_pitch_rad : float
@@ -61,6 +66,8 @@ func _ready() -> void:
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
 	character_model.stand()
+	
+	motor.sprint_speed = sprint_speed
 
 
 func _process(_delta: float) -> void:	
@@ -118,9 +125,30 @@ func set_pose(new_pose : Pose) -> bool:
 	_update_pose()
 	
 	pose_changed.emit(new_pose,old_pose)
-
 	
 	return true
+
+
+func try_to_stand() -> bool:
+	if can_stand_up():
+		stand()
+		return true
+	return false
+
+
+func try_to_crouch() -> bool:
+	if not is_in_air():
+		crouch()
+		return true
+	return false
+
+
+func is_crouching() -> bool:
+	return current_pose == Pose.CROUCHING
+
+
+func is_standing() -> bool:
+	return current_pose == Pose.STANDING
 
 
 func stand() -> void:
@@ -128,6 +156,7 @@ func stand() -> void:
 
 
 func crouch() -> void:
+	stop_sprint()
 	set_pose(Pose.CROUCHING)
 
 
@@ -137,10 +166,30 @@ func can_stand_up() -> bool:
 	return not head_clearance_sensor.is_colliding()
 
 
+func _update_pose() -> void:
+	match current_pose:
+		Pose.STANDING:
+			character_model.stand()
+			character_hitbox.stand()
+			camera_pivot.stand()
+			motor.speed = walk_speed
+		Pose.CROUCHING:
+			character_model.crouch()
+			character_hitbox.crouch()
+			camera_pivot.crouch()
+			motor.speed = crouch_speed
+
+
+#endregion
+
+
+
+
+
+
 
 
 #region Camera & Models
-
 
 func _update_freecam() -> void:
 	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
@@ -198,19 +247,40 @@ func rotate_head_relative(relative: Vector2) -> void:
 	_process_yaw(relative.x)
 
 
-func try_to_jump() -> void:
+func try_to_jump() -> bool:
+	if not can_stand_up():
+		return false
+	
 	if motor.can_jump():
 		if current_pose == Pose.CROUCHING:
 			motor.jump(1.2)
 		else:
 			motor.jump()
 		
+		
 		stand()
+		return true
+		
+	return false
 
 
 func reset_jump() -> void:
 	motor.reset_jump()
 
+
+func try_to_sprint() -> bool:
+	if not motor.is_sprinting and is_standing() and not is_in_air():
+		motor.start_sprinting()
+		return true
+	return false
+
+
+func stop_sprint() -> void:
+	motor.is_sprinting = false
+
+
+func is_sprinting() -> bool:
+	return motor.is_sprinting
 
 #endregion
 
@@ -250,7 +320,7 @@ func _process_yaw(relative_x: float) -> void:
 
 
 func get_speed_percent() -> float:
-	var horizontal_speed := get_current_horizontal_speed()
+	var horizontal_speed := get_horizontal_velocity()
 	
 	match current_pose:
 		Pose.STANDING:
@@ -262,11 +332,11 @@ func get_speed_percent() -> float:
 	return 0.0
 
 
-func get_current_horizontal_speed() -> float:
+func get_horizontal_velocity() -> float:
 	return Vector3(physics_body.velocity.x, 0.0, physics_body.velocity.z).length()
 
 
-func get_current_speed() -> float:
+func get_current_velocity() -> float:
 	return physics_body.velocity.length()
 
 
@@ -287,7 +357,7 @@ func has_move_input() -> bool:
 
 
 func _update_character_model():
-	character_model.update_strafe(input_direction, get_current_horizontal_speed())
+	character_model.update_strafe(input_direction, get_horizontal_velocity())
 	
 	if not is_free_looking: character_model.pitch = _aim_target_pitch
 	
@@ -295,25 +365,22 @@ func _update_character_model():
 	character_model.set_move_speed(get_speed_percent())
 	character_model.set_vertical_speed(physics_body.velocity.y)
 
-	if not ground_cast.is_colliding() and not physics_body.is_on_floor():
-		if abs(physics_body.velocity.y) > 0.5:
-			character_model.enter_air()
+	if is_in_air():
+		character_model.enter_air()
 	else:
 		_update_pose()
 
 
-func _update_pose() -> void:
-	match current_pose:
-		Pose.STANDING:
-			character_model.stand()
-			character_hitbox.stand()
-			camera_pivot.stand()
-			motor.speed = walk_speed
-		Pose.CROUCHING:
-			character_model.crouch()
-			character_hitbox.crouch()
-			camera_pivot.crouch()
-			motor.speed = crouch_speed
+func is_in_air() -> bool:
+	#return ! $FallingCast.is_colliding()
 	
+	
+	if not ground_cast.is_colliding():
+		if not physics_body.is_on_floor():
+			if abs(physics_body.velocity.y) >= 0.1:
+				return true
+	
+	return false
+
 
 #endregion

@@ -29,6 +29,7 @@ view_model_container = NodePath("ViewModelContainer")
 head_clearance_sensor = NodePath("HeadClearanceSensor")
 character_hitbox = NodePath("CharacterHitbox")
 ground_cast = NodePath("GroundCast")
+sprint_speed = 9.0
 visual_optimizer = NodePath("TateVisualOptimizer")
 
 [node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]

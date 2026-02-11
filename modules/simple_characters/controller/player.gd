@@ -22,10 +22,15 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed and not event.echo:
 			if event.keycode == KEY_C:
-				if character.current_pose != TateCharacter.Pose.CROUCHING:
-					character.set_pose(TateCharacter.Pose.CROUCHING)
+				if character.is_crouching():
+					character.try_to_stand()
 				else:
-					character.set_pose(TateCharacter.Pose.STANDING)
+					character.try_to_crouch()
+			if event.keycode == KEY_CTRL:
+				if not character.is_sprinting():
+					character.try_to_sprint()
+				else:
+					character.stop_sprint()
 
 
 func do_first_person():
