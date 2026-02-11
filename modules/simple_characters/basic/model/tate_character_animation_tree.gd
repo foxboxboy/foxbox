@@ -45,9 +45,7 @@ func update_air_physics(vertical_velocity: float) -> void:
 	
 	var blend_steps := 4
 	var stepped_blend : float = round(raw_blend * blend_steps) / blend_steps
-	
-	print(stepped_blend)
-	
+		
 	animation_tree.set(PATH_AIR_BLEND, stepped_blend)
 
 

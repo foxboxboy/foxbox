@@ -18,7 +18,7 @@ height = 2.1948242
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_oy2pm"]
 length = 0.5
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "visual_optimizer")]
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "ground_cast", "visual_optimizer")]
 script = ExtResource("1_7toh7")
 physics_body = NodePath(".")
 motor = NodePath("Motor")
@@ -28,11 +28,12 @@ camera_pivot = NodePath("CameraPivot")
 view_model_container = NodePath("ViewModelContainer")
 head_clearance_sensor = NodePath("HeadClearanceSensor")
 character_hitbox = NodePath("CharacterHitbox")
+ground_cast = NodePath("GroundCast")
 visual_optimizer = NodePath("TateVisualOptimizer")
 
 [node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]
 script = ExtResource("1_e87n2")
-ground_cast = NodePath("../JumpCast")
+ground_cast = NodePath("../GroundCast")
 body = NodePath("..")
 speed = 6.0
 metadata/_custom_type_script = "uid://qbedm6c0d168"
@@ -46,7 +47,7 @@ shape = SubResource("CapsuleShape3D_e87n2")
 script = ExtResource("4_oy2pm")
 collision_shape = NodePath(".")
 
-[node name="JumpCast" type="RayCast3D" parent="." unique_id=1373258311]
+[node name="GroundCast" type="RayCast3D" parent="." unique_id=1373258311]
 target_position = Vector3(0, -0.2, 0)
 
 [node name="VisualsPivot" type="Marker3D" parent="." unique_id=1702593142]

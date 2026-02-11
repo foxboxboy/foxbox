@@ -53,14 +53,15 @@ func can_jump():
 	if body.is_on_floor():
 		_has_jumped = false
 		_has_double_jumped = false
+		return true
 	if ground_cast != null:
 		if not _has_jumped:
 			return _air_time_elapsed < coyote_time
 		elif can_double_jump:
 			if not _has_double_jumped:
 				return true
-	else:
-		return super.can_jump()
+	
+	return super.can_jump()
 
 
 func _update_movement():
@@ -93,9 +94,9 @@ func _update_movement_advanced(delta):
 	body.move_and_slide()
 
 
-func jump():
+func jump(multiplier := 1.0):
 	if not _jump_pressed:
-		body.velocity.y = jump_strength
+		body.velocity.y = jump_strength * multiplier
 		_jump_pressed = true
 		
 		if _has_jumped:

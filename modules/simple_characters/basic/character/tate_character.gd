@@ -13,6 +13,7 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 @export var view_model_container : SubViewportContainer
 @export var head_clearance_sensor : ShapeCast3D
 @export var character_hitbox : TateCharacterHitbox
+@export var ground_cast : RayCast3D
 
 @export_group("Movement Settings")
 @export var walk_speed : float = 5.0
@@ -122,6 +123,14 @@ func set_pose(new_pose : Pose) -> bool:
 	return true
 
 
+func stand() -> void:
+	set_pose(Pose.STANDING)
+
+
+func crouch() -> void:
+	set_pose(Pose.CROUCHING)
+
+
 func can_stand_up() -> bool:
 	head_clearance_sensor.target_position = Vector3.ZERO
 	head_clearance_sensor.force_shapecast_update()
@@ -191,7 +200,12 @@ func rotate_head_relative(relative: Vector2) -> void:
 
 func try_to_jump() -> void:
 	if motor.can_jump():
-		motor.jump()
+		if current_pose == Pose.CROUCHING:
+			motor.jump(1.2)
+		else:
+			motor.jump()
+		
+		stand()
 
 
 func reset_jump() -> void:
@@ -280,9 +294,10 @@ func _update_character_model():
 	character_model.yaw = get_aim_torso_angle_difference()
 	character_model.set_move_speed(get_speed_percent())
 	character_model.set_vertical_speed(physics_body.velocity.y)
-	
-	if not physics_body.is_on_floor():
-		character_model.enter_air()
+
+	if not ground_cast.is_colliding() and not physics_body.is_on_floor():
+		if abs(physics_body.velocity.y) > 0.5:
+			character_model.enter_air()
 	else:
 		_update_pose()
 
