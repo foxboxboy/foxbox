@@ -1,5 +1,17 @@
 [gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://btrc8ocglgeht"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4exhl"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t36uh"]
+animation = &"fall"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_wl4eo"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_4exhl")
+blend_point_0/pos = 1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_t36uh")
+blend_point_1/pos = -1.0
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_njgnm"]
 animation = &"crouch_idle"
 
@@ -42,15 +54,25 @@ blend_point_3/pos = -0.5
 value_label = "speed"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dlmmi"]
-xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_awko8"]
-xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_24j3l"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dbon2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gr7jl"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8o4k8"]
 
 [resource]
+states/AirLogic/node = SubResource("AnimationNodeBlendSpace1D_wl4eo")
+states/AirLogic/position = Vector2(778, 100)
 states/Crouch/node = SubResource("AnimationNodeBlendSpace1D_a36b3")
 states/Crouch/position = Vector2(601, 213)
+states/End/position = Vector2(969, 132)
 states/Stand/node = SubResource("AnimationNodeBlendSpace1D_njgnm")
 states/Stand/position = Vector2(583, 86)
-transitions = ["Crouch", "Stand", SubResource("AnimationNodeStateMachineTransition_dlmmi"), "Stand", "Crouch", SubResource("AnimationNodeStateMachineTransition_awko8")]
+states/Start/position = Vector2(402, 116)
+transitions = ["Crouch", "Stand", SubResource("AnimationNodeStateMachineTransition_dlmmi"), "Stand", "Crouch", SubResource("AnimationNodeStateMachineTransition_awko8"), "Crouch", "AirLogic", SubResource("AnimationNodeStateMachineTransition_24j3l"), "AirLogic", "Stand", SubResource("AnimationNodeStateMachineTransition_dbon2"), "Stand", "AirLogic", SubResource("AnimationNodeStateMachineTransition_gr7jl"), "AirLogic", "Crouch", SubResource("AnimationNodeStateMachineTransition_8o4k8")]
 graph_offset = Vector2(-349, -37)

@@ -24,6 +24,8 @@ var _pelvis_bone_index : int
 var _meshes : Array[MeshInstance3D] = []
 var _meshes_shown := true
 
+var _smoothed_anim_transform : Transform3D
+
 var pitch : float = 0.0
 var yaw : float = 0.0
 
@@ -39,6 +41,10 @@ func _ready() -> void:
 	_spine_bone_index = _skeleton.find_bone(spine_bone_name)
 	_pelvis_bone_index = _skeleton.get_bone_parent(_spine_bone_index)
 	_meshes = _get_all_meshes()
+	
+	var pelvis = _skeleton.get_bone_global_pose(_pelvis_bone_index)
+	var spine = _skeleton.get_bone_pose(_spine_bone_index)
+	_smoothed_anim_transform = pelvis * spine
 	
 	_check_warnings()
 
@@ -57,9 +63,15 @@ func _process(_delta):
 #region Public API
 
 
-func update_visuals(input_direction: Vector2, speed: float) -> void:
+# TateCharacterModel.gd
+
+func enter_air() -> void:
+	character_animation_tree.transition_to_air()	
+
+
+func update_strafe(input_direction: Vector2, horizontal_speed: float) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
-	var rotation_speed : float = clamp(speed * visuals_sync_speed, 0.1, 0.9)
+	var rotation_speed : float = clamp(horizontal_speed * visuals_sync_speed, 0.1, 0.9)
 	
 	rotation.y = lerp_angle(rotation.y, strafe_amount, rotation_speed)
 	rotation.z = lerp_angle(rotation.z, 0.05 * strafe_amount, rotation_speed)
@@ -96,6 +108,10 @@ func crouch():
 
 func set_move_speed(speed_percent: float) -> void:
 	character_animation_tree.update_movement(speed_percent)
+
+
+func set_vertical_speed(vertical_speed: float) -> void:
+	character_animation_tree.update_air_physics(vertical_speed)
 
 
 #endregion
@@ -139,15 +155,17 @@ func _get_first_skeleton(_under_node : Node = self) -> Skeleton3D:
 	return null
 
 
-func _update_spine_bone(pitch_offset := 0.0):
+
+
+func _update_spine_bone():
 	var pelvis_global = _skeleton.get_bone_global_pose(_pelvis_bone_index)
 	var spine_local = _skeleton.get_bone_pose(_spine_bone_index)
 
-	# where the bone would be if we didn't touch it
+	# where the spine bone would be if we didn't touch it
 	var animated_global_transform = pelvis_global * spine_local
 	
 	# our offset from where the character is looking
-	var aim_basis = Basis.from_euler(Vector3(pitch + pitch_offset, yaw, 0))
+	var aim_basis = Basis.from_euler(Vector3(pitch, yaw, 0))
 	
 	# combine
 	var final_basis = animated_global_transform.basis * aim_basis

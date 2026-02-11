@@ -18,6 +18,7 @@ const PATH_LOCOMOTION_CROUCH_BLEND = "parameters/BaseMovement/Crouch/blend_posit
 const PATH_LOCOMOTION_STAND_BLEND = "parameters/BaseMovement/Stand/blend_position"
 const PATH_UPPER_BODY_PLAYBACK = "parameters/UpperBody/playback"
 const PATH_TRIGGER_SWING = "parameters/Swing/request"
+const PATH_AIR_BLEND = "parameters/BaseMovement/AirLogic/blend_position"
 
 
 ## blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
@@ -29,11 +30,25 @@ func update_movement(blend_amount: float) -> void:
 
 
 func transition_to_crouch() -> void:
-	print("crouch time")
 	_base_movement.travel("Crouch")
 
 func transition_to_stand() -> void:
 	_base_movement.travel("Stand")
+
+func transition_to_air() -> void:
+	_base_movement.travel("AirLogic")
+
+
+func update_air_physics(vertical_velocity: float) -> void:	
+	var blend_multiplier := 3.0
+	var raw_blend := clampf(vertical_velocity * blend_multiplier, -1.0, 1.0)
+	
+	var blend_steps := 4
+	var stepped_blend : float = round(raw_blend * blend_steps) / blend_steps
+	
+	print(stepped_blend)
+	
+	animation_tree.set(PATH_AIR_BLEND, stepped_blend)
 
 
 func swing(use_right_hand : bool = true) -> void:

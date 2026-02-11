@@ -16,6 +16,7 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 
 @export_group("Movement Settings")
 @export var walk_speed : float = 5.0
+@export var crouch_speed : float = 2.0
 @export var sprint_speed : float = 10.0
 @export var max_head_pitch := 89.0
 
@@ -61,8 +62,7 @@ func _ready() -> void:
 	character_model.stand()
 
 
-func _process(_delta: float) -> void:
-	
+func _process(_delta: float) -> void:	
 	if visual_optimizer:
 		if visual_optimizer.is_far:
 			return
@@ -114,17 +114,10 @@ func set_pose(new_pose : Pose) -> bool:
 	var old_pose := current_pose
 	current_pose = new_pose
 	
-	match new_pose:
-		Pose.STANDING:
-			character_model.stand()
-			character_hitbox.stand()
-			camera_pivot.stand()
-		Pose.CROUCHING:
-			character_model.crouch()
-			character_hitbox.crouch()
-			camera_pivot.crouch()
+	_update_pose()
 	
 	pose_changed.emit(new_pose,old_pose)
+
 	
 	return true
 
@@ -242,16 +235,25 @@ func _process_yaw(relative_x: float) -> void:
 #region Helpers
 
 
+func get_speed_percent() -> float:
+	var horizontal_speed := get_current_horizontal_speed()
+	
+	match current_pose:
+		Pose.STANDING:
+			return horizontal_speed / sprint_speed
+		Pose.CROUCHING:
+			return horizontal_speed / crouch_speed
+	
+	
+	return 0.0
+
+
 func get_current_horizontal_speed() -> float:
 	return Vector3(physics_body.velocity.x, 0.0, physics_body.velocity.z).length()
 
 
 func get_current_speed() -> float:
 	return physics_body.velocity.length()
-
-
-func get_speed_percentage() -> float:
-	return get_current_speed() / sprint_speed
 
 
 func is_moving() -> bool:
@@ -271,13 +273,32 @@ func has_move_input() -> bool:
 
 
 func _update_character_model():
-	character_model.update_visuals(input_direction, get_current_horizontal_speed())
+	character_model.update_strafe(input_direction, get_current_horizontal_speed())
 	
-	if not is_free_looking:
-		character_model.pitch = _aim_target_pitch
+	if not is_free_looking: character_model.pitch = _aim_target_pitch
 	
 	character_model.yaw = get_aim_torso_angle_difference()
-	character_model.set_move_speed(get_current_horizontal_speed() / sprint_speed)
+	character_model.set_move_speed(get_speed_percent())
+	character_model.set_vertical_speed(physics_body.velocity.y)
+	
+	if not physics_body.is_on_floor():
+		character_model.enter_air()
+	else:
+		_update_pose()
 
+
+func _update_pose() -> void:
+	match current_pose:
+		Pose.STANDING:
+			character_model.stand()
+			character_hitbox.stand()
+			camera_pivot.stand()
+			motor.speed = walk_speed
+		Pose.CROUCHING:
+			character_model.crouch()
+			character_hitbox.crouch()
+			camera_pivot.crouch()
+			motor.speed = crouch_speed
+	
 
 #endregion
