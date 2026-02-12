@@ -9,8 +9,8 @@ class_name TateAdvancedCharacterMotor3D
 ## Exists to allow more responsive jumping.
 @export var ground_cast : RayCast3D
 ## (Optional) The max time spent in the air before a player can no
-## longer jump. 
-@export var coyote_time := 0.3
+## longer jump. Set to -1 to always let a player jump once.
+@export var coyote_time : float = 0.25
 @export var can_double_jump := false
 
 @export_group("Smoothing")
@@ -43,10 +43,13 @@ func _physics_process(delta):
 
 func _process(delta: float) -> void:
 	if not ground_cast.is_colliding():
+		if coyote_time < 0:
+			return
 		_air_time_elapsed += delta
 		_air_time_elapsed = clampf(_air_time_elapsed, 0.0, coyote_time * 2)
 	else:
 		_air_time_elapsed = 0.0
+		_has_jumped = false
 
 
 ## More advanced can_jump() that checks for a ground cast. 
@@ -55,9 +58,12 @@ func can_jump():
 		_has_jumped = false
 		_has_double_jumped = false
 		return true
-	if ground_cast != null:
+	elif not ground_cast == null:
 		if not _has_jumped:
-			return _air_time_elapsed < coyote_time
+			if coyote_time < 0:
+				return true
+			else:
+				return _air_time_elapsed < coyote_time
 		elif can_double_jump:
 			if not _has_double_jumped:
 				return true
@@ -98,6 +104,8 @@ func _update_movement_advanced(delta):
 
 
 func jump(multiplier := 1.0):
+	print("JUMP!")
+	
 	if not _jump_pressed:
 		body.velocity.y = jump_strength * multiplier
 		_jump_pressed = true
@@ -116,8 +124,6 @@ func start_sprinting():
 
 func stop_sprinting():
 	is_sprinting = false
-
-
 
 
 

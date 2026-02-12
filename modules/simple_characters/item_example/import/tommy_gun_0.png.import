@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwfiluhxiqorg"
-path.s3tc="res://.godot/imported/tommy_gun_0.png-74d8707dc0a5a9c1d7ce95d09d3fca0e.s3tc.ctex"
-path.etc2="res://.godot/imported/tommy_gun_0.png-74d8707dc0a5a9c1d7ce95d09d3fca0e.etc2.ctex"
+path.s3tc="res://.godot/imported/tommy_gun_0.png-e7d86af2484b87d272a9ac29a84d3797.s3tc.ctex"
+path.etc2="res://.godot/imported/tommy_gun_0.png-e7d86af2484b87d272a9ac29a84d3797.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -15,8 +15,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://modules/simple_characters/item_example/tommy_gun_0.png"
-dest_files=["res://.godot/imported/tommy_gun_0.png-74d8707dc0a5a9c1d7ce95d09d3fca0e.s3tc.ctex", "res://.godot/imported/tommy_gun_0.png-74d8707dc0a5a9c1d7ce95d09d3fca0e.etc2.ctex"]
+source_file="res://modules/simple_characters/item_example/import/tommy_gun_0.png"
+dest_files=["res://.godot/imported/tommy_gun_0.png-e7d86af2484b87d272a9ac29a84d3797.s3tc.ctex", "res://.godot/imported/tommy_gun_0.png-e7d86af2484b87d272a9ac29a84d3797.etc2.ctex"]
 
 [params]
 

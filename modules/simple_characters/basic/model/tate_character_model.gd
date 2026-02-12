@@ -4,16 +4,15 @@ class_name TateCharacterModel
 
 @export_group("Components")
 @export var character_animation_tree : TateCharacterAnimationTree 
+@export var character_hands : TateCharacterHands
 
 @export_group("Bones")
 @export var spine_bone_name: String = "spine"
 @export var left_hand_target : Marker3D
 @export var right_hand_target : Marker3D
-@export var left_hand_ik : CCDIK3D
-@export var right_hand_ik : CCDIK3D
 
 @export_group("Leaning")
-@export var visuals_sync_speed := 0.02
+#@export var visuals_sync_speed := 0.02
 @export var lean_into_turn_amount := PI/4
 @export var animation_spine_pitch_offset : float = 0.0
 
@@ -62,19 +61,16 @@ func _process(_delta):
 
 #region Public API
 
-
-# TateCharacterModel.gd
-
 func enter_air() -> void:
 	character_animation_tree.transition_to_air()	
 
 
-func update_strafe(input_direction: Vector2, horizontal_speed: float) -> void:
+func update_strafe(input_direction: Vector2) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
-	var rotation_speed : float = clamp(horizontal_speed * visuals_sync_speed, 0.1, 0.9)
+	#var rotation_speed : float = clamp(horizontal_speed * visuals_sync_speed, 0.1, 0.9)
 	
-	rotation.y = lerp_angle(rotation.y, strafe_amount, rotation_speed)
-	rotation.z = lerp_angle(rotation.z, 0.05 * strafe_amount, rotation_speed)
+	rotation.y = strafe_amount#lerp_angle(rotation.y, strafe_amount, rotation_speed)
+	rotation.z = 0.05 * strafe_amount#lerp_angle(rotation.z, 0.05 * strafe_amount, rotation_speed)
 
 
 func update_pitch_and_yaw(new_pitch : float, new_yaw : float):
@@ -112,6 +108,10 @@ func set_move_speed(speed_percent: float) -> void:
 
 func set_vertical_speed(vertical_speed: float) -> void:
 	character_animation_tree.update_air_physics(vertical_speed)
+
+
+func hold_node():
+	pass
 
 
 #endregion
@@ -173,5 +173,6 @@ func _update_spine_bone():
 	# apply
 	var target_transform = Transform3D(final_basis, animated_global_transform.origin)
 	_skeleton.set_bone_global_pose_override(_spine_bone_index, target_transform, 1.0, true)
+
 
 #endregion

@@ -1,8 +1,29 @@
 extends TateNode3D
 class_name TateCharacter
 # A big bowl of spaghetti...
+## something something description here
+
+
+
+
+
+
+
+#region Signals
 
 signal pose_changed(new_pose : Pose, old_pose : Pose)
+
+## I probably need more signals here...
+
+#endregion
+
+
+
+
+
+
+
+#region Exports
 
 @export_group("Components")
 @export var physics_body : CharacterBody3D
@@ -20,20 +41,30 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 @export var crouch_speed : float = 2.0
 @export var sprint_speed : float = 10.0
 @export var max_head_pitch := 89.0
+## How fast the character needs to be moving to enter air animations.
+@export var enter_air_animation_velocity := 3.5
 
 @export_group("Visual Optimizer")
 ## @experimental
+## Might need refactoring, I don't know if I like the idea of the character
+## being coupled to the idea of a visual optimizer. I'll have to see.
 @export var visual_optimizer : TateVisualOptimizer
 
+#endregion
+
+
+
+
+
+
+
+#region Variables
+ 
 var current_speed : float:
 	get: return motor.speed
 	set(new_value):
 		motor.speed = new_value
 		current_speed = new_value
-
-var _aim_target_pitch : float
-var _max_head_pitch_rad : float
-var _free_look_offset: float = 0.0
 
 var is_free_looking := false
 
@@ -51,6 +82,12 @@ enum Pose {
 	STANDING,
 	CROUCHING,
 }
+
+var _aim_target_pitch : float
+var _max_head_pitch_rad : float
+var _free_look_offset: float = 0.0
+
+#endregion
 
 
 
@@ -85,7 +122,15 @@ func _process(_delta: float) -> void:
 
 
 
+
+
 #region Multiplayer
+
+## This might need refactoring!
+## I don't know if I like the idea of the networking stuff being done
+## by the character. I like how "blackbox" it is but I'll have to see
+## if coupling the character to the idea of multiplayer is a good or bad
+## idea.
 
 func set_network_role(is_authority: bool) -> void:
 	## SERVER
@@ -109,9 +154,10 @@ func set_network_role(is_authority: bool) -> void:
 
 
 
+
 #region Poses
 
-## Returns true if the pose was successfuly changed
+## Returns true if the pose was successfuly changed.
 func set_pose(new_pose : Pose) -> bool:
 	if new_pose == current_pose: return false
 	
@@ -191,12 +237,6 @@ func _update_pose() -> void:
 
 #region Camera & Models
 
-func _update_freecam() -> void:
-	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
-		_free_look_offset = 0.0
-		camera_pivot.rotation.y = _free_look_offset
-
-
 func get_first_person_camera_pivot() -> Marker3D:
 	if camera_pivot:
 		return camera_pivot.first_person_camera_pivot
@@ -228,7 +268,14 @@ func hide_character_model() -> void:
 	if character_model:
 		character_model.hide_meshes()
 
+func _update_freecam() -> void:
+	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
+		_free_look_offset = 0.0
+		camera_pivot.rotation.y = _free_look_offset
+
 #endregion
+
+
 
 
 
@@ -269,7 +316,8 @@ func reset_jump() -> void:
 
 
 func try_to_sprint() -> bool:
-	if not motor.is_sprinting and is_standing() and not is_in_air():
+	if not is_sprinting() and not is_in_air():
+		stand()
 		motor.start_sprinting()
 		return true
 	return false
@@ -289,7 +337,8 @@ func is_sprinting() -> bool:
 
 
 
-#region Rotation
+
+#region Aim Pitch & Yaw
 
 func _process_pitch(relative_y: float) -> void:
 	_aim_target_pitch = clamp(_aim_target_pitch - relative_y, -_max_head_pitch_rad, _max_head_pitch_rad)
@@ -317,7 +366,6 @@ func _process_yaw(relative_x: float) -> void:
 
 
 #region Helpers
-
 
 func get_speed_percent() -> float:
 	var horizontal_speed := get_horizontal_velocity()
@@ -357,7 +405,7 @@ func has_move_input() -> bool:
 
 
 func _update_character_model():
-	character_model.update_strafe(input_direction, get_horizontal_velocity())
+	character_model.update_strafe(input_direction)#, get_horizontal_velocity())
 	
 	if not is_free_looking: character_model.pitch = _aim_target_pitch
 	
@@ -365,22 +413,21 @@ func _update_character_model():
 	character_model.set_move_speed(get_speed_percent())
 	character_model.set_vertical_speed(physics_body.velocity.y)
 
-	if is_in_air():
+	if is_in_air() and is_moving_fast_vertically():
 		character_model.enter_air()
-	else:
+	elif not is_in_air():
 		_update_pose()
 
 
-func is_in_air() -> bool:
-	#return ! $FallingCast.is_colliding()
-	
-	
+func is_moving_fast_vertically() -> bool:
+	return abs(physics_body.velocity.y) > enter_air_animation_velocity
+
+
+func is_in_air() -> bool:	
 	if not ground_cast.is_colliding():
 		if not physics_body.is_on_floor():
-			if abs(physics_body.velocity.y) >= 0.1:
-				return true
+			return true
 	
 	return false
-
 
 #endregion

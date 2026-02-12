@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bj1nff6s3bdgk"]
 
 [ext_resource type="Script" uid="uid://b37wiry6885ej" path="res://modules/simple_characters/basic/view_model/view_model_container.gd" id="1_5j6q7"]
-[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/tommy_gun.gltf" id="1_e4uoi"]
+[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://modules/simple_characters/item_example/import/tommy_gun.gltf" id="1_e4uoi"]
 
 [node name="ViewModelContainer" type="SubViewportContainer" unique_id=1745782606]
 anchors_preset = 3
