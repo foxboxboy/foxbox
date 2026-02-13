@@ -87,27 +87,17 @@ func can_jump() -> bool:
 		_has_jumped = false
 		_has_double_jumped = false
 		return true
+	elif not ground_cast == null:
+		if not _has_jumped:
+			if coyote_time < 0:
+				return true
+			else:
+				return _air_time_elapsed < coyote_time
+		elif can_double_jump:
+			if not _has_double_jumped:
+				return true
 	
-	# If we don't have a ground cast
-	# the rest of the code doesn't matter
-	if ground_cast == null:
-		return false
-	
-	# Coyote time
-	if not _has_jumped:
-		# Infinite coyote time
-		if coyote_time < 0:
-			return true
-		# Normal
-		else:
-			return _air_time_elapsed < coyote_time
-	
-	# Check for double jump
-	if can_double_jump:
-		if not _has_double_jumped:
-			return true
-	
-	return false
+	return super.can_jump()
 
 
 func _update_movement():

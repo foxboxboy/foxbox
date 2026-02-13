@@ -78,7 +78,7 @@ func _on_pc_input_controller_jump_pressed() -> void:
 
 
 func _on_pc_input_controller_jump_released() -> void:
-	pass
+	character.reset_jump()
 
 
 func _on_pc_input_controller_free_cam_pressed() -> void:
