@@ -386,6 +386,67 @@ func set_input_direction(direction : Vector2) -> void:
 	input_direction = new_value_normalized
 
 
+func look_at_position(target_global_pos: Vector3) -> void:
+	# 1. Calculate the direction vector
+	var direction = target_global_pos - self.global_position
+	
+	# Safety check to prevent math errors (looking at self)
+	if direction.length_squared() < 0.001: return
+
+	# 2. YAW (Body Rotation)
+	# We use atan2 to get the angle on the flat ground plane (X, Z).
+	# Godot's forward is -Z, so we calculate the angle offset from that.
+	var target_yaw = atan2(-direction.x, -direction.z)
+	
+	# Apply directly to the root node (The Body)
+	self.global_rotation.y = target_yaw
+	
+	# 3. PITCH (Head/Spine Rotation)
+	# We calculate the angle difference in height vs distance
+	var flat_distance = Vector2(direction.x, direction.z).length()
+	var target_pitch = atan2(direction.y, flat_distance)
+	
+	# Clamp it so the AI doesn't snap its neck looking straight up/down
+	_aim_target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
+	
+	# Apply to camera pivot (which drives the Spine/Head via the Model script)
+	if camera_pivot:
+		camera_pivot.rotation.x = _aim_target_pitch
+		
+	# Update the model immediately so there's no visual lag frame
+	character_model.pitch = _aim_target_pitch
+
+
+## Rotates the character to look at a target smoothly.
+## @turn_speed: How fast to rotate (radians per second). Try 5.0 to 10.0.
+func look_at_position_smooth(target_global_pos: Vector3, delta: float, turn_speed: float = 8.0) -> void:
+	var direction = target_global_pos - self.global_position
+	
+	# 1. THE GLITCH FIX (Deadzone)
+	# If the target is too close horizontally (standing on head), don't spin the body.
+	var flat_distance = Vector2(direction.x, direction.z).length()
+	if flat_distance < 0.5: 
+		return
+
+	# 2. YAW (Body Rotation)
+	var target_yaw = atan2(-direction.x, -direction.z)
+	# use lerp_angle to prevent spinning 360 degrees unnecessarily
+	self.rotation.y = lerp_angle(self.rotation.y, target_yaw, turn_speed * delta)
+	
+	# 3. PITCH (Head/Spine Rotation)
+	var target_pitch = atan2(direction.y, flat_distance)
+	target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
+	
+	# We lerp the pitch variable, then apply it to the camera/model
+	_aim_target_pitch = lerp_angle(_aim_target_pitch, target_pitch, turn_speed * delta)
+	
+	if camera_pivot:
+		camera_pivot.rotation.x = _aim_target_pitch
+	
+	# Update model immediately for smooth visuals
+	character_model.pitch = _aim_target_pitch
+
+
 func rotate_head_relative(relative: Vector2) -> void:
 	_process_pitch(relative.y)
 	_process_yaw(relative.x)

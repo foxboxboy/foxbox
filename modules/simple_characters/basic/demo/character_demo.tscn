@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_i6m7q"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
 [ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://modules/simple_characters/basic/character/character.tscn" id="2_hbwi6"]
+[ext_resource type="Script" uid="uid://d1ayyn78ij210" path="res://modules/simple_characters/basic/demo/ai_brain.gd" id="2_phlfe"]
 [ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/controller/player.gd" id="7_3ryqn"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic/demo/gui.tscn" id="7_aq0ug"]
 [ext_resource type="Script" uid="uid://sm3rcjmnapxs" path="res://modules/simple_characters/physics_character/demo/moving_cube.gd" id="8_phf47"]
@@ -101,6 +102,11 @@ volumetric_fog_anisotropy = 0.77
 
 [node name="GUI" parent="." unique_id=649109011 instance=ExtResource("7_aq0ug")]
 
+[node name="AIBrain" type="Node" parent="." unique_id=886923235 node_paths=PackedStringArray("my_character", "player_character")]
+script = ExtResource("2_phlfe")
+my_character = NodePath("../AICharacter")
+player_character = NodePath("../Character")
+
 [node name="Player" type="Node" parent="." unique_id=1373919688 node_paths=PackedStringArray("character", "camera")]
 script = ExtResource("7_3ryqn")
 character = NodePath("../Character")
@@ -114,6 +120,16 @@ transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.2
 cull_mask = 1048573
 
 [node name="Character" parent="." unique_id=1677576452 instance=ExtResource("2_hbwi6")]
+
+[node name="AICharacter" parent="." unique_id=831317880 instance=ExtResource("2_hbwi6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="Label3D" type="Label3D" parent="AICharacter" unique_id=997475688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6000001, 0)
+billboard = 1
+text = "Jimmy"
+font_size = 96
+outline_size = 24
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=643502213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)

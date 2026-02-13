@@ -26,9 +26,7 @@ func _input(event: InputEvent) -> void:
 					character.try_to_stand()
 				else:
 					character.try_to_crouch()
-			if event.keycode == KEY_CTRL:
-				character.disable_motor()
-				
+			if event.keycode == KEY_CTRL:				
 				if not character.is_sprinting():
 					character.try_to_sprint()
 				else:
@@ -80,7 +78,7 @@ func _on_pc_input_controller_jump_pressed() -> void:
 
 
 func _on_pc_input_controller_jump_released() -> void:
-	character.reset_jump()
+	pass
 
 
 func _on_pc_input_controller_free_cam_pressed() -> void:
