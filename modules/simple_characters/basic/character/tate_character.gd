@@ -471,8 +471,8 @@ func try_to_jump() -> bool:
 	return false
 
 
-func reset_jump() -> void:
-	motor.reset_jump()
+func reset_jump_pressed() -> void:
+	motor.reset_jump_pressed()
 
 
 func try_to_sprint() -> bool:

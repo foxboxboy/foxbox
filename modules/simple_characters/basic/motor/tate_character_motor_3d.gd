@@ -38,7 +38,7 @@ func _physics_process(delta):
 	_update_y_velocity(delta)
 	
 	if body.is_on_floor():
-		reset_jump()
+		reset_jump_pressed()
 
 
 func _update_movement():
@@ -67,7 +67,7 @@ func jump():
 		jumped.emit()
 
 
-func reset_jump():
+func reset_jump_pressed():
 	_jump_pressed = false
 
 

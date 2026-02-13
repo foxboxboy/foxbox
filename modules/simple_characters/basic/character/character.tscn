@@ -34,7 +34,6 @@ visual_optimizer = NodePath("TateVisualOptimizer")
 [node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]
 script = ExtResource("1_e87n2")
 ground_cast = NodePath("../GroundCast")
-can_double_jump = true
 body = NodePath("..")
 speed = 6.0
 metadata/_custom_type_script = "uid://qbedm6c0d168"
@@ -49,7 +48,7 @@ script = ExtResource("4_oy2pm")
 collision_shape = NodePath(".")
 
 [node name="GroundCast" type="RayCast3D" parent="." unique_id=1373258311]
-target_position = Vector3(0, -0.2, 0)
+target_position = Vector3(0, -0.4, 0)
 
 [node name="CharacterModel" parent="." unique_id=366441859 instance=ExtResource("9_7toh7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)

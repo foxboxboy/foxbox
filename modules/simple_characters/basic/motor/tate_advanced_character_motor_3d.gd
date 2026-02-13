@@ -40,8 +40,10 @@ func _physics_process(delta):
 	
 	_update_y_velocity(delta)
 	
+	# If the player hits the floor and is holding jump,
+	# automatically start another jump
 	if body.is_on_floor():
-		super.reset_jump()
+		super.reset_jump_pressed()
 
 
 func _process(delta: float) -> void:
@@ -87,7 +89,12 @@ func can_jump() -> bool:
 		_has_jumped = false
 		_has_double_jumped = false
 		return true
-	elif not ground_cast == null:
+	
+	if not ground_cast == null:	
+		if ground_cast.is_colliding():
+			if body.velocity.y < 0:
+				return true
+		
 		if not _has_jumped:
 			if coyote_time < 0:
 				return true
