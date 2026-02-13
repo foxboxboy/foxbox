@@ -168,6 +168,23 @@ func set_network_role(is_authority: bool) -> void:
 
 
 
+#region Motor Control
+
+func disable_motor() -> void:
+	motor.disable()
+	
+
+func enable_motor() -> void:
+	motor.enable()
+
+#endregion
+
+
+
+
+
+
+
 #region Poses
 
 ## Returns true if the pose was successfuly changed.
@@ -262,8 +279,13 @@ func empty_left_hand() -> void:
 	character_hands.empty_left_hand() 
 
 
-func hold_item(node : Node, left_hand := false) -> bool:
-	return character_hands.hold_node(node, left_hand)
+func hold_node(node : Node, left_handed := false) -> bool:
+	return character_hands.hold_node(node, left_handed)
+
+
+func hold_item(item : TateHoldableItem, left_handed := false):
+	character_hands.hold_item(item, left_handed)
+	item_equipped.emit(item)
 
 
 func left_hand_has_item() -> bool:
@@ -282,24 +304,20 @@ func get_left_hand_item() -> Node:
 	return character_hands.get_left_hand_node()
 
 
-func enable_right_hand_ik() -> void:
-	character_hands.enable_right_hand_ik()
+func enable_right_hand_ik(target_node : Node3D, pole_node : Node3D) -> void:
+	character_hands.enable_right_hand_ik(target_node, pole_node)
 
 
 func disable_right_hand_ik() -> void:
 	character_hands.disable_right_hand_ik()
 
 
-func enable_left_hand_ik() -> void:
-	character_hands.enable_left_hand_ik()
+func enable_left_hand_ik(target_node : Node3D, pole_node : Node3D) -> void:
+	character_hands.enable_left_hand_ik(target_node, pole_node)
 
 
 func disable_left_hand_ik() -> void:
 	character_hands.disable_left_hand_ik()
-
-#endregion
-
-
 
 #endregion
 
@@ -493,6 +511,7 @@ func _update_character_model():
 	if not is_free_looking: character_model.pitch = _aim_target_pitch
 	
 	character_model.yaw = get_aim_torso_angle_difference()
+	
 	character_model.set_move_speed(get_speed_percent())
 	character_model.set_vertical_speed(physics_body.velocity.y)
 

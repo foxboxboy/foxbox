@@ -39,22 +39,21 @@ node_connections = [&"output", 0, &"UpperBodyShot", &"UpperBodyShot", 0, &"BaseM
 script = ExtResource("1_b7p6l")
 character_animation_tree = NodePath("Mannequin/CharacterAnimationTree")
 character_hands = NodePath("Hands")
-left_hand_target = NodePath("Hands/LeftHandTarget")
-right_hand_target = NodePath("Hands/RightHandTarget")
+left_hand_target = NodePath("Hands/LeftHandSlot")
+right_hand_target = NodePath("Hands/RightHandSlot")
 
-[node name="Hands" type="Marker3D" parent="." unique_id=1552049492 node_paths=PackedStringArray("left_hand_target", "right_hand_target", "left_hand_ik", "right_hand_ik")]
+[node name="Hands" type="Marker3D" parent="." unique_id=1552049492 node_paths=PackedStringArray("left_hand_slot", "right_hand_slot", "left_hand_ik", "right_hand_ik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1625, 0)
 script = ExtResource("3_njgnm")
-left_hand_target = NodePath("LeftHandTarget")
-right_hand_target = NodePath("RightHandTarget")
+left_hand_slot = NodePath("LeftHandSlot")
+right_hand_slot = NodePath("RightHandSlot")
 left_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/LeftHandIK")
 right_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/RightHandIK")
 
-[node name="LeftHandTarget" type="Marker3D" parent="Hands" unique_id=375764021]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25618154, 0, -0.9395673)
+[node name="LeftHandSlot" type="Marker3D" parent="Hands" unique_id=375764021]
 
-[node name="RightHandTarget" type="Marker3D" parent="Hands" unique_id=1333593333]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
+[node name="RightHandSlot" type="Marker3D" parent="Hands" unique_id=1333593333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2601195, -0.08590579, -0.5983463)
 
 [node name="Mannequin" parent="." unique_id=232028225 instance=ExtResource("2_7oa71")]
 
@@ -70,39 +69,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 0)
 remote_path = NodePath("../../../../../Hands")
 
-[node name="LeftHandIK" type="CCDIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(232028225, 363389417) index="2" unique_id=967513527]
+[node name="LeftHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(232028225, 363389417) index="2" unique_id=926102285]
 active = false
 setting_count = 1
-settings/0/target_node = NodePath("../../../../Hands/LeftHandTarget")
+settings/0/target_node = NodePath("../../../../Hands/LeftHandSlot")
+settings/0/pole_node = NodePath("")
 settings/0/root_bone_name = "bicep_l"
 settings/0/root_bone = 6
+settings/0/middle_bone_name = "forearm_l"
+settings/0/middle_bone = 7
+settings/0/pole_direction = 0
 settings/0/end_bone_name = "hand_l"
 settings/0/end_bone = 8
+settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
-settings/0/joint_count = 3
-settings/0/joints/0/rotation_axis = 3
-settings/0/joints/0/limitation = null
-settings/0/joints/1/rotation_axis = 3
-settings/0/joints/1/limitation = null
-settings/0/joints/2/rotation_axis = 3
-settings/0/joints/2/limitation = null
 
-[node name="RightHandIK" type="CCDIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(232028225, 363389417) index="3" unique_id=190593907]
-active = false
+[node name="RightHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(232028225, 363389417) index="3" unique_id=1480989020]
 setting_count = 1
-settings/0/target_node = NodePath("../../../../Hands/RightHandTarget")
+settings/0/target_node = NodePath("../../../../Hands/RightHandSlot")
+settings/0/pole_node = NodePath("")
 settings/0/root_bone_name = "bicep_r"
 settings/0/root_bone = 10
+settings/0/middle_bone_name = "forearm_r"
+settings/0/middle_bone = 11
+settings/0/pole_direction = 0
 settings/0/end_bone_name = "hand_r"
 settings/0/end_bone = 12
+settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
-settings/0/joint_count = 3
-settings/0/joints/0/rotation_axis = 3
-settings/0/joints/0/limitation = null
-settings/0/joints/1/rotation_axis = 3
-settings/0/joints/1/limitation = null
-settings/0/joints/2/rotation_axis = 3
-settings/0/joints/2/limitation = null
 
 [node name="OffscreenAnimationDisabler" type="VisibleOnScreenEnabler3D" parent="Mannequin" unique_id=945037561]
 enable_node_path = NodePath("../AnimationPlayer")

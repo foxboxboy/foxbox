@@ -1,0 +1,280 @@
+[gd_scene format=3 uid="uid://bedvskmd1tusw"]
+
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://modules/simple_characters/basic/demo/triplanar.png" id="1_i6m7q"]
+[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://modules/simple_characters/controller/pc_input_controller.gd" id="2_81bif"]
+[ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://modules/simple_characters/basic/character/character.tscn" id="2_hbwi6"]
+[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://modules/simple_characters/controller/player.gd" id="7_3ryqn"]
+[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://modules/simple_characters/basic/demo/gui.tscn" id="7_aq0ug"]
+[ext_resource type="Script" uid="uid://sm3rcjmnapxs" path="res://modules/simple_characters/physics_character/demo/moving_cube.gd" id="8_phf47"]
+[ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://modules/world_environments/stylized_world_environment.tscn" id="9_5anb6"]
+[ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://modules/world_environments/stylized_sky_shader/day_sky.tres" id="10_kityc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aq0ug"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_r0tlq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5anb6"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kityc"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n7rtu"]
+size = Vector3(4, 1, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5anb6"]
+size = Vector3(4, 1, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phf47"]
+albedo_texture = ExtResource("1_i6m7q")
+normal_texture = ExtResource("1_i6m7q")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llb37"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("1_i6m7q")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7rtu"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("1_i6m7q")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aq0ug"]
+load_path = "res://.godot/imported/triplanar.png-5b3f9426d7782706415178f3154d5419.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5anb6"]
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_aq0ug")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kityc"]
+albedo_color = Color(0, 1, 1, 1)
+albedo_texture = ExtResource("1_i6m7q")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rbnn3"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="PrismMesh" id="PrismMesh_svrf2"]
+material = SubResource("StandardMaterial3D_rbnn3")
+left_to_right = 1.0
+size = Vector3(1, 1, 5)
+
+[sub_resource type="Sky" id="Sky_i6m7q"]
+sky_material = ExtResource("10_kityc")
+
+[sub_resource type="Environment" id="Environment_llb37"]
+background_mode = 2
+sky = SubResource("Sky_i6m7q")
+tonemap_mode = 2
+ssao_enabled = true
+ssao_intensity = 4.0
+ssil_enabled = true
+sdfgi_energy = 0.215
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_levels/7 = 1.0
+glow_normalized = true
+glow_blend_mode = 0
+fog_sun_scatter = 0.09
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0034
+volumetric_fog_anisotropy = 0.77
+
+[node name="CharacterDemo" type="Node3D" unique_id=1566178899]
+
+[node name="GUI" parent="." unique_id=649109011 instance=ExtResource("7_aq0ug")]
+
+[node name="Player" type="Node" parent="." unique_id=1373919688 node_paths=PackedStringArray("character", "camera")]
+script = ExtResource("7_3ryqn")
+character = NodePath("../Character")
+camera = NodePath("Camera3D")
+
+[node name="PCInputController" type="Node" parent="Player" unique_id=1302206113]
+script = ExtResource("2_81bif")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=1267460044]
+transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.25881907, -1, 1.1313341e-08, -4.222196e-08, 3.2688181, 1.4935737, 1)
+cull_mask = 1048573
+
+[node name="Character" parent="." unique_id=1677576452 instance=ExtResource("2_hbwi6")]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=643502213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)
+collision_layer = 2
+collision_mask = 3
+mass = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=688783426]
+shape = SubResource("SphereShape3D_aq0ug")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=1723244415]
+mesh = SubResource("SphereMesh_r0tlq")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="." unique_id=1157206544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.125139, 3.9799104, 5.261628)
+collision_layer = 3
+collision_mask = 3
+mass = 120.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3" unique_id=722599317]
+shape = SubResource("BoxShape3D_5anb6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3" unique_id=1136777512]
+mesh = SubResource("BoxMesh_kityc")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=407048580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.656892, 3.9799104, 0)
+collision_layer = 2
+collision_mask = 3
+mass = 50000.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=590873866]
+shape = SubResource("SphereShape3D_aq0ug")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=1264586414]
+mesh = SubResource("SphereMesh_r0tlq")
+
+[node name="MovingCube" type="AnimatableBody3D" parent="." unique_id=1835207632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 14)
+script = ExtResource("8_phf47")
+a = Vector3(0, 0.5, 14)
+b = Vector3(10, 3, 14)
+time = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MovingCube" unique_id=1650715622]
+shape = SubResource("BoxShape3D_n7rtu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MovingCube" unique_id=30647542]
+mesh = SubResource("BoxMesh_5anb6")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=43164992]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=546435807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+size = Vector3(50, 0.5, 50)
+material = SubResource("StandardMaterial3D_phf47")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D" unique_id=676252398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -20.75)
+use_collision = true
+size = Vector3(50, 0.2, 8.5)
+material = SubResource("StandardMaterial3D_phf47")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1345935899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -21.75)
+use_collision = true
+size = Vector3(50, 0.2, 6.5)
+material = SubResource("StandardMaterial3D_phf47")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1949518306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.35, 8)
+use_collision = true
+size = Vector3(5, 0.8, 3)
+material = SubResource("StandardMaterial3D_llb37")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1388777927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2.5, 0)
+use_collision = true
+size = Vector3(1, 5, 50)
+material = SubResource("StandardMaterial3D_n7rtu")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1858013873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 2.5, 0)
+use_collision = true
+size = Vector3(1, 5, 50)
+material = SubResource("StandardMaterial3D_n7rtu")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1772937326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 25.5)
+use_collision = true
+size = Vector3(50, 5, 1)
+material = SubResource("StandardMaterial3D_n7rtu")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1806627764]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -25.5)
+use_collision = true
+size = Vector3(50, 5, 1)
+material = SubResource("StandardMaterial3D_n7rtu")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D" unique_id=971159861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89155, 1, 0)
+use_collision = true
+size = Vector3(1, 2, 1)
+material = SubResource("StandardMaterial3D_5anb6")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=841295770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4.173584, -8)
+use_collision = true
+radius = 2.0
+height = 10.347168
+material = SubResource("StandardMaterial3D_kityc")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=1037606125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2723737, 1.9622803, -12.385653)
+use_collision = true
+radius = 1.3623047
+height = 5.9245605
+material = SubResource("StandardMaterial3D_kityc")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=793223835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 6)
+use_collision = true
+radius = 2.0
+material = SubResource("StandardMaterial3D_llb37")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=1373362119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 8)
+use_collision = true
+radius = 2.0
+height = 4.0
+material = SubResource("StandardMaterial3D_llb37")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D" unique_id=385784477]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 24.5, 2.5, 24.5)
+mesh = SubResource("PrismMesh_svrf2")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D" unique_id=374091015]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -24.5, 2.5, 24.5)
+mesh = SubResource("PrismMesh_svrf2")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="CSGCombiner3D" unique_id=92994273]
+transform = Transform3D(-1, -8.742278e-08, -3.821371e-15, 0, -4.371139e-08, 1, -8.742278e-08, 1, 4.371139e-08, -24.5, 2.5, -24.5)
+mesh = SubResource("PrismMesh_svrf2")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="CSGCombiner3D" unique_id=1756096567]
+transform = Transform3D(1.3113416e-07, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, -1.3113416e-07, -5.7320566e-15, 24.5, 2.5, -24.5)
+mesh = SubResource("PrismMesh_svrf2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CSGCombiner3D" unique_id=838078465]
+transform = Transform3D(-0.18693916, 0.5181305, -0.8346224, 0.32378802, 0.83462244, 0.44560826, 0.92747784, -0.18693909, -0.32378805, 0, 6, -5)
+light_indirect_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldEnvironment" parent="CSGCombiner3D" unique_id=393555923 instance=ExtResource("9_5anb6")]
+environment = SubResource("Environment_llb37")
+
+[connection signal="free_cam_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_pressed"]
+[connection signal="free_cam_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_released"]
+[connection signal="jump_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_pressed"]
+[connection signal="jump_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_released"]
+[connection signal="look_input" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_look_input"]
+[connection signal="move_input" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_move_input"]

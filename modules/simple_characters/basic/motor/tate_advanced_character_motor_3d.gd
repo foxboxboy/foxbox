@@ -29,19 +29,28 @@ var _air_time_elapsed := 0.0
 var _has_jumped := false
 var _has_double_jumped := false
 var is_sprinting := false
-#var _acceleration := 0.0
+var _active := true
 
 
 func _physics_process(delta):
+	if not _active:
+		return
+	
 	_update_movement_advanced(delta)
 	
 	_update_y_velocity(delta)
 	
 	if body.is_on_floor():
-		reset_jump()
+		super.reset_jump()
 
 
 func _process(delta: float) -> void:
+	if not _active:
+		return
+	
+	if not ground_cast:
+		return
+	
 	if not ground_cast.is_colliding():
 		if coyote_time < 0:
 			return
@@ -52,23 +61,53 @@ func _process(delta: float) -> void:
 		_has_jumped = false
 
 
+## Enables the motor to work.
+## Also sets its process to Node.PROCESS_MODE_INHERIT
+func enable():
+	_active = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+
+
+## Enables the motor to work.
+## Also sets its process to Node.PROCESS_MODE_DISABLED for performance
+## and resets the phyics body's velocity to 0
+func disable():
+	_active = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+	body.velocity = Vector3.ZERO
+
+
 ## More advanced can_jump() that checks for a ground cast. 
-func can_jump():
+func can_jump() -> bool:
+	if not _active:
+		return false
+	
+	# Standard
 	if body.is_on_floor():
 		_has_jumped = false
 		_has_double_jumped = false
 		return true
-	elif not ground_cast == null:
-		if not _has_jumped:
-			if coyote_time < 0:
-				return true
-			else:
-				return _air_time_elapsed < coyote_time
-		elif can_double_jump:
-			if not _has_double_jumped:
-				return true
 	
-	return super.can_jump()
+	# If we don't have a ground cast
+	# the rest of the code doesn't matter
+	if ground_cast == null:
+		return false
+	
+	# Coyote time
+	if not _has_jumped:
+		# Infinite coyote time
+		if coyote_time < 0:
+			return true
+		# Normal
+		else:
+			return _air_time_elapsed < coyote_time
+	
+	# Check for double jump
+	if can_double_jump:
+		if not _has_double_jumped:
+			return true
+	
+	return false
 
 
 func _update_movement():
@@ -103,7 +142,10 @@ func _update_movement_advanced(delta):
 	body.move_and_slide()
 
 
-func jump(multiplier := 1.0):	
+func jump(multiplier := 1.0):
+	if not _active:
+		return
+	
 	if not _jump_pressed:
 		body.velocity.y = jump_strength * multiplier
 		_jump_pressed = true
@@ -129,6 +171,7 @@ func stop_sprinting():
 
 
 func _push_away_rigid_bodies():
+	
 	for i in body.get_slide_collision_count():
 		var c := body.get_slide_collision(i)
 		if c.get_collider() is RigidBody3D:

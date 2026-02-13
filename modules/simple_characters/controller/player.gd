@@ -27,6 +27,8 @@ func _input(event: InputEvent) -> void:
 				else:
 					character.try_to_crouch()
 			if event.keycode == KEY_CTRL:
+				character.disable_motor()
+				
 				if not character.is_sprinting():
 					character.try_to_sprint()
 				else:
@@ -35,7 +37,7 @@ func _input(event: InputEvent) -> void:
 			if event.keycode == KEY_1:
 				const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
 				
-				var new_gun := TOMMY_GUN_ITEM.instantiate()
+				var new_gun : TateHoldableItem = TOMMY_GUN_ITEM.instantiate()
 				
 				character.hold_item(new_gun)
 			

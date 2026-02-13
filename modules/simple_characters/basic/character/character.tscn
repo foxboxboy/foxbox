@@ -60,9 +60,8 @@ script = ExtResource("1_2xx2a")
 notify_root = false
 metadata/_custom_type_script = "uid://b7ayeeruost6d"
 
-[node name="TateVisualOptimizer" type="Node" parent="." unique_id=14306653 node_paths=PackedStringArray("visual_root", "nodes_to_hide")]
+[node name="TateVisualOptimizer" type="Node" parent="." unique_id=14306653 node_paths=PackedStringArray("nodes_to_hide")]
 script = ExtResource("2_04e00")
-visual_root = NodePath("")
 nodes_to_hide = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
