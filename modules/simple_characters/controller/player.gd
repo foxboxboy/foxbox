@@ -31,6 +31,16 @@ func _input(event: InputEvent) -> void:
 					character.try_to_sprint()
 				else:
 					character.stop_sprint()
+			
+			if event.keycode == KEY_1:
+				const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
+				
+				var new_gun := TOMMY_GUN_ITEM.instantiate()
+				
+				character.hold_item(new_gun)
+			
+			if event.keycode == KEY_0:
+				character.empty_hands()
 
 
 func do_first_person():

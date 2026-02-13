@@ -109,13 +109,7 @@ func set_move_speed(speed_percent: float) -> void:
 func set_vertical_speed(vertical_speed: float) -> void:
 	character_animation_tree.update_air_physics(vertical_speed)
 
-
-func hold_node():
-	pass
-
-
 #endregion
-
 
 
 

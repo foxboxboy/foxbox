@@ -9,10 +9,9 @@ left_hand_target = NodePath("LeftHandTarget")
 right_hand_target = NodePath("RightHandTarget")
 
 [node name="LeftHandTarget" type="Marker3D" parent="." unique_id=362896536]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25618154, 0, -0.9395673)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.35083318)
 
 [node name="RightHandTarget" type="Marker3D" parent="." unique_id=1997388476]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258, 0, -0.587)
 
 [node name="blockbench_export" parent="RightHandTarget" unique_id=980611698 instance=ExtResource("1_53yox")]
 transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, -0.0015138537, 0.011073828, 0.03429979)

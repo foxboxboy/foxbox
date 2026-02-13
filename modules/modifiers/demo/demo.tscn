@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbrnxcafx8i3w"]
+[gd_scene format=3 uid="uid://dbrnxcafx8i3w"]
 
 [ext_resource type="PackedScene" uid="uid://dqkyvc35kvhw3" path="res://modules/modifiers/demo/gui.tscn" id="1_72qgp"]
 [ext_resource type="Script" uid="uid://pdauhh1b2d50" path="res://modules/modifiers/demo/main.gd" id="1_j6k3g"]
@@ -11,17 +11,17 @@
 [ext_resource type="Script" uid="uid://bhdc3rbce0uhq" path="res://modules/core/math/tate_modifiable_stat.gd" id="5_d165p"]
 [ext_resource type="Resource" uid="uid://spersremf05u" path="res://modules/modifiers/demo/modifiers/status_effects/fire_status_effect.tres" id="7_psenn"]
 
-[sub_resource type="Resource" id="Resource_6ybc4"]
+[sub_resource type="Resource" id="Resource_psenn"]
 resource_local_to_scene = true
 script = ExtResource("5_d165p")
 metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
 
-[sub_resource type="Resource" id="Resource_5dtnt"]
+[sub_resource type="Resource" id="Resource_140n1"]
 resource_local_to_scene = true
 script = ExtResource("5_d165p")
 metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
 
-[node name="Demo" type="Node"]
+[node name="Demo" type="Node" unique_id=1260747672]
 script = ExtResource("1_j6k3g")
 chase_upgrade = ExtResource("2_d165p")
 wind_up_upgrade = ExtResource("3_6ybc4")
@@ -30,12 +30,12 @@ lance_weapon = ExtResource("4_5dtnt")
 sword_weapon = ExtResource("5_3ah6a")
 fire_status_effect = ExtResource("7_psenn")
 
-[node name="GUI" parent="." instance=ExtResource("1_72qgp")]
+[node name="GUI" parent="." unique_id=948060938 instance=ExtResource("1_72qgp")]
 
-[node name="Knight" parent="." instance=ExtResource("3_8rr27")]
+[node name="Knight" parent="." unique_id=1374366381 instance=ExtResource("3_8rr27")]
 position = Vector2(775, 283)
-damage_component = SubResource("Resource_6ybc4")
-speed_component = SubResource("Resource_5dtnt")
+damage_component = SubResource("Resource_psenn")
+speed_component = SubResource("Resource_140n1")
 
 [connection signal="chase_button_pressed" from="GUI" to="." method="_on_gui_chase_button_pressed"]
 [connection signal="clear_all_modifiers_button_pressed" from="GUI" to="." method="_on_gui_clear_all_modifiers_button_pressed"]

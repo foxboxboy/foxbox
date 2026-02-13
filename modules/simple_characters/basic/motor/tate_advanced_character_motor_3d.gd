@@ -2,7 +2,7 @@ extends TateCharacterMotor3D
 class_name TateAdvancedCharacterMotor3D
 ## A more advanced and robust character motor. Less flexible for a greater variety
 ## of games but designed to have generic behavior and features built in that many 
-##games/projects require (better jumping, interacting, sprinting, etc).
+## games/projects require (better jumping, interacting, sprinting, etc).
 
 @export_group("Advanced Jump")
 ## (Optional) Raycast3D that detects if the body is on the ground.
@@ -103,9 +103,7 @@ func _update_movement_advanced(delta):
 	body.move_and_slide()
 
 
-func jump(multiplier := 1.0):
-	print("JUMP!")
-	
+func jump(multiplier := 1.0):	
 	if not _jump_pressed:
 		body.velocity.y = jump_strength * multiplier
 		_jump_pressed = true

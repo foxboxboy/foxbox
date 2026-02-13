@@ -12,14 +12,31 @@ class_name TateCharacterHands
 
 #region Holding Nodes
 
+func empty_hands() -> void:
+	empty_right_hand()
+	empty_left_hand()
+
+
+func empty_left_hand() -> void:
+	for child in left_hand_target.get_children():
+		child.queue_free()
+
+
+func empty_right_hand() -> void:
+	for child in right_hand_target.get_children():
+		child.queue_free()
+
+
 func hold_node(node : Node, left_hand := false) -> bool:
 	if left_hand:
 		if left_hand_has_node(): return false
 		left_hand_target.add_child(node)
+		node.position = Vector3.ZERO
 		return true
 	else:
 		if right_hand_has_node(): return false
 		right_hand_target.add_child(node)
+		node.position = Vector3.ZERO
 		return true
 
 

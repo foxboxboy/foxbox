@@ -12,6 +12,15 @@ class_name TateCharacter
 #region Signals
 
 signal pose_changed(new_pose : Pose, old_pose : Pose)
+signal jumped(strength : float)
+signal landed
+signal item_equipped(item : Node)
+signal crouched
+signal stood
+signal started_sprinting
+signal stopped_sprinting
+signal view_model_changed(visible : bool)
+signal character_model_changed(visible : bool)
 
 ## I probably need more signals here...
 
@@ -28,7 +37,6 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 @export_group("Components")
 @export var physics_body : CharacterBody3D
 @export var motor: TateAdvancedCharacterMotor3D
-@export var visuals_pivot : Node3D
 @export var character_model : TateCharacterModel
 @export var camera_pivot : TateCharacterCameraPivot
 @export var view_model_container : SubViewportContainer
@@ -41,6 +49,9 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 @export var crouch_speed : float = 2.0
 @export var sprint_speed : float = 10.0
 @export var max_head_pitch := 89.0
+## The multiplier used for the jump force when jumping from a crouched position.
+## For example, 1.2 is a 20% jump boost. 
+@export var jump_crouch_multiplier := 1.2
 ## How fast the character needs to be moving to enter air animations.
 @export var enter_air_animation_velocity := 3.5
 
@@ -59,7 +70,9 @@ signal pose_changed(new_pose : Pose, old_pose : Pose)
 
 
 #region Variables
- 
+
+var character_hands : TateCharacterHands:
+	get: return character_model.character_hands
 var current_speed : float:
 	get: return motor.speed
 	set(new_value):
@@ -69,7 +82,7 @@ var current_speed : float:
 var is_free_looking := false
 
 var input_direction := Vector2.ZERO:
-	set = set_input
+	set = set_input_direction
 
 var input_strength := 0.0:
 	set(new_value):
@@ -86,6 +99,7 @@ enum Pose {
 var _aim_target_pitch : float
 var _max_head_pitch_rad : float
 var _free_look_offset: float = 0.0
+var _was_in_air := false
 
 #endregion
 
@@ -99,7 +113,7 @@ var _free_look_offset: float = 0.0
 
 func _ready() -> void:
 	assert(motor != null, "ERROR: No motor was assigned to character. "+str(get_path()))
-	
+		
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
 	character_model.stand()
@@ -114,7 +128,6 @@ func _process(_delta: float) -> void:
 	
 	_update_character_model()
 	_update_freecam()
-
 
 #endregion
 
@@ -219,15 +232,76 @@ func _update_pose() -> void:
 			character_hitbox.stand()
 			camera_pivot.stand()
 			motor.speed = walk_speed
+			stood.emit()
 		Pose.CROUCHING:
 			character_model.crouch()
 			character_hitbox.crouch()
 			camera_pivot.crouch()
 			motor.speed = crouch_speed
-
+			crouched.emit()
 
 #endregion
 
+
+
+
+
+
+
+#region Hands Interface
+
+func empty_hands() -> void:
+	character_hands.empty_hands()
+
+
+func empty_right_hand() -> void:
+	character_hands.empty_right_hand()
+
+
+func empty_left_hand() -> void:
+	character_hands.empty_left_hand() 
+
+
+func hold_item(node : Node, left_hand := false) -> bool:
+	return character_hands.hold_node(node, left_hand)
+
+
+func left_hand_has_item() -> bool:
+	return character_hands.left_hand_has_node()
+
+
+func right_hand_has_item() -> bool:
+	return character_hands.right_hand_has_node()
+
+
+func get_right_hand_item() -> Node:
+	return character_hands.get_right_hand_node()
+
+
+func get_left_hand_item() -> Node:
+	return character_hands.get_left_hand_node()
+
+
+func enable_right_hand_ik() -> void:
+	character_hands.enable_right_hand_ik()
+
+
+func disable_right_hand_ik() -> void:
+	character_hands.disable_right_hand_ik()
+
+
+func enable_left_hand_ik() -> void:
+	character_hands.enable_left_hand_ik()
+
+
+func disable_left_hand_ik() -> void:
+	character_hands.disable_left_hand_ik()
+
+#endregion
+
+
+
+#endregion
 
 
 
@@ -252,21 +326,26 @@ func get_shoulder_camera_pivot() -> Marker3D:
 func show_view_model() -> void:
 	if view_model_container:
 		view_model_container.show()
+		view_model_changed.emit(true)
 
 
 func hide_view_model() -> void:
 	if view_model_container:
 		view_model_container.hide()
+		view_model_changed.emit(false)
 
 
 func show_character_model() -> void:
 	if character_model:
 		character_model.show_meshes()
+		character_model_changed.emit(true)
 
 
 func hide_character_model() -> void:
 	if character_model:
 		character_model.hide_meshes()
+		character_model_changed.emit(false)
+
 
 func _update_freecam() -> void:
 	if not is_free_looking and camera_pivot and _free_look_offset != 0.0:
@@ -283,7 +362,7 @@ func _update_freecam() -> void:
 
 #region Main Input
 
-func set_input(direction : Vector2) -> void:
+func set_input_direction(direction : Vector2) -> void:
 	var new_value_normalized := direction.normalized()
 	motor.input_direction = new_value_normalized
 	input_direction = new_value_normalized
@@ -300,9 +379,11 @@ func try_to_jump() -> bool:
 	
 	if motor.can_jump():
 		if current_pose == Pose.CROUCHING:
-			motor.jump(1.2)
+			motor.jump(jump_crouch_multiplier)
+			jumped.emit(jump_crouch_multiplier)
 		else:
 			motor.jump()
+			jumped.emit(1.0)
 		
 		
 		stand()
@@ -319,12 +400,14 @@ func try_to_sprint() -> bool:
 	if not is_sprinting() and not is_in_air():
 		stand()
 		motor.start_sprinting()
+		started_sprinting.emit()
 		return true
 	return false
 
 
 func stop_sprint() -> void:
 	motor.is_sprinting = false
+	stopped_sprinting.emit()
 
 
 func is_sprinting() -> bool:
@@ -415,8 +498,11 @@ func _update_character_model():
 
 	if is_in_air() and is_moving_fast_vertically():
 		character_model.enter_air()
-	elif not is_in_air():
+		_was_in_air = true
+	elif not is_in_air() and _was_in_air:
 		_update_pose()
+		_was_in_air = false
+		landed.emit()
 
 
 func is_moving_fast_vertically() -> bool:

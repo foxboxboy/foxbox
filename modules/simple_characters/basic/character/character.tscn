@@ -18,12 +18,11 @@ height = 2.1948242
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_oy2pm"]
 length = 0.5
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "visuals_pivot", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "ground_cast", "visual_optimizer")]
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "ground_cast", "visual_optimizer")]
 script = ExtResource("1_7toh7")
 physics_body = NodePath(".")
 motor = NodePath("Motor")
-visuals_pivot = NodePath("VisualsPivot")
-character_model = NodePath("VisualsPivot/CharacterModel")
+character_model = NodePath("CharacterModel")
 camera_pivot = NodePath("CameraPivot")
 view_model_container = NodePath("ViewModelContainer")
 head_clearance_sensor = NodePath("HeadClearanceSensor")
@@ -51,9 +50,7 @@ collision_shape = NodePath(".")
 [node name="GroundCast" type="RayCast3D" parent="." unique_id=1373258311]
 target_position = Vector3(0, -0.2, 0)
 
-[node name="VisualsPivot" type="Marker3D" parent="." unique_id=1702593142]
-
-[node name="CharacterModel" parent="VisualsPivot" unique_id=366441859 instance=ExtResource("9_7toh7")]
+[node name="CharacterModel" parent="." unique_id=366441859 instance=ExtResource("9_7toh7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 
 [node name="ViewModelContainer" parent="." unique_id=1745782606 instance=ExtResource("8_d5u0s")]
@@ -65,7 +62,7 @@ metadata/_custom_type_script = "uid://b7ayeeruost6d"
 
 [node name="TateVisualOptimizer" type="Node" parent="." unique_id=14306653 node_paths=PackedStringArray("visual_root", "nodes_to_hide")]
 script = ExtResource("2_04e00")
-visual_root = NodePath("../VisualsPivot")
+visual_root = NodePath("")
 nodes_to_hide = [null]
 metadata/_custom_type_script = "uid://c4uoa6ox4wo60"
 
