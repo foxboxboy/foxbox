@@ -1,6 +1,8 @@
 # modules/core/math/tate_modifiable_bounded_node.gd
 extends TateNode
 class_name TateModifiableBoundedNode
+## Clamps out a TateModifiableStat.
+## Not sure if this should be a node though?
 
 signal updated(current: float, max_val: float)
 signal depleted(underflow: float)

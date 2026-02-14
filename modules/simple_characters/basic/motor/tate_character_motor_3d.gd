@@ -60,9 +60,9 @@ func _update_y_velocity(delta):
 		body.velocity += body.get_gravity() * delta * gravity_multiplier
 
 
-func jump():
+func jump(multiplier := 1.0):
 	if not _jump_pressed:
-		body.velocity.y = jump_strength
+		body.velocity.y = jump_strength * multiplier
 		_jump_pressed = true
 		jumped.emit()
 

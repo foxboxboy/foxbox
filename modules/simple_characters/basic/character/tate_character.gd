@@ -150,14 +150,14 @@ func set_network_role(is_authority: bool) -> void:
 	if is_authority:
 		# turn on physics & logic
 		motor.process_mode = Node.PROCESS_MODE_INHERIT
-		motor.jump_cast.enabled = true
+		#motor.jump_cast.enabled = true
 		set_physics_process(true)
 		
 
 	## CLIENT
 	else:
 		motor.process_mode = Node.PROCESS_MODE_DISABLED
-		motor.jump_cast.enabled = false
+		#motor.jump_cast.enabled = false
 		set_physics_process(false)
 
 #endregion
