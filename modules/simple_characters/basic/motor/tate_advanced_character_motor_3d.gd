@@ -7,7 +7,7 @@ class_name TateAdvancedCharacterMotor3D
 @export_group("Advanced Jump")
 ## (Optional) Raycast3D that detects if the body is on the ground.
 ## Exists to allow more responsive jumping.
-@export var ground_cast : RayCast3D
+@export var _ground_cast : RayCast3D
 ## (Optional) The max time spent in the air before a player can no
 ## longer jump. Set to -1 to always let a player jump once.
 @export var coyote_time : float = 0.25
@@ -50,10 +50,10 @@ func _process(delta: float) -> void:
 	if not _active:
 		return
 	
-	if not ground_cast:
+	if not _ground_cast:
 		return
 	
-	if not ground_cast.is_colliding():
+	if not _ground_cast.is_colliding():
 		if coyote_time < 0:
 			return
 		_air_time_elapsed += delta
@@ -90,8 +90,8 @@ func can_jump() -> bool:
 		_has_double_jumped = false
 		return true
 	
-	if not ground_cast == null:	
-		if ground_cast.is_colliding():
+	if not _ground_cast == null:	
+		if _ground_cast.is_colliding():
 			if body.velocity.y < 0:
 				return true
 		

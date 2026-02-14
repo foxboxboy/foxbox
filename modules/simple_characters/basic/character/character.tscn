@@ -18,22 +18,21 @@ height = 2.1948242
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_oy2pm"]
 length = 0.5
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("physics_body", "motor", "character_model", "camera_pivot", "view_model_container", "head_clearance_sensor", "character_hitbox", "ground_cast", "visual_optimizer")]
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_character_model", "_camera_pivot", "_view_model_container", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
 script = ExtResource("1_7toh7")
-physics_body = NodePath(".")
-motor = NodePath("Motor")
-character_model = NodePath("CharacterModel")
-camera_pivot = NodePath("CameraPivot")
-view_model_container = NodePath("ViewModelContainer")
-head_clearance_sensor = NodePath("HeadClearanceSensor")
-character_hitbox = NodePath("CharacterHitbox")
-ground_cast = NodePath("GroundCast")
+_physics_body = NodePath(".")
+_motor = NodePath("CharacterMotor")
+_character_model = NodePath("CharacterModel")
+_camera_pivot = NodePath("CameraPivot")
+_view_model_container = NodePath("ViewModelContainer")
+_head_clearance_sensor = NodePath("HeadClearanceSensor")
+_character_hitbox = NodePath("CharacterHitbox")
+_ground_cast = NodePath("GroundCast")
 sprint_speed = 9.0
 visual_optimizer = NodePath("TateVisualOptimizer")
 
-[node name="Motor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("ground_cast", "body")]
+[node name="CharacterMotor" type="Node" parent="." unique_id=1652443590 node_paths=PackedStringArray("body")]
 script = ExtResource("1_e87n2")
-ground_cast = NodePath("../GroundCast")
 body = NodePath("..")
 speed = 6.0
 metadata/_custom_type_script = "uid://qbedm6c0d168"
