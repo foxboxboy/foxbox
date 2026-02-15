@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c5m375y2sw8c"]
 
-[ext_resource type="Script" path="res://addons/TatesLib/simple_characters/_physics_character/stress_test/info_label.gd" id="1_27s4q"]
 [ext_resource type="PackedScene" uid="uid://bl46ajiolcqtg" path="res://addons/foxbox/world_environments/mobile_world_environment.tscn" id="1_7781v"]
 [ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://addons/foxbox/simple_characters/basic/character/character.tscn" id="1_eehrr"]
+[ext_resource type="Script" uid="uid://b7lyt1o1q1ssm" path="res://addons/foxbox/simple_characters/basic/stress_test/info_label.gd" id="2_wnx6f"]
 
 [node name="StressTestDemo" type="Node3D" unique_id=505460979]
 
@@ -25,7 +25,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "fps: 24"
-script = ExtResource("1_27s4q")
+script = ExtResource("2_wnx6f")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1851549608]
 use_collision = true
