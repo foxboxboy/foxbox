@@ -1,5 +1,3 @@
-tates_lib/simple_characters/mannequin
-
 "Test dummy" blockbench bbmodel and imported gltf model.
 
 Purpose of this module is to provide you with basic models to work off and reference.

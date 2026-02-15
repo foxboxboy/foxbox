@@ -1,5 +1,3 @@
-tate_lib/modules/occupancy
-
 Occupancy system that allows for reparenting nodes
 to different "seats".
 

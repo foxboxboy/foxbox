@@ -1,5 +1,3 @@
-tates_library/modules/simple_characters/animations
-
 Simple library of generic character animations.
 
 The bone structure is vastly simplified compared to most

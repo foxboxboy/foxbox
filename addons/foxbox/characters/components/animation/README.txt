@@ -1,3 +1,1 @@
-tates_library/modules/simple_characters/animaton_controller
-
-Simple animation logic for simple characters.
+Simple animation logic for characters.

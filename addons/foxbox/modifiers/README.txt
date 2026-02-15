@@ -1,4 +1,2 @@
-tate_lib/modules/modifiers
-
 Strategy pattern styled way of adding modifiers to your game.
 Can be used for upgrades, status effects, special armor bonuses, etc. 
