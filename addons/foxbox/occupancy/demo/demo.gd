@@ -3,7 +3,7 @@ extends Node
 
 @onready var guy: Sprite2D = $Guy
 @onready var guy_2: Sprite2D = $Guy2
-@onready var occupancy_component: TateOccupancyComponent = $OccupancyComponent
+@onready var occupancy_component: FoxOccupancyComponent = $OccupancyComponent
 
 @onready var guy_marker: Marker2D = $GuyMarker
 @onready var guy_2_marker: Marker2D = $Guy2Marker

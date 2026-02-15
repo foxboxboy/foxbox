@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://d1bs4j1hc5hen"]
-
-[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://addons/foxbox/simple_characters/entity_shadows/shadow.png" id="1_scntw"]
-
-[node name="Decal" type="Decal"]
-size = Vector3(1.5, 2, 1.5)
-texture_albedo = ExtResource("1_scntw")
-upper_fade = 3.9249564e-05

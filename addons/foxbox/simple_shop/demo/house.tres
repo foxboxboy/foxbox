@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="TatePurchaseOption" format=3 uid="uid://drk6fo7icv652"]
 
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_gvxeu"]
-[ext_resource type="Script" uid="uid://ntj77fn18uh6" path="res://addons/foxbox/core/resources/tate_string_name_resource.gd" id="2_n4gbv"]
-[ext_resource type="Script" uid="uid://8nygo3nfy78y" path="res://addons/foxbox/simple_shop/tate_purchase_option.gd" id="3_2ufmw"]
+[ext_resource type="Script" uid="uid://ntj77fn18uh6" path="res://addons/foxbox/core/resources/fox_string_name_resource.gd" id="2_n4gbv"]
+[ext_resource type="Script" uid="uid://8nygo3nfy78y" path="res://addons/foxbox/simple_shop/fox_purchase_option.gd" id="3_2ufmw"]
 
 [sub_resource type="Resource" id="Resource_2ckcb"]
 script = ExtResource("2_n4gbv")

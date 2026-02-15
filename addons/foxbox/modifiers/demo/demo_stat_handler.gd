@@ -1,4 +1,4 @@
-extends TateNode
+extends FoxNode
 class_name UnitStatHandler
 
 signal speed_stat_value_changed(new_value)
@@ -8,16 +8,16 @@ signal damage_stat_changed(new_value)
 
 # --- 1. Library Math Resources ---
 # These would ideally be exported or initialized via a UnitProfile resource
-var damage_stat: TateModifiableStat
-var speed_stat: TateModifiableStat
+var damage_stat: FoxModifiableStat
+var speed_stat: FoxModifiableStat
 
 # --- 2. Effect Management Logic ---
 # Inner class for type-safe tracking of active effects
 class EffectInstance:
-	var effect: TateModifier
+	var effect: FoxModifier
 	var time_left: float
 	
-	func _init(e: TateModifier):
+	func _init(e: FoxModifier):
 		effect = e
 		time_left = e.duration
 
@@ -26,8 +26,8 @@ var active_effects: Dictionary[String, EffectInstance] = {}
 
 func _init() -> void:
 	# Initialize our Atomic stats
-	speed_stat = TateModifiableStat.new(5.0)
-	damage_stat = TateModifiableStat.new(9.0)
+	speed_stat = FoxModifiableStat.new(5.0)
+	damage_stat = FoxModifiableStat.new(9.0)
 
 
 func _ready() -> void:
@@ -39,14 +39,14 @@ func _process(delta: float) -> void:
 
 # --- 3. The Effect Policy API ---
 
-func apply_effect(effect_res: TateModifier) -> void:
+func apply_effect(effect_res: FoxModifier) -> void:
 	print("Applying effect: ",effect_res.effect_id)
 	match effect_res.stack_mode:
-		TateModifier.StackMode.UNIQUE:
+		FoxModifier.StackMode.UNIQUE:
 			_handle_unique(effect_res)
-		TateModifier.StackMode.STACKING:
+		FoxModifier.StackMode.STACKING:
 			_handle_stacking(effect_res)
-		TateModifier.StackMode.ADDITIVE:
+		FoxModifier.StackMode.ADDITIVE:
 			_handle_additive(effect_res)
 
 
@@ -57,26 +57,26 @@ func clear_all_effects() -> void:
 	damage_stat.clear_all_modifiers()
 
 
-func _handle_unique(e: TateModifier) -> void:
+func _handle_unique(e: FoxModifier) -> void:
 	# If it exists, reset the timer. If not, create and execute.
 	if active_effects.has(e.effect_id):
 		active_effects[e.effect_id].time_left = e.duration
 	else:
 		_add_new_instance(e.effect_id, e)
 
-func _handle_stacking(e: TateModifier) -> void:
+func _handle_stacking(e: FoxModifier) -> void:
 	# Create a key for this specific stack
 	var stack_id = e.effect_id + "_" + str(Time.get_ticks_msec())
 	_add_new_instance(stack_id, e)
 
-func _handle_additive(e: TateModifier) -> void:
+func _handle_additive(e: FoxModifier) -> void:
 	# Add the duration to the existing effect timer
 	if active_effects.has(e.effect_id):
 		active_effects[e.effect_id].time_left += e.duration
 	else:
 		_add_new_instance(e.effect_id, e)
 
-func _add_new_instance(key: String, e: TateModifier) -> void:
+func _add_new_instance(key: String, e: FoxModifier) -> void:
 	active_effects[key] = EffectInstance.new(e)
 	
 	#var effect_instance : EffectInstance = active_effects[key]

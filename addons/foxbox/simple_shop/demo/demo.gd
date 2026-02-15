@@ -1,6 +1,6 @@
 extends Control
 
-@onready var purchase_option_menu: TatePurchaseOptionMenu = $Shop/MarginContainer/ScrollContainer/PurchaseOptionMenu
+@onready var purchase_option_menu: FoxPurchaseOptionMenu = $Shop/MarginContainer/ScrollContainer/PurchaseOptionMenu
 @onready var money_label : Label = $MoneyLabel
 @onready var console_label: Label = $ConsoleLabel
 
@@ -12,7 +12,7 @@ var money := 0:
 		purchase_option_menu.current_funds = money
 		
 
-const COOL_SWORD : TatePurchaseOption = preload("uid://cc0d142wmdcwv")
+const COOL_SWORD : FoxPurchaseOption = preload("uid://cc0d142wmdcwv")
 const HOUSE = preload("uid://drk6fo7icv652")
 const APPLE = preload("uid://pmmjkptyseek")
 
@@ -23,7 +23,7 @@ func _ready() -> void:
 	purchase_option_menu.add_option(APPLE)
 
 
-func _on_purchase_option_menu_slot_pressed(option: TatePurchaseOption) -> void:
+func _on_purchase_option_menu_slot_pressed(option: FoxPurchaseOption) -> void:
 	var string_to_print := "The "+option.display_name+" purhcase option was selected\
 	. It's payload is: "
 	

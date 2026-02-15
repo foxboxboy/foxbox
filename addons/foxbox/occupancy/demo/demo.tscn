@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
 
-[ext_resource type="Script" uid="uid://vhs3d3ynd4w0" path="res://addons/foxbox/occupancy/tate_occupancy_component.gd" id="1_3u4o7"]
+[ext_resource type="Script" uid="uid://vhs3d3ynd4w0" path="res://addons/foxbox/occupancy/fox_occupancy_component.gd" id="1_3u4o7"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_k3weg"]
 [ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://addons/foxbox/occupancy/demo/demo.gd" id="1_v8ofr"]
-[ext_resource type="Script" uid="uid://medn688h7d0p" path="res://addons/foxbox/occupancy/tate_seat.gd" id="3_v8ofr"]
+[ext_resource type="Script" uid="uid://medn688h7d0p" path="res://addons/foxbox/occupancy/fox_seat.gd" id="3_v8ofr"]
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_v8ofr")

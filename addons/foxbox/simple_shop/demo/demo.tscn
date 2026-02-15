@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpqxtqn47ltxu"]
 
-[ext_resource type="Script" uid="uid://bwl41wq4lc71h" path="res://addons/foxbox/simple_shop/tate_purchase_option_menu.gd" id="1_2ishs"]
+[ext_resource type="Script" uid="uid://bwl41wq4lc71h" path="res://addons/foxbox/simple_shop/fox_purchase_option_menu.gd" id="1_2ishs"]
 [ext_resource type="Script" uid="uid://bh0djd55yfn66" path="res://addons/foxbox/simple_shop/demo/demo.gd" id="1_dp0hb"]
 [ext_resource type="PackedScene" uid="uid://cvlfsdlvi1sn6" path="res://addons/foxbox/simple_shop/demo/purchase_option_slot.tscn" id="2_lgcr1"]
 

@@ -2,16 +2,16 @@
 extends Node
 
 # --- 1. The Resources ---
-var max_health: TateModifiableStat
-var current_health: TateBoundedValue
+var max_health: FoxModifiableStat
+var current_health: FoxBoundedValue
 
 # --- 2. Setup ---
 func _init() -> void:
 	# We define the 'Math' layer
-	max_health = TateModifiableStat.new(100.0)
+	max_health = FoxModifiableStat.new(100.0)
 	
 	# We define the 'State' layer
-	current_health = TateBoundedValue.new(max_health.value)
+	current_health = FoxBoundedValue.new(max_health.value)
 	
 	# --- 3. The Bridge logic ---
 	# Whenever a trait or upgrade changes the 'Stat' value...

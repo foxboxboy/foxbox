@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://6fjomgb318ai"]
+
+[ext_resource type="Script" uid="uid://if81gwhfjgh7" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.gd" id="1_5qssd"]
+
+[node name="FoxCharacterHands" type="Marker3D" unique_id=2029250302 node_paths=PackedStringArray("left_hand_slot", "right_hand_slot")]
+script = ExtResource("1_5qssd")
+left_hand_slot = NodePath("LeftHandSlot")
+right_hand_slot = NodePath("RightHandSlot")
+
+[node name="LeftHandSlot" type="Marker3D" parent="." unique_id=654513162]
+
+[node name="RightHandSlot" type="Marker3D" parent="." unique_id=603621541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2601195, -0.08590579, -0.5983463)

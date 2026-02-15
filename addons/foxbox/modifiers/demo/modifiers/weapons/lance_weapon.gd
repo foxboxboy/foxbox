@@ -1,10 +1,10 @@
-extends TateModifier
-class_name TateDemoModifierLanceWeapon
+extends FoxModifier
+class_name FoxDemoModifierLanceWeapon
 
 @export var lance_scene : PackedScene
 
 func _on_execute(target: Node) -> void:
-	if target is TateDemoKnight:
+	if target is FoxDemoKnight:
 		var new_lance := lance_scene.instantiate()
 		if target.weapon_socket.get_child_count() > 0:
 			target.weapon_socket.get_child(0).queue_free()
@@ -12,5 +12,5 @@ func _on_execute(target: Node) -> void:
 
 
 func _on_remove(_target : Node) -> void:
-	if _target is TateDemoKnight:
+	if _target is FoxDemoKnight:
 		_target.weapon_socket.get_child(0).queue_free()

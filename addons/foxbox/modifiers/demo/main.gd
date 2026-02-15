@@ -1,17 +1,17 @@
 extends Node
 
 @onready var gui = $GUI
-@onready var knight : TateDemoKnight = $Knight # The UnitStatHandler node
+@onready var knight : FoxDemoKnight = $Knight # The UnitStatHandler node
 
-@export var chase_upgrade: TateDemoModifierChaseUpgrade 
-@export var wind_up_upgrade: TateDemoModifierWindUpUpgrade
-@export var health_upgrade: TateDemoModifierHealthUpgrade
+@export var chase_upgrade: FoxDemoModifierChaseUpgrade 
+@export var wind_up_upgrade: FoxDemoModifierWindUpUpgrade
+@export var health_upgrade: FoxDemoModifierHealthUpgrade
 
-@export var lance_weapon: TateDemoModifierLanceWeapon
-@export var sword_weapon: TateDemoModifierSwordWeapon
+@export var lance_weapon: FoxDemoModifierLanceWeapon
+@export var sword_weapon: FoxDemoModifierSwordWeapon
 
-@export var fire_status_effect: TateDemoModifierFireStatusEffect
-@export var poison_status_effect: TateModifier
+@export var fire_status_effect: FoxDemoModifierFireStatusEffect
+@export var poison_status_effect: FoxModifier
 
 func _ready() -> void:
 	# UPDATE HEALTH
@@ -79,7 +79,7 @@ func _on_knight_health_updated(current: float, max_val: float) -> void:
 	health_bar.max_value = snappedf(max_val,0.1)
 
 
-func _on_knight_upgrades_changed(upgrade_list: Array[TateModifierInstance]) -> void:
+func _on_knight_upgrades_changed(upgrade_list: Array[FoxModifierInstance]) -> void:
 	gui.clear_upgrade_entries()
 	
 	for upgrade in upgrade_list:

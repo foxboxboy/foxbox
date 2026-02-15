@@ -1,5 +1,5 @@
-extends TateModifier
-class_name TateDemoModifierFireStatusEffect
+extends FoxModifier
+class_name FoxDemoModifierFireStatusEffect
 
 @export var damage_per_tick: float = 5.0
 @export var tick_interval: float = 1.0
@@ -25,9 +25,9 @@ func _on_execute(target: Node) -> void:
 
 func _apply_burn_damage(target: Node) -> void:
 	
-	var health_component : TateModifiableBoundedNode
+	var health_component : FoxModifiableBoundedNode
 	
-	if target is TateDemoKnight:
+	if target is FoxDemoKnight:
 		health_component = target.health_component
 
 	
