@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://cvlfsdlvi1sn6"]
+
+[ext_resource type="Script" uid="uid://dm18b18fpbccg" path="res://addons/TatesLib/simple_shop/tate_purchase_option_slot.gd" id="1_j6v6q"]
+[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="2_6w07k"]
+[ext_resource type="Script" uid="uid://b3tux0rl3r6ah" path="res://addons/TatesLib/simple_shop/demo/scroll_container.gd" id="3_6a638"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6w07k"]
+
+[node name="PurchaseOptionSlot" type="PanelContainer" node_paths=PackedStringArray("icon_rect", "name_label", "cost_label", "buy_button", "description_label")]
+offset_right = 230.0
+offset_bottom = 311.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6w07k")
+script = ExtResource("1_j6v6q")
+icon_rect = NodePath("MarginContainer2/MarginContainer/VBoxContainer/CenterContainer/IconRect")
+name_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/NameLabel")
+cost_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/CostLabel")
+buy_button = NodePath("MarginContainer2/Button")
+description_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer/Description")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Button" type="Button" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Cool Sword"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="IconRect" type="TextureRect" parent="MarginContainer2/MarginContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_6w07k")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_6a638")
+label = NodePath("MarginContainer/Description")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+
+[node name="Description" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 14
+text = "Gives you +100 epic awesome "
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="CostLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "$100"

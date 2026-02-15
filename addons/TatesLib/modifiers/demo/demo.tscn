@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dbrnxcafx8i3w"]
+
+[ext_resource type="PackedScene" uid="uid://dqkyvc35kvhw3" path="res://addons/TatesLib/modifiers/demo/gui.tscn" id="1_72qgp"]
+[ext_resource type="Script" uid="uid://pdauhh1b2d50" path="res://addons/TatesLib/modifiers/demo/main.gd" id="1_j6k3g"]
+[ext_resource type="Resource" uid="uid://cv87e0qntijny" path="res://addons/TatesLib/modifiers/demo/modifiers/upgrades/chase_upgrade.tres" id="2_d165p"]
+[ext_resource type="Resource" uid="uid://c7m4rfvfrg57" path="res://addons/TatesLib/modifiers/demo/modifiers/upgrades/wind_up_upgrade.tres" id="3_6ybc4"]
+[ext_resource type="PackedScene" uid="uid://cndfb5ei0tgxp" path="res://addons/TatesLib/modifiers/demo/knight.tscn" id="3_8rr27"]
+[ext_resource type="Resource" uid="uid://dbisn0qy7jcuo" path="res://addons/TatesLib/modifiers/demo/modifiers/weapons/lance_weapon.tres" id="4_5dtnt"]
+[ext_resource type="Resource" uid="uid://bmc57ry66asv2" path="res://addons/TatesLib/modifiers/demo/modifiers/upgrades/health_upgrade.tres" id="4_kknaf"]
+[ext_resource type="Resource" uid="uid://kuunl3b2x0rb" path="res://addons/TatesLib/modifiers/demo/modifiers/weapons/sword_weapon.tres" id="5_3ah6a"]
+[ext_resource type="Script" uid="uid://bhdc3rbce0uhq" path="res://addons/TatesLib/core/math/tate_modifiable_stat.gd" id="5_d165p"]
+[ext_resource type="Resource" uid="uid://spersremf05u" path="res://addons/TatesLib/modifiers/demo/modifiers/status_effects/fire_status_effect.tres" id="7_psenn"]
+
+[sub_resource type="Resource" id="Resource_psenn"]
+resource_local_to_scene = true
+script = ExtResource("5_d165p")
+metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
+
+[sub_resource type="Resource" id="Resource_140n1"]
+resource_local_to_scene = true
+script = ExtResource("5_d165p")
+metadata/_custom_type_script = "uid://bhdc3rbce0uhq"
+
+[node name="Demo" type="Node" unique_id=1260747672]
+script = ExtResource("1_j6k3g")
+chase_upgrade = ExtResource("2_d165p")
+wind_up_upgrade = ExtResource("3_6ybc4")
+health_upgrade = ExtResource("4_kknaf")
+lance_weapon = ExtResource("4_5dtnt")
+sword_weapon = ExtResource("5_3ah6a")
+fire_status_effect = ExtResource("7_psenn")
+
+[node name="GUI" parent="." unique_id=948060938 instance=ExtResource("1_72qgp")]
+
+[node name="Knight" parent="." unique_id=1374366381 instance=ExtResource("3_8rr27")]
+position = Vector2(775, 283)
+damage_component = SubResource("Resource_psenn")
+speed_component = SubResource("Resource_140n1")
+
+[connection signal="chase_button_pressed" from="GUI" to="." method="_on_gui_chase_button_pressed"]
+[connection signal="clear_all_modifiers_button_pressed" from="GUI" to="." method="_on_gui_clear_all_modifiers_button_pressed"]
+[connection signal="health_button_pressed" from="GUI" to="." method="_on_gui_health_button_pressed"]
+[connection signal="lance_button_pressed" from="GUI" to="." method="_on_gui_lance_button_pressed"]
+[connection signal="poison_button_pressed" from="GUI" to="." method="_on_gui_poison_button_pressed"]
+[connection signal="set_on_fire_button_pressed" from="GUI" to="." method="_on_gui_set_on_fire_button_pressed"]
+[connection signal="sword_button_pressed" from="GUI" to="." method="_on_gui_sword_button_pressed"]
+[connection signal="wind_up_button_pressed" from="GUI" to="." method="_on_gui_wind_up_button_pressed"]
+[connection signal="damage_updated" from="Knight" to="." method="_on_knight_damage_updated"]
+[connection signal="health_updated" from="Knight" to="." method="_on_knight_health_updated"]
+[connection signal="speed_updated" from="Knight" to="." method="_on_knight_speed_updated"]
+[connection signal="upgrades_changed" from="Knight" to="." method="_on_knight_upgrades_changed"]

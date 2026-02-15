@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://02p6hk3sfo7t"]
+
+[ext_resource type="Script" uid="uid://dx3cwvrm3ra5l" path="res://addons/TatesLib/modifiers/demo/upgrade_entry.gd" id="1_4v8p1"]
+
+[node name="UpgradeEnty" type="PanelContainer"]
+script = ExtResource("1_4v8p1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Name" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "test"

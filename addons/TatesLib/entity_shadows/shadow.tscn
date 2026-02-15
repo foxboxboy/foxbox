@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dpt8u7w062ece"]
+
+[ext_resource type="Script" uid="uid://bs7mgoq20h4hj" path="res://addons/TatesLib/entity_shadows/tate_entity_shadow.gd" id="1_ld5co"]
+[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://addons/TatesLib/entity_shadows/shadow_decal.tscn" id="2_m21k7"]
+[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://addons/TatesLib/entity_shadows/shadow_simple.tscn" id="3_yon1s"]
+
+[node name="Shadow" type="Node3D" unique_id=1028479081]
+script = ExtResource("1_ld5co")
+shadow_type = 2
+shadow_advanced_scene = ExtResource("2_m21k7")
+shadow_simple_scene = ExtResource("3_yon1s")

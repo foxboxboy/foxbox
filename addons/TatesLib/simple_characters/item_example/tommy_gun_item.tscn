@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://ww7unfyqu7q8"]
+
+[ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://addons/TatesLib/simple_characters/item_example/import/tommy_gun.gltf" id="1_53yox"]
+[ext_resource type="Script" uid="uid://c2ghpdgg0oxw7" path="res://addons/TatesLib/simple_characters/item_example/tate_holdable_item.gd" id="1_ik5yt"]
+
+[node name="TommyGunItem" type="Node3D" unique_id=1371064466 node_paths=PackedStringArray("main_hand_target", "off_hand_target", "main_elbow_pole", "off_elbow_pole")]
+script = ExtResource("1_ik5yt")
+main_hand_target = NodePath("MaintHandTarget")
+off_hand_target = NodePath("OffHandHandTarget")
+main_elbow_pole = NodePath("MaintElbowPole")
+off_elbow_pole = NodePath("OffHandElbowPole")
+
+[node name="blockbench_export" parent="." unique_id=980611698 instance=ExtResource("1_53yox")]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0.0678035, 0)
+
+[node name="OffHandHandTarget" type="Marker3D" parent="." unique_id=362896536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18616804, 0.116230845, -0.023557901)
+
+[node name="MaintHandTarget" type="Marker3D" parent="." unique_id=1997388476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08617577, 0.24113047)
+
+[node name="MaintElbowPole" type="Marker3D" parent="." unique_id=318928334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19840926, -0.28728485, 0.34803063)
+
+[node name="OffHandElbowPole" type="Marker3D" parent="." unique_id=228670560]
+transform = Transform3D(0.9981594, -0.038289044, -0.04702973, 0.03519663, 0.9972702, -0.06490964, 0.049386676, 0.06313488, 0.9967823, -0.29684174, -0.35071576, 0.2763749)

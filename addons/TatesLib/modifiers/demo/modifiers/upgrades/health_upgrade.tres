@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TateDemoModifierHealthUpgrade" format=3 uid="uid://bmc57ry66asv2"]
+
+[ext_resource type="Script" uid="uid://b8p6awm8ppens" path="res://addons/TatesLib/modifiers/demo/modifiers/upgrades/health_upgrade.gd" id="1_sxyp8"]
+
+[resource]
+script = ExtResource("1_sxyp8")
+stack_mode = 2
+metadata/_custom_type_script = "uid://b8p6awm8ppens"
