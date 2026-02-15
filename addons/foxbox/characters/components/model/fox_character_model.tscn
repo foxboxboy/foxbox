@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://addons/foxbox/characters/assets/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://6fjomgb318ai" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.tscn" id="2_060e5"]
 [ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://addons/foxbox/characters/components/entity_shadows/fox_entity_shadow.tscn" id="2_awko8"]
-[ext_resource type="PackedScene" uid="uid://btr0n4kplm6eu" path="res://addons/foxbox/characters/assets/mannequin/split/mannequin_split.gltf" id="3_kfsx8"]
 [ext_resource type="Script" uid="uid://cslida2upit7p" path="res://addons/foxbox/characters/components/animation/fox_character_animation_tree.gd" id="5_05jrh"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://btrc8ocglgeht" path="res://addons/foxbox/characters/components/animation/base_movement.tres" id="5_ly1yk"]
 
@@ -36,17 +35,16 @@ nodes/UpperBodyShot/node = SubResource("AnimationNodeOneShot_kfsx8")
 nodes/UpperBodyShot/position = Vector2(80, 220)
 node_connections = [&"output", 0, &"UpperBodyShot", &"UpperBodyShot", 0, &"BaseMovement", &"UpperBodyShot", 1, &"UpperBody"]
 
-[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("character_animation_tree")]
+[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("character_animation_tree", "character_hands", "skeleton")]
 script = ExtResource("1_b7p6l")
 character_animation_tree = NodePath("Mannequin/CharacterAnimationTree")
+character_hands = NodePath("FoxCharacterHands")
+skeleton = NodePath("Mannequin/armature/Skeleton3D")
 
 [node name="FoxCharacterHands" parent="." unique_id=2029250302 node_paths=PackedStringArray("left_hand_ik", "right_hand_ik") instance=ExtResource("2_060e5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1625, 0)
 left_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/LeftHandIK")
 right_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/RightHandIK")
-
-[node name="blockbench_export" parent="." unique_id=792240668 instance=ExtResource("3_kfsx8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Mannequin" parent="." unique_id=733879430 instance=ExtResource("2_7oa71")]
 

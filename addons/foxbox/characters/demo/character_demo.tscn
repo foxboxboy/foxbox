@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://d1ayyn78ij210" path="res://addons/foxbox/characters/demo/ai_brain.gd" id="2_phlfe"]
 [ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://addons/foxbox/characters/demo/player.gd" id="7_3ryqn"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://addons/foxbox/characters/demo/gui.tscn" id="7_aq0ug"]
-[ext_resource type="Script" path="res://addons/TatesLib/simple_characters/_physics_character/demo/moving_cube.gd" id="8_phf47"]
+[ext_resource type="Script" uid="uid://b5deh4myjghbj" path="res://addons/foxbox/characters/demo/moving_cube.gd" id="8_phf47"]
 [ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://addons/foxbox/world_environments/stylized_world_environment.tscn" id="9_5anb6"]
 [ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://addons/foxbox/world_environments/stylized_sky_shader/day_sky.tres" id="10_kityc"]
 

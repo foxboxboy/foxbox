@@ -5,6 +5,7 @@ class_name FoxCharacterModel
 @export_group("Components")
 @export var character_animation_tree : FoxCharacterAnimationTree 
 @export var character_hands : FoxCharacterHands
+@export var skeleton : Skeleton3D
 
 @export_group("Bones")
 @export var spine_bone_name: String = "spine"
@@ -15,7 +16,6 @@ class_name FoxCharacterModel
 @export var animation_spine_pitch_offset : float = 0.0
 
 
-var _skeleton: Skeleton3D
 var _spine_bone_index : int
 var _pelvis_bone_index : int
 var _meshes : Array[MeshInstance3D] = []
@@ -34,16 +34,19 @@ var yaw : float = 0.0
 #region Ready & Process
 
 func _ready() -> void:
-	_skeleton = _get_first_skeleton()
-	_spine_bone_index = _skeleton.find_bone(spine_bone_name)
-	_pelvis_bone_index = _skeleton.get_bone_parent(_spine_bone_index)
+	assert(character_hands != null, "ERROR: no character_hands were assigned to FoxCharacterModel: "+str(get_path()))
+	assert(character_animation_tree != null, "ERROR: no character_animation_tree was assigned to FoxCharacterModel: "+str(get_path()))
+	assert(skeleton != null, "ERROR: no skeleton was assigned to FoxCharacterModel: "+str(get_path()))	
+	
+	_spine_bone_index = skeleton.find_bone(spine_bone_name)
+	assert(_spine_bone_index != -1, "WARNING: no spine bone with name <"+spine_bone_name+"> could not be found under FoxCharacterModel: "+str(get_path()))
+	_pelvis_bone_index = skeleton.get_bone_parent(_spine_bone_index)
+	assert(_pelvis_bone_index != -1, "WARNING: no pelvis bone could not be found under FoxCharacterModel: "+str(get_path()))
 	_meshes = _get_all_meshes()
 	
-	var pelvis = _skeleton.get_bone_global_pose(_pelvis_bone_index)
-	var spine = _skeleton.get_bone_pose(_spine_bone_index)
+	var pelvis = skeleton.get_bone_global_pose(_pelvis_bone_index)
+	var spine = skeleton.get_bone_pose(_spine_bone_index)
 	_smoothed_anim_transform = pelvis * spine
-	
-	_check_warnings()
 
 
 func _process(_delta):
@@ -116,12 +119,6 @@ func set_vertical_speed(vertical_speed: float) -> void:
 
 #region Private
 
-func _check_warnings() -> void:
-	if _spine_bone_index == -1:
-		push_warning("WARNING: no spine bone with name <",
-		spine_bone_name,"> could not be found under FoxCharacterModel: ", get_path())
-	
-
 
 func _get_all_meshes(_under_node : Node = self, _array : Array[MeshInstance3D] = []) -> Array[MeshInstance3D]:
 	for child : Node in _under_node.get_children():
@@ -150,8 +147,8 @@ func _get_first_skeleton(_under_node : Node = self) -> Skeleton3D:
 
 
 func _update_spine_bone():
-	var pelvis_global = _skeleton.get_bone_global_pose(_pelvis_bone_index)
-	var spine_local = _skeleton.get_bone_pose(_spine_bone_index)
+	var pelvis_global = skeleton.get_bone_global_pose(_pelvis_bone_index)
+	var spine_local = skeleton.get_bone_pose(_spine_bone_index)
 
 	# where the spine bone would be if we didn't touch it
 	var animated_global_transform = pelvis_global * spine_local
@@ -164,7 +161,7 @@ func _update_spine_bone():
 	
 	# apply
 	var target_transform = Transform3D(final_basis, animated_global_transform.origin)
-	_skeleton.set_bone_global_pose_override(_spine_bone_index, target_transform, 1.0, true)
+	skeleton.set_bone_global_pose_override(_spine_bone_index, target_transform, 1.0, true)
 
 
 #endregion

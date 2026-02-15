@@ -46,14 +46,12 @@ func _input(event: InputEvent) -> void:
 func do_first_person():
 	camera.global_position = first_person_camera_pivot.global_position
 	camera.global_rotation = first_person_camera_pivot.global_rotation
-	character.show_view_model()
 	character.hide_character_model()
 
 
 func do_third_person():
 	camera.global_position = shoulder_camera_pivot.global_position
 	camera.global_rotation = shoulder_camera_pivot.global_rotation
-	character.hide_view_model()
 	character.show_character_model()
 
 
