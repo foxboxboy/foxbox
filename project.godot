@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Tates Lib"
+config/name="Fox Box"
 run/main_scene="uid://0yf3c1gkfxj0"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://bvd634geggfmh"

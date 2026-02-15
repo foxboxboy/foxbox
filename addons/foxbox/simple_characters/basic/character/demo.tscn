@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://g6qf6bonv66n"]
+
+[ext_resource type="Script" uid="uid://cdxm701821024" path="res://addons/foxbox/simple_characters/basic/character/tate_character.gd" id="1_ue4pr"]
+
+[node name="Node3D" type="Node3D" unique_id=1226981423]
+script = ExtResource("1_ue4pr")

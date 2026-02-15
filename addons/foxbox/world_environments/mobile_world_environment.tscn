@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bl46ajiolcqtg"]
+
+[ext_resource type="Texture2D" uid="uid://hdsrwws5evhq" path="res://addons/foxbox/world_environments/skybox.jpg" id="1_i3ghv"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gsva6"]
+panorama = ExtResource("1_i3ghv")
+
+[sub_resource type="Sky" id="Sky_xobiw"]
+sky_material = SubResource("PanoramaSkyMaterial_gsva6")
+process_mode = 3
+
+[sub_resource type="Environment" id="Environment_gsva6"]
+background_mode = 2
+sky = SubResource("Sky_xobiw")
+tonemap_exposure = 1.5
+
+[node name="MobileWorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_gsva6")

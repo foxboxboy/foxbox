@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bnyro307c3r5w"]
+
+[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://addons/foxbox/simple_characters/entity_shadows/shadow.png" id="1_m1gmk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q8nd"]
+transparency = 1
+albedo_texture = ExtResource("1_m1gmk")
+disable_receive_shadows = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cv4t6"]
+material = SubResource("StandardMaterial3D_1q8nd")
+size = Vector2(1.5, 1.5)
+
+[node name="Simple" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_cv4t6")
