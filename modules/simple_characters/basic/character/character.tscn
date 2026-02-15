@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://c4uoa6ox4wo60" path="res://modules/optimizers/tate_visual_optimizer.gd" id="2_04e00"]
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://modules/simple_characters/camera_pivot/camera_pivot.tscn" id="2_7toh7"]
 [ext_resource type="Script" uid="uid://c1qqhyvin62tl" path="res://modules/simple_characters/basic/hitbox/tate_character_hitbox.gd" id="4_oy2pm"]
-[ext_resource type="PackedScene" uid="uid://bj1nff6s3bdgk" path="res://modules/simple_characters/basic/view_model/view_model_container.tscn" id="8_d5u0s"]
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://modules/simple_characters/basic/model/character_model.tscn" id="9_7toh7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
@@ -18,13 +17,12 @@ height = 2.1948242
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_oy2pm"]
 length = 0.5
 
-[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_character_model", "_camera_pivot", "_view_model_container", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
+[node name="Character" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_character_model", "_camera_pivot", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
 script = ExtResource("1_7toh7")
 _physics_body = NodePath(".")
 _motor = NodePath("CharacterMotor")
 _character_model = NodePath("CharacterModel")
 _camera_pivot = NodePath("CameraPivot")
-_view_model_container = NodePath("ViewModelContainer")
 _head_clearance_sensor = NodePath("HeadClearanceSensor")
 _character_hitbox = NodePath("CharacterHitbox")
 _ground_cast = NodePath("GroundCast")
@@ -51,9 +49,6 @@ target_position = Vector3(0, -0.4, 0)
 
 [node name="CharacterModel" parent="." unique_id=366441859 instance=ExtResource("9_7toh7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-
-[node name="ViewModelContainer" parent="." unique_id=1745782606 instance=ExtResource("8_d5u0s")]
-visible = false
 
 [node name="TateNetworkOptimizer" type="Node" parent="." unique_id=1085349742]
 script = ExtResource("1_2xx2a")

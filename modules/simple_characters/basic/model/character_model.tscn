@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://modules/simple_characters/basic/model/tate_character_model.gd" id="1_b7p6l"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://modules/simple_characters/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://modules/entity_shadows/shadow.tscn" id="2_awko8"]
+[ext_resource type="PackedScene" uid="uid://btr0n4kplm6eu" path="res://modules/simple_characters/mannequin/split/mannequin_split.gltf" id="3_kfsx8"]
 [ext_resource type="Script" uid="uid://if81gwhfjgh7" path="res://modules/simple_characters/basic/model/tate_character_hands.gd" id="3_njgnm"]
 [ext_resource type="Script" uid="uid://cslida2upit7p" path="res://modules/simple_characters/basic/model/tate_character_animation_tree.gd" id="5_05jrh"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://btrc8ocglgeht" path="res://modules/simple_characters/animaton_controller/base_movement.tres" id="5_ly1yk"]
@@ -54,6 +55,9 @@ right_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/RightHandIK")
 
 [node name="RightHandSlot" type="Marker3D" parent="Hands" unique_id=1333593333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2601195, -0.08590579, -0.5983463)
+
+[node name="blockbench_export" parent="." unique_id=1629190290 instance=ExtResource("3_kfsx8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Mannequin" parent="." unique_id=232028225 instance=ExtResource("2_7oa71")]
 

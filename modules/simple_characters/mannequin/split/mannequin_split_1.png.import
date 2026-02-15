@@ -3,11 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bekh26m5r8fvl"
-path.s3tc="res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.s3tc.ctex"
-path.etc2="res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.etc2.ctex"
+path="res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "50b18e88a8af283d974eb9b5eb08470e"
@@ -16,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://modules/simple_characters/mannequin/split/mannequin_split_1.png"
-dest_files=["res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.s3tc.ctex", "res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.etc2.ctex"]
+dest_files=["res://.godot/imported/mannequin_split_1.png-ec35c7ec254e07fb99f5d6d1a74fb156.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

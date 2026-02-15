@@ -1,10 +1,29 @@
 extends TateNode3D
 class_name TateCharacter
-# A big bowl of spaghetti...
-## something something description here
-
-
-
+## A "pawn" or "puppet". A high level facade abstraction for a humanoid character 
+## that handles physics, animation, and interaction.
+##
+## Designed to be controlled by an outside controller. This class is designed to 
+## only handle the body and nothing more. It falls into the category of "muscle" 
+## rather than brain.
+##
+## [br] [br]
+## [b]Responsibilities:[/b]
+## [br] - Move a character around.
+## [br] - Animate it.
+## [br] - Make it hold nodes or TateHoldableItems.
+##
+## [br] [br]
+## [b]What this class does NOT do:[/b]
+## [br] - It does not know how to receive input.
+## [br] - It does not know game rules.
+## [br] - It does not manage inventory (outside its two hands).
+## [br] - It does not handle first person view models.
+##
+## [br] [br]
+## [b]Note:[/b]
+## Most behaviour in this are delegated as components. If you need less abstraction 
+## and more control, you can assemble the components into your own character controller.
 
 
 
@@ -19,7 +38,6 @@ signal crouched
 signal stood
 signal started_sprinting
 signal stopped_sprinting
-signal view_model_changed(visible : bool)
 signal character_model_changed(visible : bool)
 
 ## I probably need more signals here...
@@ -39,7 +57,6 @@ signal character_model_changed(visible : bool)
 @export var _motor: TateAdvancedCharacterMotor3D
 @export var _character_model : TateCharacterModel
 @export var _camera_pivot : TateCharacterCameraPivot
-@export var _view_model_container : SubViewportContainer
 @export var _head_clearance_sensor : ShapeCast3D
 @export var _character_hitbox : TateCharacterHitbox
 @export var _ground_cast : RayCast3D
@@ -116,7 +133,6 @@ func _ready() -> void:
 	assert(_motor != null, "ERROR: No _motor was assigned to character. "+str(get_path()))
 	assert(_character_model != null, "ERROR: No _character_model was assigned to character. "+str(get_path()))
 	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
-	assert(_view_model_container != null, "ERROR: No _view_model_container was assigned to character. "+str(get_path()))
 	assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
 	assert(_character_hitbox != null, "ERROR: No _character_hitbox was assigned to character. "+str(get_path()))
 	assert(_ground_cast != null, "ERROR: No _ground_cast was assigned to character. "+str(get_path()))
@@ -346,18 +362,6 @@ func get_shoulder_camera_pivot() -> Marker3D:
 	if _camera_pivot:
 		return _camera_pivot.shoulder_camera_pivot
 	return null
-
-
-func show_view_model() -> void:
-	if _view_model_container:
-		_view_model_container.show()
-		view_model_changed.emit(true)
-
-
-func hide_view_model() -> void:
-	if _view_model_container:
-		_view_model_container.hide()
-		view_model_changed.emit(false)
 
 
 func show_character_model() -> void:
