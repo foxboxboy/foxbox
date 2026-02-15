@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dqkcecbmubhmd"]
+
+[ext_resource type="Script" uid="uid://bks5tm3a525gl" path="res://addons/foxbox/interaction/demo/player.gd" id="1_7g04l"]
+[ext_resource type="Script" uid="uid://ce774eul7obos" path="res://addons/foxbox/interaction/fox_interaction_sensor_3d.gd" id="1_cggxt"]
+[ext_resource type="Script" uid="uid://djwv6u7igq0r3" path="res://addons/foxbox/interaction/demo/red_box.gd" id="1_vvqvw"]
+[ext_resource type="Script" uid="uid://c5l17vfl0thck" path="res://addons/foxbox/interaction/fox_interactable_3d.gd" id="2_tt8h7"]
+[ext_resource type="PackedScene" uid="uid://bxtgywveontjj" path="res://addons/foxbox/core/assets/camera/import/camera.gltf" id="3_a1jta"]
+[ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxbox/physics_dragging/fox_physics_dragable_3d.gd" id="3_dcams"]
+[ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxbox/physics_dragging/fox_physics_drag_manager_3d.gd" id="7_hju5i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajcoa"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dcams"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcams"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dcams"]
+material = SubResource("StandardMaterial3D_dcams")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dcams"]
+
+[node name="InteractionDemo" type="Node3D" unique_id=342451955]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1025683934]
+transform = Transform3D(0.8660254, -0.12940955, 0.482963, 0, 0.9659258, 0.2588191, -0.50000006, -0.22414388, 0.8365163, 0, 4, 0)
+shadow_enabled = true
+
+[node name="Ground" type="CSGBox3D" parent="." unique_id=1443558785]
+use_collision = true
+size = Vector3(25, 1, 25)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=264834979 node_paths=PackedStringArray("drag_component")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 0)
+collision_layer = 2
+collision_mask = 3
+can_sleep = false
+script = ExtResource("1_vvqvw")
+drag_component = NodePath("FoxPhysicsDragable")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="RigidBody3D" unique_id=73211651]
+layers = 2
+light_color = Color(1, 0, 0, 1)
+light_energy = 3.0
+shadow_enabled = true
+
+[node name="Interactable" type="Node3D" parent="RigidBody3D" unique_id=1899117437 node_paths=PackedStringArray("context_node")]
+script = ExtResource("2_tt8h7")
+context_node = NodePath("..")
+
+[node name="FoxPhysicsDragable" type="Node3D" parent="RigidBody3D" unique_id=1184627044 node_paths=PackedStringArray("physics_body")]
+script = ExtResource("3_dcams")
+physics_body = NodePath("..")
+stiffness = 10.0
+damping = 5.0
+
+[node name="CSGBox" type="CSGBox3D" parent="RigidBody3D" unique_id=940608046]
+collision_layer = 2
+collision_mask = 2
+material = SubResource("StandardMaterial3D_ajcoa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=253824227]
+shape = SubResource("BoxShape3D_dcams")
+
+[node name="Player" type="Camera3D" parent="." unique_id=234214075 node_paths=PackedStringArray("dragger_raycast", "interaction_sensor", "dragger")]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 6, 10)
+script = ExtResource("1_7g04l")
+dragger_raycast = NodePath("DraggerRaycast")
+interaction_sensor = NodePath("InteractionSensor")
+dragger = NodePath("Dragger")
+
+[node name="DraggerRaycast" type="RayCast3D" parent="Player" unique_id=1419106677]
+target_position = Vector3(0, 0, -50)
+
+[node name="InteractionSensor" type="RayCast3D" parent="Player" unique_id=1834838527 node_paths=PackedStringArray("raycast")]
+collision_mask = 2
+script = ExtResource("1_cggxt")
+raycast = NodePath(".")
+interaction_range = 30.0
+search_mode = 1
+
+[node name="blockbench_export" parent="Player" unique_id=248557822 instance=ExtResource("3_a1jta")]
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Player" unique_id=996701382]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881907, 0, 0.25881907, 0.9659259, 0, -3.2073646, -11.212174)
+
+[node name="Dragger" type="Node3D" parent="Player" unique_id=2015179067 node_paths=PackedStringArray("joint", "anchor")]
+script = ExtResource("7_hju5i")
+joint = NodePath("../Generic6DOFJoint3D")
+anchor = NodePath("DragPoint")
+
+[node name="DragPoint" type="StaticBody3D" parent="Player/Dragger" unique_id=852333493]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881907, 0, 0.25881907, 0.9659259, 0, 0, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Player/Dragger/DragPoint" unique_id=977347308]
+mesh = SubResource("SphereMesh_dcams")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Dragger/DragPoint" unique_id=1160256317]
+shape = SubResource("SphereShape3D_dcams")
+
+[node name="DebugViewport" type="SubViewportContainer" parent="." unique_id=500270278]
+anchors_preset = -1
+anchor_left = 0.74
+anchor_right = 1.0
+anchor_bottom = 0.30900002
+offset_left = -0.47998047
+offset_bottom = -0.23200989
+grow_horizontal = 0
+
+[node name="SubViewport" type="SubViewport" parent="DebugViewport" unique_id=1137966391]
+handle_input_locally = false
+size = Vector2i(300, 200)
+render_target_update_mode = 4
+
+[node name="Camera3D2" type="Camera3D" parent="DebugViewport/SubViewport" unique_id=931437634]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -17, 5, 3)
+fov = 55.0
+
+[node name="blockbench_export" parent="DebugViewport/SubViewport/Camera3D2" unique_id=1003696364 instance=ExtResource("3_a1jta")]
+
+[connection signal="interacted" from="RigidBody3D/Interactable" to="RigidBody3D" method="_on_interactable_interacted"]
