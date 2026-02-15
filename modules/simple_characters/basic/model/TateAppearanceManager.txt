@@ -1,0 +1,13 @@
+PLANNED FEATURE
+	TateAppearanceManager
+
+What is it?
+	Realtime modular armor, clothes, and accessories on characters.
+
+How's it work?
+	Bone attachments, scaling/inflating armor & accessories, and "paper dolling"
+	parts of the original mesh away. 
+	
+	The characters are split up into every limb being its own mesh, then these meshes
+	are dynamically hidden. In order to deal with the number of draw calls this adds,
+	the meshes are baked together into a single mesh.
