@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bxtgywveontjj" path="res://addons/foxbox/core/assets/camera/import/camera.gltf" id="3_a1jta"]
 [ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxbox/physics_dragging/fox_physics_dragable_3d.gd" id="3_dcams"]
 [ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxbox/physics_dragging/fox_physics_drag_manager_3d.gd" id="7_hju5i"]
+[ext_resource type="Script" uid="uid://8lyo1dj2251p" path="res://addons/foxbox/interaction/demo/door.gd" id="8_sfwh4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajcoa"]
 albedo_color = Color(1, 0, 0, 1)
@@ -24,6 +25,9 @@ radius = 0.25
 height = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dcams"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c6adm"]
+size = Vector3(2, 4, 0.3)
 
 [node name="InteractionDemo" type="Node3D" unique_id=342451955]
 
@@ -56,7 +60,6 @@ context_node = NodePath("..")
 [node name="FoxPhysicsDragable" type="Node3D" parent="RigidBody3D" unique_id=1184627044 node_paths=PackedStringArray("physics_body")]
 script = ExtResource("3_dcams")
 physics_body = NodePath("..")
-stiffness = 10.0
 damping = 5.0
 
 [node name="CSGBox" type="CSGBox3D" parent="RigidBody3D" unique_id=940608046]
@@ -89,10 +92,9 @@ search_mode = 1
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Player" unique_id=996701382]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881907, 0, 0.25881907, 0.9659259, 0, -3.2073646, -11.212174)
 
-[node name="Dragger" type="Node3D" parent="Player" unique_id=2015179067 node_paths=PackedStringArray("joint", "anchor")]
+[node name="Dragger" type="Node3D" parent="Player" unique_id=2015179067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5881908, -9.659259)
 script = ExtResource("7_hju5i")
-joint = NodePath("../Generic6DOFJoint3D")
-anchor = NodePath("DragPoint")
 
 [node name="DragPoint" type="StaticBody3D" parent="Player/Dragger" unique_id=852333493]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881907, 0, 0.25881907, 0.9659259, 0, 0, 0)
@@ -125,5 +127,36 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -17,
 fov = 55.0
 
 [node name="blockbench_export" parent="DebugViewport/SubViewport/Camera3D2" unique_id=1003696364 instance=ExtResource("3_a1jta")]
+
+[node name="Door" type="Node3D" parent="." unique_id=898363535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 0)
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Door" unique_id=2054680015]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.5999999, 0, 0)
+node_a = NodePath("../RigidBody3D2")
+angular_limit/enable = true
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="Door" unique_id=707770188 node_paths=PackedStringArray("drag_component")]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("8_sfwh4")
+drag_component = NodePath("drag")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/RigidBody3D2" unique_id=1797146635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+shape = SubResource("BoxShape3D_c6adm")
+
+[node name="MeshInstance3D" type="CSGBox3D" parent="Door/RigidBody3D2" unique_id=1918770933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
+size = Vector3(2, 4, 0.3)
+
+[node name="interact" type="Node3D" parent="Door/RigidBody3D2" unique_id=862948401 node_paths=PackedStringArray("context_node")]
+script = ExtResource("2_tt8h7")
+context_node = NodePath("..")
+
+[node name="drag" type="Node3D" parent="Door/RigidBody3D2" unique_id=1502183667 node_paths=PackedStringArray("physics_body")]
+script = ExtResource("3_dcams")
+physics_body = NodePath("..")
+damping = 15.0
 
 [connection signal="interacted" from="RigidBody3D/Interactable" to="RigidBody3D" method="_on_interactable_interacted"]
