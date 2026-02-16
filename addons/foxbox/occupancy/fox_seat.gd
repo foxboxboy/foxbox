@@ -1,5 +1,5 @@
 # tates_lib/modules/occupancy/tate_seat.gd
-extends FoxNode
+extends FoxNode	
 class_name FoxSeat
 ## Provides a way of reparenting a single node and update its
 ## transform. Literally just a seat.

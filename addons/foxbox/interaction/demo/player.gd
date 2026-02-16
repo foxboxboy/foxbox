@@ -8,76 +8,67 @@ extends Camera3D
 var _dragged_object : FoxDraggable3D
 var is_rotating_mode: bool = false
 var last_mouse_pos := Vector2.ZERO
-var hold_height := 0.0 # Height offset relative to raycast hit
+var current_hold_distance := 2.5 # How far away we hold the object
 
 func _ready() -> void:
 	dragger_raycast.enabled = true
 
 func _physics_process(_delta):
-	# 1. Update Raycasts
+	# 1. Update Interaction Sensor (Finding things)
 	var mouse_pos = get_viewport().get_mouse_position()
 	var local_ray_dir = get_local_mouse_direction(mouse_pos)
-	
 	interaction_sensor.target_position = local_ray_dir * interaction_sensor.interaction_range
-	dragger_raycast.target_position = local_ray_dir * 30.0
-	dragger_raycast.force_raycast_update() # Critical: Ensure fresh data
 	
-	# 2. Update Dragger Position (Only if not rotating)
-	if not is_rotating_mode:
-		var target_point: Vector3
+	# 2. Update Dragger Position (The Floating Hand)
+	if _dragged_object:
+		# Calculate where the hand WANTS to be (Floating in front of camera)
+		var target_pos = global_position + (local_ray_dir * current_hold_distance)
+		
+		# WALL CHECK: Raycast from eyes to target to prevent clipping
+		# We reuse the dragger_raycast for this check
+		dragger_raycast.target_position = local_ray_dir * current_hold_distance
+		dragger_raycast.force_raycast_update()
 		
 		if dragger_raycast.is_colliding():
-			# Hit a wall? Hold it there.
-			target_point = dragger_raycast.get_collision_point()
-		else:
-			# Hit sky? Hold it at max distance in front of us.
-			target_point = dragger_raycast.to_global(dragger_raycast.target_position)
-		
-		# Apply Hold Height/Distance modification
-		# (You can modify this logic if you want 'Trombone' sliding)
-		target_point.y += hold_height
-		
-		# Move the dragger (The Manager handles the Anchor follow logic)
-		dragger.global_position = target_point
+			# If wall is closer, pull hand back
+			target_pos = dragger_raycast.get_collision_point()
+			# Pull back slightly (padding)
+			target_pos -= (target_pos - global_position).normalized() * 0.2
+			
+		# Update the Ghost Hand
+		dragger.global_position = target_pos
 
 func _process(delta: float) -> void:
 	# --- INPUT HANDLING ---
 	
-	# 1. Rotation Mode (RMB)
+	# Rotation Mode (RMB)
 	if Input.is_action_just_pressed("rmb"):
-		if not is_rotating_mode:
-			is_rotating_mode = true
-			dragger.set_rotation_override(true) # Tell manager to lock rotation
-			last_mouse_pos = get_viewport().get_mouse_position()
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		is_rotating_mode = true
+		last_mouse_pos = get_viewport().get_mouse_position()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			
 	elif Input.is_action_just_released("rmb"):
-		if is_rotating_mode:
-			is_rotating_mode = false
-			dragger.set_rotation_override(false) # Release lock
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			Input.warp_mouse(last_mouse_pos * get_viewport().sdf_scale)
+		is_rotating_mode = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		get_viewport().warp_mouse(last_mouse_pos)
 
-	# 2. Clicking / Grabbing
+	# Click & Grab
 	if Input.is_action_just_pressed("click"):
-		# Reset rotation to flat when picking up new object
-		dragger.rotation = Vector3.ZERO
-		
 		var interactable_target = interaction_sensor.get_current_target()
 		if interactable_target:
 			_try_handle_target(interactable_target)
 
 	if Input.is_action_just_released("click"):
 		if _dragged_object:
-			dragger.release()
+			dragger.release() # True = Dampen spin on release
 			_dragged_object = null
 
-	# 3. Zoom / Height Adjustment
+	# Zoom (Distance Adjustment)
 	if _dragged_object:
 		if Input.is_action_just_pressed("zoom_in"):
-			hold_height = clamp(hold_height + 0.5, -2.0, 5.0)
+			current_hold_distance = clamp(current_hold_distance + 0.5, 1.0, 5.0)
 		elif Input.is_action_just_pressed("zoom_out"):
-			hold_height = clamp(hold_height - 0.5, -2.0, 5.0)
+			current_hold_distance = clamp(current_hold_distance - 0.5, 1.0, 5.0)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -85,15 +76,17 @@ func _input(event: InputEvent) -> void:
 			_handle_object_rotation(event)
 
 func _handle_object_rotation(event: InputEventMouseMotion):
-	# Rotate the Drag Point (The "Ghost Hand")
-	# The Physics Joint will twist the object to catch up.
+	# REPO STYLE ROTATION
+	# We rotate the "Ghost Hand" (Dragger). 
+	# The Physics Manager pulls the object's corner to this hand.
+	# The result: The object pivots around the grab point.
 	
 	# YAW (Left/Right) - Rotate around GLOBAL UP
-	dragger.rotate_y(deg_to_rad(-event.relative.x * 0.1))
+	dragger.rotate_y(deg_to_rad(-event.relative.x * 0.2))
 	
 	# PITCH (Up/Down) - Rotate around CAMERA RIGHT
 	var cam_right = global_transform.basis.x
-	dragger.rotate(cam_right, deg_to_rad(-event.relative.y * 0.1))
+	dragger.rotate(cam_right, deg_to_rad(-event.relative.y * 0.2))
 
 func _try_handle_target(interactable: FoxInteractable3D):
 	var entity = interactable.context_node as InteractionDemoEntity
@@ -101,12 +94,23 @@ func _try_handle_target(interactable: FoxInteractable3D):
 		interactable.interact()
 		return
 
-	var hit_point = interaction_sensor.raycast.get_collision_point()
-
 	var drag_data = entity.get_drag_component()
 	if drag_data:
 		_dragged_object = drag_data
-		# Pass hit_point here!
+		var hit_point = interaction_sensor.raycast.get_collision_point()
+		
+		# --- CRITICAL SETUP ---
+		# 1. Calculate how far away the object is so we don't snap it to our face.
+		current_hold_distance = global_position.distance_to(hit_point)
+		
+		# 2. Teleport Dragger to the EXACT grab point
+		dragger.global_position = hit_point
+		
+		# 3. Align Dragger rotation to the Object.
+		# This prevents the object from snapping "Upright" when we grab it.
+		# It keeps its chaotic, natural rotation.
+		dragger.global_basis = _dragged_object.physics_body.global_basis
+		
 		dragger.grab_component(_dragged_object, hit_point) 
 		return
 		

@@ -1,127 +1,107 @@
 class_name FoxPhysicsDragManager3D
 extends Node3D
 
-@export_group("Default Settings")
-@export var default_stiffness: float = 20.0
-@export var default_damping: float = 1.0
+@export_group("Settings")
+@export var stiffness: float = 800.0  # Strength of the hold
+@export var damping: float = 25.0     # Smoothness (Resistance)
 
 var _current_body: RigidBody3D
-var _current_settings: Dictionary = {} 
-var _rotation_override: bool = false 
-var _grab_offset_local: Vector3 = Vector3.ZERO
-
-# NEW: A safety flag to prevent "Ghost Velocity" explosions
-var _skip_first_frame: bool = false 
+var _grab_offset_local: Vector3
+var _skip_first_frame: bool = false
 
 # ------------------------------------------------------------------------------
 # Public API
 # ------------------------------------------------------------------------------
 
+# This is the function your PlayerController was missing!
 func grab_component(draggable: FoxDraggable3D, hit_point: Vector3) -> void:
 	if not draggable or not draggable.physics_body: return
 	
-	_current_settings = {
-		"stiffness": draggable.stiffness,
-		"damping": draggable.damping,
-		"keep_upright": draggable.keep_upright
-	}
-	_setup_grab(draggable.physics_body, hit_point)
+	# Allow individual objects to override stiffness (e.g. heavy pianos)
+	var obj_stiffness = draggable.stiffness if draggable.stiffness > 0 else stiffness
+	var obj_damping = draggable.damping if draggable.damping > 0 else damping
+	
+	_setup_grab(draggable.physics_body, hit_point, obj_stiffness, obj_damping)
 
 func grab_body(body: RigidBody3D, hit_point: Vector3) -> void:
 	if not body: return
-	_current_settings = {
-		"stiffness": default_stiffness,
-		"damping": default_damping,
-		"keep_upright": false 
-	}
-	_setup_grab(body, hit_point)
+	_setup_grab(body, hit_point, stiffness, damping)
 
-func release() -> void:
+func release(dampen_spin: bool = true) -> void:
 	if _current_body:
-		_current_body.angular_velocity *= 0.25
+		# Smart Release: If it's just vibrating, kill the spin. If throwing, keep it.
+		if dampen_spin and _current_body.angular_velocity.length() < 2.0:
+			_current_body.angular_velocity *= 0.1
+			
 		_current_body.sleeping = false
 		_current_body = null
-		_current_settings = {}
-		_rotation_override = false
-
-func set_rotation_override(active: bool) -> void:
-	_rotation_override = active
 
 # ------------------------------------------------------------------------------
 # Internal Logic
 # ------------------------------------------------------------------------------
 
-func _setup_grab(body: RigidBody3D, hit_point: Vector3) -> void:
+func _setup_grab(body: RigidBody3D, hit_point: Vector3, k: float, d: float) -> void:
 	_current_body = body
+	stiffness = k
+	damping = d
 	
-	# 1. KILL MOMENTUM
+	# 1. Kill Momentum (Stop the fight before it starts)
 	_current_body.linear_velocity = Vector3.ZERO
 	_current_body.angular_velocity = Vector3.ZERO
 	
-	# 2. Setup Offset
+	# 2. Store the "Knot" (Where we grabbed relative to center)
 	_grab_offset_local = _current_body.to_local(hit_point)
-	global_basis = _current_body.global_basis
 	
-	# 3. ENABLE SAFETY FLAG (The Fix)
-	# We refuse to run physics math this frame. We wait for the velocity reset to take effect.
 	_skip_first_frame = true
 
 func _physics_process(delta):
 	if not _current_body:
 		return
 
-	# SAFETY CHECK
 	if _skip_first_frame:
 		_skip_first_frame = false
-		return # Exit immediately. Do not pass Go. Do not apply Forces.
+		return
 
-	# --- 1. DETERMINE OFFSET ---
-	var effective_offset_local = _grab_offset_local
-	if _rotation_override:
-		effective_offset_local = Vector3.ZERO
-
-	# --- 2. LINEAR SPRING ---
+	# --- 1. PIVOT DRAGGING (The R.E.P.O. Feel) ---
+	# We pull the "Grab Offset" to the "Dragger Position".
+	# If we rotate the Dragger, the object rotates around this point.
+	
 	var target_pos = global_position
 	
-	var global_offset = _current_body.global_basis * effective_offset_local
+	# Calculate where the Grab Point is right now in the world
+	var global_offset = _current_body.global_basis * _grab_offset_local
 	var current_grab_point = _current_body.global_position + global_offset
+	
 	var diff_pos = target_pos - current_grab_point
 	
-	var kp = _current_settings.get("stiffness", 20.0)
-	var kd = _current_settings.get("damping", 1.0)
+	# Calculate Velocity of that specific point for accurate damping
+	var vel_at_point = _current_body.linear_velocity + _current_body.angular_velocity.cross(global_offset)
 	
-	var velocity_at_point = _current_body.linear_velocity + _current_body.angular_velocity.cross(global_offset)
+	var force = (diff_pos * stiffness) - (vel_at_point * damping)
 	
-	var spring_force = (diff_pos * kp) - (velocity_at_point * kd)
-	
-	_current_body.apply_force(spring_force, global_offset)
+	# Force Clamp (Weight): Heavy objects won't lift if force > max
+	# Pianos need ~5000 force to lift. If we clamp at 4000, they drag but don't fly.
+	var max_force = 4000.0 
+	if force.length() > max_force:
+		force = force.normalized() * max_force
+		
+	_current_body.apply_force(force, global_offset)
 
-	# --- 3. ANGULAR SPRING ---
-	var should_rotate = _current_settings.get("keep_upright", false) or _rotation_override
+	# --- 2. ROTATION LOCK ---
+	# We align the Body's rotation to the Dragger's rotation.
+	# Since the PlayerController rotates the Dragger, this handles everything.
 	
-	if should_rotate:
-		var target_basis = global_transform.basis
-		var current_basis = _current_body.global_transform.basis
-		
-		var diff = (target_basis * current_basis.inverse()).get_rotation_quaternion()
-		var axis = diff.get_axis().normalized()
-		var angle = diff.get_angle()
-		
-		if angle > PI: angle -= TAU 
-		
-		var r_kp = kp * 8.0
-		var r_kd = kd * 4.0
-		
-		if _rotation_override:
-			r_kp = 200.0
-			r_kd = 25.0
-			
-		var spring_torque = (axis * angle * r_kp) - (_current_body.angular_velocity * r_kd)
-		
-		if spring_torque.length() > 50.0:
-			spring_torque = spring_torque.normalized() * 50.0
-			
-		_current_body.apply_torque(spring_torque)
-
+	var target_basis = global_transform.basis
+	var current_basis = _current_body.global_transform.basis
+	
+	var diff = (target_basis * current_basis.inverse()).get_rotation_quaternion()
+	var axis = diff.get_axis().normalized()
+	var angle = diff.get_angle()
+	if angle > PI: angle -= TAU
+	
+	# Deadzone (Stop micro-jitter)
+	if abs(rad_to_deg(angle)) < 1.0:
+		_current_body.apply_torque(-_current_body.angular_velocity * damping * 0.1)
 	else:
-		_current_body.apply_torque(_current_body.angular_velocity * -0.1)
+		var torque = (axis * angle * (stiffness * 0.5)) - (_current_body.angular_velocity * (damping * 0.2))
+		_current_body.apply_torque(torque)
