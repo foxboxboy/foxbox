@@ -44,15 +44,12 @@ func _physics_process(delta):
 	# automatically start another jump
 	if body.is_on_floor():
 		super.reset_jump_pressed()
+	
+	if _ground_cast:
+		_update_airtime(delta)
 
 
-func _process(delta: float) -> void:
-	if not _active:
-		return
-	
-	if not _ground_cast:
-		return
-	
+func _update_airtime(delta):
 	if not _ground_cast.is_colliding():
 		if coyote_time < 0:
 			return
@@ -61,6 +58,8 @@ func _process(delta: float) -> void:
 	else:
 		_air_time_elapsed = 0.0
 		_has_jumped = false
+	
+
 
 
 ## Enables the motor to work.
@@ -107,6 +106,8 @@ func can_jump() -> bool:
 	return super.can_jump()
 
 
+## Made to override the parent class's method for safety, the _update_movement_advanced() takes in delta so the
+## parameter signatures don't match.
 func _update_movement():
 	return
 
@@ -117,22 +118,26 @@ func _update_movement_advanced(delta):
 	var direction = (forward * input_direction.y) + (right * input_direction.x)
 	direction = direction * input_strength
 	
+	var body_velocity_2d := Vector2(body.velocity.x, body.velocity.z)
+	
 	if body.velocity.length() < stop_sprinting_threshold:
 		is_sprinting = false
 	
 	if direction:
-		var target_vector := Vector3(direction.x, 0.0, direction.z)
+		var target_vector := Vector2(direction.x, direction.z)
 		
 		if is_sprinting:
 			target_vector *= sprint_speed
 		else:
 			target_vector *= speed
-		
-		target_vector += Vector3(0, body.velocity.y, 0)
-		
-		body.velocity = body.velocity.move_toward(target_vector, delta * acceleration)
+
+		body_velocity_2d = body_velocity_2d.move_toward(target_vector, delta * acceleration)
+
 	else:
-		body.velocity = body.velocity.move_toward(Vector3(0, body.velocity.y, 0), delta * friction)
+		body_velocity_2d = body_velocity_2d.move_toward(Vector2(0,0), delta * friction)
+	
+	body.velocity.x = body_velocity_2d.x
+	body.velocity.z = body_velocity_2d.y
 	
 	_push_away_rigid_bodies()
 	
