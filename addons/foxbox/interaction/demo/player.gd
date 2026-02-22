@@ -8,35 +8,43 @@ extends Camera3D
 var _dragged_object : FoxDraggable3D
 var is_rotating_mode: bool = false
 var last_mouse_pos := Vector2.ZERO
-var current_hold_distance := 2.5 # How far away we hold the object
+
+# "Lift" Height: How high above the ground/cursor the object floats.
+# Start at 0.5 so it doesn't drag/scrape along the floor immediately.
+var hold_height := 0.5 
 
 func _ready() -> void:
 	dragger_raycast.enabled = true
 
 func _physics_process(_delta):
-	# 1. Update Interaction Sensor (Finding things)
+	# 1. Update Raycasts
 	var mouse_pos = get_viewport().get_mouse_position()
 	var local_ray_dir = get_local_mouse_direction(mouse_pos)
+	
 	interaction_sensor.target_position = local_ray_dir * interaction_sensor.interaction_range
 	
-	# 2. Update Dragger Position (The Floating Hand)
-	if _dragged_object:
-		# Calculate where the hand WANTS to be (Floating in front of camera)
-		var target_pos = global_position + (local_ray_dir * current_hold_distance)
-		
-		# WALL CHECK: Raycast from eyes to target to prevent clipping
-		# We reuse the dragger_raycast for this check
-		dragger_raycast.target_position = local_ray_dir * current_hold_distance
-		dragger_raycast.force_raycast_update()
+	# Cast far into the world (e.g. 100 meters) to find the "Cursor Position"
+	dragger_raycast.target_position = local_ray_dir * 100.0
+	dragger_raycast.force_raycast_update()
+	
+	# 2. Update Dragger Position (The "God Hand")
+	#if _dragged_object and not is_rotating_mode:
+	if not is_rotating_mode:
+		var target_point: Vector3
 		
 		if dragger_raycast.is_colliding():
-			# If wall is closer, pull hand back
-			target_pos = dragger_raycast.get_collision_point()
-			# Pull back slightly (padding)
-			target_pos -= (target_pos - global_position).normalized() * 0.2
-			
-		# Update the Ghost Hand
-		dragger.global_position = target_pos
+			# HIT: Move the hand to exactly where the mouse clicked on the world (Floor/Table)
+			target_point = dragger_raycast.get_collision_point()
+		else:
+			# MISS: If pointing at the sky, just hold it out at max range
+			target_point = dragger_raycast.to_global(dragger_raycast.target_position)
+		
+		# Apply the "Levitation" height
+		# This is CRITICAL for top-down. It lets you lift things over fences.
+		target_point.y += hold_height
+		
+		# Teleport the ghost hand there. The physics manager will pull the object to it.
+		dragger.global_position = target_point
 
 func _process(delta: float) -> void:
 	# --- INPUT HANDLING ---
@@ -60,15 +68,17 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_released("click"):
 		if _dragged_object:
-			dragger.release() # True = Dampen spin on release
+			dragger.release(true)
 			_dragged_object = null
 
-	# Zoom (Distance Adjustment)
+	# Height Adjustment (Mouse Wheel = Lift/Lower)
 	if _dragged_object:
 		if Input.is_action_just_pressed("zoom_in"):
-			current_hold_distance = clamp(current_hold_distance + 0.5, 1.0, 5.0)
+			# Lift the object HIGHER
+			hold_height = clamp(hold_height + 0.5, 0.0, 5.0)
 		elif Input.is_action_just_pressed("zoom_out"):
-			current_hold_distance = clamp(current_hold_distance - 0.5, 1.0, 5.0)
+			# Lower the object (Drop it)
+			hold_height = clamp(hold_height - 0.5, 0.0, 5.0)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -76,15 +86,12 @@ func _input(event: InputEvent) -> void:
 			_handle_object_rotation(event)
 
 func _handle_object_rotation(event: InputEventMouseMotion):
-	# REPO STYLE ROTATION
-	# We rotate the "Ghost Hand" (Dragger). 
-	# The Physics Manager pulls the object's corner to this hand.
-	# The result: The object pivots around the grab point.
+	# Rotate the Dragger. The object will pivot around the grab point to match.
 	
-	# YAW (Left/Right) - Rotate around GLOBAL UP
-	dragger.rotate_y(deg_to_rad(-event.relative.x * 0.2))
+	# YAW: Rotate around the WORLD UP axis (Standard top-down rotation)
+	dragger.rotate(Vector3.UP, deg_to_rad(-event.relative.x * 0.2))
 	
-	# PITCH (Up/Down) - Rotate around CAMERA RIGHT
+	# PITCH: Rotate around CAMERA RIGHT (Tumble forward/back)
 	var cam_right = global_transform.basis.x
 	dragger.rotate(cam_right, deg_to_rad(-event.relative.y * 0.2))
 
@@ -99,17 +106,22 @@ func _try_handle_target(interactable: FoxInteractable3D):
 		_dragged_object = drag_data
 		var hit_point = interaction_sensor.raycast.get_collision_point()
 		
-		# --- CRITICAL SETUP ---
-		# 1. Calculate how far away the object is so we don't snap it to our face.
-		current_hold_distance = global_position.distance_to(hit_point)
+		# 1. Calculate initial Hold Height
+		# This prevents the object from snapping Up or Down when grabbed.
+		# If I grab a box on a table (height 2), my hold_height becomes (2 - floor_height).
+		# We approximate this by just using the Y difference from the "Ground" cursor hit?
+		# A simpler way: Reset hold_height to 0 relative to where we clicked, or keep it sticky.
 		
-		# 2. Teleport Dragger to the EXACT grab point
-		dragger.global_position = hit_point
+		# Let's just start clean:
+		# We snapped the dragger to the hit point.
+		#dragger.global_position = hit_point
 		
-		# 3. Align Dragger rotation to the Object.
-		# This prevents the object from snapping "Upright" when we grab it.
-		# It keeps its chaotic, natural rotation.
-		dragger.global_basis = _dragged_object.physics_body.global_basis
+		# We set the logic to maintain that height relative to future raycasts.
+		# If dragger is at Y=2, and Raycast is at Y=2, hold_height = 0.
+		hold_height = 0.0 
+		
+		# Align Dragger rotation (Repo Feel)
+		#dragger.global_basis = _dragged_object.physics_body.global_basis
 		
 		dragger.grab_component(_dragged_object, hit_point) 
 		return

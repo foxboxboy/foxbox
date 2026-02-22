@@ -184,9 +184,9 @@ mesh = SubResource("BoxMesh_5anb6")
 use_collision = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=546435807]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
 use_collision = true
-size = Vector3(50, 0.5, 50)
+size = Vector3(50, 5, 50)
 material = SubResource("StandardMaterial3D_phf47")
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D" unique_id=676252398]
