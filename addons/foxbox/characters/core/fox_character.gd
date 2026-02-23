@@ -89,6 +89,8 @@ signal character_model_changed(visible : bool)
 
 var hands : FoxCharacterHands:
 	get: return _model.hands
+var accessories : FoxCharacterAccessories:
+	get: return _model.accessories
 var current_speed : float:
 	get: return _motor.speed
 	set(new_value):

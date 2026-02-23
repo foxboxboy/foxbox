@@ -11,6 +11,10 @@ class_name FoxCharacterHands
 
 
 
+func _process(delta: float) -> void:
+	return#rotation = Vector3.ZERO
+	
+
 
 
 
@@ -74,6 +78,18 @@ func get_left_hand_node() -> Node:
 		return null
 	return left_hand_slot.get_child(0)
 
+
+func has_right_hand_node() -> bool:
+	return get_right_hand_node() != null
+
+
+func has_left_hand_node() -> bool:
+	return get_left_hand_node() != null
+
+
+func has_node_in_either_hand() -> bool:
+	return has_right_hand_node() or has_left_hand_node()
+
 #endregion
 
 
@@ -104,7 +120,6 @@ func hold_item(item : FoxHoldableItem, left_handed := false):
 	if item.main_elbow_pole == null:
 		return
 	
-
 	
 	## MAIN HAND
 	if right_handed:

@@ -121,7 +121,7 @@ cull_mask = 1048573
 
 [node name="Character" parent="." unique_id=1677576452 instance=ExtResource("2_hbwi6")]
 
-[node name="AICharacter" parent="." unique_id=831317880 instance=ExtResource("2_hbwi6")]
+[node name="AICharacter" parent="." unique_id=145916314 instance=ExtResource("2_hbwi6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 
 [node name="Label3D" type="Label3D" parent="AICharacter" unique_id=997475688]

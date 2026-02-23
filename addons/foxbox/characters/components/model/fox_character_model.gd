@@ -6,6 +6,7 @@ class_name FoxCharacterModel
 @export var animation_tree : FoxCharacterAnimationTree 
 @export var hands : FoxCharacterHands
 @export var skeleton : Skeleton3D
+@export var accessories : FoxCharacterAccessories
 
 @export_group("Bones")
 @export var spine_bone_name: String = "spine"
@@ -37,6 +38,8 @@ func _ready() -> void:
 	assert(hands != null, "ERROR: no hands were assigned to FoxCharacterModel: "+str(get_path()))
 	assert(animation_tree != null, "ERROR: no animation_tree was assigned to FoxCharacterModel: "+str(get_path()))
 	assert(skeleton != null, "ERROR: no skeleton was assigned to FoxCharacterModel: "+str(get_path()))	
+	assert(accessories != null, "ERROR: no accessories were assigned to FoxCharacterModel: "+str(get_path()))	
+
 	
 	_spine_bone_index = skeleton.find_bone(spine_bone_name)
 	assert(_spine_bone_index != -1, "WARNING: no spine bone with name <"+spine_bone_name+"> could not be found under FoxCharacterModel: "+str(get_path()))

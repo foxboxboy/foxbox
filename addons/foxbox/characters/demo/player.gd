@@ -9,6 +9,10 @@ extends Node
 var first_person_camera_pivot : Marker3D
 var shoulder_camera_pivot : Marker3D
 
+const TOMMY_GUN = preload("uid://384do1qwb655")
+const VEST = preload("uid://cu8c6xykn3112")
+const HELMET = preload("uid://qalmtfjmgw2q")
+
 
 func _process(_delta: float) -> void:
 	first_person_camera_pivot = character.get_first_person_camera_pivot()
@@ -21,27 +25,42 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed and not event.echo:
+			#CROUCH
 			if event.keycode == KEY_C:
 				if character.is_crouching():
 					character.try_to_stand()
 				else:
 					character.try_to_crouch()
+			
+			# SPRINT
 			if event.keycode == KEY_CTRL:
 				if not character.is_sprinting():
 					character.try_to_sprint()
 				else:
 					character.stop_sprint()
 			
+			# HOLD GUN
 			if event.keycode == KEY_1:
-				const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
-				
-				var new_gun : FoxHoldableItem = TOMMY_GUN_ITEM.instantiate()
-				
-				character.hands.hold_item(new_gun)
+				if character.hands.has_node_in_either_hand():
+					character.hands.empty_hands()
+				else:
+					const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
+					var new_gun : FoxHoldableItem = TOMMY_GUN_ITEM.instantiate()
+					character.hands.hold_item(new_gun)
 			
-			if event.keycode == KEY_0:
-				character.hands.empty_hands()
-
+			# EQUIP HELMET
+			if event.keycode == KEY_2:
+				if character.accessories.has_rigid_accessory_in_slot("head"):
+					character.accessories.empty_rigid_accessory_slot("head")
+				else:
+					character.accessories.equip_rigid_accessory(HELMET.instantiate(), "head")
+			
+			# EQUIP VEST
+			if event.keycode == KEY_3:
+				if character.accessories.has_skinned_accessory_slot("torso"):
+					character.accessories.empty_skinned_accessory_slot("torso")
+				else:
+					character.accessories.equip_skinned_accessory(VEST.instantiate(), "torso")
 
 func do_first_person():
 	camera.global_position = first_person_camera_pivot.global_position

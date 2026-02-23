@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://addons/foxbox/characters/assets/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://6fjomgb318ai" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.tscn" id="2_060e5"]
 [ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://addons/foxbox/characters/components/entity_shadows/fox_entity_shadow.tscn" id="2_awko8"]
+[ext_resource type="Script" uid="uid://xnodb87petin" path="res://addons/foxbox/characters/components/model/accessory_manager/fox_character_accessories.gd" id="4_b5bb4"]
 [ext_resource type="Script" uid="uid://cslida2upit7p" path="res://addons/foxbox/characters/components/animation/fox_character_animation_tree.gd" id="5_05jrh"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://btrc8ocglgeht" path="res://addons/foxbox/characters/components/animation/base_movement.tres" id="5_ly1yk"]
 
@@ -35,20 +36,25 @@ nodes/UpperBodyShot/node = SubResource("AnimationNodeOneShot_kfsx8")
 nodes/UpperBodyShot/position = Vector2(80, 220)
 node_connections = [&"output", 0, &"UpperBodyShot", &"UpperBodyShot", 0, &"BaseMovement", &"UpperBodyShot", 1, &"UpperBody"]
 
-[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("animation_tree", "hands", "skeleton")]
+[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("animation_tree", "hands", "skeleton", "accessories")]
 script = ExtResource("1_b7p6l")
 animation_tree = NodePath("Mannequin/CharacterAnimationTree")
 hands = NodePath("FoxCharacterHands")
 skeleton = NodePath("Mannequin/armature/Skeleton3D")
+accessories = NodePath("Mannequin/armature/Skeleton3D")
 
 [node name="FoxCharacterHands" parent="." unique_id=2029250302 node_paths=PackedStringArray("left_hand_ik", "right_hand_ik") instance=ExtResource("2_060e5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1625, 0)
 left_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/LeftHandIK")
 right_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/RightHandIK")
 
-[node name="Mannequin" parent="." unique_id=733879430 instance=ExtResource("2_7oa71")]
+[node name="Mannequin" parent="." unique_id=601530213 instance=ExtResource("2_7oa71")]
 
-[node name="Head" type="BoneAttachment3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(733879430, 1762570456) index="1" unique_id=666230453]
+[node name="Skeleton3D" parent="Mannequin/armature" parent_id_path=PackedInt32Array(601530213, 919447920) index="0" unique_id=377446097 node_paths=PackedStringArray("skeleton")]
+script = ExtResource("4_b5bb4")
+skeleton = NodePath(".")
+
+[node name="Head" type="BoneAttachment3D" parent="Mannequin/armature/Skeleton3D" index="1" unique_id=666230453]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5625, 0)
 bone_name = "head"
 bone_idx = 3
@@ -60,7 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27491498, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 0)
 remote_path = NodePath("../../../../../FoxCharacterHands")
 
-[node name="LeftHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(733879430, 1762570456) index="2" unique_id=926102285]
+[node name="LeftHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" index="2" unique_id=926102285]
 active = false
 setting_count = 1
 settings/0/target_node = NodePath("../../../../FoxCharacterHands/LeftHandSlot")
@@ -75,7 +81,7 @@ settings/0/end_bone = 8
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
-[node name="RightHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" parent_id_path=PackedInt32Array(733879430, 1762570456) index="3" unique_id=1480989020]
+[node name="RightHandIK" type="TwoBoneIK3D" parent="Mannequin/armature/Skeleton3D" index="3" unique_id=1480989020]
 setting_count = 1
 settings/0/target_node = NodePath("../../../../FoxCharacterHands/RightHandSlot")
 settings/0/pole_node = NodePath("")
