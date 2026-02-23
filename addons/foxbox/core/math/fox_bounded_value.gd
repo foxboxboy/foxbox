@@ -1,6 +1,7 @@
 extends FoxResource
 class_name FoxBoundedValue
 ## A generic resource that manages a float value within a defined range.
+
 ## Tracks "overflow" and "underflow" to allow for secondary mechanics like overkill.
 
 #region Signals
@@ -17,6 +18,8 @@ signal depleted(underflow: float)
 signal saturated(overflow: float)
 
 #endregion
+
+
 
 #region Variables
 
@@ -40,17 +43,21 @@ var value : float = 1.0:
 
 #endregion
 
+
+
 #region Public
 
 ## Decreases the value.
 func subtract(amount : float) -> void:
-	value -= amount
+	self.value -= amount
 
 ## Increases the value.
 func add(amount : float) -> void:
-	value += amount
+	self.value += amount
 
 #endregion
+
+
 
 #region Private
 

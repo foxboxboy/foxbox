@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
+
+[ext_resource type="Script" uid="uid://vhs3d3ynd4w0" path="res://addons/foxbox/occupancy/fox_occupancy_component.gd" id="1_3u4o7"]
+[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_k3weg"]
+[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://addons/foxbox/occupancy/demo/occupancy_demo.gd" id="1_v8ofr"]
+[ext_resource type="Script" uid="uid://medn688h7d0p" path="res://addons/foxbox/occupancy/fox_seat.gd" id="3_v8ofr"]
+
+[node name="Demo" type="Node3D" unique_id=1446433242]
+script = ExtResource("1_v8ofr")
+
+[node name="Label" type="Label" parent="." unique_id=2140426172]
+offset_left = 149.0
+offset_top = 877.0
+offset_right = 406.0
+offset_bottom = 900.0
+text = "good job you found an easter egg
+I DON'T WANT IT I JUST NEED IT"
+
+[node name="OccupancyComponent" type="Node3D" parent="." unique_id=584230032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 209, 323, 0)
+script = ExtResource("1_3u4o7")
+
+[node name="Seat" type="Marker3D" parent="OccupancyComponent" unique_id=79449598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 0)
+script = ExtResource("3_v8ofr")
+
+[node name="Label" type="Label3D" parent="OccupancyComponent/Seat" unique_id=61084789]
+pixel_size = 0.4705
+text = "SEAT 1"
+
+[node name="Seat2" type="Marker3D" parent="OccupancyComponent" unique_id=380468559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 226, 0)
+script = ExtResource("3_v8ofr")
+
+[node name="Label" type="Label3D" parent="OccupancyComponent/Seat2" unique_id=1587575690]
+pixel_size = 0.4705
+text = "SEAT 2"
+
+[node name="Guy" type="Sprite3D" parent="." unique_id=1206126905]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 695, 369, 0)
+texture = ExtResource("1_k3weg")
+
+[node name="SitButton" type="Button" parent="Guy" unique_id=1614083468]
+offset_left = -76.0
+offset_top = 150.0
+offset_right = 81.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 32
+text = "Sit"
+
+[node name="Label" type="Label" parent="Guy" unique_id=129580213]
+offset_left = -116.0
+offset_top = -162.0
+offset_right = -72.0
+offset_bottom = -139.0
+text = "Guy 1"
+
+[node name="Guy2" type="Sprite3D" parent="." unique_id=1207025962]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 962, 280, 0)
+texture = ExtResource("1_k3weg")
+
+[node name="Label" type="Label" parent="Guy2" unique_id=1708582447]
+offset_left = -110.0
+offset_top = -168.0
+offset_right = -66.0
+offset_bottom = -145.0
+text = "Guy 2"
+
+[node name="SitButton" type="Button" parent="Guy2" unique_id=346161157]
+offset_left = -76.0
+offset_top = 150.0
+offset_right = 81.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 32
+text = "Sit"
+
+[node name="GuyMarker" type="Marker3D" parent="." unique_id=1629322519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 693, 365, 0)
+
+[node name="Guy2Marker" type="Marker3D" parent="." unique_id=1460753785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 968, 284, 0)
+
+[connection signal="pressed" from="Guy/SitButton" to="." method="_on_sit_button_pressed"]
+[connection signal="pressed" from="Guy2/SitButton" to="." method="_on_sit_button_2_pressed"]
