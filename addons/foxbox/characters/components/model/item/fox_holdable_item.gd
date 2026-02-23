@@ -26,7 +26,4 @@ func _ready() -> void:
 
 
 func is_two_handed() -> bool:
-	if off_hand_target: 
-		return true
-	else: 
-		return false
+	return off_hand_target != null

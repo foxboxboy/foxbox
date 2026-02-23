@@ -23,12 +23,12 @@ func empty_hands() -> void:
 
 func empty_left_hand() -> void:
 	for child in left_hand_slot.get_children():
-		child.queue_free()
+		remove_child(child)
 
 
 func empty_right_hand() -> void:
 	for child in right_hand_slot.get_children():
-		child.queue_free()
+		remove_child(child)
 
 
 ## Returns true if a node was replaced.
@@ -40,13 +40,15 @@ func hold_node(node : Node, left_handed := false) -> bool:
 			empty_left_hand()
 			cleared = true
 		left_hand_slot.add_child(node)
-		node.position = Vector3.ZERO
 	else:
 		if right_hand_has_node(): 
 			empty_right_hand()
 			cleared = true
 		right_hand_slot.add_child(node)
+		
+	if node is Node3D:
 		node.position = Vector3.ZERO
+		node.rotation = Vector3.ZERO
 	
 	return cleared
 
