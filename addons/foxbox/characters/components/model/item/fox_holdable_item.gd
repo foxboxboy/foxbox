@@ -25,5 +25,6 @@ func _ready() -> void:
 		push_warning("WARNING: FoxHoldableItem has a off_elbow_pole but no main_elbow_pole, ",get_path())
 
 
+
 func is_two_handed() -> bool:
 	return off_hand_target != null

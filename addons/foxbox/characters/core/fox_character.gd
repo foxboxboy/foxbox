@@ -33,7 +33,6 @@ class_name FoxCharacter
 signal pose_changed(new_pose : Pose, old_pose : Pose)
 signal jumped(strength : float)
 signal landed
-signal item_equipped(item : Node)
 signal crouched
 signal stood
 signal started_sprinting
@@ -53,7 +52,7 @@ signal character_model_changed(visible : bool)
 @export_group("Components")
 @export var _physics_body : CharacterBody3D
 @export var _motor: FoxAdvancedCharacterMotor3D
-@export var _character_model : FoxCharacterModel
+@export var _model : FoxCharacterModel
 @export var _camera_pivot : FoxCharacterCameraPivot
 @export var _head_clearance_sensor : ShapeCast3D
 @export var _character_hitbox : FoxCharacterHitbox
@@ -88,8 +87,8 @@ signal character_model_changed(visible : bool)
 
 #region Variables
 
-var character_hands : FoxCharacterHands:
-	get: return _character_model.character_hands
+var hands : FoxCharacterHands:
+	get: return _model.hands
 var current_speed : float:
 	get: return _motor.speed
 	set(new_value):
@@ -132,7 +131,7 @@ var _is_sprinting := false
 func _ready() -> void:
 	assert(_physics_body != null, "ERROR: No _physics_body was assigned to character. "+str(get_path()))
 	assert(_motor != null, "ERROR: No _motor was assigned to character. "+str(get_path()))
-	assert(_character_model != null, "ERROR: No _character_model was assigned to character. "+str(get_path()))
+	assert(_model != null, "ERROR: No _model was assigned to character. "+str(get_path()))
 	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
 	assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
 	assert(_character_hitbox != null, "ERROR: No _character_hitbox was assigned to character. "+str(get_path()))
@@ -140,7 +139,7 @@ func _ready() -> void:
 		
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
-	_character_model.stand()
+	_model.stand()
 	
 	_motor.speed = walk_speed
 
@@ -242,7 +241,7 @@ func can_stand_up() -> bool:
 func _update_pose() -> void:
 	match current_pose:
 		Pose.STANDING:
-			_character_model.stand()
+			_model.stand()
 			_character_hitbox.stand()
 			_camera_pivot.stand()
 			
@@ -254,7 +253,7 @@ func _update_pose() -> void:
 			stood.emit()
 			
 		Pose.CROUCHING:
-			_character_model.crouch()
+			_model.crouch()
 			_character_hitbox.crouch()
 			_camera_pivot.crouch()
 			_motor.speed = crouch_speed
@@ -283,14 +282,14 @@ func get_shoulder_camera_pivot() -> Marker3D:
 
 
 func show_character_model() -> void:
-	if _character_model:
-		_character_model.show_meshes()
+	if _model:
+		_model.show_meshes()
 		character_model_changed.emit(true)
 
 
 func hide_character_model() -> void:
-	if _character_model:
-		_character_model.hide_meshes()
+	if _model:
+		_model.hide_meshes()
 		character_model_changed.emit(false)
 
 
@@ -346,7 +345,7 @@ func look_at_position(target_global_pos: Vector3) -> void:
 	if _camera_pivot:
 		_camera_pivot.rotation.x = _aim_target_pitch
 		
-	_character_model.pitch = _aim_target_pitch
+	_model.pitch = _aim_target_pitch
 
 
 
@@ -372,7 +371,7 @@ func look_at_position_smooth(target_global_pos: Vector3, delta: float, turn_spee
 	if _camera_pivot:
 		_camera_pivot.rotation.x = _aim_target_pitch
 	
-	_character_model.pitch = _aim_target_pitch
+	_model.pitch = _aim_target_pitch
 
 
 func rotate_head_relative(relative: Vector2) -> void:
@@ -470,68 +469,6 @@ func _update_sprint() -> void:
 
 
 
-#region Hands Interface
-
-func empty_hands() -> void:
-	character_hands.empty_hands()
-
-
-func empty_right_hand() -> void:
-	character_hands.empty_right_hand()
-
-
-func empty_left_hand() -> void:
-	character_hands.empty_left_hand() 
-
-
-func hold_node(node : Node, left_handed := false) -> bool:
-	return character_hands.hold_node(node, left_handed)
-
-
-func hold_item(item : FoxHoldableItem, left_handed := false):
-	character_hands.hold_item(item, left_handed)
-	item_equipped.emit(item)
-
-
-func left_hand_has_item() -> bool:
-	return character_hands.left_hand_has_node()
-
-
-func right_hand_has_item() -> bool:
-	return character_hands.right_hand_has_node()
-
-
-func get_right_hand_item() -> Node:
-	return character_hands.get_right_hand_node()
-
-
-func get_left_hand_item() -> Node:
-	return character_hands.get_left_hand_node()
-
-
-func enable_right_hand_ik(target_node : Node3D, pole_node : Node3D) -> void:
-	character_hands.enable_right_hand_ik(target_node, pole_node)
-
-
-func disable_right_hand_ik() -> void:
-	character_hands.disable_right_hand_ik()
-
-
-func enable_left_hand_ik(target_node : Node3D, pole_node : Node3D) -> void:
-	character_hands.enable_left_hand_ik(target_node, pole_node)
-
-
-func disable_left_hand_ik() -> void:
-	character_hands.disable_left_hand_ik()
-
-#endregion
-
-
-
-
-
-
-
 #region Helpers
 
 func get_speed_percent() -> float:
@@ -560,7 +497,7 @@ func is_moving() -> bool:
 
 
 func get_aim_torso_angle_difference() -> float:
-	var angle := _character_model.global_rotation.y - self.global_rotation.y
+	var angle := _model.global_rotation.y - self.global_rotation.y
 	# Between -180 and +180
 	angle = wrapf(angle, -PI, PI) 
 	angle = angle
@@ -584,17 +521,17 @@ func is_in_air() -> bool:
 
 
 func _update_character_model():
-	_character_model.update_strafe(input_direction)#, get_horizontal_velocity())
+	_model.update_strafe(input_direction)#, get_horizontal_velocity())
 	
-	if not is_free_looking: _character_model.pitch = _aim_target_pitch
+	if not is_free_looking: _model.pitch = _aim_target_pitch
 	
-	_character_model.yaw = get_aim_torso_angle_difference()
+	_model.yaw = get_aim_torso_angle_difference()
 	
-	_character_model.set_move_speed(snappedf(get_speed_percent(),0.1))
-	_character_model.set_vertical_speed(_physics_body.velocity.y)
+	_model.set_move_speed(snappedf(get_speed_percent(),0.1))
+	_model.set_vertical_speed(_physics_body.velocity.y)
 
 	if is_in_air() and is_moving_fast_vertically():
-		_character_model.enter_air()
+		_model.enter_air()
 		_was_in_air = true
 	elif not is_in_air() and _was_in_air:
 		_update_pose()

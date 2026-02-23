@@ -17,13 +17,13 @@ length = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oy2pm"]
 
-[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_character_model", "_camera_pivot", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
+[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_model", "_camera_pivot", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
 collision_mask = 3
 platform_floor_layers = 4294967293
 script = ExtResource("1_7128x")
 _physics_body = NodePath(".")
 _motor = NodePath("AdvancedCharacterMotor")
-_character_model = NodePath("CharacterModel")
+_model = NodePath("CharacterModel")
 _camera_pivot = NodePath("CameraPivot")
 _head_clearance_sensor = NodePath("HeadClearanceSensor")
 _character_hitbox = NodePath("CharacterHitbox")

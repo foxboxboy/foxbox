@@ -3,8 +3,8 @@ class_name FoxCharacterModel
 ## Rotates the spine bone and provides simple API to work with an imported character model.
 
 @export_group("Components")
-@export var character_animation_tree : FoxCharacterAnimationTree 
-@export var character_hands : FoxCharacterHands
+@export var animation_tree : FoxCharacterAnimationTree 
+@export var hands : FoxCharacterHands
 @export var skeleton : Skeleton3D
 
 @export_group("Bones")
@@ -34,8 +34,8 @@ var yaw : float = 0.0
 #region Ready & Process
 
 func _ready() -> void:
-	assert(character_hands != null, "ERROR: no character_hands were assigned to FoxCharacterModel: "+str(get_path()))
-	assert(character_animation_tree != null, "ERROR: no character_animation_tree was assigned to FoxCharacterModel: "+str(get_path()))
+	assert(hands != null, "ERROR: no hands were assigned to FoxCharacterModel: "+str(get_path()))
+	assert(animation_tree != null, "ERROR: no animation_tree was assigned to FoxCharacterModel: "+str(get_path()))
 	assert(skeleton != null, "ERROR: no skeleton was assigned to FoxCharacterModel: "+str(get_path()))	
 	
 	_spine_bone_index = skeleton.find_bone(spine_bone_name)
@@ -63,7 +63,7 @@ func _process(_delta):
 #region Public API
 
 func enter_air() -> void:
-	character_animation_tree.transition_to_air()	
+	animation_tree.transition_to_air()	
 
 
 func update_strafe(input_direction: Vector2) -> void:
@@ -96,19 +96,19 @@ func show_meshes():
 
 
 func stand():
-	character_animation_tree.transition_to_stand()
+	animation_tree.transition_to_stand()
 
 
 func crouch():
-	character_animation_tree.transition_to_crouch()
+	animation_tree.transition_to_crouch()
 
 
 func set_move_speed(speed_percent: float) -> void:
-	character_animation_tree.update_movement(speed_percent)
+	animation_tree.update_movement(speed_percent)
 
 
 func set_vertical_speed(vertical_speed: float) -> void:
-	character_animation_tree.update_air_physics(vertical_speed)
+	animation_tree.update_air_physics(vertical_speed)
 
 #endregion
 

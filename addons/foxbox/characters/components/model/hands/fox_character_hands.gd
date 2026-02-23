@@ -23,12 +23,12 @@ func empty_hands() -> void:
 
 func empty_left_hand() -> void:
 	for child in left_hand_slot.get_children():
-		remove_child(child)
+		child.remove_child(child)
 
 
 func empty_right_hand() -> void:
 	for child in right_hand_slot.get_children():
-		remove_child(child)
+		child.queue_free()
 
 
 ## Returns true if a node was replaced.

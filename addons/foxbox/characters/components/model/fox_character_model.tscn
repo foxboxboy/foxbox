@@ -35,10 +35,10 @@ nodes/UpperBodyShot/node = SubResource("AnimationNodeOneShot_kfsx8")
 nodes/UpperBodyShot/position = Vector2(80, 220)
 node_connections = [&"output", 0, &"UpperBodyShot", &"UpperBodyShot", 0, &"BaseMovement", &"UpperBodyShot", 1, &"UpperBody"]
 
-[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("character_animation_tree", "character_hands", "skeleton")]
+[node name="FoxCharacterModel" type="Node3D" unique_id=366441859 node_paths=PackedStringArray("animation_tree", "hands", "skeleton")]
 script = ExtResource("1_b7p6l")
-character_animation_tree = NodePath("Mannequin/CharacterAnimationTree")
-character_hands = NodePath("FoxCharacterHands")
+animation_tree = NodePath("Mannequin/CharacterAnimationTree")
+hands = NodePath("FoxCharacterHands")
 skeleton = NodePath("Mannequin/armature/Skeleton3D")
 
 [node name="FoxCharacterHands" parent="." unique_id=2029250302 node_paths=PackedStringArray("left_hand_ik", "right_hand_ik") instance=ExtResource("2_060e5")]

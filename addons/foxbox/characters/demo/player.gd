@@ -37,10 +37,10 @@ func _input(event: InputEvent) -> void:
 				
 				var new_gun : FoxHoldableItem = TOMMY_GUN_ITEM.instantiate()
 				
-				character.hold_item(new_gun)
+				character.hands.hold_item(new_gun)
 			
 			if event.keycode == KEY_0:
-				character.empty_hands()
+				character.hands.empty_hands()
 
 
 func do_first_person():
