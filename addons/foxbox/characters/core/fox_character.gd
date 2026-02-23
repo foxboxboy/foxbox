@@ -40,8 +40,6 @@ signal started_sprinting
 signal stopped_sprinting
 signal character_model_changed(visible : bool)
 
-## I probably need more signals here...
-
 #endregion
 
 
@@ -71,6 +69,8 @@ signal character_model_changed(visible : bool)
 @export var jump_crouch_multiplier := 1.2
 ## How fast the character needs to be moving to enter air animations.
 @export var enter_air_animation_velocity := 3.5
+## The % the velocity needs to be of the sprint_speed for the character to stop sprinting. Default 5%.
+@export var stop_sprinting_threshold := 0.05
 
 @export_group("Visual Optimizer")
 ## @experimental
@@ -117,6 +117,7 @@ var _aim_target_pitch : float
 var _max_head_pitch_rad : float
 var _free_look_offset: float = 0.0
 var _was_in_air := false
+var _is_sprinting := false
 
 #endregion
 
@@ -126,7 +127,7 @@ var _was_in_air := false
 
 
 
-#region Ready & Process
+#region Virtual Methods
 
 func _ready() -> void:
 	assert(_physics_body != null, "ERROR: No _physics_body was assigned to character. "+str(get_path()))
@@ -141,7 +142,7 @@ func _ready() -> void:
 	
 	_character_model.stand()
 	
-	_motor.sprint_speed = sprint_speed
+	_motor.speed = walk_speed
 
 
 func _process(_delta: float) -> void:	
@@ -152,36 +153,10 @@ func _process(_delta: float) -> void:
 	_update_character_model()
 	_update_freecam()
 
-#endregion
 
-
-
-
-
-
-
-#region Multiplayer
-
-## This might need refactoring!
-## I don't know if I like the idea of the networking stuff being done
-## by the character. I like how "blackbox" it is but I'll have to see
-## if coupling the character to the idea of multiplayer is a good or bad
-## idea.
-
-func set_network_role(is_authority: bool) -> void:
-	## SERVER
-	if is_authority:
-		# turn on physics & logic
-		_motor.process_mode = Node.PROCESS_MODE_INHERIT
-		#_motor.jump_cast.enabled = true
-		set_physics_process(true)
-		
-
-	## CLIENT
-	else:
-		_motor.process_mode = Node.PROCESS_MODE_DISABLED
-		#_motor.jump_cast.enabled = false
-		set_physics_process(false)
+func _physics_process(_delta: float) -> void:
+	if is_sprinting():
+		_update_sprint()
 
 #endregion
 
@@ -215,7 +190,6 @@ func set_pose(new_pose : Pose) -> bool:
 	if new_pose == current_pose: return false
 	
 	if new_pose == Pose.STANDING and not can_stand_up():
-		print(_head_clearance_sensor.get_collider(0))
 		return false
 	
 	var old_pose := current_pose
@@ -271,14 +245,222 @@ func _update_pose() -> void:
 			_character_model.stand()
 			_character_hitbox.stand()
 			_camera_pivot.stand()
-			_motor.speed = walk_speed
+			
+			if is_sprinting():
+				_motor.speed = sprint_speed
+			else:
+				_motor.speed = walk_speed
+			
 			stood.emit()
+			
 		Pose.CROUCHING:
 			_character_model.crouch()
 			_character_hitbox.crouch()
 			_camera_pivot.crouch()
 			_motor.speed = crouch_speed
 			crouched.emit()
+
+#endregion
+
+
+
+
+
+
+
+#region Camera & Models
+
+func get_first_person_camera_pivot() -> Marker3D:
+	if _camera_pivot:
+		return _camera_pivot.first_person_camera_pivot
+	return null
+
+
+func get_shoulder_camera_pivot() -> Marker3D:
+	if _camera_pivot:
+		return _camera_pivot.shoulder_camera_pivot
+	return null
+
+
+func show_character_model() -> void:
+	if _character_model:
+		_character_model.show_meshes()
+		character_model_changed.emit(true)
+
+
+func hide_character_model() -> void:
+	if _character_model:
+		_character_model.hide_meshes()
+		character_model_changed.emit(false)
+
+
+func _update_freecam() -> void:
+	if not is_free_looking and _camera_pivot and _free_look_offset != 0.0:
+		_free_look_offset = 0.0
+		_camera_pivot.rotation.y = _free_look_offset
+
+#endregion
+
+
+
+
+
+
+
+#region Main Input
+
+func set_input_direction(direction : Vector2) -> void:
+	var new_value_normalized := direction.normalized()
+	_motor.input_direction = new_value_normalized
+	input_direction = new_value_normalized
+
+#endregion
+
+
+
+
+
+
+
+#region Aim Rotation
+
+func look_at_position(target_global_pos: Vector3) -> void:
+	var direction = target_global_pos - self.global_position
+	
+	# Safety check to prevent math errors (looking at self)
+	if direction.length_squared() < 0.001: return
+
+	# Yaw
+	var target_yaw = atan2(-direction.x, -direction.z)
+	
+	self.global_rotation.y = target_yaw
+	
+	# Pitch
+	# We calculate the angle difference in height vs distance
+	var flat_distance = Vector2(direction.x, direction.z).length()
+	var target_pitch = atan2(direction.y, flat_distance)
+	
+	# Clamp it so we don't snap our spine looking straight up/down
+	_aim_target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
+	
+	if _camera_pivot:
+		_camera_pivot.rotation.x = _aim_target_pitch
+		
+	_character_model.pitch = _aim_target_pitch
+
+
+
+func look_at_position_smooth(target_global_pos: Vector3, delta: float, turn_speed: float = 8.0) -> void:
+	var direction = target_global_pos - self.global_position
+	
+	# If the target is too close horizontally don't spin the body.
+	var flat_distance = Vector2(direction.x, direction.z).length()
+	if flat_distance < 0.5: 
+		return
+
+	# Yaw
+	var target_yaw = atan2(-direction.x, -direction.z)
+	self.rotation.y = lerp_angle(self.rotation.y, target_yaw, turn_speed * delta)
+	
+	# Pitch
+	var target_pitch = atan2(direction.y, flat_distance)
+	target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
+	
+	# We lerp the pitch variable, then apply it to the camera/model
+	_aim_target_pitch = lerp_angle(_aim_target_pitch, target_pitch, turn_speed * delta)
+	
+	if _camera_pivot:
+		_camera_pivot.rotation.x = _aim_target_pitch
+	
+	_character_model.pitch = _aim_target_pitch
+
+
+func rotate_head_relative(relative: Vector2) -> void:
+	_process_pitch(relative.y)
+	_process_yaw(relative.x)
+
+
+func _process_pitch(relative_y: float) -> void:
+	_aim_target_pitch = clamp(_aim_target_pitch - relative_y, -_max_head_pitch_rad, _max_head_pitch_rad)
+
+	if _camera_pivot:
+		_camera_pivot.rotation.x = _aim_target_pitch
+
+
+func _process_yaw(relative_x: float) -> void:
+	if is_free_looking:
+		_free_look_offset += -relative_x
+		
+		if _camera_pivot:
+			_camera_pivot.rotation.y = _free_look_offset
+			
+	else:
+		self.rotate_y(-relative_x)
+
+#endregion
+
+
+
+
+
+
+
+#region Jump
+
+func try_to_jump() -> bool:
+	if not can_stand_up():
+		return false
+	
+	if _motor.can_jump():
+		if current_pose == Pose.CROUCHING:
+			_motor.jump(jump_crouch_multiplier)
+			jumped.emit(jump_crouch_multiplier)
+		else:
+			_motor.jump()
+			jumped.emit(1.0)
+		
+		stand()
+		return true
+		
+	return false
+
+
+func reset_jump_pressed() -> void:
+	_motor.reset_jump_pressed()
+
+#endregion
+
+
+
+
+
+
+
+#region Sprint
+
+func try_to_sprint() -> bool:
+	if not is_sprinting() and not is_in_air():
+		stand()
+		_motor.speed = sprint_speed
+		_is_sprinting = true
+		started_sprinting.emit()
+		return true
+	return false
+
+
+func stop_sprint() -> void:
+	_is_sprinting = false
+	_motor.speed = walk_speed
+	stopped_sprinting.emit()
+
+
+func is_sprinting() -> bool:
+	return _is_sprinting
+
+
+func _update_sprint() -> void:
+	if get_current_velocity() < sprint_speed * stop_sprinting_threshold:
+		stop_sprint()
 
 #endregion
 
@@ -350,194 +532,6 @@ func disable_left_hand_ik() -> void:
 
 
 
-#region Camera & Models
-
-func get_first_person_camera_pivot() -> Marker3D:
-	if _camera_pivot:
-		return _camera_pivot.first_person_camera_pivot
-	return null
-
-
-func get_shoulder_camera_pivot() -> Marker3D:
-	if _camera_pivot:
-		return _camera_pivot.shoulder_camera_pivot
-	return null
-
-
-func show_character_model() -> void:
-	if _character_model:
-		_character_model.show_meshes()
-		character_model_changed.emit(true)
-
-
-func hide_character_model() -> void:
-	if _character_model:
-		_character_model.hide_meshes()
-		character_model_changed.emit(false)
-
-
-func _update_freecam() -> void:
-	if not is_free_looking and _camera_pivot and _free_look_offset != 0.0:
-		_free_look_offset = 0.0
-		_camera_pivot.rotation.y = _free_look_offset
-
-#endregion
-
-
-
-
-
-
-
-#region Main Input
-
-func set_input_direction(direction : Vector2) -> void:
-	var new_value_normalized := direction.normalized()
-	_motor.input_direction = new_value_normalized
-	input_direction = new_value_normalized
-
-
-func look_at_position(target_global_pos: Vector3) -> void:
-	# 1. Calculate the direction vector
-	var direction = target_global_pos - self.global_position
-	
-	# Safety check to prevent math errors (looking at self)
-	if direction.length_squared() < 0.001: return
-
-	# 2. YAW (Body Rotation)
-	# We use atan2 to get the angle on the flat ground plane (X, Z).
-	# Godot's forward is -Z, so we calculate the angle offset from that.
-	var target_yaw = atan2(-direction.x, -direction.z)
-	
-	# Apply directly to the root node (The Body)
-	self.global_rotation.y = target_yaw
-	
-	# 3. PITCH (Head/Spine Rotation)
-	# We calculate the angle difference in height vs distance
-	var flat_distance = Vector2(direction.x, direction.z).length()
-	var target_pitch = atan2(direction.y, flat_distance)
-	
-	# Clamp it so the AI doesn't snap its neck looking straight up/down
-	_aim_target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
-	
-	# Apply to camera pivot (which drives the Spine/Head via the Model script)
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-		
-	# Update the model immediately so there's no visual lag frame
-	_character_model.pitch = _aim_target_pitch
-
-
-## Rotates the character to look at a target smoothly.
-## @turn_speed: How fast to rotate (radians per second). Try 5.0 to 10.0.
-func look_at_position_smooth(target_global_pos: Vector3, delta: float, turn_speed: float = 8.0) -> void:
-	var direction = target_global_pos - self.global_position
-	
-	# 1. THE GLITCH FIX (Deadzone)
-	# If the target is too close horizontally (standing on head), don't spin the body.
-	var flat_distance = Vector2(direction.x, direction.z).length()
-	if flat_distance < 0.5: 
-		return
-
-	# 2. YAW (Body Rotation)
-	var target_yaw = atan2(-direction.x, -direction.z)
-	# use lerp_angle to prevent spinning 360 degrees unnecessarily
-	self.rotation.y = lerp_angle(self.rotation.y, target_yaw, turn_speed * delta)
-	
-	# 3. PITCH (Head/Spine Rotation)
-	var target_pitch = atan2(direction.y, flat_distance)
-	target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
-	
-	# We lerp the pitch variable, then apply it to the camera/model
-	_aim_target_pitch = lerp_angle(_aim_target_pitch, target_pitch, turn_speed * delta)
-	
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-	
-	# Update model immediately for smooth visuals
-	_character_model.pitch = _aim_target_pitch
-
-
-func rotate_head_relative(relative: Vector2) -> void:
-	_process_pitch(relative.y)
-	_process_yaw(relative.x)
-
-
-func try_to_jump() -> bool:
-	if not can_stand_up():
-		return false
-	
-	if _motor.can_jump():
-		if current_pose == Pose.CROUCHING:
-			_motor.jump(jump_crouch_multiplier)
-			jumped.emit(jump_crouch_multiplier)
-		else:
-			_motor.jump()
-			jumped.emit(1.0)
-		
-		
-		stand()
-		return true
-		
-	return false
-
-
-func reset_jump_pressed() -> void:
-	_motor.reset_jump_pressed()
-
-
-func try_to_sprint() -> bool:
-	if not is_sprinting() and not is_in_air():
-		stand()
-		_motor.start_sprinting()
-		started_sprinting.emit()
-		return true
-	return false
-
-
-func stop_sprint() -> void:
-	_motor.is_sprinting = false
-	stopped_sprinting.emit()
-
-
-func is_sprinting() -> bool:
-	return _motor.is_sprinting
-
-#endregion
-
-
-
-
-
-
-
-#region Aim Pitch & Yaw
-
-func _process_pitch(relative_y: float) -> void:
-	_aim_target_pitch = clamp(_aim_target_pitch - relative_y, -_max_head_pitch_rad, _max_head_pitch_rad)
-
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-
-
-func _process_yaw(relative_x: float) -> void:
-	if is_free_looking:
-		_free_look_offset += -relative_x
-		
-		if _camera_pivot:
-			_camera_pivot.rotation.y = _free_look_offset
-			
-	else:
-		self.rotate_y(-relative_x)
-
-#endregion
-
-
-
-
-
-
-
 #region Helpers
 
 func get_speed_percent() -> float:
@@ -577,25 +571,6 @@ func has_move_input() -> bool:
 	return input_direction.x != 0 or input_direction.y != 0
 
 
-func _update_character_model():
-	_character_model.update_strafe(input_direction)#, get_horizontal_velocity())
-	
-	if not is_free_looking: _character_model.pitch = _aim_target_pitch
-	
-	_character_model.yaw = get_aim_torso_angle_difference()
-	
-	_character_model.set_move_speed(get_speed_percent())
-	_character_model.set_vertical_speed(_physics_body.velocity.y)
-
-	if is_in_air() and is_moving_fast_vertically():
-		_character_model.enter_air()
-		_was_in_air = true
-	elif not is_in_air() and _was_in_air:
-		_update_pose()
-		_was_in_air = false
-		landed.emit()
-
-
 func is_moving_fast_vertically() -> bool:
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
@@ -606,5 +581,24 @@ func is_in_air() -> bool:
 			return true
 	
 	return false
+
+
+func _update_character_model():
+	_character_model.update_strafe(input_direction)#, get_horizontal_velocity())
+	
+	if not is_free_looking: _character_model.pitch = _aim_target_pitch
+	
+	_character_model.yaw = get_aim_torso_angle_difference()
+	
+	_character_model.set_move_speed(snappedf(get_speed_percent(),0.1))
+	_character_model.set_vertical_speed(_physics_body.velocity.y)
+
+	if is_in_air() and is_moving_fast_vertically():
+		_character_model.enter_air()
+		_was_in_air = true
+	elif not is_in_air() and _was_in_air:
+		_update_pose()
+		_was_in_air = false
+		landed.emit()
 
 #endregion

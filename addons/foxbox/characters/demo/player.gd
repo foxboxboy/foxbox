@@ -26,7 +26,7 @@ func _input(event: InputEvent) -> void:
 					character.try_to_stand()
 				else:
 					character.try_to_crouch()
-			if event.keycode == KEY_CTRL:				
+			if event.keycode == KEY_CTRL:
 				if not character.is_sprinting():
 					character.try_to_sprint()
 				else:
