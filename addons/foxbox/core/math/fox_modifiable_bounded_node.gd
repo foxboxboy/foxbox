@@ -1,4 +1,3 @@
-# modules/core/math/tate_modifiable_bounded_node.gd
 extends FoxNode
 class_name FoxModifiableBoundedNode
 ## Clamps out a FoxModifiableStat.

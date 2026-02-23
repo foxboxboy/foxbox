@@ -1,8 +1,8 @@
-# tate_lib/modules/core/math/tate_modifiable_stat.gd
 extends FoxResource
 class_name FoxModifiableStat
 ## Changes a number based on two lists of modifiers.
 ##
+## FinalValue = (Base + ∑Flat) * ∑Multipliers
 ## The flat_modifiers do addition (+) operations on the base value.
 ## The multiplier_modifiers do multiplication (*) operations on the base value afterwards. 
 ## Flat bonuses are applied first, then the total of all multiplier_modifiers are tallied up and applied.

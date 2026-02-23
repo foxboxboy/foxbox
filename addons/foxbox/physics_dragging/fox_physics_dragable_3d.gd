@@ -1,9 +1,5 @@
-class_name FoxDraggable3D
-extends Node3D
-## 
-
-## The Rigidbody this component exposes.
-@export var physics_body: RigidBody3D
+class_name FoxPhysicsDragProfile
+extends FoxResource
 
 ## The "strength" of the pull. High = snappy, low = heavy.
 @export var stiffness: float = 200.0  # Stiffness

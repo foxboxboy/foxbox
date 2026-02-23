@@ -1,10 +1,11 @@
 # door.gd
-extends InteractionDemoEntity
+extends RigidBody3D
 
-@export var drag_component : FoxDraggable3D
+@export var drag_profile : FoxPhysicsDragProfile
 
-func get_drag_component() -> FoxDraggable3D:
-	return drag_component
 
-func _on_interactable_interacted() -> void:
+func _on_interactable_area_3d_interacted(interactor: Node) -> void:
 	print("Clicked, I am a door!")
+	
+	if interactor.has_method("drag_target"):
+		interactor.drag_target(self, drag_profile)

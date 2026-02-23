@@ -1,11 +1,12 @@
+# demo player for interaction and physics dragging
 extends Camera3D
 
 @export var dragger_raycast : RayCast3D
-@export var interaction_sensor : FoxInteractionSensor3D
-@export var dragger : FoxPhysicsDragManager3D
+@export var interaction_sensor : FoxInteractionRaycast3D
+@export var dragger : FoxPhysicsDragger3D
 
 # State
-var _dragged_object : FoxDraggable3D
+var _dragged_object : RigidBody3D
 var is_rotating_mode: bool = false
 var last_mouse_pos := Vector2.ZERO
 
@@ -13,8 +14,10 @@ var last_mouse_pos := Vector2.ZERO
 # Start at 0.5 so it doesn't drag/scrape along the floor immediately.
 var hold_height := 0.5 
 
+
 func _ready() -> void:
 	dragger_raycast.enabled = true
+
 
 func _physics_process(_delta):
 	# 1. Update Raycasts
@@ -46,9 +49,8 @@ func _physics_process(_delta):
 		# Teleport the ghost hand there. The physics manager will pull the object to it.
 		dragger.global_position = target_point
 
-func _process(delta: float) -> void:
-	# --- INPUT HANDLING ---
-	
+
+func _process(delta: float) -> void:	
 	# Rotation Mode (RMB)
 	if Input.is_action_just_pressed("rmb"):
 		is_rotating_mode = true
@@ -64,7 +66,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("click"):
 		var interactable_target = interaction_sensor.get_current_target()
 		if interactable_target:
-			_try_handle_target(interactable_target)
+			interactable_target.interact(self)
 
 	if Input.is_action_just_released("click"):
 		if _dragged_object:
@@ -80,10 +82,12 @@ func _process(delta: float) -> void:
 			# Lower the object (Drop it)
 			hold_height = clamp(hold_height - 0.5, 0.0, 5.0)
 
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if is_rotating_mode and _dragged_object:
 			_handle_object_rotation(event)
+
 
 func _handle_object_rotation(event: InputEventMouseMotion):
 	# Rotate the Dragger. The object will pivot around the grab point to match.
@@ -95,16 +99,11 @@ func _handle_object_rotation(event: InputEventMouseMotion):
 	var cam_right = global_transform.basis.x
 	dragger.rotate(cam_right, deg_to_rad(-event.relative.y * 0.2))
 
-func _try_handle_target(interactable: FoxInteractable3D):
-	var entity = interactable.context_node as InteractionDemoEntity
-	if not entity:
-		interactable.interact()
-		return
 
-	var drag_data = entity.get_drag_component()
+func drag_target(body: RigidBody3D, drag_data : FoxPhysicsDragProfile):
 	if drag_data:
-		_dragged_object = drag_data
-		var hit_point = interaction_sensor.raycast.get_collision_point()
+		_dragged_object = body
+		var hit_point = interaction_sensor.get_collision_point()
 		
 		# 1. Calculate initial Hold Height
 		# This prevents the object from snapping Up or Down when grabbed.
@@ -123,10 +122,9 @@ func _try_handle_target(interactable: FoxInteractable3D):
 		# Align Dragger rotation (Repo Feel)
 		#dragger.global_basis = _dragged_object.physics_body.global_basis
 		
-		dragger.grab_component(_dragged_object, hit_point) 
+		dragger.grab(_dragged_object, hit_point, drag_data) 
 		return
-		
-	interactable.interact()
+
 
 func get_local_mouse_direction(mouse_pos: Vector2) -> Vector3:
 	var world_normal = project_ray_normal(mouse_pos)

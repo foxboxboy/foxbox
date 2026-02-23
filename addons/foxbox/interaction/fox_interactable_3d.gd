@@ -1,16 +1,27 @@
 class_name FoxInteractable3D
-extends FoxNode3D
+extends Area3D
+## A physical volume that can be detected by a FoxInteractionRaycast3D.
 
-## Signal emitted when the interaction is triggered.
-signal interacted()
+## Designed to be extended or used in conjuction with signals on a project basis.
 
-@export var context_node : Node
+## Emitted when interact() is called.
+signal interacted(interactor: Node)
+## Emitted when a FoxInteractionRaycast3D focuses this FoxInteractable3D.
+signal focused(interaction_raycast : FoxInteractionRaycast3D)
+## Emitted when a FoxInteractionRaycast3D unfocuses this FoxInteractable3D.
+signal unfocused(interaction_raycast : FoxInteractionRaycast3D)
 
-func interact() -> void:
-	interacted.emit()
-	_on_interact()
+## Pass in who interacted with it as interactor.
+func interact(interactor: Node) -> void:
+	interacted.emit(interactor)
+	_on_interact(interactor)
 
+func focus(interaction_raycast: FoxInteractionRaycast3D) -> void:
+	focused.emit(interaction_raycast)
 
-## Override this function in your inherited scripts.
-func _on_interact() -> void:
+func unfocus(interaction_raycast: FoxInteractionRaycast3D) -> void:
+	unfocused.emit(interaction_raycast)
+
+## Override this function ifor inherited scripts.
+func _on_interact(_interactor: Node) -> void:
 	pass
