@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnyro307c3r5w"]
 
-[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://addons/foxbox/characters/components/entity_shadows/fox_shadow.png" id="1_k88d5"]
+[ext_resource type="Texture2D" uid="uid://osuyarr7ppc4" path="res://addons/foxbox/characters/components/entity_shadows/assets/fox_shadow.png" id="1_k88d5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q8nd"]
 transparency = 1

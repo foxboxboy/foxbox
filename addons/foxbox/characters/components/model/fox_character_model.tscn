@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://addons/foxbox/characters/components/model/fox_character_model.gd" id="1_b7p6l"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://addons/foxbox/characters/assets/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://6fjomgb318ai" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.tscn" id="2_060e5"]
-[ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://addons/foxbox/characters/components/entity_shadows/fox_entity_shadow.tscn" id="2_awko8"]
+[ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://addons/foxbox/characters/components/entity_shadows/assets/fox_entity_shadow.tscn" id="2_awko8"]
 [ext_resource type="Script" uid="uid://xnodb87petin" path="res://addons/foxbox/characters/components/model/accessory_manager/fox_character_accessories.gd" id="4_b5bb4"]
-[ext_resource type="Script" uid="uid://cslida2upit7p" path="res://addons/foxbox/characters/components/animation/fox_character_animation_tree.gd" id="5_05jrh"]
-[ext_resource type="AnimationNodeStateMachine" uid="uid://btrc8ocglgeht" path="res://addons/foxbox/characters/components/animation/base_movement.tres" id="5_ly1yk"]
+[ext_resource type="Script" uid="uid://cslida2upit7p" path="res://addons/foxbox/characters/components/model/animation/fox_character_animation_tree.gd" id="5_05jrh"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://btrc8ocglgeht" path="res://addons/foxbox/characters/components/model/animation/base_movement.tres" id="5_ly1yk"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ly1yk"]
 animation = &"swing_left"

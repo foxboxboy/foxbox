@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dpt8u7w062ece"]
 
 [ext_resource type="Script" uid="uid://bs7mgoq20h4hj" path="res://addons/foxbox/characters/components/entity_shadows/fox_entity_shadow.gd" id="1_pefv3"]
-[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://addons/foxbox/characters/components/entity_shadows/fox_shadow_decal.tscn" id="2_8t86m"]
-[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://addons/foxbox/characters/components/entity_shadows/fox_shadow_simple.tscn" id="3_e1k75"]
+[ext_resource type="PackedScene" uid="uid://d1bs4j1hc5hen" path="res://addons/foxbox/characters/components/entity_shadows/assets/fox_shadow_decal.tscn" id="2_8t86m"]
+[ext_resource type="PackedScene" uid="uid://bnyro307c3r5w" path="res://addons/foxbox/characters/components/entity_shadows/assets/fox_shadow_simple.tscn" id="3_e1k75"]
 
 [node name="FoxEntityShadow" type="Node3D" unique_id=1028479081]
 script = ExtResource("1_pefv3")
