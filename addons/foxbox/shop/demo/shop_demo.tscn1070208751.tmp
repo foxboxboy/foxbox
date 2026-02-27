@@ -1,20 +1,10 @@
 [gd_scene format=3 uid="uid://bpqxtqn47ltxu"]
 
 [ext_resource type="Script" uid="uid://cwhngvppuvve4" path="res://addons/foxbox/shop/gui/fox_shop_menu.gd" id="1_qmk60"]
-[ext_resource type="Script" uid="uid://bh0djd55yfn66" path="res://addons/foxbox/shop/demo/shop_demo.gd" id="1_tvbi3"]
-[ext_resource type="Script" uid="uid://8nygo3nfy78y" path="res://addons/foxbox/shop/core/fox_shop_item.gd" id="2_ax6ml"]
+[ext_resource type="Script" uid="uid://bh0djd55yfn66" path="res://addons/foxbox/shop/demo/demo.gd" id="1_tvbi3"]
 [ext_resource type="PackedScene" uid="uid://cvlfsdlvi1sn6" path="res://addons/foxbox/shop/demo/purchase_option_slot.tscn" id="2_tvbi3"]
-[ext_resource type="Resource" uid="uid://pmmjkptyseek" path="res://addons/foxbox/shop/demo/apple.tres" id="3_ikpro"]
-[ext_resource type="Resource" uid="uid://cc0d142wmdcwv" path="res://addons/foxbox/shop/demo/cool_sword.tres" id="4_eqf34"]
-[ext_resource type="Resource" uid="uid://drk6fo7icv652" path="res://addons/foxbox/shop/demo/house.tres" id="5_6bhpl"]
-[ext_resource type="Script" uid="uid://dyg8nr7pa27xr" path="res://addons/foxbox/shop/core/fox_shop_catalog.gd" id="6_8qi72"]
 
-[sub_resource type="Resource" id="Resource_jt6yy"]
-script = ExtResource("6_8qi72")
-options = Array[ExtResource("2_ax6ml")]([ExtResource("3_ikpro"), ExtResource("4_eqf34"), ExtResource("5_6bhpl")])
-metadata/_custom_type_script = "uid://dyg8nr7pa27xr"
-
-[node name="Demo" type="Control" unique_id=979678021 node_paths=PackedStringArray("shop_menu", "money_label", "details_label", "add_money_button")]
+[node name="Demo" type="Control" unique_id=979678021]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,11 +12,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tvbi3")
-shop_menu = NodePath("Shop")
-money_label = NodePath("MoneyLabel")
-details_label = NodePath("ConsoleLabel")
-add_money_button = NodePath("AddMoney")
-starting_catalog = SubResource("Resource_jt6yy")
 
 [node name="Shop" type="PanelContainer" parent="." unique_id=461010867 node_paths=PackedStringArray("container")]
 layout_mode = 1
@@ -77,13 +62,5 @@ offset_right = 73.0
 offset_bottom = -32.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 12
-
-[node name="AddMoney" type="Button" parent="." unique_id=1435211210]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 86.0
-offset_right = 158.0
-offset_bottom = 125.0
-text = "Add Money"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

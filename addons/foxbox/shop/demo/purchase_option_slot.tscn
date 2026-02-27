@@ -1,33 +1,33 @@
 [gd_scene format=3 uid="uid://cvlfsdlvi1sn6"]
 
-[ext_resource type="Script" uid="uid://dm18b18fpbccg" path="res://addons/foxbox/shop/fox_purchase_option_slot.gd" id="1_j6v6q"]
+[ext_resource type="Script" uid="uid://cab5ddd81ymew" path="res://addons/foxbox/shop/gui/fox_shop_slot.gd" id="1_qh6r8"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="2_6w07k"]
 [ext_resource type="Script" uid="uid://b3tux0rl3r6ah" path="res://addons/foxbox/shop/demo/scroll_container.gd" id="3_6a638"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6w07k"]
 
-[node name="PurchaseOptionSlot" type="PanelContainer" node_paths=PackedStringArray("icon_rect", "name_label", "cost_label", "buy_button", "description_label")]
+[node name="FoxShopGUISlot" type="PanelContainer" unique_id=1646156472 node_paths=PackedStringArray("buy_button", "icon_rect", "name_label", "cost_label", "description_label")]
 offset_right = 230.0
 offset_bottom = 311.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_6w07k")
-script = ExtResource("1_j6v6q")
+script = ExtResource("1_qh6r8")
+buy_button = NodePath("MarginContainer2/Button")
 icon_rect = NodePath("MarginContainer2/MarginContainer/VBoxContainer/CenterContainer/IconRect")
 name_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/NameLabel")
 cost_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/CostLabel")
-buy_button = NodePath("MarginContainer2/Button")
 description_label = NodePath("MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer/Description")
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1378437521]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Button" type="Button" parent="MarginContainer2"]
+[node name="Button" type="Button" parent="MarginContainer2" unique_id=1830643674]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2" unique_id=1833577038]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 10
@@ -35,31 +35,31 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer" unique_id=313115463]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1211117102]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="NameLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=569435595]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Cool Sword"
 horizontal_alignment = 1
 clip_text = true
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1972876519]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1272022357]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="IconRect" type="TextureRect" parent="MarginContainer2/MarginContainer/VBoxContainer/CenterContainer"]
+[node name="IconRect" type="TextureRect" parent="MarginContainer2/MarginContainer/VBoxContainer/CenterContainer" unique_id=1522683621]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 mouse_filter = 2
@@ -67,34 +67,34 @@ texture = ExtResource("2_6w07k")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1686957606]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1961979099]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=34302365]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2" node_paths=PackedStringArray("label")]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2" unique_id=2018261596 node_paths=PackedStringArray("label")]
 custom_minimum_size = Vector2(50, 75)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_6a638")
 label = NodePath("MarginContainer/Description")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer" unique_id=1114225679]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/margin_left = 5
 
-[node name="Description" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer"]
+[node name="Description" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer" unique_id=1739059565]
 clip_contents = true
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
@@ -105,16 +105,16 @@ text = "Gives you +100 epic awesome "
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2095422874]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer" unique_id=105815457]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="CostLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
+[node name="CostLabel" type="Label" parent="MarginContainer2/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=144155724]
 layout_mode = 2
 text = "$100"
