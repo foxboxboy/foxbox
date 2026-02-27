@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
 
-[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_k3weg"]
-[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://addons/foxbox/occupancy/demo/occupancy_demo.gd" id="1_v8ofr"]
-[ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxbox/occupancy/fox_seat_manager_2d.gd" id="2_pbwxa"]
-[ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxbox/occupancy/fox_seat_2d.gd" id="3_mi5uh"]
+[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://addons/foxbox/socket/demo/socket_demo.gd" id="1_njwab"]
+[ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxbox/socket/fox_socket_manager_2d.gd" id="2_k0o5c"]
+[ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxbox/socket/fox_socket_2d.gd" id="3_qbdgk"]
+[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="4_wg6ym"]
 
 [node name="Demo" type="Node" unique_id=1752730093]
-script = ExtResource("1_v8ofr")
+script = ExtResource("1_njwab")
 
 [node name="Label" type="Label" parent="." unique_id=2140426172]
 offset_left = 149.0
@@ -18,11 +18,11 @@ I DON'T WANT IT I JUST NEED IT"
 
 [node name="OccupancyComponent" type="Node2D" parent="." unique_id=489741831]
 position = Vector2(209, 323)
-script = ExtResource("2_pbwxa")
+script = ExtResource("2_k0o5c")
 
 [node name="Seat" type="Marker2D" parent="OccupancyComponent" unique_id=390304215]
 position = Vector2(-38, 0)
-script = ExtResource("3_mi5uh")
+script = ExtResource("3_qbdgk")
 
 [node name="Label" type="Label" parent="OccupancyComponent/Seat" unique_id=1931409376]
 offset_left = -25.0
@@ -33,7 +33,7 @@ text = "SEAT 1"
 
 [node name="Seat2" type="Marker2D" parent="OccupancyComponent" unique_id=753246662]
 position = Vector2(-35, 226)
-script = ExtResource("3_mi5uh")
+script = ExtResource("3_qbdgk")
 
 [node name="Label" type="Label" parent="OccupancyComponent/Seat2" unique_id=88604944]
 offset_left = -25.0
@@ -45,7 +45,7 @@ text = "SEAT 2"
 [node name="Guy" type="Sprite2D" parent="." unique_id=114057141]
 position = Vector2(695, 369)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_k3weg")
+texture = ExtResource("4_wg6ym")
 
 [node name="SitButton" type="Button" parent="Guy" unique_id=1614083468]
 offset_left = -76.0
@@ -65,7 +65,7 @@ text = "Guy 1"
 [node name="Guy2" type="Sprite2D" parent="." unique_id=1581567387]
 position = Vector2(962, 280)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_k3weg")
+texture = ExtResource("4_wg6ym")
 
 [node name="Label" type="Label" parent="Guy2" unique_id=1708582447]
 offset_left = -110.0

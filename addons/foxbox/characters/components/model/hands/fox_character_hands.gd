@@ -11,12 +11,6 @@ class_name FoxCharacterHands
 
 
 
-func _process(delta: float) -> void:
-	return#rotation = Vector3.ZERO
-	
-
-
-
 
 #region Holding Nodes
 
@@ -40,12 +34,12 @@ func hold_node(node : Node, left_handed := false) -> bool:
 	var cleared := false
 	
 	if left_handed:
-		if left_hand_has_node(): 
+		if has_left_hand_node(): 
 			empty_left_hand()
 			cleared = true
 		left_hand_slot.add_child(node)
 	else:
-		if right_hand_has_node(): 
+		if has_right_hand_node(): 
 			empty_right_hand()
 			cleared = true
 		right_hand_slot.add_child(node)
@@ -57,34 +51,28 @@ func hold_node(node : Node, left_handed := false) -> bool:
 	return cleared
 
 
-func left_hand_has_node() -> bool:
-	return left_hand_slot.get_child_count() > 0
-
-
-func right_hand_has_node() -> bool:
-	return right_hand_slot.get_child_count() > 0
 
 
 func get_right_hand_node() -> Node:
-	if not right_hand_has_node():
+	if not has_right_hand_node():
 		push_warning("WARNING: No node found under right hand for FoxCharacterHands: ",get_path())
 		return null
 	return right_hand_slot.get_child(0)
 
 
 func get_left_hand_node() -> Node:
-	if not right_hand_has_node():
+	if not has_left_hand_node():
 		push_warning("WARNING: No node found under left hand for FoxCharacterHands: ",get_path())
 		return null
 	return left_hand_slot.get_child(0)
 
 
 func has_right_hand_node() -> bool:
-	return get_right_hand_node() != null
+	return right_hand_slot.get_child_count() > 0
 
 
 func has_left_hand_node() -> bool:
-	return get_left_hand_node() != null
+	return left_hand_slot.get_child_count() > 0
 
 
 func has_node_in_either_hand() -> bool:
