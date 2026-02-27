@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://djwv6u7igq0r3" path="res://addons/foxbox/interaction/demo/red_box.gd" id="1_vvqvw"]
 [ext_resource type="Script" uid="uid://c5l17vfl0thck" path="res://addons/foxbox/interaction/fox_interactable_3d.gd" id="2_tt8h7"]
 [ext_resource type="PackedScene" uid="uid://bxtgywveontjj" path="res://addons/foxbox/core/assets/camera/import/camera.gltf" id="3_a1jta"]
-[ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxbox/physics_dragging/fox_physics_dragable_3d.gd" id="3_dcams"]
-[ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxbox/physics_dragging/fox_physics_drag_manager_3d.gd" id="7_hju5i"]
+[ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxbox/physics_dragging/fox_physics_drag_profile.gd" id="3_dcams"]
+[ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxbox/physics_dragging/fox_physics_dragger_3d.gd" id="7_hju5i"]
 [ext_resource type="Script" uid="uid://8lyo1dj2251p" path="res://addons/foxbox/interaction/demo/door.gd" id="8_sfwh4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcams"]

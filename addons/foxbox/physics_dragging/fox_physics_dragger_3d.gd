@@ -1,11 +1,23 @@
 class_name FoxPhysicsDragger3D
-extends Node3D
-## Manipulates a RigidBody3D by applying localized forces and torques to match 
-## this node's global position and rotation. 
+extends FoxNode3D
+## Manipulates a [RigidBody3D] by applying localized forces and torques 
+## to match this node's global position and rotation. 
+
+
+
+
+
+#region Variables
 
 @export_group("Default Drag Settings")
+
+## The default strength of the pull if no profile is provided.
 @export var default_stiffness: float = 800.0 
+
+## The default control of the pull if no profile is provided.
 @export var default_damping: float = 25.0 
+
+## The absolute maximum force this dragger can apply to a body in a single frame.
 @export var max_pull_force: float = 4000.0
 
 var _current_body: RigidBody3D
@@ -15,13 +27,21 @@ var _skip_first_frame: bool = false
 var _current_stiffness: float
 var _current_damping: float
 
+#endregion
+
+
+
+
+
 #region Public API
 
-## Grabs a body at a specific global hit point. 
-## Optionally pass a FoxDragProfile to override the default stiffness/damping.
+## Grabs a [RigidBody3D] at a specific global hit point. 
+## Optionally pass a [FoxPhysicsDragProfile] to override the default stiffness and damping.
 func grab(body: RigidBody3D, hit_point: Vector3, profile: FoxPhysicsDragProfile = null) -> void:
-	if not body: return
-	
+	if not is_instance_valid(body):
+		push_error("FoxPhysicsDragger3D: Attempted to grab a null or invalid RigidBody3D.")
+		return
+		
 	_current_body = body
 	_current_stiffness = profile.stiffness if profile else default_stiffness
 	_current_damping = profile.damping if profile else default_damping
@@ -36,8 +56,11 @@ func grab(body: RigidBody3D, hit_point: Vector3, profile: FoxPhysicsDragProfile 
 	_skip_first_frame = true
 
 
+## Releases the currently held [RigidBody3D].
+## If [param dampen_spin] is [code]true[/code], it will aggressively kill residual angular velocity 
+## to prevent unrealistic spinning upon release.
 func release(dampen_spin: bool = true) -> void:
-	if _current_body:
+	if is_instance_valid(_current_body):
 		# Smart Release: If it's just vibrating, kill the spin. If throwing, keep it.
 		if dampen_spin and _current_body.angular_velocity.length() < 2.0:
 			_current_body.angular_velocity *= 0.1
@@ -48,10 +71,13 @@ func release(dampen_spin: bool = true) -> void:
 #endregion
 
 
-#region Physics Logic
+
+
+
+#region Private Logic
 
 func _physics_process(_delta: float) -> void:
-	if not _current_body:
+	if not is_instance_valid(_current_body):
 		return
 
 	if _skip_first_frame:

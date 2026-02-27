@@ -1,43 +1,59 @@
-extends FoxNode3D
 class_name FoxSocket3D
+extends Marker3D
 ## A physical 3D location that reparents and holds a single attachment.
 
-## Emitted when this FoxSocket3D gains a new attachment.
+
+
+
+
+#region Signals
+
+## Emitted when this socket gains a new attachment.
 signal attached(attachment: Node3D, socket: FoxSocket3D)
+
 ## Emitted when the attachment leaves and is no longer a child.
 signal detached(attachment: Node3D, socket: FoxSocket3D)
+
 ## Emitted when the child order changes.
 signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 
-## (Optional) The node that will be used for position
-## and rotation. Leave blank to make this the marker. 
+#endregion
+
+
+
+
+
+#region Variables
+
+## (Optional) The node that will be used for position and rotation. 
+## Leave blank to use this [Marker3D]'s transform.
 @export var marker: Node3D
 
 ## The child node currently plugged into this socket.
 var attachment: Node3D = null
 
-
-func _ready() -> void:
-	child_order_changed.connect(_attachment_changed)
-	
-	if marker == null:
-		marker = self
+#endregion
 
 
-## Returns true if there is no attachment. 
+
+
+
+#region Public API
+
+## Returns [code]true[/code] if there is no current attachment.
 func is_empty() -> bool:
 	return attachment == null
 
 
-## Returns the current attachment.
+## Returns the current attachment node, or [code]null[/code] if empty.
 func get_attachment() -> Node3D:
 	return attachment
 
 
-## Reparents a node to plug into this socket and snaps its transform.
+## Reparents [param new_attachment] to this socket and snaps its transform to [member marker].
 func attach(new_attachment: Node3D) -> void:
 	if not is_empty():
-		push_error("ERROR: FoxSocket3D already has an attachment! ", new_attachment, " ", get_path())
+		push_error("FoxSocket3D: Attempted to attach '%s', but socket '%s' already has an attachment!" % [new_attachment.name, get_path()])
 		return
 	
 	attachment = new_attachment
@@ -49,8 +65,8 @@ func attach(new_attachment: Node3D) -> void:
 	attached.emit(new_attachment, self)
 
 
-## Safely unplugs the attachment from the socket. Returns the attachment.
-## Note this does not reparent the attachment anywhere.
+## Safely unplugs the attachment from the socket and returns it.
+## [br][b]Note:[/b] This does not reparent the attachment anywhere else in the scene tree.
 func detach() -> Node3D:
 	if is_empty(): 
 		return null
@@ -61,11 +77,27 @@ func detach() -> Node3D:
 	
 	return detached_node
 
+#endregion
 
-func _attachment_changed():
+
+
+
+
+#region Private Logic
+
+func _ready() -> void:
+	child_order_changed.connect(_attachment_changed)
+	
+	if marker == null:
+		marker = self
+
+
+func _attachment_changed() -> void:
 	attachment_changed.emit(attachment, self)
 	
 	if not is_instance_valid(attachment) or attachment.get_parent() != self:
 		if is_instance_valid(attachment):
 			detached.emit(attachment, self)
 		attachment = null
+
+#endregion

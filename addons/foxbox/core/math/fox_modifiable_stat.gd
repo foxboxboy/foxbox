@@ -1,9 +1,13 @@
 extends FoxResource
 class_name FoxModifiableStat
-## A resource that calculates a final value based on flat and multiplier modifiers.
-## Flat modifiers are added to the base value first, then the total is multiplied
-## by the sum of all multiplier modifiers.
+## A resource that calculates a final [float] value based on flat and multiplier modifiers.
+##
+## Flat modifiers are added to [member base_value] first. The total is then multiplied by the sum of all multiplier modifiers.
 
+
+
+
+## Defines how a modifier affects the base value.
 enum ModifierType {
 	FLAT,
 	MULTIPLIER
@@ -12,19 +16,18 @@ enum ModifierType {
 
 
 
-
 #region Signals
 
-## Emitted whenever the final calculated value changes.
+## Emitted when the calculated [member value] changes.
 signal value_changed(new_value: float)
 
-## Emitted when a new modifier is added.
+## Emitted when a modifier is added via [method add_modifier].
 signal modifier_added(id: StringName, type: ModifierType, amount: float)
 
-## Emitted when a modifier is removed.
+## Emitted when a modifier is removed via [method pop_modifier], [method clear_modifier], or [method remove_specific_modifier].
 signal modifier_removed(id: StringName, type: ModifierType, amount: float)
 
-## Emitted when clear_all_modifiers() is called.
+## Emitted when [method clear_all_modifiers] is called.
 signal all_modifiers_cleared()
 
 #endregion
@@ -35,7 +38,7 @@ signal all_modifiers_cleared()
 
 #region Variables
 
-## The raw, unmodified starting stat.
+## The base, unmodified value.
 @export var base_value: float = 0.0:
 	set(v):
 		base_value = v
@@ -47,7 +50,7 @@ var _multiplier_modifiers: Dictionary = {}
 
 var _current_value: float = 0.0
 
-## The final, calculated value. Read-only.
+## The final, calculated value. This property is read-only.
 var value: float:
 	get: return _current_value
 	set(_v): push_error("ERROR: FoxModifiableStat 'value' is read-only. Modify the base_value or add/remove modifiers instead.")
@@ -60,8 +63,10 @@ var value: float:
 
 #region Public API
 
-## Adds a modifier instance to the stat.
+## Adds a modifier of [param type] with the specified [param amount] to the stack identified by [param id].
 func add_modifier(id: StringName, type: ModifierType, amount: float) -> void:
+	assert(is_finite(amount), "FoxModifiableStat: Attempted to add a non-finite modifier amount (NaN or INF).")
+	
 	var dict = _get_dict(type)
 	
 	if not dict.has(id):
@@ -72,8 +77,8 @@ func add_modifier(id: StringName, type: ModifierType, amount: float) -> void:
 	modifier_added.emit(id, type, amount)
 
 
-## Removes the most recently added instance of this modifier ID (pops the stack). 
-## Returns true if a modifier was successfully found and removed.
+## Removes the most recently added modifier from the [param id] stack. 
+## Returns [code]true[/code] if successful.
 func pop_modifier(id: StringName, type: ModifierType) -> bool:
 	var dict = _get_dict(type)
 	
@@ -91,7 +96,7 @@ func pop_modifier(id: StringName, type: ModifierType) -> bool:
 	return false
 
 
-## Acts as a "Cleanse". Instantly deletes ALL instances of a specific modifier ID.
+## Instantly removes all instances of a modifier identified by [param id] and [param type].
 func clear_modifier(id: StringName, type: ModifierType) -> void:
 	var dict = _get_dict(type)
 	
@@ -105,7 +110,7 @@ func clear_modifier(id: StringName, type: ModifierType) -> void:
 			modifier_removed.emit(id, type, amount)
 
 
-## Completely wipes all modifiers from the stat, returning it to its base_value.
+## Removes all modifiers and resets [member value] to [member base_value].
 func clear_all_modifiers() -> void:
 	_flat_modifiers.clear()
 	_multiplier_modifiers.clear()
@@ -113,13 +118,13 @@ func clear_all_modifiers() -> void:
 	all_modifiers_cleared.emit()
 
 
-## Returns true if at least one instance of the modifier ID is currently active.
+## Returns [code]true[/code] if the stack for [param id] exists and is not empty.
 func has_modifier(id: StringName, type: ModifierType) -> bool:
 	return _get_dict(type).has(id)
 
 
-## Hunts down the first instance of a specific value within a modifier ID's stack and removes it.
-## Returns true if the specific value was found and removed.
+## Removes the first instance matching [param specific_amount] from the [param id] stack. 
+## Returns [code]true[/code] if successful.
 func remove_specific_modifier(id: StringName, type: ModifierType, specific_amount: float) -> bool:
 	var dict = _get_dict(type)
 	

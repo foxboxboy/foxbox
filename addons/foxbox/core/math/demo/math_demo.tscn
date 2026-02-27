@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://brpa407xwkthq"]
 
 [ext_resource type="Script" uid="uid://coassbdcxjmxr" path="res://addons/foxbox/core/math/demo/math_demo.gd" id="1_owsys"]
+[ext_resource type="Script" uid="uid://tmlvua8qu5ni" path="res://addons/foxbox/core/math/fox_stat_pool.gd" id="2_gvyur"]
 [ext_resource type="AudioStream" uid="uid://ca8hvyjak00vs" path="res://addons/foxbox/core/assets/sfx/dragon-studio-ding-402325.mp3" id="2_kciuc"]
+
+[sub_resource type="Resource" id="Resource_utg4e"]
+script = ExtResource("2_gvyur")
+metadata/_custom_type_script = "uid://tmlvua8qu5ni"
 
 [node name="MathDemo" type="Node2D" unique_id=1237757957]
 script = ExtResource("1_owsys")
+test_pool = SubResource("Resource_utg4e")
 
 [node name="Ding" type="AudioStreamPlayer2D" parent="." unique_id=287353806]
 stream = ExtResource("2_kciuc")
@@ -14,3 +20,7 @@ visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Test passed!"
+
+[node name="HSlider" type="HSlider" parent="." unique_id=1676854693]
+offset_right = 8.0
+offset_bottom = 16.0
