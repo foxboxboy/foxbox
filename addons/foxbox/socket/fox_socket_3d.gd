@@ -1,4 +1,4 @@
-extends Marker3D
+extends FoxNode3D
 class_name FoxSocket3D
 ## A physical 3D location that reparents and holds a single attachment.
 

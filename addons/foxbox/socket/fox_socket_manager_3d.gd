@@ -7,7 +7,7 @@ signal node_detached(attachment: Node3D, socket: FoxSocket3D)
 
 var sockets: Array[FoxSocket3D] = []
 
-	
+
 func _ready() -> void:
 	# Recursively find all sockets
 	for child in find_children("*", "FoxSocket3D", true, false):
