@@ -1,4 +1,4 @@
-class_name FoxPrice
+@abstract class_name FoxPrice
 extends FoxResource
 ## The abstract base class for evaluating and executing transaction costs.
 
@@ -10,10 +10,8 @@ func can_be_paid_by(_wallet: FoxWallet) -> bool:
 
 
 ## Deducts the cost from the provided [FoxWallet].
-func pay(_wallet: FoxWallet) -> void:
-	pass
+@abstract func pay(_wallet: FoxWallet) -> void
 
 
 ## Returns a formatted string for UI display (e.g., "$150" or "50 Wood").
-func get_display_string() -> String:
-	return "Free"
+@abstract func get_display_string() -> String
