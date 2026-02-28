@@ -1,14 +1,18 @@
 extends FoxModifier
-class_name FoxDemoModifierSwordWeapon
+class_name FoxDemoModifierLanceWeapon
 
-@export var sword_scene : PackedScene
+@export var lance_scene : PackedScene
 
 func _on_execute(target: Node) -> void:
 	if target is FoxDemoKnight:
-		var new_sword := sword_scene.instantiate()
+		var new_lance := lance_scene.instantiate()
 		if target.weapon_socket.get_child_count() > 0:
 			target.weapon_socket.get_child(0).queue_free()
-		target.weapon_socket.add_child(new_sword)
+		target.weapon_socket.add_child(new_lance)
+
+
+func _on_reapply(_target: Node, _stack: int = 1) -> void:
+	pass
 
 
 func _on_remove(_target : Node) -> void:

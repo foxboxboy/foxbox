@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FoxDemoModifierLanceWeapon" format=3 uid="uid://dbisn0qy7jcuo"]
+
+[ext_resource type="PackedScene" uid="uid://d03q8prh3jo2m" path="res://addons/foxbox/modifiers/demo/modifiers/weapons/lance/lance.tscn" id="1_ejjc0"]
+[ext_resource type="Script" uid="uid://dr5iy2a6hohn8" path="res://addons/foxbox/modifiers/demo/modifiers/weapons/lance/lance_weapon.gd" id="2_iy0kl"]
+
+[resource]
+script = ExtResource("2_iy0kl")
+lance_scene = ExtResource("1_ejjc0")
+metadata/_custom_type_script = "uid://dr5iy2a6hohn8"

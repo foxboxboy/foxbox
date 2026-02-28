@@ -145,6 +145,26 @@ func remove_specific_modifier(id: StringName, type: ModifierType, specific_amoun
 			
 	return false
 
+
+## Helper to quickly add a flat modifier without typing the enum.
+func add_flat_modifier(id: StringName, amount: float) -> void:
+	add_modifier(id, ModifierType.FLAT, amount)
+
+
+## Helper to quickly add a multiplier modifier without typing the enum.
+func add_multiplier_modifier(id: StringName, amount: float) -> void:
+	add_modifier(id, ModifierType.MULTIPLIER, amount)
+
+
+## Helper to quickly pop a multiplier modifier without typing the enum.
+func pop_flat_modifier(id: StringName) -> void:
+	pop_modifier(id, ModifierType.FLAT)
+
+
+## Helper to quickly pop a multiplier modifier without typing the enum.
+func pop_multiplier_modifier(id: StringName) -> void:
+	pop_modifier(id, ModifierType.MULTIPLIER)
+
 #endregion
 
 

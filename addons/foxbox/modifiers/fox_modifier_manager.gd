@@ -1,119 +1,133 @@
-# tates_lib/modifiers/tate_modifier_manager.gd
-extends FoxNode
 class_name FoxModifierManager
-## Handles the creation, lifetime, and cleanup of Modifier Instances.
-## REFACTOR NOTE: Now uses an internal Array instead of child Nodes for performance.
+extends FoxNode
+## Handles the creation, lifecycle, and cleanup of [FoxModifierInstance] objects.
 
-## Emitted when a FoxModifierInstance is added or removed.
+
+#region Signals
+
+## Emitted whenever a [FoxModifierInstance] is added or removed from the active list.
 signal modifiers_updated
+## Emitted whenever a [FoxModifierInstance] is permanently removed.
+signal instance_removed(instance: FoxModifierInstance)
 
-# CHANGED: We store data objects, not child nodes
+#endregion
+
+
+#region Variables
+
+## The internal list of currently active modifier instances.
 var active_modifiers: Array[FoxModifierInstance] = []
 
+#endregion
+
+
+#region Built-In Loops
+
 func _process(delta: float) -> void:
-	# We loop backwards so we can safely remove items while iterating
+	# We loop backwards. If process_time() triggers a destruction signal, 
+	# the array size shrinks safely without skipping the next element.
 	for i in range(active_modifiers.size() - 1, -1, -1):
-		var instance = active_modifiers[i]
-		
-		# -1 duration means "Permanent" (Infinite)
-		if instance.time_left != -1:
-			instance.time_left -= delta
-			
-			if instance.time_left <= 0:
-				_remove_instance_at(i)
+		active_modifiers[i].process_time(delta)
+
+#endregion
 
 
-## Returns the FoxModifierInstance that was added. If tate_modifier is null returns null. 
-## Depending on the stack_mode of the FoxModifier, different things happen.
-## Both StackMode.SINGLE & StackMode.ADDITIVE allow only one FoxModifierInstance
-## to exist in this manager with that associated FoxModifier.
-## StackMode.UNIQUE checks for an existing FoxModifierInstance
-## and updates its duration to match. 
-## StackMode.ADDITIVE runs FoxModifierInstance.increase_stack(). 
-## Increasing its stack by 1 and telling its FoxModifier to run reapply().
-## StackMode.MULTIPLE_INSTANCES makes a new FoxModifierInstance with a unique suffix
-## (handled automatically by being a distinct object in the Array).
-func add_modifier(tate_modifier: FoxModifier, target: Node) -> FoxModifierInstance:
-	print("add_modifier ",tate_modifier.modifier_id)
-	
-	if not tate_modifier: return null
+#region Public API
+
+## Adds a [FoxModifier] to the target. Depending on the [member FoxModifier.stack_mode], 
+## this will either return an existing instance or instantiate a new one.
+func add_modifier(mod: FoxModifier, target: Node) -> FoxModifierInstance:
+	if not mod: return null
 
 	# 1. Check for existing instances by ID
-	var existing: FoxModifierInstance = _get_instance_by_id(tate_modifier.modifier_id)
+	var existing: FoxModifierInstance = _get_instance_by_id(mod.modifier_id)
+	
+	print(mod._get_resource_name())
+	print(FoxModifier.StackMode.UNIQUE == mod.stack_mode)
 	
 	if existing:
-		if tate_modifier.stack_mode == FoxModifier.StackMode.UNIQUE:
-			existing.time_left = tate_modifier.duration
+		if mod.stack_mode == FoxModifier.StackMode.UNIQUE:
+			_add_duration(existing, mod.duration)
 			return existing
 			
-		if tate_modifier.stack_mode == FoxModifier.StackMode.ADDITIVE:
-			existing.increase_stack()
-			existing.time_left = tate_modifier.duration
+		if mod.stack_mode == FoxModifier.StackMode.INTENSITY:
+			_add_duration(existing, mod.duration)
+			existing.increase_stack(1)
 			return existing
 			
 		# StackMode.MULTIPLE_INSTANCES falls through to create a new one below
 
-	# make a new FoxModifierInstance if there wasn't an existing instance 
+	# 2. Instantiate new if no valid existing instance was found
 	var new_instance := FoxModifierInstance.new()
-	new_instance.modifier_data = tate_modifier
+	new_instance.modifier_data = mod
 	new_instance.target = target
-	new_instance.time_left = tate_modifier.duration
+	new_instance.time_left = mod.duration
 	
-	# Execute the logic immediately (Replaces _ready)
-	tate_modifier.execute(target)
+	# Wire up the destruction signal so it can kill itself if stack/time hits 0
+	new_instance.request_destruction.connect(_on_instance_request_destruction)
 	
-	# Store it
+	# Execute initial logic
+	mod.execute(target)
+	
 	active_modifiers.append(new_instance)
 	modifiers_updated.emit()
 	
 	return new_instance
 
 
-## Removes a FoxModifierInstance associated with a modifier_id.
-## Set all_instances to true to delete all FoxModifierInstances
-## associated with that modifier_id.
-func remove_modifier_by_id(modifier_id: StringName, all_instances := false) -> void:
-	# Loop backwards to find and destroy
-	for i in range(active_modifiers.size() - 1, -1, -1):
-		if active_modifiers[i].modifier_id == modifier_id:
-			_remove_instance_at(i)
-			if not all_instances:
-				return # We removed one, job done
-
-
-## Removes a specific instance object.
+## Removes a specific instance object, running its cleanup logic.
 func remove_instance(instance: FoxModifierInstance) -> void:
 	var idx = active_modifiers.find(instance)
 	if idx != -1:
 		_remove_instance_at(idx)
 
 
-## Removes all FoxModifierInstances under this FoxModifierManager.
-## Cleans up/resets any FoxModifierSlotPolicy under this FoxModifierManager too.
-func remove_all_modifiers():
-	# Loop backwards clearing everything
+## Removes all instances associated with a specific [member FoxModifier.modifier_id].
+func remove_modifier_by_id(target_id: StringName, all_instances: bool = false) -> void:
+	# Loop backwards to safely remove while iterating
+	for i in range(active_modifiers.size() - 1, -1, -1):
+		if active_modifiers[i].modifier_id == target_id:
+			_remove_instance_at(i)
+			if not all_instances:
+				return
+
+
+## Clears every active modifier and runs their cleanup logic.
+func remove_all_modifiers() -> void:
 	for i in range(active_modifiers.size() - 1, -1, -1):
 		_remove_instance_at(i)
-		
-	# Also clear policy slots if you have them
-	for child in get_children():
-		if child is FoxModifierSlotPolicy:
-			child.clear_slots()
 
-# --- Internal Helpers ---
+#endregion
 
-func _get_instance_by_id(id: StringName) -> FoxModifierInstance:
+
+#region Private Logic
+
+func _add_duration(instance: FoxModifierInstance, added_time: float) -> void:
+	# Ignore if either the existing buff or the incoming buff is permanent
+	if instance.time_left != -1.0 and added_time != -1.0:
+		instance.time_left += added_time
+
+
+func _get_instance_by_id(target_id: StringName) -> FoxModifierInstance:
 	for instance in active_modifiers:
-		if instance.modifier_id == id:
+		if instance.modifier_id == target_id:
 			return instance
 	return null
 
-func _remove_instance_at(index: int):
+
+func _remove_instance_at(index: int) -> void:
 	var instance = active_modifiers[index]
 	
-	# Important: We must manually trigger the cleanup logic!
-	# (Since there is no _exit_tree)
+	instance.request_destruction.disconnect(_on_instance_request_destruction)
 	instance.cleanup()
 	
 	active_modifiers.remove_at(index)
+	
+	instance_removed.emit(instance)
 	modifiers_updated.emit()
+
+
+func _on_instance_request_destruction(instance: FoxModifierInstance) -> void:
+	remove_instance(instance)
+
+#endregion

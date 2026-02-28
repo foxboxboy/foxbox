@@ -25,7 +25,7 @@ func _on_execute(target: Node) -> void:
 
 func _apply_burn_damage(target: Node) -> void:
 	
-	var health_component : FoxModifiableBoundedNode
+	var health_component : FoxStatPool
 	
 	if target is FoxDemoKnight:
 		health_component = target.health_component
@@ -41,3 +41,8 @@ func _on_remove(target : Node) -> void:
 		flame.queue_free()
 	if timer:
 		timer.queue_free()
+
+
+
+func _on_reapply(_target: Node, _stack: int = 1) -> void:
+	pass

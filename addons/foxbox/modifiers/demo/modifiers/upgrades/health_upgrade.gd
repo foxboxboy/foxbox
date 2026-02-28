@@ -11,10 +11,10 @@ func _on_execute(target: Node) -> void:
 	if target is FoxDemoKnight:
 		health_node = target.health_component
 	
-	if health_node is FoxModifiableBoundedNode:
+	if health_node is FoxStatPool:
 		# 2. Add the bonus to the MAX engine
 		# We use the ModifierNode's name or ID as the unique key
-		health_node.max_stat.add_flat_modifier(modifier_id, health_bonus)
+		health_node.add_flat_max_modifier(modifier_id, health_bonus)
 		
 		# 3. Optional: Heal the player for the amount gained so it doesn't just look like 
 		# an empty extension of the health bar.
@@ -26,6 +26,10 @@ func _on_remove(target: Node) -> void:
 	if target is FoxDemoKnight:
 		health_node = target.health_component
 	
-	if health_node is FoxModifiableBoundedNode:
+	if health_node is FoxStatPool:
 		# Remove the specific bonus using the ID
-		health_node.max_stat.remove_flat_modifier(modifier_id)
+		health_node.pop_flat_max_modifier(modifier_id)
+
+
+func _on_reapply(_target: Node, _stack: int = 1) -> void:
+	pass

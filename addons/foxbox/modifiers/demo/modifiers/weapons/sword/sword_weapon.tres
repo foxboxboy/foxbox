@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FoxDemoModifierSwordWeapon" format=3 uid="uid://kuunl3b2x0rb"]
+
+[ext_resource type="Script" uid="uid://bygmgo7fugjge" path="res://addons/foxbox/modifiers/demo/modifiers/weapons/sword/sword_weapon.gd" id="1_1jer5"]
+[ext_resource type="PackedScene" uid="uid://dqt70ofnp6htu" path="res://addons/foxbox/modifiers/demo/modifiers/weapons/sword/sword.tscn" id="2_eosc3"]
+
+[resource]
+script = ExtResource("1_1jer5")
+sword_scene = ExtResource("2_eosc3")
+metadata/_custom_type_script = "uid://bygmgo7fugjge"

@@ -97,6 +97,32 @@ func clear_max_modifier(id: StringName, type: FoxModifiableStat.ModifierType) ->
 func clear_all_max_modifiers() -> void:
 	_max_stat.clear_all_modifiers()
 
+
+
+## Helper to quickly add a flat modifier to the max capacity.
+func add_flat_max_modifier(id: StringName, amount: float) -> void:
+	add_max_modifier(id, FoxModifiableStat.ModifierType.FLAT, amount)
+
+## Helper to quickly add a multiplier modifier to the max capacity.
+func add_multiplier_max_modifier(id: StringName, amount: float) -> void:
+	add_max_modifier(id, FoxModifiableStat.ModifierType.MULTIPLIER, amount)
+
+## Helper to quickly pop the top flat modifier from the max capacity stack.
+func pop_flat_max_modifier(id: StringName) -> bool:
+	return pop_max_modifier(id, FoxModifiableStat.ModifierType.FLAT)
+
+## Helper to quickly pop the top multiplier modifier from the max capacity stack.
+func pop_multiplier_max_modifier(id: StringName) -> bool:
+	return pop_max_modifier(id, FoxModifiableStat.ModifierType.MULTIPLIER)
+
+## Helper to instantly remove all flat modifiers under a specific ID from the max capacity.
+func clear_flat_max_modifier(id: StringName) -> void:
+	clear_max_modifier(id, FoxModifiableStat.ModifierType.FLAT)
+
+## Helper to instantly remove all multiplier modifiers under a specific ID from the max capacity.
+func clear_multiplier_max_modifier(id: StringName) -> void:
+	clear_max_modifier(id, FoxModifiableStat.ModifierType.MULTIPLIER)
+
 #endregion
 
 

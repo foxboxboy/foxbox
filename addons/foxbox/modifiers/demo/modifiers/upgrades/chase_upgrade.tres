@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TateDemoModifierChaseUpgrade" format=3 uid="uid://cv87e0qntijny"]
+[gd_resource type="Resource" script_class="FoxDemoModifierChaseUpgrade" format=3 uid="uid://cv87e0qntijny"]
 
 [ext_resource type="Script" uid="uid://bmuvg26u1d45l" path="res://addons/foxbox/modifiers/demo/modifiers/upgrades/chase_upgrade.gd" id="1_dg34x"]
 
