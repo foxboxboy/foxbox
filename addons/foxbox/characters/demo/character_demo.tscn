@@ -121,6 +121,9 @@ cull_mask = 1048573
 
 [node name="Character" parent="." unique_id=1677576452 instance=ExtResource("2_hbwi6")]
 
+[node name="RayCast3D" type="RayCast3D" parent="Character" unique_id=830276601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
 [node name="AICharacter" parent="." unique_id=145916314 instance=ExtResource("2_hbwi6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 

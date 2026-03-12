@@ -523,7 +523,7 @@ func is_in_air() -> bool:
 
 
 func _update_character_model():
-	_model.update_strafe(input_direction)#, get_horizontal_velocity())
+	_model.update_strafe(input_direction)
 	
 	if not is_free_looking: _model.pitch = _aim_target_pitch
 	

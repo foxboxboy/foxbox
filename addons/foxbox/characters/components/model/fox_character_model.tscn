@@ -15,19 +15,20 @@ animation = &"swing_left"
 animation = &"swing_right"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_njgnm"]
-states/Start/position = Vector2(232, 214)
+states/End/position = Vector2(626, 148)
+states/Start/position = Vector2(354, 160)
 states/swing_left/node = SubResource("AnimationNodeAnimation_ly1yk")
 states/swing_left/position = Vector2(515, 94)
 states/swing_right/node = SubResource("AnimationNodeAnimation_05jrh")
 states/swing_right/position = Vector2(530, 214)
-graph_offset = Vector2(-259, -3)
+graph_offset = Vector2(234, 16)
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_kfsx8"]
 filter_enabled = true
 filters = ["armature/Skeleton3D:bicep_l", "armature/Skeleton3D:bicep_r", "armature/Skeleton3D:collarbone_l", "armature/Skeleton3D:collarbone_r", "armature/Skeleton3D:forearm_l", "armature/Skeleton3D:forearm_r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_kfsx8"]
-graph_offset = Vector2(-857.5405, 63.15445)
+graph_offset = Vector2(-565.50085, 110.64993)
 nodes/BaseMovement/node = ExtResource("5_ly1yk")
 nodes/BaseMovement/position = Vector2(-280, 120)
 nodes/UpperBody/node = SubResource("AnimationNodeStateMachine_njgnm")
@@ -117,4 +118,5 @@ update_rotation = false
 [node name="Shadow" parent="." unique_id=1028479081 instance=ExtResource("2_awko8")]
 top_level = true
 
+[editable path="FoxCharacterHands"]
 [editable path="Mannequin"]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cs86odgdio8ak"]
+
+[ext_resource type="Script" uid="uid://buygsk7jkkber" path="res://addons/foxbox/characters/demo/bullet/bullet.gd" id="1_1cjdq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tp30l"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tp30l"]
+material = SubResource("StandardMaterial3D_tp30l")
+size = Vector3(0.05, 0.05, 0.5)
+
+[node name="Bullet" type="Node3D" unique_id=965251396]
+script = ExtResource("1_1cjdq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1556852448]
+mesh = SubResource("BoxMesh_tp30l")

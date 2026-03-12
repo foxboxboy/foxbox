@@ -61,6 +61,19 @@ func _input(event: InputEvent) -> void:
 					character.accessories.empty_skinned_accessory_slot("torso")
 				else:
 					character.accessories.equip_skinned_accessory(VEST.instantiate(), "torso")
+			
+			if event.keycode == KEY_E:
+				print("nerp")
+				
+				const BULLET = preload("uid://cs86odgdio8ak")
+				var new_bullet : Node3D = BULLET.instantiate()
+				var target_position := first_person_camera_pivot.global_position + first_person_camera_pivot.global_basis.z
+				var spawn_position := first_person_camera_pivot.global_position
+				new_bullet.position = spawn_position
+				get_parent().add_child(new_bullet)
+				new_bullet.look_at(target_position)
+
+
 
 func do_first_person():
 	camera.global_position = first_person_camera_pivot.global_position

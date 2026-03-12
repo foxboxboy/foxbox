@@ -71,10 +71,9 @@ func enter_air() -> void:
 
 func update_strafe(input_direction: Vector2) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
-	#var rotation_speed : float = clamp(horizontal_speed * visuals_sync_speed, 0.1, 0.9)
 	
-	rotation.y = strafe_amount#lerp_angle(rotation.y, strafe_amount, rotation_speed)
-	rotation.z = 0.05 * strafe_amount#lerp_angle(rotation.z, 0.05 * strafe_amount, rotation_speed)
+	rotation.y = strafe_amount
+	rotation.z = 0.05 * strafe_amount
 
 
 func update_pitch_and_yaw(new_pitch : float, new_yaw : float):
