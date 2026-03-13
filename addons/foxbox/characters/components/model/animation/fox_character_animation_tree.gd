@@ -23,6 +23,7 @@ const PATH_AIR_BLEND = "parameters/BaseMovement/AirLogic/blend_position"
 
 ## blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 func update_movement(blend_amount: float) -> void:
+
 	blend_amount = clampf(blend_amount, -1, 1)
 	
 	# Just update BOTH. It's cleaner than checking state.

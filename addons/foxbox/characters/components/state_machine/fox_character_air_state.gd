@@ -5,26 +5,8 @@ extends FoxCharacterState
 
 #region Exports
 
-@export_group("Dependencies")
 @export var state_id: StringName = &"Air"
 @export var motor: FoxCharacterMotor3D 
-
-@export_group("Air Parameters")
-## How long the player can still jump after leaving a ledge.
-@export var coyote_duration: float = 0.15
-## How many jumps are allowed (1 = Coyote/Normal, 2 = Double Jump).
-@export var max_jumps: int = 3
-
-#endregion
-
-
-
-
-
-#region Variables
-
-var _time_since_grounded: float = 0.0
-var _jumps_made: int = 0
 
 #endregion
 
@@ -34,51 +16,35 @@ var _jumps_made: int = 0
 
 #region State Virtual Methods
 
+## Called by the state machine when leaving the ground.
+## Validates dependencies, enables the motor, and syncs the visual pose to the air state.
 func enter() -> void:
-	if motor: 
-		motor.enable()
+	assert(motor != null, "AirState requires a FoxCharacterMotor3D.")
+	assert(character != null, "AirState requires a FoxCharacter.")
+	
+	motor.enable()
+	character.enter_air()
 
-	if model:
-		model.enter_air()
 
-
+## Called by the state machine upon landing or dashing.
+## Disables the physics motor to hand control to the next state.
 func exit() -> void:
-	pass
+	motor.disable()
 
 
+## Called every visual frame by the state machine.
 func update(_delta: float) -> void:
 	pass
 
 
+## Acts as the primary orchestrator for the mid-air execution loop. 
+## Evaluates state transitions, synchronizes visual models, and drives the physics motor.
 func physics_update(delta: float) -> void:
-	_time_since_grounded += delta
-	
-	# --- VISUALS ---
-	# Feed the continuous velocity data to the model for the AnimationTree to blend
-	if model:
-		model.set_move_speed(snappedf(character.get_speed_percent(), 0.1))
-		model.set_vertical_speed(motor.body.velocity.y)
-	
-	# --- DASH CHECK ---
-	# We safely ask the character if the cooldown is finished before dashing
-	if character.wants_to_dash and character.can_dash():
-		character.wants_to_dash = false
-		transitioned.emit(self, &"Dash")
-		return
-	
-	# --- JUMP CHECK ---
-	if character.wants_to_jump:
-		if _can_jump_in_air():
-			_execute_jump()
-
-	# --- LANDING CHECK ---
-	if motor.body.velocity.y <= 0.0 and not character.is_in_air():
-		transitioned.emit(self, &"Grounded")
-		return
-
-	# --- MOVEMENT ---
-	motor.input_direction = character.input_direction
-	motor._physics_process(delta)
+	var transitioned := _check_and_handle_transitions()
+	if transitioned: return
+		
+	character.update_locomotion_visuals()
+	_execute_motor(delta)
 
 #endregion
 
@@ -86,29 +52,48 @@ func physics_update(delta: float) -> void:
 
 
 
-#region Private
+#region Internal Helpers
 
-func _can_jump_in_air() -> bool:
-	if not character.can_jump():
+## Evaluates current intents and physical states to determine if the state machine should transition.
+## Returns [code]true[/code] if a transition was requested, signaling the physics loop to abort early.
+func _check_and_handle_transitions() -> bool:
+	
+	# Priority 1: Dashing
+	if character.has_dash_request() and character.can_dash():
+		character.consume_dash_request()
+		transition_requested.emit(self, &"Dash")
+		return true
+		
+	# Priority 2: Landing
+	# We check downward velocity to prevent snapping to the ground while moving up a steep slope.
+	if motor.body.velocity.y <= 0.0 and not character.is_in_air():
+		transition_requested.emit(self, &"Grounded")
+		return true
+	
+	# Priority 3: Mid-Air Jumping
+	if character.has_jump_request() and _can_jump_in_air():
+		_execute_jump()
 		return false
-	
-	# Rule 1: Within Coyote Window
-	var time_since_ground: float = (Time.get_ticks_msec() - character.last_grounded_time) / 1000.0
-	
-	if character.jumps_made == 0 and time_since_ground <= coyote_duration:
-		return true
-		
-	# Rule 2: Multi-Jump Logic    
-	if character.jumps_made < max_jumps:
-		return true
-		
+
 	return false
 
 
+## Evaluates if the character has remaining jump charges or is within the coyote time window.
+func _can_jump_in_air() -> bool:
+	return character.can_coyote_jump() or character.can_multi_jump()
+
+
+## Consumes a validated jump request, increments jump memory, and applies vertical impulse.
 func _execute_jump() -> void:
-	character.wants_to_jump = false # Consume the token
-	character.jumps_made += 1       # INCREMENT CHARACTER MEMORY
-	character.last_jump_time = Time.get_ticks_msec()
+	character.consume_jump_request()
+	
 	motor.jump()
+	character.jumped.emit(1.0)
+
+
+## Passes the character's desired input direction to the motor and advances its simulation.
+func _execute_motor(delta: float) -> void:
+	motor.input_direction = character.input_direction
+	motor._physics_process(delta)
 
 #endregion

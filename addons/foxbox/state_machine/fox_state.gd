@@ -10,7 +10,7 @@ extends FoxNode
 ## Emitted when the state requests a transition to another state.
 ## [param state] is a reference to the state requesting the transition.
 ## [param new_state_name] is the string name of the target state (case-insensitive).
-signal transitioned(old_state: FoxState, new_state_name: StringName)
+signal transition_requested(old_state: FoxState, new_state_name: StringName)
 
 ## Called by the [FoxStateMachine] when this state becomes the active state.
 ## Use this to initialize animations, reset variables, or apply initial forces.

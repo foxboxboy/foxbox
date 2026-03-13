@@ -6,10 +6,10 @@ extends FoxStateMachine
 @export var character: FoxCharacter
 
 func _ready() -> void:
-	super._ready()
-	
 	for child in get_children():
 		if child is FoxCharacterState:
 			child.physics_body = physics_body
 			child.model = model
 			child.character = character
+	
+	super._ready()

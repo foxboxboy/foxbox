@@ -107,7 +107,7 @@ func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 
 func _on_pc_input_controller_jump_held() -> void:
 	if character.is_on_floor():
-		character.wants_to_jump = true
+		character.request_jump()
 
 
 func _on_pc_input_controller_free_cam_pressed() -> void:
@@ -120,21 +120,25 @@ func _on_pc_input_controller_free_cam_released() -> void:
 
 func _on_pc_input_controller_jump_pressed() -> void:
 	_trigger_jump_intent()
-	character.wants_to_jump = true
+	character.request_jump()
 
 
 
 func _trigger_jump_intent():
-	character.wants_to_jump = true
+	character.request_jump()
 	# If we don't land/jump within 0.1s, forget the intent.
 	get_tree().create_timer(0.1).timeout.connect(
-		func(): character.wants_to_jump = false
+		func(): character.cancel_jump_request()
 	)
 
 
 func _on_pc_input_controller_dash_pressed() -> void:
-	character.wants_to_dash = true
+	character.request_dash()
 
 
 func _on_pc_input_controller_sprint_pressed() -> void:
-	character.wants_to_sprint = !character.wants_to_sprint
+	character.toggle_sprint_intent()
+
+
+func _on_pc_input_controller_dash_released() -> void:
+	character.cancel_dash_request()

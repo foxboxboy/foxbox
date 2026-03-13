@@ -65,9 +65,6 @@ func _process(_delta):
 
 #region Public API
 
-func enter_air() -> void:
-	animation_tree.transition_to_air()	
-
 
 func update_strafe(input_direction: Vector2) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
@@ -103,6 +100,10 @@ func stand():
 
 func crouch():
 	animation_tree.transition_to_crouch()
+
+
+func enter_air() -> void:
+	animation_tree.transition_to_air()	
 
 
 func set_move_speed(speed_percent: float) -> void:

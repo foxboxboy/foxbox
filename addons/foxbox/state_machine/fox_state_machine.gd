@@ -17,7 +17,7 @@ func _ready() -> void:
 			states[key] = child
 			
 			# 2. Wire the microphone
-			child.transitioned.connect(_on_child_transition)
+			child.transition_requested.connect(_on_child_transition_requested)
 	
 	if initial_state:
 		initial_state.enter()
@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 
 
 
-func _on_child_transition(old_state: FoxState, new_state_name: StringName) -> void:
+func _on_child_transition_requested(old_state: FoxState, new_state_name: StringName) -> void:
 	if old_state != current_state:
 		return
 	

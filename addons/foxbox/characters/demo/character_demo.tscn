@@ -281,6 +281,7 @@ shadow_enabled = true
 environment = SubResource("Environment_llb37")
 
 [connection signal="dash_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_dash_pressed"]
+[connection signal="dash_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_dash_released"]
 [connection signal="free_cam_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_pressed"]
 [connection signal="free_cam_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_released"]
 [connection signal="jump_held" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_held"]

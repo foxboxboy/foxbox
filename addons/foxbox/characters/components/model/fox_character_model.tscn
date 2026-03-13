@@ -28,7 +28,7 @@ filter_enabled = true
 filters = ["armature/Skeleton3D:bicep_l", "armature/Skeleton3D:bicep_r", "armature/Skeleton3D:collarbone_l", "armature/Skeleton3D:collarbone_r", "armature/Skeleton3D:forearm_l", "armature/Skeleton3D:forearm_r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_kfsx8"]
-graph_offset = Vector2(-565.50085, 110.64993)
+graph_offset = Vector2(-562.90906, 33.18181)
 nodes/BaseMovement/node = ExtResource("5_ly1yk")
 nodes/BaseMovement/position = Vector2(-280, 120)
 nodes/UpperBody/node = SubResource("AnimationNodeStateMachine_njgnm")

@@ -35,6 +35,7 @@ signal jumped(strength : float)
 signal landed
 signal crouched
 signal stood
+signal entered_air
 signal started_sprinting
 signal stopped_sprinting
 signal character_model_changed(visible : bool)
@@ -65,13 +66,25 @@ signal character_model_changed(visible : bool)
 @export var crouch_speed : float = 2.0
 @export var sprint_speed : float = 10.0
 @export var max_head_pitch := 89.0
-## The multiplier used for the jump force when jumping from a crouched position.
-## For example, 1.2 is a 20% jump boost. 
-@export var jump_crouch_multiplier := 1.2
 ## How fast the character needs to be moving to enter air animations.
 @export var enter_air_animation_velocity := 3.5
 ## The % the velocity needs to be of the sprint_speed for the character to stop sprinting. Default 5%.
 @export var stop_sprinting_threshold := 0.05
+
+
+#region Jump Parameters
+
+@export_group("Jump Physics")
+## Maximum number of jumps allowed before landing (1 = Normal, 2 = Double Jump).
+@export var max_jumps: int = 1
+## How long the player can still jump after walking off a ledge.
+@export var coyote_duration: float = 0.15
+@export var jump_buffer_time: float = 0.1
+## The multiplier used for the jump force when jumping from a crouched position.
+## For example, 1.2 is a 20% jump boost. 
+@export var jump_crouch_multiplier := 1.2
+
+#endregion
 
 
 @export_group("Visual Optimizer")
@@ -90,10 +103,11 @@ signal character_model_changed(visible : bool)
 
 #region StateMachine stuff
 
-var wants_to_crouch := false
-var wants_to_sprint := false
-var wants_to_jump := false
-var wants_to_dash := false
+var _sprint_intent: bool = false
+var _crouch_intent: bool = false
+
+var _wants_to_jump := false
+var _wants_to_dash := false
 
 func is_in_water() -> bool:
 	return false
@@ -133,6 +147,7 @@ var current_pose : Pose = Pose.STANDING : set = set_pose
 enum Pose {
 	STANDING,
 	CROUCHING,
+	IN_AIR,
 }
 
 var jumps_made: int = 0
@@ -142,8 +157,7 @@ var last_jump_time: int = 0
 var _aim_target_pitch : float
 var _max_head_pitch_rad : float
 var _free_look_offset: float = 0.0
-var _was_in_air := false
-var _is_sprinting := false
+var _jump_buffer_timer: float = 0.0
 
 #endregion
 
@@ -167,15 +181,18 @@ func _ready() -> void:
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
 	_model.stand()
+	
+	_ground_motor.process_mode = Node.PROCESS_MODE_DISABLED
 
 
-func _process(_delta: float) -> void:	
+func _process(delta: float) -> void:	
 	if visual_optimizer:
 		if visual_optimizer.is_far:
 			return
 	
 	_update_character_model()
 	_update_freecam()
+	_update_jump_request(delta)
 
 """
 func _physics_process(_delta: float) -> void:
@@ -183,24 +200,6 @@ func _physics_process(_delta: float) -> void:
 		_update_sprint()
 """
 #endregion
-
-
-
-
-
-
-
-#region Motor Control
-
-#func disable__motor() -> void:
-#	_motor.disable()
-	
-
-#func enable__motor() -> void:
-#	_motor.enable()
-
-#endregion
-
 
 
 
@@ -229,20 +228,6 @@ func set_pose(new_pose: Pose) -> bool:
 	return true
 
 
-"""func try_to_stand() -> bool:
-	if can_stand_up():
-		stand()
-		return true
-	return false"""
-
-
-"""func try_to_crouch() -> bool:
-	if not is_in_air():
-		crouch()
-		return true
-	return false"""
-
-
 func is_crouching() -> bool:
 	return current_pose == Pose.CROUCHING
 
@@ -256,8 +241,11 @@ func stand() -> void:
 
 
 func crouch() -> void:
-	#stop_sprint()
 	set_pose(Pose.CROUCHING)
+
+
+func enter_air() -> void:
+	set_pose(Pose.IN_AIR)
 
 
 ## Returns true if there is enough physical room above the character's head to stand up.
@@ -280,6 +268,12 @@ func _update_pose() -> void:
 			_hitbox.crouch()
 			_camera_pivot.crouch()
 			crouched.emit()
+		
+		Pose.IN_AIR:
+			_model.enter_air()
+			_hitbox.stand()
+			_camera_pivot.stand()
+			entered_air.emit()
 
 #endregion
 
@@ -425,79 +419,13 @@ func _process_yaw(relative_x: float) -> void:
 
 
 
-
-#region Jump
-
-"""func try_to_jump() -> bool:
-	if not can_stand_up():
-		return false
-	
-	if _motor.can_jump():
-		if current_pose == Pose.CROUCHING:
-			_motor.jump(jump_crouch_multiplier)
-			jumped.emit(jump_crouch_multiplier)
-		else:
-			_motor.jump()
-			jumped.emit(1.0)
-		
-		stand()
-		return true
-		
-	return false
-
-
-func reset_jump_pressed() -> void:
-	_motor.reset_jump_pressed()"""
-
-#endregion
-
-
-
-
-
-
-
-#region Sprint
-
-"""func try_to_sprint() -> bool:
-	if not is_sprinting() and not is_in_air():
-		stand()
-		_motor.speed = sprint_speed
-		_is_sprinting = true
-		started_sprinting.emit()
-		return true
-	return false
-
-
-func stop_sprint() -> void:
-	_is_sprinting = false
-	_motor.speed = walk_speed
-	stopped_sprinting.emit()"""
-
-"""
-func is_sprinting() -> bool:
-	return _is_sprinting
-
-
-func _update_sprint() -> void:
-	if get_current_velocity() < sprint_speed * stop_sprinting_threshold:
-		stop_sprint()
-"""
-#endregion
-
-
-
-
-
-
-
 #region Helpers
 
 func get_speed_percent() -> float:
 	var horizontal_speed := get_horizontal_velocity()
-	
+		
 	match current_pose:
-		Pose.STANDING:
+		Pose.STANDING, Pose.IN_AIR:
 			return horizontal_speed / sprint_speed
 		Pose.CROUCHING:
 			return horizontal_speed / crouch_speed
@@ -534,24 +462,19 @@ func has_move_input() -> bool:
 
 
 func is_moving_fast_vertically() -> bool:
-	print("HEY ", abs(_physics_body.velocity.y), enter_air_animation_velocity)
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
 
 func is_in_air() -> bool:
-	# 1. Force the math to update to the exact current microsecond
 	if _ground_cast:
 		_ground_cast.force_raycast_update()
 		
-		# If the raycast is touching the ground, we are definitely grounded.
 		if _ground_cast.is_colliding():
 			return false
 			
-	# 2. Fallback to the physics body's last known state
 	if _physics_body.is_on_floor():
 		return false
 		
-	# 3. If both sensors fail to find the floor, we are in the air.
 	return true
 
 
@@ -563,13 +486,18 @@ func can_dash() -> bool:
 
 
 func _update_character_model():
-	# This continuous data is safe to update every frame.
 	_model.update_strafe(input_direction)
 	
 	if not is_free_looking: 
 		_model.pitch = _aim_target_pitch
 		
 	_model.yaw = get_aim_torso_angle_difference()
+
+
+func update_locomotion_visuals() -> void:
+	print(get_speed_percent())
+	_model.set_move_speed(snappedf(get_speed_percent(), 0.1))
+	_model.set_vertical_speed(_physics_body.velocity.y)
 
 
 func force_update_pose() -> void:
@@ -579,5 +507,103 @@ func force_update_pose() -> void:
 func can_jump() -> bool:
 	var elapsed_seconds: float = (Time.get_ticks_msec() - last_jump_time) / 1000.0
 	return elapsed_seconds > 0.15
+
+
+func reset_jumps_made() -> void:
+	jumps_made = 0
+
+
+## Reads the dash request, checks if physically possible, and clears the buffer.
+func consume_dash_request() -> void:
+	_wants_to_dash = false
+
+func consume_jump_request() -> void:
+	_wants_to_jump = false
+	jumps_made += 1
+	last_jump_time = Time.get_ticks_msec()
+
+
+func update_grounded_time() -> void:
+	last_grounded_time = Time.get_ticks_msec()
+
+
+
+
+func request_jump() -> void:
+	_wants_to_jump = true
+	_jump_buffer_timer = jump_buffer_time # Start the countdown
+
+
+# Automatically forget the jump if the time runs out
+func _update_jump_request(delta: float) -> void:
+	if _wants_to_jump:
+		_jump_buffer_timer -= delta
+		if _jump_buffer_timer <= 0.0:
+			cancel_jump_request()
+
+func cancel_jump_request() -> void:
+	_wants_to_jump = false
+
+func request_dash() -> void:
+	_wants_to_dash = true
+
+func cancel_dash_request() -> void:
+	_wants_to_dash = false
+
+
+
+func set_sprint_intent(active: bool) -> void:
+	_sprint_intent = active
+
+func toggle_sprint_intent() -> void:
+	_sprint_intent = !_sprint_intent
+
+func set_crouch_intent(active: bool) -> void:
+	_crouch_intent = active
+
+
+
+func has_jump_request() -> bool:
+	return _wants_to_jump
+
+func has_dash_request() -> bool:
+	return _wants_to_dash
+
+
+
+
+func has_crouch_intent() -> bool:
+	return _crouch_intent
+
+func has_sprint_intent() -> bool:
+	return _sprint_intent
+
+func cancel_sprint_request() -> void:
+	_sprint_intent = false
+
+## Checks if the character has slowed down enough to break out of a sprint.
+func is_below_sprint_dropoff() -> bool:
+	var threshold: float = sprint_speed * stop_sprinting_threshold
+	return get_current_velocity() < threshold
+
+
+
+func is_currently_sprinting() -> bool:
+	# Check if our current speed target matches our sprint speed
+	return _ground_motor.speed == sprint_speed
+
+
+
+## Checks if the character is falling but still within the grace period to jump.
+func can_coyote_jump() -> bool:
+	if jumps_made > 0:
+		return false
+		
+	var time_since_ground: float = (Time.get_ticks_msec() - last_grounded_time) / 1000.0
+	return time_since_ground <= coyote_duration
+
+## Checks if the character has multi-jump charges remaining.
+func can_multi_jump() -> bool:
+	return jumps_made < max_jumps
 
 #endregion

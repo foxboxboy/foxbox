@@ -74,9 +74,9 @@ func physics_update(delta: float) -> void:
 
 	if _dash_timer <= 0.0:
 		if character.is_in_air():
-			transitioned.emit(self, &"Air")
+			transition_requested.emit(self, &"Air")
 		else:
-			transitioned.emit(self, &"Grounded")
+			transition_requested.emit(self, &"Grounded")
 
 #endregion
 
