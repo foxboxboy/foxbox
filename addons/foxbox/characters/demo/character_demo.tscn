@@ -102,9 +102,8 @@ volumetric_fog_anisotropy = 0.77
 
 [node name="GUI" parent="." unique_id=649109011 instance=ExtResource("7_aq0ug")]
 
-[node name="AIBrain" type="Node" parent="." unique_id=886923235 node_paths=PackedStringArray("my_character", "player_character")]
+[node name="AIBrain" type="Node" parent="." unique_id=886923235 node_paths=PackedStringArray("player_character")]
 script = ExtResource("2_phlfe")
-my_character = NodePath("../AICharacter")
 player_character = NodePath("../Character")
 
 [node name="Player" type="Node" parent="." unique_id=1373919688 node_paths=PackedStringArray("character", "camera")]
@@ -123,16 +122,6 @@ cull_mask = 1048573
 
 [node name="RayCast3D" type="RayCast3D" parent="Character" unique_id=830276601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
-
-[node name="AICharacter" parent="." unique_id=145916314 instance=ExtResource("2_hbwi6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
-
-[node name="Label3D" type="Label3D" parent="AICharacter" unique_id=997475688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6000001, 0)
-billboard = 1
-text = "Jimmy"
-font_size = 96
-outline_size = 24
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=643502213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34310836, 3.9799104, 0)
@@ -291,6 +280,7 @@ shadow_enabled = true
 [node name="WorldEnvironment" parent="CSGCombiner3D" unique_id=393555923 instance=ExtResource("9_5anb6")]
 environment = SubResource("Environment_llb37")
 
+[connection signal="dash_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_dash_pressed"]
 [connection signal="free_cam_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_pressed"]
 [connection signal="free_cam_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_released"]
 [connection signal="jump_held" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_held"]
@@ -298,3 +288,4 @@ environment = SubResource("Environment_llb37")
 [connection signal="jump_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_released"]
 [connection signal="look_input" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_look_input"]
 [connection signal="move_input" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_move_input"]
+[connection signal="sprint_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_sprint_pressed"]

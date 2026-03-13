@@ -55,8 +55,10 @@ signal character_model_changed(visible : bool)
 @export var _model : FoxCharacterModel
 @export var _camera_pivot : FoxCharacterCameraPivot
 @export var _head_clearance_sensor : ShapeCast3D
-@export var _character_hitbox : FoxCharacterHitbox
+@export var _hitbox : FoxCharacterHitbox
 @export var _ground_cast : RayCast3D
+@export var _state_machine : FoxCharacterStateMachine
+
 
 @export_group("Movement Settings")
 @export var walk_speed : float = 5.0
@@ -70,6 +72,7 @@ signal character_model_changed(visible : bool)
 @export var enter_air_animation_velocity := 3.5
 ## The % the velocity needs to be of the sprint_speed for the character to stop sprinting. Default 5%.
 @export var stop_sprinting_threshold := 0.05
+
 
 @export_group("Visual Optimizer")
 ## @experimental
@@ -132,6 +135,10 @@ enum Pose {
 	CROUCHING,
 }
 
+var jumps_made: int = 0
+var last_grounded_time: int = 0
+var last_jump_time: int = 0
+
 var _aim_target_pitch : float
 var _max_head_pitch_rad : float
 var _free_look_offset: float = 0.0
@@ -154,7 +161,7 @@ func _ready() -> void:
 	assert(_model != null, "ERROR: No _model was assigned to character. "+str(get_path()))
 	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
 	assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
-	assert(_character_hitbox != null, "ERROR: No _character_hitbox was assigned to character. "+str(get_path()))
+	assert(_hitbox != null, "ERROR: No _hitbox was assigned to character. "+str(get_path()))
 	assert(_ground_cast != null, "ERROR: No _ground_cast was assigned to character. "+str(get_path()))
 		
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
@@ -202,19 +209,22 @@ func _physics_process(_delta: float) -> void:
 
 #region Poses
 
-## Returns true if the pose was successfuly changed.
-func set_pose(new_pose : Pose) -> bool:
-	if new_pose == current_pose: return false
+## Returns true if the pose was successfully changed.
+func set_pose(new_pose: Pose) -> bool:
+	# 1. Guard against spam
+	if new_pose == current_pose: 
+		return false
 	
+	# 2. Guard against illegal physical states
 	if new_pose == Pose.STANDING and not can_stand_up():
 		return false
 	
-	var old_pose := current_pose
+	# 3. Apply the change
+	var old_pose: Pose = current_pose
 	current_pose = new_pose
 	
 	_update_pose()
-	
-	pose_changed.emit(new_pose,old_pose)
+	pose_changed.emit(new_pose, old_pose)
 	
 	return true
 
@@ -261,21 +271,14 @@ func _update_pose() -> void:
 	match current_pose:
 		Pose.STANDING:
 			_model.stand()
-			_character_hitbox.stand()
+			_hitbox.stand()
 			_camera_pivot.stand()
-			
-			#if is_sprinting():
-			#	_motor.speed = sprint_speed
-			#else:
-			#	_motor.speed = walk_speed
-			
 			stood.emit()
 			
 		Pose.CROUCHING:
 			_model.crouch()
-			_character_hitbox.crouch()
+			_hitbox.crouch()
 			_camera_pivot.crouch()
-			#_motor.speed = crouch_speed
 			crouched.emit()
 
 #endregion
@@ -531,33 +534,50 @@ func has_move_input() -> bool:
 
 
 func is_moving_fast_vertically() -> bool:
+	print("HEY ", abs(_physics_body.velocity.y), enter_air_animation_velocity)
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
 
 func is_in_air() -> bool:
-	if not _ground_cast.is_colliding():
-		if not _physics_body.is_on_floor():
-			return true
-	
+	# 1. Force the math to update to the exact current microsecond
+	if _ground_cast:
+		_ground_cast.force_raycast_update()
+		
+		# If the raycast is touching the ground, we are definitely grounded.
+		if _ground_cast.is_colliding():
+			return false
+			
+	# 2. Fallback to the physics body's last known state
+	if _physics_body.is_on_floor():
+		return false
+		
+	# 3. If both sensors fail to find the floor, we are in the air.
+	return true
+
+
+func can_dash() -> bool:
+	var dash_state = _state_machine.get_state(&"Dash")
+	if dash_state and dash_state is FoxCharacterDashState:
+		return dash_state.is_cooldown_finished()
 	return false
 
 
 func _update_character_model():
+	# This continuous data is safe to update every frame.
 	_model.update_strafe(input_direction)
 	
-	if not is_free_looking: _model.pitch = _aim_target_pitch
-	
+	if not is_free_looking: 
+		_model.pitch = _aim_target_pitch
+		
 	_model.yaw = get_aim_torso_angle_difference()
-	
-	_model.set_move_speed(snappedf(get_speed_percent(),0.1))
-	_model.set_vertical_speed(_physics_body.velocity.y)
 
-	if is_in_air() and is_moving_fast_vertically():
-		_model.enter_air()
-		_was_in_air = true
-	elif not is_in_air() and _was_in_air:
-		_update_pose()
-		_was_in_air = false
-		landed.emit()
+
+func force_update_pose() -> void:
+	_update_pose()
+
+
+func can_jump() -> bool:
+	var elapsed_seconds: float = (Time.get_ticks_msec() - last_jump_time) / 1000.0
+	return elapsed_seconds > 0.15
 
 #endregion

@@ -4,8 +4,9 @@ extends FoxNode
 @export var initial_state: FoxState
 var current_state: FoxState
 
-## The "phonebook" that maps StringNames to the actual nodes
+## [member Dictionary] that maps StringNames to the actual FoxNode nodes
 var states: Dictionary = {}
+
 
 func _ready() -> void:
 	for child in get_children():
@@ -16,26 +17,33 @@ func _ready() -> void:
 			states[key] = child
 			
 			# 2. Wire the microphone
-			child.transitioned.connect(on_child_transition)
+			child.transitioned.connect(_on_child_transition)
 	
 	if initial_state:
 		initial_state.enter()
 		current_state = initial_state
 
+
 func _process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)
+
 
 func _physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_update(delta)
 
-# Notice we changed 'state' back to 'old_state' for clarity!
-func on_child_transition(old_state: FoxState, new_state_name: StringName) -> void:
+
+
+func _on_child_transition(old_state: FoxState, new_state_name: StringName) -> void:
 	if old_state != current_state:
 		return
 	
-	# THE FIX: We use the phonebook to translate the StringName back into the physical Node
+	transition_to_state(new_state_name)
+
+
+## Transitions to a FoxState from [member states] if one could be found. 
+func transition_to_state(new_state_name: StringName) -> void:
 	var new_state: FoxState = states.get(new_state_name)
 	
 	if not new_state:
@@ -47,3 +55,13 @@ func on_child_transition(old_state: FoxState, new_state_name: StringName) -> voi
 	
 	new_state.enter()
 	current_state = new_state
+
+
+## Returns a FoxState from [member states] if one could be found. 
+func get_state(state_name: StringName) -> FoxState:
+	var state: FoxState = states.get(state_name)
+	
+	if not state:
+		push_warning("FoxStateMachine get_state failed: The target state '%s' does not exist in the dictionary." % state_name)
+	
+	return state

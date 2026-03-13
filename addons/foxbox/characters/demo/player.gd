@@ -110,10 +110,6 @@ func _on_pc_input_controller_jump_held() -> void:
 		character.wants_to_jump = true
 
 
-#func _on_pc_input_controller_jump_released() -> void:
-#	character.wants_to_jump = false
-
-
 func _on_pc_input_controller_free_cam_pressed() -> void:
 	character.is_free_looking = true
 
@@ -134,3 +130,11 @@ func _trigger_jump_intent():
 	get_tree().create_timer(0.1).timeout.connect(
 		func(): character.wants_to_jump = false
 	)
+
+
+func _on_pc_input_controller_dash_pressed() -> void:
+	character.wants_to_dash = true
+
+
+func _on_pc_input_controller_sprint_pressed() -> void:
+	character.wants_to_sprint = !character.wants_to_sprint

@@ -9,6 +9,7 @@
 @abstract class_name FoxCharacterState
 extends FoxState
 
+
 ## The physics node of the character.
 ## Used by states and motors to apply velocity, detect floors, and handle world collisions.
 var physics_body: CharacterBody3D

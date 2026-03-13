@@ -34,9 +34,11 @@ func transition_to_crouch() -> void:
 	_base_movement.travel("Crouch")
 
 func transition_to_stand() -> void:
+	print("Entering the ground!")
 	_base_movement.travel("Stand")
 
 func transition_to_air() -> void:
+	print("Entering the air!")
 	_base_movement.travel("AirLogic")
 
 
