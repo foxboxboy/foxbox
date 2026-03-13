@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://addons/foxbox/characters/components/model/fox_character_model.tscn" id="5_vwgx6"]
 [ext_resource type="Script" uid="uid://bvjessm2ux1nn" path="res://addons/foxbox/characters/components/state_machine/fox_character_state_machine.gd" id="6_gyrcu"]
 [ext_resource type="Script" uid="uid://b6bxv4yvhnqiw" path="res://addons/foxbox/characters/components/state_machine/fox_character_grounded_state.gd" id="7_7128x"]
-[ext_resource type="Script" uid="uid://civ7m3j5iqawi" path="res://addons/foxbox/characters/components/state_machine/fox_character_air_state.gd" id="8_0ex66"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
 radius = 0.5288086
@@ -18,27 +17,28 @@ length = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oy2pm"]
 
-[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_ground_motor", "_model", "_camera_pivot", "_head_clearance_sensor", "_character_hitbox", "_ground_cast")]
+[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("_physics_body", "_motor", "_model", "_camera_pivot", "_head_clearance_sensor", "_character_hitbox", "_ground_cast", "visual_optimizer")]
 collision_mask = 3
 platform_floor_layers = 4294967293
 script = ExtResource("1_7128x")
 _physics_body = NodePath(".")
-_ground_motor = NodePath("AdvancedCharacterMotor")
+_motor = NodePath("AdvancedCharacterMotor")
 _model = NodePath("CharacterModel")
 _camera_pivot = NodePath("CameraPivot")
 _head_clearance_sensor = NodePath("HeadClearanceSensor")
 _character_hitbox = NodePath("CharacterHitbox")
 _ground_cast = NodePath("GroundCast")
 sprint_speed = 9.0
+visual_optimizer = NodePath("")
 
-[node name="AdvancedCharacterMotor" type="Node3D" parent="." unique_id=507443324 node_paths=PackedStringArray("body")]
+[node name="AdvancedCharacterMotor" type="Node3D" parent="." unique_id=507443324 node_paths=PackedStringArray("_ground_cast", "body")]
 script = ExtResource("2_0ex66")
+_ground_cast = NodePath("../GroundCast")
+coyote_time = 0.5
 body = NodePath("..")
 
 [node name="GroundCast" type="RayCast3D" parent="." unique_id=1373258311]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 target_position = Vector3(0, -0.4, 0)
-hit_from_inside = true
 
 [node name="CharacterHitbox" type="CollisionShape3D" parent="." unique_id=236041623 node_paths=PackedStringArray("collision_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0974121, 0)
@@ -61,17 +61,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 shape = SubResource("SphereShape3D_oy2pm")
 target_position = Vector3(0, 0, 0)
 
-[node name="CharacterStateMachine" type="Node" parent="." unique_id=1867456045 node_paths=PackedStringArray("physics_body", "model", "character", "initial_state")]
+[node name="CharacterStateMachine" type="Node" parent="." unique_id=1867456045 node_paths=PackedStringArray("physics_body", "model", "ground_motor")]
 script = ExtResource("6_gyrcu")
 physics_body = NodePath("..")
 model = NodePath("../CharacterModel")
-character = NodePath("..")
-initial_state = NodePath("GroundedState")
+ground_motor = NodePath("../AdvancedCharacterMotor")
 
 [node name="GroundedState" type="Node" parent="CharacterStateMachine" unique_id=1830978882 node_paths=PackedStringArray("motor")]
 script = ExtResource("7_7128x")
-motor = NodePath("../../AdvancedCharacterMotor")
-
-[node name="AirState" type="Node" parent="CharacterStateMachine" unique_id=1903171990 node_paths=PackedStringArray("motor")]
-script = ExtResource("8_0ex66")
 motor = NodePath("../../AdvancedCharacterMotor")

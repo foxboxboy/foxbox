@@ -21,21 +21,10 @@ var input_direction := Vector2.ZERO
 ## How strong the input is, useful for joysticks.
 var input_strength := 1.0
 ## Whether or not this motor will process. 
-## True will set the process mode to Node.PROCESS_MODE_INHERIT.
-## False will set the process mode to Node.PROCESS_MODE_DISABLED.
 var active := true:
 	set(new_value):
 		active = new_value
-		
-		if active:
-			process_mode = Node.PROCESS_MODE_INHERIT
-		else:
-			process_mode = Node.PROCESS_MODE_DISABLED
 
-
-## Internal variable used to stop the body from jumping over and over. 
-## Becomes true when jump() is called and resets to false when the body is on the floor.
-var _jump_pressed := false
 
 
 
@@ -60,9 +49,6 @@ func _physics_process(delta) -> void:
 	_update_movement(delta)
 	
 	body.move_and_slide()
-	
-	if body.is_on_floor():
-		reset_jump_pressed()
 
 #endregion
 
@@ -73,14 +59,12 @@ func _physics_process(delta) -> void:
 #region Public API
 
 ## Enables the motor to work.
-## Also sets its process to Node.PROCESS_MODE_INHERIT.
 func enable():
 	active = true
 	
 
 
 ## Enables the motor to work.
-## Also sets its process to Node.PROCESS_MODE_DISABLED for performance.
 func disable():
 	active = false
 
@@ -88,18 +72,7 @@ func disable():
 ## Makes the body jump based on jump_strength multiplied by the multiplier passed in.
 func jump(multiplier := 1.0) -> void:
 	body.velocity.y = jump_strength * multiplier
-	_jump_pressed = true
 	jumped.emit()
-
-
-## Sets _jump_pressed to false. 
-func reset_jump_pressed() -> void:
-	_jump_pressed = false
-
-
-## Returns true if the body is on the ground and character hasn't already jumped.
-func can_jump() -> bool:
-	return body.is_on_floor() and not _jump_pressed
 
 #endregion
 

@@ -9,12 +9,14 @@ extends Node
 var first_person_camera_pivot : Marker3D
 var shoulder_camera_pivot : Marker3D
 
+
 const TOMMY_GUN = preload("uid://384do1qwb655")
 const VEST = preload("uid://cu8c6xykn3112")
 const HELMET = preload("uid://qalmtfjmgw2q")
 
 
 func _process(_delta: float) -> void:
+	
 	first_person_camera_pivot = character.get_first_person_camera_pivot()
 	shoulder_camera_pivot = character.get_shoulder_camera_pivot()
 	
@@ -23,21 +25,19 @@ func _process(_delta: float) -> void:
 
 # i would put this in the input controlers but oh my god i am lazy
 func _input(event: InputEvent) -> void:
+	return
+	
 	if event is InputEventKey:
 		if event.pressed and not event.echo:
 			#CROUCH
 			if event.keycode == KEY_C:
-				if character.is_crouching():
-					character.try_to_stand()
-				else:
-					character.try_to_crouch()
+				character.wants_to_crouch = !character.wants_to_crouch
+
 			
 			# SPRINT
 			if event.keycode == KEY_CTRL:
-				if not character.is_sprinting():
-					character.try_to_sprint()
-				else:
-					character.stop_sprint()
+				character.wants_to_sprint = !character.wants_to_sprint
+				
 			
 			# HOLD GUN
 			if event.keycode == KEY_1:
@@ -87,6 +87,7 @@ func do_third_person():
 	character.show_character_model()
 
 
+
 func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 	mouse_relative *= look_sensitivity
 	mouse_relative.y *= vertical_sensitivity
@@ -103,12 +104,14 @@ func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 		character.input_strength = 1.0
 
 
-func _on_pc_input_controller_jump_pressed() -> void:
-	character.try_to_jump()
+
+func _on_pc_input_controller_jump_held() -> void:
+	if character.is_on_floor():
+		character.wants_to_jump = true
 
 
-func _on_pc_input_controller_jump_released() -> void:
-	character.reset_jump_pressed()
+#func _on_pc_input_controller_jump_released() -> void:
+#	character.wants_to_jump = false
 
 
 func _on_pc_input_controller_free_cam_pressed() -> void:
@@ -117,3 +120,17 @@ func _on_pc_input_controller_free_cam_pressed() -> void:
 
 func _on_pc_input_controller_free_cam_released() -> void:
 	character.is_free_looking = false
+
+
+func _on_pc_input_controller_jump_pressed() -> void:
+	_trigger_jump_intent()
+	character.wants_to_jump = true
+
+
+
+func _trigger_jump_intent():
+	character.wants_to_jump = true
+	# If we don't land/jump within 0.1s, forget the intent.
+	get_tree().create_timer(0.1).timeout.connect(
+		func(): character.wants_to_jump = false
+	)

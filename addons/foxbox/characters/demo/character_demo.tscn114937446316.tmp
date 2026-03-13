@@ -293,7 +293,6 @@ environment = SubResource("Environment_llb37")
 
 [connection signal="free_cam_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_pressed"]
 [connection signal="free_cam_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_free_cam_released"]
-[connection signal="jump_held" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_held"]
 [connection signal="jump_pressed" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_pressed"]
 [connection signal="jump_released" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_jump_released"]
 [connection signal="look_input" from="Player/PCInputController" to="Player" method="_on_pc_input_controller_look_input"]

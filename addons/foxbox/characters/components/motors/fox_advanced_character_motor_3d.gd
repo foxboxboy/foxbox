@@ -2,18 +2,10 @@ extends FoxCharacterMotor3D
 class_name FoxAdvancedCharacterMotor3D
 ## A more advanced and robust FoxCharacterMotor3D used to propell a human like actor.
 
-## Unlike the FoxCharacterMotor3D, this motor has extra features like coyote time,
+## Unlike the FoxCharacterMotor3D, this motor has extra features like,
 ## acceleration, friction, and interactions with RigidBody3D. 
 ## [br]
 ## This gives it an overall higher fidelity "feel".
-
-@export_group("Advanced Jump")
-## (Optional) Raycast3D that detects if the body is on the ground.
-## Helps prevent missed inputs when running down steep slopes.
-@export var _ground_cast : RayCast3D
-## The max time spent in the air before a player can no longer jump. 
-## Set to -1 to always let a player jump once in the air.
-@export var coyote_time : float = 0.25
 
 @export_group("Smoothing")
 ## How responsive input is.
@@ -38,50 +30,10 @@ func _physics_process(delta):
 	# math
 	_update_y_velocity(delta)
 	_update_movement(delta)
-	_update_airtime(delta)
 	
 	# appyling the math
 	_push_away_rigid_bodies()
 	body.move_and_slide()
-	
-	# If the player hits the floor and is holding jump,
-	# automatically start another jump
-	if body.is_on_floor():
-		reset_jump_pressed()
-
-#endregion
-
-
-
-
-
-#region Public API
-
-## More advanced can_jump() from FoxCharacterMotor3D.
-## If there is a ground cast lets the character jump before they hit
-## the ground and use coyote time. 
-func can_jump() -> bool:
-	if not active:
-		return false
-	
-	if _jump_pressed:
-		return false
-	
-	# Standard
-	if super.can_jump():
-		return true
-	
-	# Raycast check
-	if _ground_cast and _ground_cast.is_colliding() and body.velocity.y <= 0:
-		return true
-	
-	# Coyote Time check
-	if coyote_time < 0:
-		return true
-	elif _air_time_elapsed < coyote_time:
-		return true
-		
-	return false
 
 #endregion
 
@@ -91,20 +43,6 @@ func can_jump() -> bool:
 
 
 #region Private Helpers
-
-func _update_airtime(delta: float) -> void:
-	var is_grounded := body.is_on_floor()
-	
-	# If we have a raycast, it can override the grounded check
-	if _ground_cast:
-		is_grounded = is_grounded or _ground_cast.is_colliding()
-		
-	if not is_grounded:
-		_air_time_elapsed += delta
-		# Clamp it safely to prevent floating point overflow if falling for hours
-		_air_time_elapsed = clampf(_air_time_elapsed, 0.0, coyote_time * 2.0)
-	else:
-		_air_time_elapsed = 0.0
 
 
 ## More advanced _update_movement() from FoxCharacterMotor3D. 

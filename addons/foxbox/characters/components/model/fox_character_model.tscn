@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bd5g3v65ulm7d"]
 
-[ext_resource type="Script" uid="uid://dj00e175tgty8" path="res://addons/foxbox/characters/components/model/fox_character_model.gd" id="1_b7p6l"]
+[ext_resource type="Script" uid="uid://dhu56xkcp5rju" path="res://addons/foxbox/characters/components/model/fox_character_model.gd" id="1_b7p6l"]
 [ext_resource type="PackedScene" uid="uid://cqyjjy1gyltv7" path="res://addons/foxbox/characters/assets/mannequin/merged/mannequin_merged.gltf" id="2_7oa71"]
 [ext_resource type="PackedScene" uid="uid://6fjomgb318ai" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.tscn" id="2_060e5"]
 [ext_resource type="PackedScene" uid="uid://dpt8u7w062ece" path="res://addons/foxbox/characters/components/entity_shadows/assets/fox_entity_shadow.tscn" id="2_awko8"]

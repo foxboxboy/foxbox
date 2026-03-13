@@ -51,7 +51,7 @@ signal character_model_changed(visible : bool)
 
 @export_group("Components")
 @export var _physics_body : CharacterBody3D
-@export var _motor: FoxAdvancedCharacterMotor3D
+@export var _ground_motor: FoxAdvancedCharacterMotor3D
 @export var _model : FoxCharacterModel
 @export var _camera_pivot : FoxCharacterCameraPivot
 @export var _head_clearance_sensor : ShapeCast3D
@@ -85,17 +85,35 @@ signal character_model_changed(visible : bool)
 
 
 
+#region StateMachine stuff
+
+var wants_to_crouch := false
+var wants_to_sprint := false
+var wants_to_jump := false
+var wants_to_dash := false
+
+func is_in_water() -> bool:
+	return false
+
+func is_flying() -> bool:
+	return false
+
+#endregion
+
+
+
+
 #region Variables
 
 var hands : FoxCharacterHands:
 	get: return _model.hands
 var accessories : FoxCharacterAccessories:
 	get: return _model.accessories
-var current_speed : float:
-	get: return _motor.speed
-	set(new_value):
-		_motor.speed = new_value
-		current_speed = new_value
+#var current_speed : float:
+#	get: return _motor.speed
+#	set(new_value):
+#		_motor.speed = new_value
+#		current_speed = new_value
 
 var is_free_looking := false
 
@@ -105,7 +123,7 @@ var input_direction := Vector2.ZERO:
 var input_strength := 0.0:
 	set(new_value):
 		input_strength = clampf(new_value, 0.0, 1.0)
-		_motor.input_strength = new_value
+		#_motor.input_strength = new_value
 
 var current_pose : Pose = Pose.STANDING : set = set_pose
 
@@ -132,7 +150,7 @@ var _is_sprinting := false
 
 func _ready() -> void:
 	assert(_physics_body != null, "ERROR: No _physics_body was assigned to character. "+str(get_path()))
-	assert(_motor != null, "ERROR: No _motor was assigned to character. "+str(get_path()))
+	#assert(_motor != null, "ERROR: No _motor was assigned to character. "+str(get_path()))
 	assert(_model != null, "ERROR: No _model was assigned to character. "+str(get_path()))
 	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
 	assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
@@ -142,8 +160,6 @@ func _ready() -> void:
 	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
 	
 	_model.stand()
-	
-	_motor.speed = walk_speed
 
 
 func _process(_delta: float) -> void:	
@@ -154,11 +170,11 @@ func _process(_delta: float) -> void:
 	_update_character_model()
 	_update_freecam()
 
-
+"""
 func _physics_process(_delta: float) -> void:
 	if is_sprinting():
 		_update_sprint()
-
+"""
 #endregion
 
 
@@ -169,12 +185,12 @@ func _physics_process(_delta: float) -> void:
 
 #region Motor Control
 
-func disable__motor() -> void:
-	_motor.disable()
+#func disable__motor() -> void:
+#	_motor.disable()
 	
 
-func enable__motor() -> void:
-	_motor.enable()
+#func enable__motor() -> void:
+#	_motor.enable()
 
 #endregion
 
@@ -203,18 +219,18 @@ func set_pose(new_pose : Pose) -> bool:
 	return true
 
 
-func try_to_stand() -> bool:
+"""func try_to_stand() -> bool:
 	if can_stand_up():
 		stand()
 		return true
-	return false
+	return false"""
 
 
-func try_to_crouch() -> bool:
+"""func try_to_crouch() -> bool:
 	if not is_in_air():
 		crouch()
 		return true
-	return false
+	return false"""
 
 
 func is_crouching() -> bool:
@@ -230,10 +246,11 @@ func stand() -> void:
 
 
 func crouch() -> void:
-	stop_sprint()
+	#stop_sprint()
 	set_pose(Pose.CROUCHING)
 
 
+## Returns true if there is enough physical room above the character's head to stand up.
 func can_stand_up() -> bool:
 	_head_clearance_sensor.target_position = Vector3.ZERO
 	_head_clearance_sensor.force_shapecast_update()
@@ -247,10 +264,10 @@ func _update_pose() -> void:
 			_character_hitbox.stand()
 			_camera_pivot.stand()
 			
-			if is_sprinting():
-				_motor.speed = sprint_speed
-			else:
-				_motor.speed = walk_speed
+			#if is_sprinting():
+			#	_motor.speed = sprint_speed
+			#else:
+			#	_motor.speed = walk_speed
 			
 			stood.emit()
 			
@@ -258,7 +275,7 @@ func _update_pose() -> void:
 			_model.crouch()
 			_character_hitbox.crouch()
 			_camera_pivot.crouch()
-			_motor.speed = crouch_speed
+			#_motor.speed = crouch_speed
 			crouched.emit()
 
 #endregion
@@ -312,7 +329,7 @@ func _update_freecam() -> void:
 
 func set_input_direction(direction : Vector2) -> void:
 	var new_value_normalized := direction.normalized()
-	_motor.input_direction = new_value_normalized
+	#_motor.input_direction = new_value_normalized
 	input_direction = new_value_normalized
 
 #endregion
@@ -408,7 +425,7 @@ func _process_yaw(relative_x: float) -> void:
 
 #region Jump
 
-func try_to_jump() -> bool:
+"""func try_to_jump() -> bool:
 	if not can_stand_up():
 		return false
 	
@@ -427,7 +444,7 @@ func try_to_jump() -> bool:
 
 
 func reset_jump_pressed() -> void:
-	_motor.reset_jump_pressed()
+	_motor.reset_jump_pressed()"""
 
 #endregion
 
@@ -439,7 +456,7 @@ func reset_jump_pressed() -> void:
 
 #region Sprint
 
-func try_to_sprint() -> bool:
+"""func try_to_sprint() -> bool:
 	if not is_sprinting() and not is_in_air():
 		stand()
 		_motor.speed = sprint_speed
@@ -452,9 +469,9 @@ func try_to_sprint() -> bool:
 func stop_sprint() -> void:
 	_is_sprinting = false
 	_motor.speed = walk_speed
-	stopped_sprinting.emit()
+	stopped_sprinting.emit()"""
 
-
+"""
 func is_sprinting() -> bool:
 	return _is_sprinting
 
@@ -462,7 +479,7 @@ func is_sprinting() -> bool:
 func _update_sprint() -> void:
 	if get_current_velocity() < sprint_speed * stop_sprinting_threshold:
 		stop_sprint()
-
+"""
 #endregion
 
 
@@ -506,6 +523,9 @@ func get_aim_torso_angle_difference() -> float:
 	return(-angle)
 
 
+func is_on_floor() -> bool:
+	return _physics_body.is_on_floor()
+
 func has_move_input() -> bool:
 	return input_direction.x != 0 or input_direction.y != 0
 
@@ -514,7 +534,7 @@ func is_moving_fast_vertically() -> bool:
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
 
-func is_in_air() -> bool:	
+func is_in_air() -> bool:
 	if not _ground_cast.is_colliding():
 		if not _physics_body.is_on_floor():
 			return true
