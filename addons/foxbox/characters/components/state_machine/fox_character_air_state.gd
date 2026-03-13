@@ -59,19 +59,21 @@ func physics_update(delta: float) -> void:
 func _check_and_handle_transitions() -> bool:
 	
 	# Priority 1: Dashing
-	if character.has_dash_request() and character.can_dash():
+	var should_dash := character.has_dash_request() and character.can_dash()
+	if should_dash:
 		character.consume_dash_request()
 		transition_requested.emit(self, &"Dash")
 		return true
 		
 	# Priority 2: Landing
-	# We check downward velocity to prevent snapping to the ground while moving up a steep slope.
-	if motor.body.velocity.y <= 0.0 and not character.is_in_air():
+	var should_land := motor.body.velocity.y <= 0.0 and not character.is_in_air()
+	if should_land:
 		transition_requested.emit(self, &"Grounded")
 		return true
 	
 	# Priority 3: Mid-Air Jumping
-	if character.has_jump_request() and _can_jump_in_air():
+	var should_jump := character.has_jump_request() and _can_jump_in_air()
+	if should_jump:
 		_execute_jump()
 		return false
 

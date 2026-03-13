@@ -41,8 +41,7 @@ func enter() -> void:
 ## Called by the state machine when transitioning out of the grounded state.
 ## Disables the motor to hand physics control over to the next state.
 func exit() -> void:
-	if motor:
-		motor.disable()
+	motor.disable()
 
 
 ## Called every visual frame by the state machine.
@@ -80,7 +79,8 @@ func physics_update(delta: float) -> void:
 func _check_and_handle_transitions() -> bool:
 	
 	# Priority 1: Dashing
-	if character.has_dash_request() and character.can_dash():
+	var should_dash := character.has_dash_request() and character.can_dash()
+	if should_dash:
 		character.consume_dash_request()
 		transition_requested.emit(self, &"Dash")
 		return true
@@ -91,7 +91,8 @@ func _check_and_handle_transitions() -> bool:
 		return true
 		
 	# Priority 3: Jumping
-	if character.has_jump_request():
+	var should_jump := character.has_jump_request() and character.can_jump()
+	if should_jump:
 		_execute_jump()
 		transition_requested.emit(self, &"Air")
 		return true
