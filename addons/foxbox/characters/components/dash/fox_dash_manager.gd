@@ -49,7 +49,7 @@ func has_request() -> bool:
 
 
 ## Returns [code]true[/code] if the dash cooldown timer has fully elapsed.
-func is_ready() -> bool:
+func is_available() -> bool:
 	var time_since: float = (Time.get_ticks_msec() - _last_dash_time) / 1000.0
 	return time_since >= cooldown
 

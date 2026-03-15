@@ -23,7 +23,7 @@ length = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oy2pm"]
 
-[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("jump", "dash", "pose", "sprint", "_physics_body", "_ground_motor", "model", "_camera_pivot", "_hitbox", "_ground_cast", "_state_machine")]
+[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("jump", "dash", "pose", "sprint", "_physics_body", "_ground_motor", "model", "_camera_pivot", "_head_clearance_sensor", "_hitbox", "_ground_cast", "_state_machine")]
 collision_mask = 3
 platform_floor_layers = 4294967293
 script = ExtResource("1_7128x")
@@ -35,6 +35,7 @@ _physics_body = NodePath(".")
 _ground_motor = NodePath("GroundMotor")
 model = NodePath("Model")
 _camera_pivot = NodePath("CameraPivot")
+_head_clearance_sensor = NodePath("HeadClearanceSensor")
 _hitbox = NodePath("Hitbox")
 _ground_cast = NodePath("GroundCast")
 _state_machine = NodePath("StateMachine")
@@ -93,9 +94,8 @@ script = ExtResource("10_irypd")
 [node name="Jump" type="Node" parent="." unique_id=733823146]
 script = ExtResource("11_vwgx6")
 
-[node name="Pose" type="Node" parent="." unique_id=1853024140 node_paths=PackedStringArray("headroom_sensor")]
+[node name="Pose" type="Node" parent="." unique_id=1853024140]
 script = ExtResource("12_433hr")
-headroom_sensor = NodePath("../HeadClearanceSensor")
 
 [node name="Sprint" type="Node" parent="." unique_id=289677418]
 script = ExtResource("13_egagp")

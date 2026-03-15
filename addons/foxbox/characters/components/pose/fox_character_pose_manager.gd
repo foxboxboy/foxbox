@@ -44,36 +44,32 @@ var _is_prone_requested: bool = false
 var _locked_pose: int = -1 
 
 
+func _ready() -> void:
+	assert(headroom_sensor != null, "FoxCharacterPoseManager: No headroom_sensor assigned on %s" % get_path())
+
+
 ## Evaluates intents and physical constraints to determine the correct locomotion pose.
 ## Requires the current [param is_grounded] context from the active state.
-func evaluate(is_grounded: bool) -> void:
+func evaluate(is_grounded: bool) -> Type:
 	if _locked_pose != -1:
 		_set_pose(_locked_pose as Type)
-		return
+		return _locked_pose
+		
+	var target_pose := Type.STANDING
 	
-	# 1. Contextual Override (Air always forces In-Air)
 	if not is_grounded:
-		_set_pose(Type.IN_AIR)
-		return
-		
-	# 2. Determine the "Desired" Pose based on player intent
-	var desired_pose := Type.STANDING
-	if _is_prone_requested:
-		desired_pose = Type.PRONE
+		target_pose = Type.IN_AIR
+	elif _is_prone_requested:
+		target_pose = Type.PRONE
 	elif _is_crouch_requested:
-		desired_pose = Type.CROUCHING
+		target_pose = Type.CROUCHING
+	
+	if target_pose == Type.STANDING and not can_stand_up():
+		target_pose = Type.CROUCHING
 		
-	# 3. Physical Validation (The "Headroom Stack")
-	var final_pose := desired_pose
+	_set_pose(target_pose)
 	
-	# If we want to be STANDING, we must be able to clear the crouch-to-stand height
-	if desired_pose == Type.STANDING and not _can_physically_stand():
-		final_pose = Type.CROUCHING
-	
-	# If we are now forced to be CROUCHING (or want to be), we check prone-to-crouch height
-	# Note: Add a second sensor here if you want to support Prone -> Crouch trapping!
-	
-	_set_pose(final_pose)
+	return target_pose
 
 
 ## Registers an intent to crouch during standard locomotion.
@@ -120,14 +116,14 @@ func get_current_speed_limit() -> float:
 
 
 ## Casts the headroom sensor upward to ensure clearance.
-func _can_physically_stand() -> bool:
+func can_stand_up() -> bool:
 	if not headroom_sensor: 
 		return true
 		
-	headroom_sensor.target_position = Vector3.ZERO 
-	headroom_sensor.force_shapecast_update() 
-	
+	headroom_sensor.target_position = Vector3.ZERO
+	headroom_sensor.force_shapecast_update()
 	return not headroom_sensor.is_colliding()
+
 
 ## Internally updates the pose and broadcasts the change if it differs.
 func _set_pose(new_pose: Type) -> void:

@@ -60,7 +60,7 @@ signal character_model_changed(visible : bool)
 @export var _ground_motor: FoxAdvancedCharacterMotor3D
 @export var model : FoxCharacterModel
 @export var _camera_pivot : FoxCharacterCameraPivot
-@export var _head_clearance_sensor : ShapeCast3D
+#@export var _head_clearance_sensor : ShapeCast3D
 @export var _hitbox : FoxCharacterHitbox
 @export var _ground_cast : RayCast3D
 @export var _state_machine : FoxCharacterStateMachine
@@ -126,7 +126,7 @@ func _ready() -> void:
 	assert(_ground_motor != null, "ERROR: No _ground_motor was assigned to character. "+str(get_path()))
 	assert(model != null, "ERROR: No model was assigned to character. "+str(get_path()))
 	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
-	assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
+	#assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
 	assert(_hitbox != null, "ERROR: No _hitbox was assigned to character. "+str(get_path()))
 	assert(_ground_cast != null, "ERROR: No _ground_cast was assigned to character. "+str(get_path()))
 		
@@ -345,18 +345,6 @@ func is_in_air() -> bool:
 		
 	return true
 	
-### === === === === ###
-
-
-
-### === Headroom === ###
-
-## Returns true if there is enough physical room above the character's head to stand up.
-func can_stand_up() -> bool:
-	_head_clearance_sensor.target_position = Vector3.ZERO
-	_head_clearance_sensor.force_shapecast_update()
-	return not _head_clearance_sensor.is_colliding()
-
 ### === === === === ###
 
 

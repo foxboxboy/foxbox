@@ -32,10 +32,10 @@ func enter() -> void:
 	
 	character.jump.reset_count()
 	
-	if character.has_crouch_intent() or not character.can_stand_up():
-		character.crouch()
-	else:
-		character.stand()
+	#if character.has_crouch_intent() or not character.can_stand_up():
+	#	character.crouch()
+	#else:
+	#	character.stand()
 
 
 ## Called by the state machine when transitioning out of the grounded state.
@@ -77,6 +77,8 @@ func physics_update(delta: float) -> void:
 ## Checks for dash requests, falling conditions, and jump requests in priority order.
 ## Returns [code]true[/code] if a transition was requested, signaling the physics loop to abort early.
 func _check_and_handle_transitions() -> bool:
+	return false
+	
 	var dash := character.dash
 	var jump := character.jump
 	
@@ -126,25 +128,28 @@ func _execute_jump() -> void:
 ## which override sprinting intents, falling back to a default walk.
 func _process_stance_and_speed() -> void:
 	
+	character.pose.evaluate(true)
+	
+	return
 	# 1 Headroom
-	if not character.can_stand_up():
-		character.crouch()
-		motor.speed = character.crouch_speed
-		character.cancel_sprint_request() # Can't sprint while trapped
-		return
+	#if not character.can_stand_up():
+	#	character.crouch()
+	#	motor.speed = character.crouch_speed
+	#	character.cancel_sprint_request() # Can't sprint while trapped
+	#	return
 		
 	# 2 Crouch Intent
-	if character.pose.():
-		character.crouch()
-		motor.speed = character.crouch_speed
-		return
+	#if character.has_crouch_intent():
+	#	character.crouch()
+	#	motor.speed = character.crouch_speed
+	#	return
 		
 	# 3 Cancel Sprint
-	var trying_to_sprint := character.sprint.is_requested() and character.has_move_input()
+	var trying_to_sprint := character.sprint.has_request() and character.has_move_input()
 	var current_velocity := character.get_current_velocity()
-	var should_cancel_sprint := character.sprint.is_below_dropoff(current_velocity) and character.sprint.is_requested()
+	var should_cancel_sprint := character.sprint.is_below_dropoff(current_velocity) and character.sprint.has_request()
 		
-	if character.has_sprint_intent() and should_cancel_sprint:
+	if character.sprint.has_request() and should_cancel_sprint:
 		character.stand()
 		character.cancel_sprint_request()
 		motor.speed = character.walk_speed

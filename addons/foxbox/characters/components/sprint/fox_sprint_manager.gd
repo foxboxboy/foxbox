@@ -39,7 +39,7 @@ func cancel() -> void:
 
 
 ## Returns true if a sprint is currently being requested.
-func is_requested() -> bool:
+func has_request() -> bool:
 	return _is_requested
 
 
