@@ -230,7 +230,10 @@ func _update_freecam() -> void:
 
 
 
+# This region feels off. Its so much code and low level complication to turn
+# the character I don't know if it belongs here in this script.
 
+# Same with the low level camera processing stuff.
 #region Aim
 
 func look_at_position(target_global_pos: Vector3) -> void:
@@ -297,11 +300,16 @@ func rotate_head_relative(relative: Vector2) -> void:
 
 #region Input Routing
 
-# === Main Direction ===
 func set_input_direction(direction : Vector2) -> void:
 	var new_value_normalized := direction.normalized()
 	input_direction = new_value_normalized
-# === === === ===
+
+
+func flush_inputs() -> void:
+	if dash:
+		dash.cancel()
+	if jump:
+		jump.cancel()
 
 #endregion
 
@@ -361,16 +369,11 @@ func get_current_velocity() -> float:
 	return _physics_body.velocity.length()
 
 func get_speed_percent() -> float:
-	if not pose: 
-		return 0.0
-		
 	var horizontal_speed := get_horizontal_velocity()
 	
 	match pose.current_pose:
 		pose.Type.STANDING, pose.Type.IN_AIR:
-			# If a sprint manager exists, use its speed as the 100% maximum.
-			# Otherwise, fall back to the standard walking speed.
-			var max_speed: float = sprint.speed if sprint else pose.walk_speed
+			var max_speed: float = sprint.speed
 			return horizontal_speed / max_speed
 			
 		pose.Type.CROUCHING:
@@ -389,6 +392,7 @@ func is_moving_fast_vertically() -> bool:
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
 ### === === === === ###
+
 
 
 ### === Has Kinematic Input ===

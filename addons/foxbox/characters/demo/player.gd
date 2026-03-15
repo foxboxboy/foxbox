@@ -34,14 +34,6 @@ func _input(event: InputEvent) -> void:
 					character.pose.request_crouch()
 				else:
 					character.pose.cancel_crouch()
-
-			# SPRINT TOGGLE
-			if event.keycode == KEY_CTRL:
-				_sprint_toggled = !_sprint_toggled
-				if _sprint_toggled:
-					character.sprint.request()
-				else:
-					character.sprint.cancel()
 					
 			# HOLD GUN
 			if event.keycode == KEY_1:

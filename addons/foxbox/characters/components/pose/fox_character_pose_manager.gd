@@ -4,10 +4,10 @@ extends FoxNode
 ## Component that manages the character's macro human configuration.
 ##
 ## Acts as the definitive source of truth for the character's physical shape 
-## and visual stance. Evaluates player intents against physical constraints, 
+## and visual stance. Resolves player intents against physical constraints, 
 ## and allows specialized physics states to lock custom poses.
 
-## Emitted whenever the active pose changes. The character facade should route 
+## Emitted whenever the active pose changes. The character facade routes 
 ## this to the visual model, collision hitbox, and camera pivot.
 signal pose_changed(new_pose: Type, old_pose: Type)
 
@@ -40,7 +40,6 @@ var current_pose: Type = Type.STANDING
 var _is_crouch_requested: bool = false
 var _is_prone_requested: bool = false
 
-# Stores a pose forced by a specialized state (e.g., SwimState) to bypass normal evaluation.
 var _locked_pose: int = -1 
 
 
@@ -48,12 +47,12 @@ func _ready() -> void:
 	assert(headroom_sensor != null, "FoxCharacterPoseManager: No headroom_sensor assigned on %s" % get_path())
 
 
-## Evaluates intents and physical constraints to determine the correct locomotion pose.
+## Resolves intents and physical constraints to determine the correct locomotion pose.
 ## Requires the current [param is_grounded] context from the active state.
-func evaluate(is_grounded: bool) -> Type:
+func resolve_pose(is_grounded: bool) -> Type:
 	if _locked_pose != -1:
 		_set_pose(_locked_pose as Type)
-		return _locked_pose
+		return _locked_pose as Type
 		
 	var target_pose := Type.STANDING
 	
@@ -68,7 +67,6 @@ func evaluate(is_grounded: bool) -> Type:
 		target_pose = Type.CROUCHING
 		
 	_set_pose(target_pose)
-	
 	return target_pose
 
 
@@ -92,20 +90,18 @@ func cancel_prone() -> void:
 	_is_prone_requested = false
 
 
-## Forces the manager into a specific pose, ignoring standard grounded/intent evaluation.
-## Used by specialized states (Swim, Glide, Sit) upon entering.
+## Forces the manager into a specific pose, bypassing standard [method resolve_pose] rules.
 func lock_pose(forced_pose: Type) -> void:
 	_locked_pose = forced_pose
 	_set_pose(forced_pose)
 
 
-## Releases a previously locked pose, returning control to standard locomotion evaluation.
-## Used by specialized states upon exiting.
+## Releases a previously locked pose, returning control to standard evaluation.
 func unlock_pose() -> void:
 	_locked_pose = -1
 
 
-## Returns the appropriate maximum speed for the currently active pose.
+## Returns the appropriate maximum speed limit for the currently active pose.
 func get_current_speed_limit() -> float:
 	match current_pose:
 		Type.STANDING: return walk_speed
@@ -115,7 +111,7 @@ func get_current_speed_limit() -> float:
 	return walk_speed
 
 
-## Casts the headroom sensor upward to ensure clearance.
+## Casts the headroom sensor upward to ensure clearance for standing.
 func can_stand_up() -> bool:
 	if not headroom_sensor: 
 		return true
@@ -125,7 +121,6 @@ func can_stand_up() -> bool:
 	return not headroom_sensor.is_colliding()
 
 
-## Internally updates the pose and broadcasts the change if it differs.
 func _set_pose(new_pose: Type) -> void:
 	if new_pose == current_pose:
 		return

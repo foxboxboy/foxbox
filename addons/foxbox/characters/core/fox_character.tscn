@@ -89,6 +89,7 @@ motor = NodePath("../../GroundMotor")
 
 [node name="Dash" type="Node" parent="." unique_id=1049687027]
 script = ExtResource("10_irypd")
+cooldown = 2.0
 
 [node name="Jump" type="Node" parent="." unique_id=733823146]
 script = ExtResource("11_vwgx6")
