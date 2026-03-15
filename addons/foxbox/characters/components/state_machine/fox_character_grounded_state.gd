@@ -25,12 +25,12 @@ extends FoxCharacterState
 ## Validates required dependencies, enables the motor, resets jump memory, 
 ## and evaluates the character's physical posture immediately upon landing.
 func enter() -> void:
-	assert(motor != null, "GroundedState requires a FoxCharacterMotor3D.")
-	assert(character != null, "GroundedState requires a FoxCharacter.")
+	assert(motor != null, "FoxCharacterGroundedState requires a FoxCharacterMotor3D.")
+	assert(character != null, "FoxCharacterGroundedState requires a FoxCharacter.")
 	
 	motor.enable()
 	
-	character.reset_jumps_made()
+	character.jump.reset_count()
 	
 	if character.has_crouch_intent() or not character.can_stand_up():
 		character.crouch()
@@ -55,7 +55,7 @@ func update(_delta: float) -> void:
 ## evaluates state transitions, calculates stance and speed, synchronizes visual 
 ## models, and drives the physics motor.
 func physics_update(delta: float) -> void:	
-	character.update_grounded_time()
+	character.jump.update_grounded_time()
 	
 	var transitioned := _check_and_handle_transitions()
 	if transitioned: return
@@ -77,11 +77,13 @@ func physics_update(delta: float) -> void:
 ## Checks for dash requests, falling conditions, and jump requests in priority order.
 ## Returns [code]true[/code] if a transition was requested, signaling the physics loop to abort early.
 func _check_and_handle_transitions() -> bool:
+	var dash := character.dash
+	var jump := character.jump
 	
 	# Priority 1: Dashing
-	var should_dash := character.has_dash_request() and character.can_dash()
+	var should_dash := dash.has_request() and dash.is_available()
 	if should_dash:
-		character.consume_dash_request()
+		dash.consume()
 		transition_requested.emit(self, &"Dash")
 		return true
 
@@ -91,7 +93,8 @@ func _check_and_handle_transitions() -> bool:
 		return true
 		
 	# Priority 3: Jumping
-	var should_jump := character.has_jump_request() and character.can_jump()
+	var while_on_ground := true
+	var should_jump := jump.has_request() and jump.is_available(while_on_ground)
 	if should_jump:
 		_execute_jump()
 		transition_requested.emit(self, &"Air")
@@ -104,11 +107,11 @@ func _check_and_handle_transitions() -> bool:
 ## Calculates jump strength based on the current posture, broadcasts the jump event 
 ## to external listeners, and forces a standing posture upon leaving the ground.
 func _execute_jump() -> void:
-	character.consume_jump_request()
+	character.jump.consume()
 	
 	var multiplier: float = 1.0
 	if character.current_pose == character.Pose.CROUCHING:
-		multiplier = character.jump_crouch_multiplier
+		multiplier = character.jump.crouch_multiplier
 		
 	motor.jump(multiplier)
 	character.jumped.emit(multiplier)
@@ -123,36 +126,37 @@ func _execute_jump() -> void:
 ## which override sprinting intents, falling back to a default walk.
 func _process_stance_and_speed() -> void:
 	
-	# Priority 1: Physical Constraints (Overrides all intents)
+	# 1 Headroom
 	if not character.can_stand_up():
 		character.crouch()
 		motor.speed = character.crouch_speed
 		character.cancel_sprint_request() # Can't sprint while trapped
 		return
 		
-	# Priority 2: Crouch Intent
-	if character.has_crouch_intent():
+	# 2 Crouch Intent
+	if character.pose.():
 		character.crouch()
 		motor.speed = character.crouch_speed
 		return
 		
-	# Priority 3: Cancel Sprint
-	var trying_to_sprint := character.has_sprint_intent() and character.has_move_input()
-	var should_cancel_sprint := character.is_currently_sprinting() and character.is_below_sprint_dropoff()
-	
-	if trying_to_sprint and should_cancel_sprint:
+	# 3 Cancel Sprint
+	var trying_to_sprint := character.sprint.is_requested() and character.has_move_input()
+	var current_velocity := character.get_current_velocity()
+	var should_cancel_sprint := character.sprint.is_below_dropoff(current_velocity) and character.sprint.is_requested()
+		
+	if character.has_sprint_intent() and should_cancel_sprint:
 		character.stand()
 		character.cancel_sprint_request()
 		motor.speed = character.walk_speed
 		return
 		
-	# Priority 4: Do Sprint
+	# 4 Sprint
 	if trying_to_sprint:
 		character.stand()
 		motor.speed = character.sprint_speed
 		return
 		
-	# Priority 5: Default (Walking)
+	# 5 Walking
 	character.stand()
 	motor.speed = character.walk_speed
 

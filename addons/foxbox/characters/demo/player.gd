@@ -9,67 +9,68 @@ extends Node
 var first_person_camera_pivot : Marker3D
 var shoulder_camera_pivot : Marker3D
 
-
 const TOMMY_GUN = preload("uid://384do1qwb655")
 const VEST = preload("uid://cu8c6xykn3112")
 const HELMET = preload("uid://qalmtfjmgw2q")
 
+# The controller remembers how the player pressed the buttons, 
+# the character just executes the current intent.
+var _crouch_toggled := false
+var _sprint_toggled := false
 
 func _process(_delta: float) -> void:
-	
 	first_person_camera_pivot = character.get_first_person_camera_pivot()
 	shoulder_camera_pivot = character.get_shoulder_camera_pivot()
-	
 	do_third_person()
 
-
-# i would put this in the input controlers but oh my god i am lazy
 func _input(event: InputEvent) -> void:
-	return
-	
 	if event is InputEventKey:
 		if event.pressed and not event.echo:
-			#CROUCH
+			
+			# CROUCH TOGGLE
 			if event.keycode == KEY_C:
-				character.wants_to_crouch = !character.wants_to_crouch
+				_crouch_toggled = !_crouch_toggled
+				if _crouch_toggled:
+					character.pose.request_crouch()
+				else:
+					character.pose.cancel_crouch()
 
-			
-			# SPRINT
+			# SPRINT TOGGLE
 			if event.keycode == KEY_CTRL:
-				character.wants_to_sprint = !character.wants_to_sprint
-				
-			
+				_sprint_toggled = !_sprint_toggled
+				if _sprint_toggled:
+					character.sprint.request()
+				else:
+					character.sprint.cancel()
+					
 			# HOLD GUN
 			if event.keycode == KEY_1:
-				if character.hands.has_node_in_either_hand():
-					character.hands.empty_hands()
+				if character.model.hands.has_node_in_either_hand():
+					character.model.hands.empty_hands()
 				else:
 					const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
 					var new_gun : FoxHoldableItem = TOMMY_GUN_ITEM.instantiate()
-					character.hands.hold_item(new_gun)
+					character.model.hands.hold_item(new_gun)
 			
 			# EQUIP HELMET
 			if event.keycode == KEY_2:
-				if character.accessories.has_rigid_accessory_in_slot("head"):
-					character.accessories.empty_rigid_accessory_slot("head")
+				if character.model.accessories.has_rigid_accessory_in_slot("head"):
+					character.model.accessories.empty_rigid_accessory_slot("head")
 				else:
-					character.accessories.equip_rigid_accessory(HELMET.instantiate(), "head")
+					character.model.accessories.equip_rigid_accessory(HELMET.instantiate(), "head")
 			
 			# EQUIP VEST
 			if event.keycode == KEY_3:
-				if character.accessories.has_skinned_accessory_slot("torso"):
-					character.accessories.empty_skinned_accessory_slot("torso")
+				if character.model.accessories.has_skinned_accessory_slot("torso"):
+					character.model.accessories.empty_skinned_accessory_slot("torso")
 				else:
-					character.accessories.equip_skinned_accessory(VEST.instantiate(), "torso")
+					character.model.accessories.equip_skinned_accessory(VEST.instantiate(), "torso")
 			
 			if event.keycode == KEY_E:
-				print("nerp")
-				
 				const BULLET = preload("uid://cs86odgdio8ak")
 				var new_bullet : Node3D = BULLET.instantiate()
 				var target_position := first_person_camera_pivot.global_position + first_person_camera_pivot.global_basis.z
-				var spawn_position := first_person_camera_pivot.global_position
-				new_bullet.position = spawn_position
+				new_bullet.position = first_person_camera_pivot.global_position
 				get_parent().add_child(new_bullet)
 				new_bullet.look_at(target_position)
 
@@ -78,67 +79,49 @@ func _input(event: InputEvent) -> void:
 func do_first_person():
 	camera.global_position = first_person_camera_pivot.global_position
 	camera.global_rotation = first_person_camera_pivot.global_rotation
-	character.hide_character_model()
+	character.model.hide_meshes()
 
 
 func do_third_person():
 	camera.global_position = shoulder_camera_pivot.global_position
 	camera.global_rotation = shoulder_camera_pivot.global_rotation
-	character.show_character_model()
+	character.model.show_meshes()
 
 
 
 func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 	mouse_relative *= look_sensitivity
 	mouse_relative.y *= vertical_sensitivity
-	
 	character.rotate_head_relative(mouse_relative)
-
 
 func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 	character.input_direction = input_direction
-	
 	if input_direction.length() == 0.0:
 		character.input_strength = 0.0
 	else:
 		character.input_strength = 1.0
 
-
-
-func _on_pc_input_controller_jump_held() -> void:
-	if character.is_on_floor():
-		character.request_jump()
-
-
 func _on_pc_input_controller_free_cam_pressed() -> void:
 	character.is_free_looking = true
-
 
 func _on_pc_input_controller_free_cam_released() -> void:
 	character.is_free_looking = false
 
-
 func _on_pc_input_controller_jump_pressed() -> void:
-	_trigger_jump_intent()
-	character.request_jump()
+	# The manager handles the buffer and multi-jump logic natively now!
+	if character.jump: character.jump.request()
 
-
-
-func _trigger_jump_intent():
-	character.request_jump()
-	# If we don't land/jump within 0.1s, forget the intent.
-	get_tree().create_timer(0.1).timeout.connect(
-		func(): character.cancel_jump_request()
-	)
-
+func _on_pc_input_controller_jump_held() -> void:
+	# Optional: Depending on how you want "bunny hopping" to work.
+	pass
 
 func _on_pc_input_controller_dash_pressed() -> void:
-	character.request_dash()
-
-
-func _on_pc_input_controller_sprint_pressed() -> void:
-	character.toggle_sprint_intent()
-
+	if character.dash: character.dash.request()
 
 func _on_pc_input_controller_dash_released() -> void:
-	character.cancel_dash_request()
+	if character.dash: character.dash.cancel()
+
+func _on_pc_input_controller_sprint_pressed() -> void:
+	# Handle standard sprint holding if you aren't using the C-key toggle
+	_sprint_toggled = true
+	if character.sprint: character.sprint.request()

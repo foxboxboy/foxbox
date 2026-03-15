@@ -15,11 +15,6 @@ class_name FoxAdvancedCharacterMotor3D
 @export var friction := 1500.0
 
 
-## Time spent in air.
-var _air_time_elapsed := 0.0
-
-
-
 
 #region Virtual Methods
 

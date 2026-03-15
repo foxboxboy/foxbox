@@ -2,55 +2,32 @@ class_name FoxCharacterDashState
 extends FoxCharacterState
 
 ## A state that handles a quick, directional burst of movement, ignoring gravity.
-
-#region Exports
+## Relies on [FoxDashManager] for configuration and cooldown tracking.
 
 @export_group("Dependencies")
 @export var state_id: StringName = &"Dash"
-@export var motor: FoxCharacterMotor3D
+@export var motor: FoxAdvancedCharacterMotor3D
 
-@export_group("Dash Parameters")
-## Speed of the dash burst in meters per second.
-@export var dash_speed: float = 20.0
-## How long the dash lasts in seconds.
-@export var dash_duration: float = 0.2
-## How long the character must wait before dashing again in seconds.
-@export var cooldown_duration: float = 1.0
-
-#endregion
-
-
-
-
-
-#region Variables
 
 var _dash_timer: float = 0.0
 var _dash_direction: Vector3 = Vector3.ZERO
-var _last_dash_time: int = 0
 
-#endregion
-
-
-
-
-
-#region State Virtual Methods
 
 func enter() -> void:
-	if motor:
-		motor.enable()
-		
-	_dash_timer = dash_duration
-	_last_dash_time = Time.get_ticks_msec()
+	assert(motor != null, "DashState requires a FoxAdvancedCharacterMotor3D.")	
+	motor.enable()
+	character.stand()
 	
-	model.stand()
+	# Consume the intent and trigger the cooldown/signals
+	character.dash.consume()
 	
-	# Force the model into max speed so the animation tree plays the sprint cycle
-	model.set_move_speed(1.0)
+	character.dashed.emit()
 	
+	_dash_timer = character.dash.duration
 	_dash_direction = _get_dash_direction()
-	motor.body.velocity = _dash_direction * dash_speed
+	
+	# Initial burst
+	motor.body.velocity = _dash_direction * character.dash.speed
 
 
 func exit() -> void:
@@ -65,42 +42,18 @@ func update(_delta: float) -> void:
 func physics_update(delta: float) -> void:
 	_dash_timer -= delta
 	
-	# Lock the visuals to sprint for the duration of the dash
-	model.set_move_speed(1.0)
+	character.update_locomotion_visuals()
 	
-	# Maintain constant velocity and slide (ignoring motor gravity)
-	physics_body.velocity = _dash_direction * dash_speed
-	physics_body.move_and_slide()
-
+	# Maintain constant velocity and slide
+	motor.body.velocity = _dash_direction * character.dash.speed
+	motor.body.move_and_slide()
+	
 	if _dash_timer <= 0.0:
 		if character.is_in_air():
 			transition_requested.emit(self, &"Air")
 		else:
 			transition_requested.emit(self, &"Grounded")
 
-#endregion
-
-
-
-
-
-#region Public
-
-## Called by FoxCharacter.gd to verify if the player is allowed to dash.
-func is_cooldown_finished() -> bool:
-	if _last_dash_time == 0:
-		return true
-	
-	var elapsed_seconds: float = (Time.get_ticks_msec() - _last_dash_time) / 1000.0
-	return elapsed_seconds >= cooldown_duration
-
-#endregion
-
-
-
-
-
-#region Private
 
 func _get_dash_direction() -> Vector3:
 	var input: Vector2 = character.input_direction 
@@ -111,5 +64,3 @@ func _get_dash_direction() -> Vector3:
 	
 	# Otherwise, dash straight forward
 	return -character.global_basis.z
-
-#endregion

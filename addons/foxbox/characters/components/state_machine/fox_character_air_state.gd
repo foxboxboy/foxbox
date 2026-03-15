@@ -19,10 +19,11 @@ extends FoxCharacterState
 ## Called by the state machine when leaving the ground.
 ## Validates dependencies, enables the motor, and syncs the visual pose to the air state.
 func enter() -> void:
-	assert(motor != null, "AirState requires a FoxCharacterMotor3D.")
-	assert(character != null, "AirState requires a FoxCharacter.")
+	assert(motor != null, "FoxCharacterAirState requires a FoxCharacterMotor3D.")
+	assert(character != null, "FoxCharacterAirState requires a FoxCharacter.")
 	
 	motor.enable()
+	
 	character.enter_air()
 
 
@@ -57,22 +58,25 @@ func physics_update(delta: float) -> void:
 ## Evaluates current intents and physical states to determine if the state machine should transition.
 ## Returns [code]true[/code] if a transition was requested, signaling the physics loop to abort early.
 func _check_and_handle_transitions() -> bool:
+	var dash := character.dash
+	var jump := character.jump
 	
-	# Priority 1: Dashing
-	var should_dash := character.has_dash_request() and character.can_dash()
+	
+	# 1 Dashing
+	var should_dash := dash.has_request() and dash.is_available()
 	if should_dash:
-		character.consume_dash_request()
 		transition_requested.emit(self, &"Dash")
 		return true
 		
-	# Priority 2: Landing
+	# 2 Landing
 	var should_land := motor.body.velocity.y <= 0.0 and not character.is_in_air()
 	if should_land:
 		transition_requested.emit(self, &"Grounded")
 		return true
 	
-	# Priority 3: Mid-Air Jumping
-	var should_jump := character.has_jump_request() and _can_jump_in_air()
+	# 3 Mid-Air Jumping
+	var while_in_air := false
+	var should_jump := jump.has_request() and jump.is_available(while_in_air)
 	if should_jump:
 		_execute_jump()
 		return false
@@ -80,14 +84,9 @@ func _check_and_handle_transitions() -> bool:
 	return false
 
 
-## Evaluates if the character has remaining jump charges or is within the coyote time window.
-func _can_jump_in_air() -> bool:
-	return character.can_coyote_jump() or character.can_multi_jump()
-
-
 ## Consumes a validated jump request, increments jump memory, and applies vertical impulse.
 func _execute_jump() -> void:
-	character.consume_jump_request()
+	character.jump.consume()
 	
 	motor.jump()
 	character.jumped.emit(1.0)

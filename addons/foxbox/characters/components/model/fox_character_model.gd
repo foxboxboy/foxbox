@@ -2,6 +2,11 @@ extends FoxNode3D
 class_name FoxCharacterModel
 ## Rotates the spine bone and provides simple API to work with an imported character model.
 
+
+signal meshes_hidden
+signal meshes_shown
+
+
 @export_group("Components")
 @export var animation_tree : FoxCharacterAnimationTree 
 @export var hands : FoxCharacterHands
@@ -84,6 +89,8 @@ func hide_meshes():
 	for mesh in _meshes:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
 	_meshes_shown = false
+	
+	meshes_hidden.emit()
 
 
 func show_meshes():
@@ -92,6 +99,8 @@ func show_meshes():
 	for mesh in _meshes:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	_meshes_shown = true
+	
+	meshes_shown.emit()
 
 
 func stand():
