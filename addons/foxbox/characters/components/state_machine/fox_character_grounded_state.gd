@@ -19,8 +19,6 @@ func enter() -> void:
 	if character.jump:
 		character.jump.reset_count()
 	
-	character.flush_inputs()
-	
 	if character.pose:
 		character.pose.resolve_pose(true)
 

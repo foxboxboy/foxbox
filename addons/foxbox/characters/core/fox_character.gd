@@ -1,48 +1,33 @@
 extends FoxNode3D
 class_name FoxCharacter
-## A "pawn" or "puppet". A high level facade abstraction for a humanoid character 
-## that handles physics, animation, and interaction.
+
+## A high-level facade abstraction for a humanoid character that handles physics, 
+## animation, and interaction delegation.
 ##
-## Designed to be controlled by an outside controller. This class is designed to 
-## only handle the body and nothing more. It falls into the category of "muscle" 
-## rather than brain.
+## Designed to be controlled by an outside controller. This class acts as the "muscle"
+## rather than the "brain", blindly executing inputs and routing data between 
+## specialized components (State Machine, Pose Manager, Motors).
 ##
 ## [br] [br]
-## [b]Responsibilities:[/b]
-## [br] - Move a character around.
-## [br] - Animate it.
-## [br] - Make it hold nodes or FoxHoldableItems.
-##
-## [br] [br]
-## [b]What this class does NOT do:[/b]
-## [br] - It does not know how to receive input.
-## [br] - It does not know game rules.
-## [br] - It does not manage inventory (outside its two hands).
-## [br] - It does not handle first person view models.
-##
-## [br] [br]
-## [b]Note:[/b]
-## Most behaviour in this are delegated as components. If you need less abstraction 
-## and more control, you can assemble the components into your own character controller.
-
-
-
+## ([b]WARNING[/b] this feature below is deprcated)
+## [br]
+## [b]Note:[/b] If a [FoxVisualOptimizer] is assigned and the character is far away, 
+## visual processing and aim math are suspended to save performance.
 
 #region Signals
 
-signal jumped(strength : float)
+signal jumped(strength: float)
 signal dashed
 signal landed
+signal proned
 signal crouched
 signal stood
 signal entered_air
 signal started_sprinting
 signal stopped_sprinting
-signal character_model_changed(visible : bool)
+signal character_model_changed(visible: bool)
 
 #endregion
-
-
 
 
 
@@ -55,37 +40,28 @@ signal character_model_changed(visible : bool)
 @export var dash: FoxDashManager
 @export var pose: FoxCharacterPoseManager
 @export var sprint: FoxSprintManager
+@export var aim: FoxCharacterAimManager
 
-@export var _physics_body : CharacterBody3D
+@export var _physics_body: CharacterBody3D
 @export var _ground_motor: FoxAdvancedCharacterMotor3D
-@export var model : FoxCharacterModel
-@export var _camera_pivot : FoxCharacterCameraPivot
-#@export var _head_clearance_sensor : ShapeCast3D
-@export var _hitbox : FoxCharacterHitbox
-@export var _ground_cast : RayCast3D
-@export var _state_machine : FoxCharacterStateMachine
-
+@export var model: FoxCharacterModel
+@export var _hitbox: FoxCharacterHitbox
+@export var _ground_cast: RayCast3D
+@export var _state_machine: FoxCharacterStateMachine
 
 @export_group("Movement Settings")
-@export var walk_speed : float = 5.0
+@export var walk_speed: float = 5.0
 @export var max_head_pitch := 89.0
-## How fast the character needs to be moving to enter air animations.
+## Velocity required to trigger aerial blend animations.
 @export var enter_air_animation_velocity := 3.5
-## The % the velocity needs to be of the sprint_speed for the character to stop sprinting. Default 5%.
+## Velocity ratio (relative to sprint speed) required to maintain a sprint.
 @export var stop_sprinting_threshold := 0.05
 
-#endregion
-
-
-@export_group("Visual Optimizer")
-## @experimental
-## Might need refactoring, I don't know if I like the idea of the character
-## being coupled to the idea of a visual optimizer. I'll have to see.
-@export var visual_optimizer : FoxVisualOptimizer
+#@export_group("Visual Optimizer")
+## Suspends [method _process] visual and aim updates when the character is distant.
+#@export var visual_optimizer: FoxVisualOptimizer
 
 #endregion
-
-
 
 
 
@@ -93,25 +69,13 @@ signal character_model_changed(visible : bool)
 
 #region Variables
 
-# === Input Intents ===
-var input_direction := Vector2.ZERO:
-	set = set_input_direction
+## The raw normalized directional input intent (usually from a joystick or WASD).
+var input_direction := Vector2.ZERO: set = set_input_direction
 
+## The magnitude of the input intent (0.0 to 1.0).
 var input_strength := 0.0:
 	set(new_value):
 		input_strength = clampf(new_value, 0.0, 1.0)
-
-# IDK ABOUT THIS is_free_looking maybe make it more in line with the other inputs?
-var is_free_looking := false
-# === === === ===
-
-
-# === Camera Memory ===
-var _aim_target_pitch : float
-var _max_head_pitch_rad : float
-var _free_look_offset: float = 0.0
-# === === === ===
-
 
 #endregion
 
@@ -122,31 +86,25 @@ var _free_look_offset: float = 0.0
 #region Virtual Methods
 
 func _ready() -> void:
-	assert(_physics_body != null, "ERROR: No _physics_body was assigned to character. "+str(get_path()))
-	assert(_ground_motor != null, "ERROR: No _ground_motor was assigned to character. "+str(get_path()))
-	assert(model != null, "ERROR: No model was assigned to character. "+str(get_path()))
-	assert(_camera_pivot != null, "ERROR: No _camera_pivot was assigned to character. "+str(get_path()))
-	#assert(_head_clearance_sensor != null, "ERROR: No _head_clearance_sensor was assigned to character. "+str(get_path()))
-	assert(_hitbox != null, "ERROR: No _hitbox was assigned to character. "+str(get_path()))
-	assert(_ground_cast != null, "ERROR: No _ground_cast was assigned to character. "+str(get_path()))
+	assert(_physics_body != null, "FoxCharacter missing _physics_body on %s" % get_path())
+	assert(_ground_motor != null, "FoxCharacter missing _ground_motor on %s" % get_path())
+	assert(model != null, "FoxCharacter missing model on %s" % get_path())
+	assert(aim != null, "FoxCharacter missing aim on %s" % get_path())
+	assert(_hitbox != null, "FoxCharacter missing _hitbox on %s" % get_path())
+	assert(_ground_cast != null, "FoxCharacter missing _ground_cast on %s" % get_path())
 		
-	_max_head_pitch_rad = deg_to_rad(max_head_pitch)
-	
 	model.stand()
-	
 	_ground_motor.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	if pose:
 		pose.pose_changed.connect(_on_pose_changed)
 
 
-func _process(delta: float) -> void:	
-	if visual_optimizer:
-		if visual_optimizer.is_far:
-			return
+func _process(delta: float) -> void:    
+	#if visual_optimizer and visual_optimizer.is_far:
+	#	return
 	
 	_update_character_model()
-	_update_freecam()
 
 #endregion
 
@@ -154,37 +112,35 @@ func _process(delta: float) -> void:
 
 
 
-
 #region Pose
 
-## Acts as a mediator, syncing the visual model, collision hitbox, and camera 
-## pivot to whatever physical pose the manager decided was valid.
 func _on_pose_changed(new_pose: FoxCharacterPoseManager.Type, _old_pose: FoxCharacterPoseManager.Type) -> void:
 	match new_pose:
 		pose.Type.STANDING:
 			model.stand()
 			_hitbox.stand()
-			_camera_pivot.stand()
+			aim.stand()
 			stood.emit()
 			
 		pose.Type.CROUCHING:
 			model.crouch()
 			_hitbox.crouch()
-			_camera_pivot.crouch()
+			aim.crouch()
 			crouched.emit()
 			
 		pose.Type.IN_AIR:
 			model.enter_air()
-			_hitbox.stand() # Collision stays tall in the air
-			_camera_pivot.stand()
+			_hitbox.stand() 
+			aim.stand()
 			entered_air.emit()
 			
 		pose.Type.PRONE:
-			# Call _model.prone(), _hitbox.prone() when you build them!
-			pass
+			model.prone()
+			_hitbox.prone()
+			aim.prone()
+			proned.emit()
 			
 		pose.Type.SWIMMING:
-			# Call _model.swim(), _hitbox.prone()
 			pass
 
 #endregion
@@ -195,6 +151,7 @@ func _on_pose_changed(new_pose: FoxCharacterPoseManager.Type, _old_pose: FoxChar
 
 #region Visuals
 
+## Feeds the physical velocity data into the visual model's animation tree.
 func update_locomotion_visuals() -> void:
 	model.set_move_speed(snappedf(get_speed_percent(), 0.1))
 	model.set_vertical_speed(_physics_body.velocity.y)
@@ -205,106 +162,14 @@ func update_locomotion_visuals() -> void:
 
 
 
-#region Camera
-
-func get_first_person_camera_pivot() -> Marker3D:
-	if _camera_pivot:
-		return _camera_pivot.first_person_camera_pivot
-	return null
-
-
-func get_shoulder_camera_pivot() -> Marker3D:
-	if _camera_pivot:
-		return _camera_pivot.shoulder_camera_pivot
-	return null
-
-
-func _update_freecam() -> void:
-	if not is_free_looking and _camera_pivot and _free_look_offset != 0.0:
-		_free_look_offset = 0.0
-		_camera_pivot.rotation.y = _free_look_offset
-
-#endregion
-
-
-
-
-
-# This region feels off. Its so much code and low level complication to turn
-# the character I don't know if it belongs here in this script.
-
-# Same with the low level camera processing stuff.
-#region Aim
-
-func look_at_position(target_global_pos: Vector3) -> void:
-	var direction = target_global_pos - self.global_position
-	
-	# Safety check to prevent math errors (looking at self)
-	if direction.length_squared() < 0.001: return
-
-	# Yaw
-	var target_yaw = atan2(-direction.x, -direction.z)
-	
-	self.global_rotation.y = target_yaw
-	
-	# Pitch
-	# We calculate the angle difference in height vs distance
-	var flat_distance = Vector2(direction.x, direction.z).length()
-	var target_pitch = atan2(direction.y, flat_distance)
-	
-	# Clamp it so we don't snap our spine looking straight up/down
-	_aim_target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
-	
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-		
-	model.pitch = _aim_target_pitch
-
-
-
-func look_at_position_smooth(target_global_pos: Vector3, delta: float, turn_speed: float = 8.0) -> void:
-	var direction = target_global_pos - self.global_position
-	
-	# If the target is too close horizontally don't spin the body.
-	var flat_distance = Vector2(direction.x, direction.z).length()
-	if flat_distance < 0.5: 
-		return
-
-	# Yaw
-	var target_yaw = atan2(-direction.x, -direction.z)
-	self.rotation.y = lerp_angle(self.rotation.y, target_yaw, turn_speed * delta)
-	
-	# Pitch
-	var target_pitch = atan2(direction.y, flat_distance)
-	target_pitch = clamp(target_pitch, -_max_head_pitch_rad, _max_head_pitch_rad)
-	
-	# We lerp the pitch variable, then apply it to the camera/model
-	_aim_target_pitch = lerp_angle(_aim_target_pitch, target_pitch, turn_speed * delta)
-	
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-	
-	model.pitch = _aim_target_pitch
-
-
-func rotate_head_relative(relative: Vector2) -> void:
-	_process_pitch(relative.y)
-	_process_yaw(relative.x)
-
-
-#endregion
-
-
-
-
-
 #region Input Routing
 
-func set_input_direction(direction : Vector2) -> void:
-	var new_value_normalized := direction.normalized()
-	input_direction = new_value_normalized
+func set_input_direction(direction: Vector2) -> void:
+	input_direction = direction.normalized()
 
 
+## Clears any momentary action intents (Jump, Dash) to prevent input ghosting.
+## Note: This deliberately does NOT clear persistent stances like Crouch or Sprint.
 func flush_inputs() -> void:
 	if dash:
 		dash.cancel()
@@ -319,21 +184,8 @@ func flush_inputs() -> void:
 
 #region Kinematic Queries
 
-### === Pose ===
-
-func is_standing() -> bool:
-	return pose.current_pose == pose.Type.STANDING
-
-func is_crouching() -> bool:
-	return pose.current_pose == pose.Type.CROUCHING
-
 func is_flying() -> bool:
 	return false
-
-### === === === === ###
-
-
-### === Where === ###
 
 func is_on_floor() -> bool:
 	return _physics_body.is_on_floor()
@@ -341,23 +193,15 @@ func is_on_floor() -> bool:
 func is_in_water() -> bool:
 	return false
 
+## Verifies aerial state via the physics body floor normal, corroborated by the ground cast.
 func is_in_air() -> bool:
 	if _ground_cast:
 		_ground_cast.force_raycast_update()
-		
 		if _ground_cast.is_colliding():
 			return false
 			
-	if _physics_body.is_on_floor():
-		return false
-		
-	return true
-	
-### === === === === ###
+	return not _physics_body.is_on_floor()
 
-
-
-### === Speed & Velocity === ###
 
 func is_moving() -> bool:
 	return _physics_body.velocity.length() > 0.01
@@ -368,6 +212,8 @@ func get_horizontal_velocity() -> float:
 func get_current_velocity() -> float:
 	return _physics_body.velocity.length()
 
+
+## Calculates the normalized speed ratio relative to the current state's max speed.
 func get_speed_percent() -> float:
 	var horizontal_speed := get_horizontal_velocity()
 	
@@ -391,56 +237,30 @@ func get_speed_percent() -> float:
 func is_moving_fast_vertically() -> bool:
 	return abs(_physics_body.velocity.y) > enter_air_animation_velocity
 
-### === === === === ###
-
-
-
-### === Has Kinematic Input ===
-
 func has_move_input() -> bool:
 	return input_direction.x != 0 or input_direction.y != 0
-
-### === === === === ###
 
 #endregion
 
 
 
 
+
 #region Internal Helpers
 
-func _update_character_model():
+func _update_character_model() -> void:
 	model.update_strafe(input_direction)
 	
-	if not is_free_looking: 
-		model.pitch = _aim_target_pitch
+	# Ask the camera component for its data!
+	if aim and not aim.is_free_looking: 
+		model.pitch = aim.get_pitch()
 		
 	model.yaw = _get_aim_torso_angle_difference()
 
 
 func _get_aim_torso_angle_difference() -> float:
 	var angle := model.global_rotation.y - self.global_rotation.y
-	# Between -180 and +180
 	angle = wrapf(angle, -PI, PI) 
-	angle = angle
-	return(-angle)
-
-
-func _process_pitch(relative_y: float) -> void:
-	_aim_target_pitch = clamp(_aim_target_pitch - relative_y, -_max_head_pitch_rad, _max_head_pitch_rad)
-	
-	if _camera_pivot:
-		_camera_pivot.rotation.x = _aim_target_pitch
-
-
-func _process_yaw(relative_x: float) -> void:
-	if is_free_looking:
-		_free_look_offset += -relative_x
-		
-		if _camera_pivot:
-			_camera_pivot.rotation.y = _free_look_offset
-			
-	else:
-		self.rotate_y(-relative_x)
+	return -angle
 
 #endregion

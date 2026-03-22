@@ -25,7 +25,7 @@ signal interaction_range_changed(new_range: float)
 
 
 
-#region Variables
+#region Variables 
 
 ## How far the raycast will project along the local -Z axis. 
 ## Leave as -1.0 to ignore and use the manual [member RayCast3D.target_position].

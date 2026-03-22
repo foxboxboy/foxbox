@@ -1,5 +1,6 @@
 extends FoxNode3D
 class_name FoxCharacterCameraPivot
+## @deprecated
 
 @export_group("Components")
 @export var shoulder_camera_pivot : Marker3D
@@ -22,6 +23,5 @@ func stand() -> void:
 	_animate_shape(stand_height)
 
 func _animate_shape(target_y: float) -> void:
-	# The exact same logic as before, just encapsulated
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "position:y", target_y, 0.2)

@@ -19,8 +19,8 @@ var _crouch_toggled := false
 var _sprint_toggled := false
 
 func _process(_delta: float) -> void:
-	first_person_camera_pivot = character.get_first_person_camera_pivot()
-	shoulder_camera_pivot = character.get_shoulder_camera_pivot()
+	first_person_camera_pivot = character.aim.first_person_camera_pivot
+	shoulder_camera_pivot = character.aim.shoulder_camera_pivot
 	do_third_person()
 
 func _input(event: InputEvent) -> void:
@@ -84,7 +84,7 @@ func do_third_person():
 func _on_pc_input_controller_look_input(mouse_relative: Vector2) -> void:
 	mouse_relative *= look_sensitivity
 	mouse_relative.y *= vertical_sensitivity
-	character.rotate_head_relative(mouse_relative)
+	character.aim.rotate_head_relative(mouse_relative)
 
 func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 	character.input_direction = input_direction
@@ -94,17 +94,17 @@ func _on_pc_input_controller_move_input(input_direction: Vector2) -> void:
 		character.input_strength = 1.0
 
 func _on_pc_input_controller_free_cam_pressed() -> void:
-	character.is_free_looking = true
+	character.aim.is_free_looking = true
 
 func _on_pc_input_controller_free_cam_released() -> void:
-	character.is_free_looking = false
+	character.aim.is_free_looking = false
 
 func _on_pc_input_controller_jump_pressed() -> void:
 	# The manager handles the buffer and multi-jump logic natively now!
 	if character.jump: character.jump.request()
 
 func _on_pc_input_controller_jump_held() -> void:
-	# Optional: Depending on how you want "bunny hopping" to work.
+	if character.jump: character.jump.request()
 	pass
 
 func _on_pc_input_controller_dash_pressed() -> void:

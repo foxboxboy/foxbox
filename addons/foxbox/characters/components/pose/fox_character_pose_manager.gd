@@ -70,6 +70,11 @@ func resolve_pose(is_grounded: bool) -> Type:
 	return target_pose
 
 
+## Returns [code]true[/code] if the character is currently in the [constant Type.STANDING] pose.
+func is_standing() -> bool:
+	return current_pose == Type.STANDING
+
+
 ## Registers an intent to crouch during standard locomotion.
 func request_crouch() -> void:
 	_is_crouch_requested = true
@@ -78,6 +83,11 @@ func request_crouch() -> void:
 ## Cancels a pending crouch intent.
 func cancel_crouch() -> void:
 	_is_crouch_requested = false
+
+
+## Returns [code]true[/code] if the character is currently in the [constant Type.CROUCHING] pose.
+func is_crouching() -> bool:
+	return current_pose == Type.CROUCHING
 
 
 ## Registers an intent to go prone during standard locomotion.

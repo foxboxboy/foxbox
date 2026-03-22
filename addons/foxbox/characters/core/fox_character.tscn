@@ -23,7 +23,7 @@ length = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oy2pm"]
 
-[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("jump", "dash", "pose", "sprint", "_physics_body", "_ground_motor", "model", "_camera_pivot", "_hitbox", "_ground_cast", "_state_machine")]
+[node name="FoxCharacter" type="CharacterBody3D" unique_id=1677576452 node_paths=PackedStringArray("jump", "dash", "pose", "sprint", "aim", "_physics_body", "_ground_motor", "model", "_hitbox", "_ground_cast", "_state_machine")]
 collision_mask = 3
 platform_floor_layers = 4294967293
 script = ExtResource("1_7128x")
@@ -31,10 +31,10 @@ jump = NodePath("Jump")
 dash = NodePath("Dash")
 pose = NodePath("Pose")
 sprint = NodePath("Sprint")
+aim = NodePath("CameraPivot")
 _physics_body = NodePath(".")
 _ground_motor = NodePath("GroundMotor")
 model = NodePath("Model")
-_camera_pivot = NodePath("CameraPivot")
 _hitbox = NodePath("Hitbox")
 _ground_cast = NodePath("GroundCast")
 _state_machine = NodePath("StateMachine")
@@ -57,8 +57,10 @@ collision_shape = NodePath(".")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.4, 0)
 shape = SubResource("SeparationRayShape3D_oy2pm")
 
-[node name="CameraPivot" parent="." unique_id=480003097 instance=ExtResource("3_osto5")]
+[node name="CameraPivot" parent="." unique_id=480003097 node_paths=PackedStringArray("parent_body") instance=ExtResource("3_osto5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+parent_body = NodePath("..")
+crouch_height = 1.0
 
 [node name="Model" parent="." unique_id=366441859 instance=ExtResource("5_vwgx6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)

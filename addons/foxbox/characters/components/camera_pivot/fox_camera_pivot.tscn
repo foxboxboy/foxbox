@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://cajgsd7cqowsa"]
 
-[ext_resource type="Script" uid="uid://d364phsbiddk8" path="res://addons/foxbox/characters/components/camera_pivot/fox_character_camera_pivot.gd" id="1_nmc7c"]
+[ext_resource type="Script" uid="uid://ddmtowmyqtryh" path="res://addons/foxbox/characters/components/aim/fox_character_aim_manager.gd" id="1_bwbh0"]
 [ext_resource type="Script" uid="uid://bkdays5b1q8f3" path="res://addons/foxbox/camera_arm/fox_camera_arm.gd" id="1_q4t6f"]
 
 [node name="CameraPivot" type="Marker3D" unique_id=1380073160 node_paths=PackedStringArray("shoulder_camera_pivot", "first_person_camera_pivot")]
-script = ExtResource("1_nmc7c")
+script = ExtResource("1_bwbh0")
 shoulder_camera_pivot = NodePath("CameraArm/ShoulderCameraMarker")
 first_person_camera_pivot = NodePath("FirstPersonCameraMarker")
+crouch_height = 1.8
 
 [node name="CameraArm" type="SpringArm3D" parent="." unique_id=794924454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)

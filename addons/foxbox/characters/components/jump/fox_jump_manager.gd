@@ -63,8 +63,7 @@ func has_request() -> bool:
 	return _is_request_active
 
 
-## Returns true if the 0.15s throttle has passed AND a jump is legally allowed
-## (either grounded, within coyote time, or via multi-jump).
+## Returns true if a jump is legally allowed (grounded, coyote, or multi-jump).
 func is_available(is_grounded: bool) -> bool:
 	var elapsed: float = (Time.get_ticks_msec() - _last_jump_time) / 1000.0
 	if elapsed <= 0.15:
@@ -75,8 +74,17 @@ func is_available(is_grounded: bool) -> bool:
 		
 	# Mid-Air Logic
 	var time_since_ground: float = (Time.get_ticks_msec() - _last_grounded_time) / 1000.0
+	
+	# Coyote Jump (First jump, just stepped off)
 	var can_coyote: bool = (_jumps_made == 0) and (time_since_ground <= coyote_duration)
-	var can_multi: bool = _jumps_made < max_jumps
+	
+	# Multi-Jump 
+	var jumps_spent = _jumps_made
+	if jumps_spent == 0 and time_since_ground > coyote_duration:
+		# If they fell off a ledge and missed coyote time, the 1st jump is forfeit.
+		jumps_spent = 1 
+
+	var can_multi: bool = jumps_spent < max_jumps
 	
 	return can_coyote or can_multi
 
@@ -84,7 +92,15 @@ func is_available(is_grounded: bool) -> bool:
 ## Clears the buffer, increments the jump counter, and records the timestamp.
 func consume() -> void:
 	_is_request_active = false
-	_jumps_made += 1
+	
+	var time_since_ground: float = (Time.get_ticks_msec() - _last_grounded_time) / 1000.0
+	
+	# If they used a double-jump after falling off a ledge, we must charge them for 2 jumps.
+	if _jumps_made == 0 and time_since_ground > coyote_duration:
+		_jumps_made = 2
+	else:
+		_jumps_made += 1
+		
 	_last_jump_time = Time.get_ticks_msec()
 	consumed.emit()
 

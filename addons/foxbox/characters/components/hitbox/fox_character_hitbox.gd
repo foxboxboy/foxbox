@@ -6,11 +6,13 @@ class_name FoxCharacterHitbox
 @export_group("Crouch Settings")
 @export var stand_height : float = 2.2
 @export var crouch_height : float = 1.8
+@export var prone_height : float = 1.0
 
 # Pre-calculate positions to keep feet on the ground
 # Assuming the pivot is at the center of the capsule
 @onready var _stand_y : float = stand_height / 2.0
 @onready var _crouch_y : float = crouch_height / 2.0
+@onready var _prone_y : float = prone_height / 2.0
 
 func _ready() -> void:
 	stand()
@@ -19,6 +21,9 @@ func crouch() -> void:
 	_animate_shape(crouch_height, _crouch_y)
 
 func stand() -> void:
+	_animate_shape(prone_height, _stand_y)
+
+func prone() -> void:
 	_animate_shape(stand_height, _stand_y)
 
 func _animate_shape(target_h: float, target_y: float) -> void:
