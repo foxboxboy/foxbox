@@ -80,12 +80,13 @@ func _init(starting_value := 1.0, p_max: float = 1.0, p_min: float = 0.0):
 	max_value = p_max
 	min_value = p_min
 	value = starting_value
+	_check_bounds()
 
 
 func _check_bounds() -> void:
 	# overflow/underflow
 	if value < min_value:
-		var underflow = value - min_value
+		var underflow = min_value - value
 		value = min_value
 		depleted.emit(underflow)
 	

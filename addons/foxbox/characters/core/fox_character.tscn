@@ -60,7 +60,6 @@ shape = SubResource("SeparationRayShape3D_oy2pm")
 [node name="CameraPivot" parent="." unique_id=480003097 node_paths=PackedStringArray("parent_body") instance=ExtResource("3_osto5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 parent_body = NodePath("..")
-crouch_height = 1.0
 
 [node name="Model" parent="." unique_id=366441859 instance=ExtResource("5_vwgx6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)

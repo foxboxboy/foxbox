@@ -9,7 +9,7 @@ extends FoxNode3D
 
 @export_group("Height Settings")
 @export var stand_height: float = 2.0
-@export var crouch_height: float = 1.0
+@export var crouch_height: float = 1.8
 @export var prone_height: float = 0.4
 
 @export_group("Aim Settings")
@@ -67,7 +67,6 @@ func rotate_head_relative(relative: Vector2) -> void:
 		_free_look_yaw_offset -= relative.x
 		rotation.y = _free_look_yaw_offset
 	else:
-		print("ROTATE ", -relative.x)
 		parent_body.rotate_y(-relative.x)
 
 ## Instantly snaps the character's yaw and head pitch to target the spatial position.

@@ -119,7 +119,11 @@ func _on_pose_changed(new_pose: FoxCharacterPoseManager.Type, _old_pose: FoxChar
 		pose.Type.STANDING:
 			model.stand()
 			_hitbox.stand()
+			
+			# Needs refactored this doesn't read well
+			# Should be something camera_pivot.stand()
 			aim.stand()
+			
 			stood.emit()
 			
 		pose.Type.CROUCHING:
