@@ -1,3 +1,22 @@
 TODO LIST
 
 Refactor character modules to use resources
+	For example, the "hitbox" module shouldn't have
+	a hard coded crouch() function and a crouch_height
+	exported variable
+
+Hurtbox Hitbox Health pipeline
+	Hurtboxes look for hitboxes and pass context to hurt them
+	Hitboxes emit a signal and the context when hit
+	
+	Check if you can make "context" statically typed and change
+	its type depending on the project instead of just a generic
+	Variant
+
+Effect cleanup & rename
+	Rename the "modifiers" module to "effects"
+	This might just want another code review and cleanup
+
+AttributeMaps
+	A special node used for recursively holding and changing data
+	Basically a fancy Dictionary
