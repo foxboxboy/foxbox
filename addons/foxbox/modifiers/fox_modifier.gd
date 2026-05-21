@@ -14,8 +14,6 @@ enum StackMode {
 
 
 
-
-
 #region Variables
 
 @export var modifier_id: StringName:
@@ -34,8 +32,6 @@ enum StackMode {
 @export var duration: float = -1.0
 
 #endregion
-
-
 
 
 
@@ -60,15 +56,11 @@ func _get_resource_name() -> String:
 
 
 
-
-
 @abstract
 func _on_execute(_target: Node) -> void
 
-
 @abstract
 func _on_remove(_target: Node) -> void
-
 
 @abstract
 func _on_reapply(_target: Node, _stack: int = 1) -> void

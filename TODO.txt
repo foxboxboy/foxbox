@@ -11,7 +11,7 @@ Hurtbox Hitbox Health pipeline
 	
 	Check if you can make "context" statically typed and change
 	its type depending on the project instead of just a generic
-	Variant
+	Variant (see for other modules if this applies like for shops)
 
 Effect cleanup & rename
 	Rename the "modifiers" module to "effects"
