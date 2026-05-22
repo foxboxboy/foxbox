@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://do8yal883w2ue"]
+
+[ext_resource type="Script" uid="uid://dc18dgl7sxhwd" path="res://addons/foxbox/effects/demo/effect_demo.gd" id="1_6hhhj"]
+
+[node name="EffectDemo" type="Node" unique_id=598011985]
+script = ExtResource("1_6hhhj")

@@ -1,0 +1,160 @@
+class_name FoxEffectInstance
+extends FoxRefCounted
+## A runtime state container for an active [FoxEffect] applied to a target [Object].
+##
+## This class manages the active lifecycle of an effect, tracking its remaining 
+## [member time_left] and current [member stack] count. It is instantiated and 
+## managed exclusively by a [FoxEffectManager].
+
+#region Signals
+
+## Emitted when the [member stack] count changes.
+## [br][br]
+## [b]Note:[/b] This is ideal for connecting directly to UI elements to update visual 
+## counters (e.g., changing a poison icon from "x1" to "x2") without polling.
+signal stack_changed(previous_stack: int, new_stack: int)
+
+## Emitted when external logic forces this instance to expire prematurely.
+## Triggers automatically when [method decrease_stack] causes the stack to reach [code]0[/code].
+signal request_destruction(instance: FoxEffectInstance)
+
+#endregion
+
+
+#region Variables
+
+## The static data blueprint governing this instance's logic and stacking behavior.
+var effect: FoxEffect
+
+## The specific entity in memory currently being modified.
+var target: Object
+
+## The remaining duration of the effect in seconds. 
+## [br][br][b]Note:[/b] This property is Read-Only.
+var time_left: float:
+	get: return _time_left
+	set(_v): push_error("FoxEffectInstance: 'time_left' is read-only.")
+
+## The current intensity level of the effect. 
+## [br][br][b]Note:[/b] This property is Read-Only. Use [method increase_stack] 
+## or [method decrease_stack] to modify.
+var stack: int:
+	get: return _stack
+	set(_v): push_error("FoxEffectInstance: 'stack' is read-only. Use increase_stack() or decrease_stack().")
+
+## Returns [code]true[/code] if the timer has reached zero. 
+## Permanent effects always return [code]false[/code].
+var is_expired: bool:
+	get: return _time_left != -1.0 and _time_left <= 0.0
+
+# [Private] The actual memory holding the time.
+var _time_left: float
+
+# [Private] The actual memory holding the stack count.
+var _stack: int = 1
+
+# [Private] Tracks the countdown til the next time [method FoxEffect.tick] is called.
+var _tick_timer: float = 0.0
+
+#endregion
+
+
+#region Public API
+
+## Initializes the instance. This should only be called once immediately after creation.
+func setup(p_effect: FoxEffect, p_target: Object) -> void:
+	effect = p_effect
+	target = p_target
+	_time_left = p_effect.duration
+	_stack = 1
+	_tick_timer = p_effect.tick_interval
+
+
+## Increases the [member stack] count, strictly capped by [member FoxEffect.max_stacks].
+## [br][br]
+## If the stack successfully increases, this automatically triggers the effect's 
+## [method FoxEffect.reapply] logic and emits [signal stack_changed].
+func increase_stack(amount: int = 1) -> void:
+	if not effect: return
+		
+	var previous_stack = _stack
+	
+	if effect.max_stacks > 0:
+		_stack = mini(_stack + amount, effect.max_stacks)
+	else:
+		_stack += amount
+		
+	if _stack != previous_stack:
+		effect.reapply(target, _stack)
+		stack_changed.emit(previous_stack, _stack)
+
+
+## Decreases the [member stack] count. 
+## [br][br]
+## If the stack reaches [code]0[/code], it immediately emits [signal request_destruction] 
+## so the manager can purge it. Otherwise, it triggers [method FoxEffect.reapply] 
+## to scale down the math.
+func decrease_stack(amount: int = 1) -> void:
+	var previous_stack = _stack
+	_stack -= amount
+	
+	if _stack <= 0:
+		request_destruction.emit(self)
+	else:
+		if effect:
+			effect.reapply(target, _stack)
+		stack_changed.emit(previous_stack, _stack)
+
+
+## Ticks down the internal timer. 
+## [br][br]
+## [b]Note:[/b] This does not automatically destroy the instance. The manager 
+## must check [member is_expired] and handle cleanup.
+func process_time(delta: float) -> void:
+	if _time_left != -1.0:
+		_time_left -= delta
+	
+	if effect and effect.tick_interval > 0.0:
+		_tick_timer -= delta
+		if _tick_timer <= 0.0:
+			effect.tick(target, _stack)
+			_tick_timer += effect.tick_interval
+
+
+## Safely delegates the reversal logic to the [member effect] blueprint before 
+## this instance is destroyed.
+func cleanup() -> void:
+	if effect and is_instance_valid(target):
+		effect.remove(target)
+
+
+## Safely merges the duration of a new effect into this active instance 
+## based on the incoming effect's [member FoxEffect.duration_mode].
+func merge_duration(incoming_effect: FoxEffect) -> void:
+	# If either the current instance or the new effect is permanent, ignore math.
+	if _time_left == -1.0 or incoming_effect.duration == -1.0: 
+		return
+		
+	match incoming_effect.duration_mode:
+		FoxEffect.DurationMode.ADD:
+			_time_left += incoming_effect.duration
+		FoxEffect.DurationMode.REFRESH:
+			_time_left = incoming_effect.duration
+		FoxEffect.DurationMode.KEEP_LONGEST:
+			_time_left = maxf(_time_left, incoming_effect.duration)
+
+#endregion
+
+
+
+#region Built-In Overrides
+
+## Overrides the default print() behavior to show readable, human-friendly data 
+## instead of a raw memory ID (e.g., "[poison x2 (4.5s)]").
+func _to_string() -> String:
+	if effect:
+		var time_str = "Perm" if _time_left == -1.0 else "%.1fs" % _time_left
+		return "[%s x%s (%s)]" % [effect.id, _stack, time_str]
+	return "[Empty FoxEffectInstance]"
+
+#endregion
