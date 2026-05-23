@@ -29,8 +29,8 @@ func add_item(item: FoxShopItem) -> void:
 	slot.setup(item)
 	
 	slot.buy_button_pressed.connect(_on_slot_pressed)
-	slot.buy_button_focused.connect(func(i): item_focused.emit(i))
-	slot.buy_button_unfocused.connect(func(i): item_unfocused.emit(i))
+	slot.buy_button_focused.connect(item_focused.emit)
+	slot.buy_button_unfocused.connect(item_unfocused.emit)
 	
 	if _current_wallet:
 		var can_buy = item.price.can_be_paid_by(_current_wallet) if item.price else true
