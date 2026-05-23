@@ -1,7 +1,4 @@
 extends ScrollContainer
-## This is just for the shop demo. 
-## It lets a mouse ignore a scroll container if the
-## description isn't long enough to be scrolled.
 
 @export var label : Label
 
