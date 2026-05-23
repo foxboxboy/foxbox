@@ -102,6 +102,44 @@ func has_effect(target_id: StringName) -> bool:
 
 
 
+#region Serialization
+
+## Returns an array of dictionaries representing the active state of all managed effects.
+func serialize() -> Array[Dictionary]:
+	var save_data: Array[Dictionary] = []
+	for instance in effects:
+		save_data.append(instance.serialize())
+	return save_data
+
+
+## Rebuilds the active effects from saved data.
+## Requires the [param target] and a [Callable] that takes a [StringName] ID and returns a [FoxEffect].
+func load_state(save_data: Array, target: Object, blueprint_lookup: Callable) -> void:
+	remove_all_effects()
+	
+	for data in save_data:
+		var effect_id: StringName = data.get("id", &"")
+		var blueprint: FoxEffect = blueprint_lookup.call(effect_id)
+		
+		if not blueprint:
+			push_warning("FoxEffectManager: Could not load blueprint for ID '%s'" % effect_id)
+			continue
+			
+		var instance := FoxEffectInstance.new()
+		
+		instance.setup(blueprint, target)
+		instance.load_state(data)
+		instance.request_destruction.connect(_on_instance_request_destruction)
+		
+		effects.append(instance)
+		
+		# Note: We purposely bypass effect.execute() here so we don't 
+		# trigger initial burst damage or sounds when loading a save file.
+
+#endregion
+
+
+
 #region Private
 
 func _get_instance_by_id(target_id: StringName) -> FoxEffectInstance:

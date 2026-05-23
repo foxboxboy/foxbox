@@ -1,2 +1,3 @@
-Strategy pattern styled way of adding modifiers to your game.
-Can be used for upgrades, status effects, special armor bonuses, etc. 
+A memory-safe Flyweight architecture for managing the lifecycle, stacking, 
+and interval ticking of temporary gameplay modifiers (buffs and debuffs) 
+without SceneTree bloat.

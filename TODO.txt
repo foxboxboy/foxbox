@@ -13,10 +13,20 @@ Hurtbox Hitbox Health pipeline
 	its type depending on the project instead of just a generic
 	Variant (see for other modules if this applies like for shops)
 
-Effect cleanup & rename
-	Rename the "modifiers" module to "effects"
-	This might just want another code review and cleanup
+Projectiles Module
 
-AttributeMaps
-	A special node used for recursively holding and changing data
-	Basically a fancy Dictionary
+Checkup on Shop, Interaction, Camera Arm, & Physics Dragging. 
+
+Custom WorldEnvironment like Euphoria Patches
+
+Icons for all modules on-par with the "Effects" module's icons
+
+DONE
+
+	Effect cleanup & rename
+		Rename the "modifiers" module to "effects"
+		This might just want another code review and cleanup
+
+	AttributeMaps
+		A special node used for recursively holding and changing data
+		Basically a fancy Dictionary

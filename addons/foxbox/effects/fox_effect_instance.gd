@@ -147,6 +147,29 @@ func merge_duration(incoming_effect: FoxEffect) -> void:
 
 
 
+#region Serialization
+
+## Returns a dictionary containing the instance's current state for saving.
+func serialize() -> Dictionary:
+	return {
+		"id": effect.id,
+		"stack": _stack,
+		"time_left": _time_left,
+		"tick_timer": _tick_timer
+	}
+
+
+## Restores the private state from a saved dictionary.
+## Must be called immediately after [method setup].
+func load_state(data: Dictionary) -> void:
+	_stack = data.get("stack", 1)
+	_time_left = data.get("time_left", effect.duration)
+	_tick_timer = data.get("tick_timer", effect.tick_interval)
+
+#endregion
+
+
+
 #region Built-In Overrides
 
 ## Overrides the default print() behavior to show readable, human-friendly data 
