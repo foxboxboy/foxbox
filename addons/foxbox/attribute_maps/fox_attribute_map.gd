@@ -1,24 +1,34 @@
 class_name FoxAttributeMap
 extends FoxNode
+## A recursive, hierarchical Blackboard node for safely managing dynamic entity data, stacked flags, and rules.
+##
+## Acts as a centralized data hub for an entity. It can store any arbitrary [Variant] data (such as [int], [String], or [FoxStatPool] resources), 
+## tracks temporary binary states via stacked string flags, and safely propagates [FoxAttributeRule]s up and down a node hierarchy.
 
 #region Signals
 
-# Data
+## Emitted when a new [param key] is added to the data with the given [param value].
 signal data_added(key: StringName, value: Variant)
+## Emitted when the [param value] of an existing [param key] is overwritten.
 signal data_replaced(key: StringName, value: Variant)
+## Emitted when a data [param key] is completely removed from the map.
 signal data_removed(key: StringName, value: Variant)
 
-# Groups
+## Emitted when a data [param key] is categorized into a [param group].
 signal data_added_to_group(group: StringName, key: StringName)
+## Emitted when a data [param key] is removed from a [param group].
 signal data_removed_from_group(group: StringName, key: StringName)
 
-# Rules
+## Emitted when an active [param rule] is applied to this map.
 signal rule_added(rule: FoxAttributeRule)
+## Emitted when an active [param rule] expires or is removed.
 signal rule_removed(rule: FoxAttributeRule)
 
-# Flags
+## Emitted the first time a [param flag]'s stack reaches [code]1[/code].
 signal flag_added(flag: StringName)
+## Emitted when a [param flag]'s stack reaches [code]0[/code] and is completely removed.
 signal flag_removed(flag: StringName)
+## Emitted any time a [param flag]'s stack count increases or decreases.
 signal flag_changed(flag: StringName, stacks: int)
 
 #endregion
@@ -27,7 +37,9 @@ signal flag_changed(flag: StringName, stacks: int)
 
 #region Variables
 
+## If [code]true[/code], this map will accept and apply rules propagated from a parent map.
 @export var can_receive_rules: bool = true
+## If [code]true[/code], this map will propagate its active rules down to any registered child maps.
 @export var can_send_rules: bool = true
 
 var _data: Dictionary[StringName, Variant] = {}
@@ -43,6 +55,8 @@ var _child_maps: Array[FoxAttributeMap] = []
 
 #region Data
 
+## Adds or updates a piece of data in the internal dictionary. Emits [signal data_added] if the 
+## [param key] is new, or [signal data_replaced] if the [param key] already exists.
 func set_data(key: StringName, value: Variant) -> void:
 	var is_new = not _data.has(key)
 	
@@ -54,14 +68,19 @@ func set_data(key: StringName, value: Variant) -> void:
 		data_replaced.emit(key, value)
 
 
+## Retrieves data associated with the given [param key]. Returns [param default_value] if the 
+## [param key] does not exist.
 func get_data(key: StringName, default_value: Variant = null) -> Variant:
 	return _data.get(key, default_value)
 
 
+## Returns [code]true[/code] if the exact key exists in the data dictionary.
 func has_data(key: StringName) -> bool:
 	return _data.has(key)
 
 
+## Completely removes data associated with the given [param key] and purges it from any 
+## associated groups. Emits [signal data_removed].
 func erase_data(key: StringName) -> void:
 	if not _data.has(key):
 		return
@@ -79,6 +98,7 @@ func erase_data(key: StringName) -> void:
 
 #region Groups
 
+## Associates an existing data [param key] with a specific [param group] string for bulk querying.
 func add_data_to_group(key: StringName, group: StringName) -> void:
 	# prevent ghost data
 	if not _data.has(key):
@@ -97,6 +117,7 @@ func add_data_to_group(key: StringName, group: StringName) -> void:
 	data_added_to_group.emit(group, key)
 
 
+## Removes a specific data key from a group.
 func erase_data_from_group(key: StringName, group: StringName) -> void:
 	# does the group and key exist
 	if not _groups.has(group) or not _groups[group].has(key):
@@ -106,12 +127,14 @@ func erase_data_from_group(key: StringName, group: StringName) -> void:
 	data_removed_from_group.emit(group, key)
 
 
+## Helper function that purges a key from all groups it currently belongs to.
 func erase_data_from_all_groups(key: StringName) -> void:
 	# uses duplicate() because arrays/dicts shouldn't be modified while iterating
 	for group in _groups.keys().duplicate():
 		erase_data_from_group(key, group)
 
 
+## Returns an array of all actual data [Variant]s currently associated with the target [param group].
 func get_data_in_group(group: StringName) -> Array[Variant]:
 	var results: Array[Variant] = []
 	
@@ -125,11 +148,14 @@ func get_data_in_group(group: StringName) -> Array[Variant]:
 	return results
 
 
+## Explicitly creates an empty group tracking array.
 func create_group(group: StringName) -> void:
 	if not _groups.has(group):
 		_groups[group] = []
 
 
+## Completely destroys a [param group] and disassociates all keys inside of it. 
+## Returns [code]true[/code] if the [param group] existed and was erased, or [code]false[/code] if it did not exist.
 func erase_group(group: StringName) -> bool:
 	if not _groups.has(group):
 		return false
@@ -142,6 +168,7 @@ func erase_group(group: StringName) -> bool:
 	return _groups.erase(group)
 
 
+## Returns [code]true[/code] if the group exists.
 func has_group(group: StringName) -> bool:
 	return _groups.has(group)
 
@@ -151,6 +178,8 @@ func has_group(group: StringName) -> bool:
 
 #region Flags
 
+## Adds one stack to a string-based [param flag]. If this is the first stack applied, 
+## emits [signal flag_added]. Always emits [signal flag_changed].
 func increment_flag(flag: StringName) -> void:
 	if not _flags.has(flag):
 		_flags[flag] = 0
@@ -164,6 +193,8 @@ func increment_flag(flag: StringName) -> void:
 	flag_changed.emit(flag, _flags[flag])
 
 
+## Removes one stack from a string-based [param flag]. If the stack count reaches [code]0[/code], 
+## the flag is erased entirely and emits [signal flag_removed].
 func decrement_flag(flag: StringName) -> void:
 	if not _flags.has(flag):
 		return
@@ -179,14 +210,17 @@ func decrement_flag(flag: StringName) -> void:
 		flag_changed.emit(flag, _flags[flag])
 
 
+## Returns [code]true[/code] if the [param flag] exists with at least one stack.
 func has_flag(flag: StringName) -> bool:
 	return _flags.has(flag)
 
 
+## Returns the exact number of times this flag has been stacked.
 func get_flag_stacks(flag: StringName) -> int:
 	return _flags.get(flag, 0)
 
 
+## Forcefully removes all stacks of a flag instantly.
 func erase_flag(flag: StringName) -> void:
 	if not _flags.has(flag):
 		return
@@ -196,6 +230,7 @@ func erase_flag(flag: StringName) -> void:
 	flag_removed.emit(flag)
 
 
+## Forcefully purges all active flags on the entity.
 func clear_all_flags() -> void:
 	# uses duplicate() because arrays/dicts shouldn't be modified while iterating
 	for flag in _flags.keys().duplicate():
@@ -207,6 +242,8 @@ func clear_all_flags() -> void:
 
 #region Rules
 
+## Applies a data-modifying [FoxAttributeRule] to the internal data and propagates it to 
+## children if [member can_send_rules] is [code]true[/code].
 func add_rule(rule: FoxAttributeRule) -> void:
 	if not can_receive_rules:
 		return
@@ -228,6 +265,8 @@ func add_rule(rule: FoxAttributeRule) -> void:
 			child.add_rule(rule)
 
 
+## Removes a [FoxAttributeRule] by matching its [member FoxAttributeRule.rule_id]. 
+## Reverses the rule's mathematical effects on the local data and emits [signal rule_removed].
 func remove_rule(rule_id: StringName) -> void:
 	# find rule in data with rule_id
 	var rule_to_remove: FoxAttributeRule = null
@@ -251,6 +290,7 @@ func remove_rule(rule_id: StringName) -> void:
 			child.remove_rule(rule_id)
 
 
+## Returns the array of currently active and applied [FoxAttributeRule]s.
 func get_active_rules() -> Array[FoxAttributeRule]:
 	return _active_rules
 
@@ -291,6 +331,7 @@ func _exit_tree() -> void:
 		_parent_map.unregister_child_map(self)
 
 
+## Links a child map to this parent, passing down all current rules and flags.
 func register_child_map(child: FoxAttributeMap) -> void:
 	# check for duplicates
 	if _child_maps.has(child):
@@ -301,16 +342,16 @@ func register_child_map(child: FoxAttributeMap) -> void:
 	if not can_send_rules:
 		return
 	
-	# late-joiner
-	# this is so that when we make this make, have a bunch of rules/flags,
-	# then a new child map is added it gets this maps rules/flags
+	# late-joiner propagation
 	for rule in _active_rules:
 		child.add_rule(rule)
+		
 	for flag in _flags:
 		for i in range(_flags[flag]):
-			child.add_flag(flag)
+			child.increment_flag(flag)
 
 
+## Unlinks a child map and strips away any rules and flags it inherited from this parent.
 func unregister_child_map(child: FoxAttributeMap) -> void:
 	_child_maps.erase(child)
 	
@@ -321,6 +362,6 @@ func unregister_child_map(child: FoxAttributeMap) -> void:
 	# remove the _parent_map's visual states from the departing child
 	for flag in _flags:
 		for i in range(_flags[flag]):
-			child.remove_flag(flag)
+			child.decrement_flag(flag)
 
 #endregion
