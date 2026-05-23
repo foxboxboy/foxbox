@@ -1,20 +1,17 @@
-class_name FoxInteractionRaycast3D
+@icon("uid://dus7rdnmnq7y3")
+class_name FoxInteractionRayCast3D
 extends RayCast3D
-## A specialized raycast for detecting and managing focus on [FoxInteractable3D] nodes.
+## A specialized raycast for detecting and managing focus on [FoxInteractableArea3D] nodes.
 ##
 ## [b]Note:[/b] Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
 
-
-
-
-
 #region Signals
 
-## Emitted when a [FoxInteractable3D] enters focus.
-signal focused(interactable: FoxInteractable3D)
+## Emitted when a [FoxInteractableArea3D] enters focus.
+signal focused(interactable: FoxInteractableArea3D)
 
-## Emitted when a [FoxInteractable3D] leaves focus.
-signal unfocused(interactable: FoxInteractable3D)
+## Emitted when a [FoxInteractableArea3D] leaves focus.
+signal unfocused(interactable: FoxInteractableArea3D)
 
 ## Emitted when the [member interaction_range] is modified.
 signal interaction_range_changed(new_range: float)
@@ -23,16 +20,14 @@ signal interaction_range_changed(new_range: float)
 
 
 
-
-
 #region Variables 
 
 ## How far the raycast will project along the local -Z axis. 
-## Leave as -1.0 to ignore and use the manual [member RayCast3D.target_position].
+## Leave as [code]-1.0[/code] to ignore and use the manual [member RayCast3D.target_position].
 @export var interaction_range: float = -1.0:
 	set(value):
 		if value < 0.0 and value != -1.0:
-			push_warning("FoxInteractionRaycast3D: interaction_range set to a negative value (%s). Use -1.0 to ignore." % value)
+			push_warning("FoxInteractionRayCast3D: interaction_range set to a negative value (%s). Use -1.0 to ignore." % value)
 			
 		interaction_range = value
 		
@@ -41,23 +36,25 @@ signal interaction_range_changed(new_range: float)
 			
 		interaction_range_changed.emit(value)
 
-var _current_target: FoxInteractable3D = null
+var _current_target: FoxInteractableArea3D = null
 
 #endregion
-
-
 
 
 
 #region Public API
 
-## Returns the [FoxInteractable3D] currently being hovered over, or [code]null[/code] if none.
-func get_current_target() -> FoxInteractable3D:
+## Returns the [FoxInteractableArea3D] currently being hovered over, or [code]null[/code] if none.
+func get_current_target() -> FoxInteractableArea3D:
 	return _current_target
 
+
+## Attempts to interact with the currently focused target, passing the given [param context].
+func interact_with_target(context: Variant = null) -> void:
+	if is_instance_valid(_current_target):
+		_current_target.interact(context)
+
 #endregion
-
-
 
 
 
@@ -68,27 +65,24 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if is_colliding():
-		var interactable = get_collider() as FoxInteractable3D
+	var interactable = get_collider() as FoxInteractableArea3D if is_colliding() else null
+	
+	if interactable == _current_target:
+		return
 		
-		# Check if we're looking at something new (or if we hit a wall and interactable became null)
-		if interactable != _current_target:
-			if _current_target:
-				_clear_target()
-			
-			if interactable:
-				_current_target = interactable
-				focused.emit(_current_target)
-				_current_target.focus(self)
-			
-	elif _current_target != null:
-		_clear_target()
+	_clear_target()
+	
+	if interactable:
+		_current_target = interactable
+		focused.emit(_current_target)
+		_current_target.focus(self)
 
 
 func _clear_target() -> void:
-	if _current_target:
+	if is_instance_valid(_current_target):
 		_current_target.unfocus(self)
 		unfocused.emit(_current_target)
-		_current_target = null
+		
+	_current_target = null
 
 #endregion

@@ -2,7 +2,7 @@
 extends Camera3D
 
 @export var dragger_raycast : RayCast3D
-@export var interaction_sensor : FoxInteractionRaycast3D
+@export var interaction_sensor : FoxInteractionRayCast3D
 @export var dragger : FoxPhysicsDragger3D
 
 # State
