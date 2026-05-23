@@ -35,41 +35,41 @@ var _current_damping: float
 ## Grabs a [RigidBody3D] at a specific global hit point. 
 ## Optionally pass a [FoxPhysicsDragProfile] to override the default stiffness and damping.
 func grab(body: RigidBody3D, hit_point: Vector3, profile: FoxPhysicsDragProfile = null) -> void:
-    # Check if the provided body is valid
-    if not is_instance_valid(body):
-        push_error("FoxPhysicsDragger3D: Attempted to grab a null or invalid RigidBody3D.")
-        return
+	# Check if the provided body is valid
+	if not is_instance_valid(body):
+		push_error("FoxPhysicsDragger3D: Attempted to grab a null or invalid RigidBody3D.")
+		return
 		
-    _current_body = body
-    _current_stiffness = profile.stiffness if profile else default_stiffness
-    _current_damping = profile.damping if profile else default_damping
+	_current_body = body
+	_current_stiffness = profile.stiffness if profile else default_stiffness
+	_current_damping = profile.damping if profile else default_damping
 	
-    # Reset the velocity of the grabbed body to stop any movement
-    _current_body.linear_velocity = Vector3.ZERO
-    _current_body.angular_velocity = Vector3.ZERO
+	# Reset the velocity of the grabbed body to stop any movement
+	_current_body.linear_velocity = Vector3.ZERO
+	_current_body.angular_velocity = Vector3.ZERO
 	
-    # Store where we grabbed relative to center of mass
-    _grab_offset_local = _current_body.to_local(hit_point)
+	# Store where we grabbed relative to center of mass
+	_grab_offset_local = _current_body.to_local(hit_point)
 	
-    _skip_first_frame = true
+	_skip_first_frame = true
 
 
 ## Releases the currently held [RigidBody3D].
 ## If [param dampen_spin] is [code]true[/code], it will aggressively kill residual angular velocity 
 ## to prevent unrealistic spinning upon release.
 func release(dampen_spin: bool = true) -> void:
-    # Check if the current body is valid
-    if not is_instance_valid(_current_body):
-        push_error("FoxPhysicsDragger3D: Attempted to release a null or invalid RigidBody3D.")
-        return
+	# Check if the current body is valid
+	if not is_instance_valid(_current_body):
+		push_error("FoxPhysicsDragger3D: Attempted to release a null or invalid RigidBody3D.")
+		return
 
-    # Dampen angular velocity if required and within threshold
-    if dampen_spin and _current_body.angular_velocity.length() < 2.0:
-        _current_body.angular_velocity *= 0.1
+	# Dampen angular velocity if required and within threshold
+	if dampen_spin and _current_body.angular_velocity.length() < 2.0:
+		_current_body.angular_velocity *= 0.1
 			
-    # Wake up the body and reset the current body reference
-    _current_body.sleeping = false
-    _current_body = null
+	# Wake up the body and reset the current body reference
+	_current_body.sleeping = false
+	_current_body = null
 
 #endregion
 
@@ -126,7 +126,7 @@ func _apply_rotational_torque() -> void:
 	if abs(rad_to_deg(angle)) < 1.0:
 		_current_body.apply_torque(-_current_body.angular_velocity * _current_damping * 0.1)
 	else:
-		var torque = (axis * angle * (_current_stiffness * 0.5)) - (_current_body.angular_velocity * (_damping * 0.2))
+		var torque = (axis * angle * (_current_stiffness * 0.5)) - (_current_body.angular_velocity * (_current_damping * 0.2))
 		_current_body.apply_torque(torque)
 
 #endregion
