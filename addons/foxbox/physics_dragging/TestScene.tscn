@@ -1,0 +1,12 @@
+extends Node
+
+onready var dragger = FoxPhysicsDragger3D.new()
+onready var body = $RigidBody3D
+
+func _ready():
+    var hit_point = Vector3(0, 1, 0)
+    dragger.grab(body, hit_point)
+
+func _input(event):
+    if event.is_action_pressed("ui_cancel"):
+        dragger.release(true)
