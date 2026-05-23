@@ -1,3 +1,4 @@
+@icon("uid://dq6eveqbdipqk")
 class_name FoxShopItem
 extends FoxResource
 

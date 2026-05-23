@@ -1,3 +1,4 @@
+@icon("uid://cjf8prmuxwnac")
 @abstract class_name FoxPrice
 extends FoxResource
 

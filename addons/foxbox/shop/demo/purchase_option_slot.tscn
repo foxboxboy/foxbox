@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cab5ddd81ymew" path="res://addons/foxbox/shop/gui/fox_shop_slot.gd" id="1_qh6r8"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icons/old_icon.png" id="2_6w07k"]
-[ext_resource type="Script" uid="uid://b3tux0rl3r6ah" path="res://addons/foxbox/shop/demo/scroll_container.gd" id="3_6a638"]
+[ext_resource type="Script" uid="uid://b3tux0rl3r6ah" path="res://addons/foxbox/shop/demo/special_scroll_container.gd" id="3_6a638"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6w07k"]
 
