@@ -7,4 +7,3 @@ The `FoxPhysicsDragger3D` class allows you to manipulate [RigidBody3D] nodes by 
 
 ### Grabbing a RigidBody3D
 To grab a `RigidBody3D`, use the `grab` method:
-
