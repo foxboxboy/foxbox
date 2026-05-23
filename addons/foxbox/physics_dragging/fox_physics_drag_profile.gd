@@ -1,3 +1,4 @@
+@icon("uid://cus3vopn7ucer")
 class_name FoxPhysicsDragProfile
 extends FoxResource
 ## A configuration profile defining the physics characteristics of a grab action.

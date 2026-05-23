@@ -1,3 +1,4 @@
+@icon("uid://dqng8xj2sfcq2")
 class_name FoxPhysicsDragger3D
 extends FoxNode3D
 ## Manipulates a [RigidBody3D] by applying localized forces and torques 
@@ -125,7 +126,7 @@ func _apply_rotational_torque() -> void:
 	if abs(rad_to_deg(angle)) < 1.0:
 		_current_body.apply_torque(-_current_body.angular_velocity * _current_damping * 0.1)
 	else:
-		var torque = (axis * angle * (_current_stiffness * 0.5)) - (_current_body.angular_velocity * (_damping * 0.2))
+		var torque = (axis * angle * (_current_stiffness * 0.5)) - (_current_body.angular_velocity * (_current_damping * 0.2))
 		_current_body.apply_torque(torque)
 
 #endregion
