@@ -1,3 +1,4 @@
+@icon("uid://b5tv46lqk2755")
 class_name FoxAttributeMap
 extends FoxNode
 ## A recursive, hierarchical Blackboard node for safely managing dynamic entity data, stacked flags, and rules.

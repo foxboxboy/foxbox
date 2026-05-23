@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FoxShopItem" format=3 uid="uid://cc0d142wmdcwv"]
 
-[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icon.png" id="1_5cd8m"]
+[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://old_icon.png" id="1_5cd8m"]
 [ext_resource type="Script" uid="uid://8nygo3nfy78y" path="res://addons/foxbox/shop/core/fox_shop_item.gd" id="1_t4bcw"]
 [ext_resource type="Script" uid="uid://62shgvkbm52t" path="res://addons/foxbox/shop/simple/fox_simple_price.gd" id="2_if7h5"]
 

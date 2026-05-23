@@ -14,9 +14,10 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Fox Box"
+config/name="FoxBox"
+config/description="Lightweight framework for Godot"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="uid://bvd634geggfmh"
+config/icon="uid://c3ntasv61n17c"
 
 [autoload]
 

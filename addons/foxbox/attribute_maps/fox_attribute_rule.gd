@@ -1,15 +1,23 @@
+@icon("uid://cgnijevks1w7x")
 @abstract 
 class_name FoxAttributeRule
 extends FoxRefCounted
+## An abstract base class for defining mathematical or logical modifiers applied to data.
+##
+## Designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule). 
+## When added to a [FoxAttributeMap], the map automatically routes the correct data to [method apply_to] 
+## and [method remove_from] based on the [member target_key].
 
-## The unique identifier so we can remove it later (e.g., &"fire_mage_buff_1")
+## The unique identifier used to track and remove this specific rule instance (e.g., [code]&"fire_mage_buff_1"[/code]).
 var rule_id: StringName = &"null"
 
-## The specific data key this rule is looking for (e.g., &"health", &"move_speed")
+## The specific dictionary key in the [FoxAttributeMap] that this rule targets (e.g., [code]&"health"[/code], [code]&"move_speed"[/code]).
 var target_key: StringName = &"null"
 
-## Applies the math/logic to the local data. Overridden by subclasses.
+## Executes the rule's logic on the target [param data]. 
+## Must be overridden by subclasses to define exactly how the data is modified.
 @abstract func apply_to(data: Variant) -> void
 
-## Removes the math/logic from the local data. Overridden by subclasses.
+## Reverses the rule's logic, safely restoring the target [param data] to its previous state. 
+## Must be overridden by subclasses to define exactly how the modification is undone.
 @abstract func remove_from(data: Variant) -> void
