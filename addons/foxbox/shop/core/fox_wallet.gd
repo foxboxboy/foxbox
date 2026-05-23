@@ -1,3 +1,5 @@
+@icon("uid://c5rpdj7ur3yuj")
+@abstract
 class_name FoxWallet
 extends FoxResource
 ## The abstract base container for a buyer's purchasing power.
