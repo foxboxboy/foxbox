@@ -1,6 +1,4 @@
 
-# tates_library/docs/naming_conventions.gd
-# ==========================================================
 # AI DISCLAIMER: many of these terms are partially or entirely 
 # done with research and organization from Google Gemini.
 

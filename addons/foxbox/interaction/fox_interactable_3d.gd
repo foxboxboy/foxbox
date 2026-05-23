@@ -6,8 +6,6 @@ extends Area3D
 
 
 
-
-
 #region Signals
 
 ## Emitted when [method interact] is called.
@@ -20,8 +18,6 @@ signal focused(interaction_raycast: FoxInteractionRaycast3D)
 signal unfocused(interaction_raycast: FoxInteractionRaycast3D)
 
 #endregion
-
-
 
 
 
@@ -44,8 +40,6 @@ func unfocus(interaction_raycast: FoxInteractionRaycast3D) -> void:
 	unfocused.emit(interaction_raycast)
 
 #endregion
-
-
 
 
 

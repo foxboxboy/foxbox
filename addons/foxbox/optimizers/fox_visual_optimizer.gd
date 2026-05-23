@@ -1,3 +1,5 @@
+## @deprecated
+
 extends FoxNode
 class_name FoxVisualOptimizer
 

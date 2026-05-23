@@ -1,3 +1,4 @@
+@icon("uid://cc75ukbud54ws")
 extends FoxResource
 class_name FoxModifiableStat
 ## A resource that calculates a final [float] value based on flat and multiplier modifiers.

@@ -1,4 +1,3 @@
-@icon("uid://cgnijevks1w7x")
 @abstract 
 class_name FoxAttributeRule
 extends FoxRefCounted
@@ -9,10 +8,14 @@ extends FoxRefCounted
 ## and [method remove_from] based on the [member target_key].
 
 ## The unique identifier used to track and remove this specific rule instance (e.g., [code]&"fire_mage_buff_1"[/code]).
-var rule_id: StringName = &"null"
+var id: StringName = &""
 
 ## The specific dictionary key in the [FoxAttributeMap] that this rule targets (e.g., [code]&"health"[/code], [code]&"move_speed"[/code]).
-var target_key: StringName = &"null"
+var target_key: StringName = &""
+
+func _init(p_id: StringName = &"", p_target_key: StringName = &"") -> void:
+	id = p_id
+	target_key = p_target_key
 
 ## Executes the rule's logic on the target [param data]. 
 ## Must be overridden by subclasses to define exactly how the data is modified.

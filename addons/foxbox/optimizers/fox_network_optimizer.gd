@@ -1,3 +1,4 @@
+## @deprecated
 extends FoxNode
 class_name FoxNetworkOptimizer
 ## Looks for a method called "set_network_role"

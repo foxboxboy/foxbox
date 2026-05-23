@@ -1,3 +1,4 @@
+@icon("uid://dv080jam3jp5e")
 class_name FoxEffectInstance
 extends FoxRefCounted
 ## A runtime state container for an active [FoxEffect] applied to a target [Object].
