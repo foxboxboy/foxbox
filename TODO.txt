@@ -5,20 +5,20 @@ Refactor character modules to use resources
 	a hard coded crouch() function and a crouch_height
 	exported variable
 
-Hurtbox Hitbox Health pipeline
-	Hurtboxes look for hitboxes and pass context to hurt them
-	Hitboxes emit a signal and the context when hit
-	
-	Check if you can make "context" statically typed and change
-	its type depending on the project instead of just a generic
-	Variant (see for other modules if this applies like for shops)
-
 Projectiles Module
 
 Custom WorldEnvironment like Euphoria Patches
 
 
 == DONE ==
+	
+	Hurtbox Hitbox Health pipeline
+		Hurtboxes look for hitboxes and pass context to hurt them
+		Hitboxes emit a signal and the context when hit
+		
+		Check if you can make "context" statically typed and change
+		its type depending on the project instead of just a generic
+		Variant (see for other modules if this applies like for shops)
 
 	Effect cleanup & rename
 		Rename the "modifiers" module to "effects"
