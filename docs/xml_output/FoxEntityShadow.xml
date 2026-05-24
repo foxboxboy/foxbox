@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxEntityShadow" inherits="FoxNode3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_set_shadow_quality">
+			<return type="void" />
+			<param index="0" name="new_shadow_quality" type="int" enum="FoxEntityShadow.ShadowQuality" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="shadow_type" type="int" setter="_set_shadow_quality" getter="" enum="FoxEntityShadow.ShadowQuality" default="0">
+		</member>
+		<member name="shadow_advanced_scene" type="PackedScene" setter="" getter="">
+		</member>
+		<member name="shadow_simple_scene" type="PackedScene" setter="" getter="">
+		</member>
+		<member name="shadow_simple_y_offset" type="float" setter="" getter="" default="0.025">
+		</member>
+		<member name="shadow_decal_y_offset" type="float" setter="" getter="" default="-0.975">
+		</member>
+		<member name="shadow" type="Node" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="DISABLED" value="0" enum="ShadowQuality">
+			No shadow will be shown under this character.
+		</constant>
+		<constant name="SIMPLE" value="1" enum="ShadowQuality">
+			A simple mesh instance with a black circle will be shown.
+		</constant>
+		<constant name="DECAL" value="2" enum="ShadowQuality">
+			A more advanced decal will be used to draw the shadow.
+		</constant>
+	</constants>
+</class>

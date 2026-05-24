@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorJUnitXmlReportExporter" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Exports CLI validation results as a JUnit-style XML report.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_indent">
+			<return type="String" />
+			<param index="0" name="level" type="int" />
+			<description>
+				Returns an indentation string for the given [param level].
+			</description>
+		</method>
+		<method name="export_report_from_suite_reports">
+			<return type="void" />
+			<param index="0" name="suite_reports" type="GodotDoctorValidationSuiteReport[]" />
+			<param index="1" name="summary_stats" type="Dictionary" />
+			<description>
+				Exports a JUnit-style XML report from [param suite_reports] if enabled in settings. [param summary_stats] is the [Dictionary] from the [GodotDoctorSummaryReport] stats used to populate top-level report attributes.
+			</description>
+		</method>
+		<method name="_ensure_directory_exists">
+			<return type="bool" />
+			<param index="0" name="dir_path" type="String" />
+			<description>
+				Ensures the directory at [param dir_path] exists, creating it recursively if needed. Returns [code]true[/code] on success, [code]false[/code] on failure.
+			</description>
+		</method>
+		<method name="_build_junit_xml_report">
+			<return type="String" />
+			<param index="0" name="suite_reports" type="GodotDoctorValidationSuiteReport[]" />
+			<param index="1" name="summary_stats" type="Dictionary" />
+			<description>
+				Builds and returns the full JUnit XML report string from [param suite_reports].
+			</description>
+		</method>
+		<method name="_build_testsuite_xml">
+			<return type="String" />
+			<param index="0" name="suite_report" type="GodotDoctorValidationSuiteReport" />
+			<description>
+				Builds and returns the XML string for a single [param suite_report].
+			</description>
+		</method>
+		<method name="_build_scene_testcase_xml">
+			<return type="String" />
+			<param index="0" name="scene_report" type="GodotDoctorSceneReport" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Builds and returns the XML string for a single [param scene_report] testcase. Uses [param treat_warnings_as_errors] to calculate effective failure counts.
+			</description>
+		</method>
+		<method name="_build_resource_testcase_xml">
+			<return type="String" />
+			<param index="0" name="resource_report" type="GodotDoctorResourceReport" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Builds and returns the XML string for a single [param resource_report] testcase. Uses [param treat_warnings_as_errors] to calculate effective failure counts.
+			</description>
+		</method>
+		<method name="_build_node_xml">
+			<return type="String" />
+			<param index="0" name="node_report" type="GodotDoctorNodeReport" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Builds and returns the XML string for a single [param node_report]. Uses [param treat_warnings_as_errors] to calculate effective failure counts.
+			</description>
+		</method>
+		<method name="_build_resource_item_xml">
+			<return type="String" />
+			<param index="0" name="resource_report" type="GodotDoctorResourceReport" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Builds and returns the XML string for the resource item element within a resource testcase. Uses [param treat_warnings_as_errors] to calculate effective failure counts.
+			</description>
+		</method>
+		<method name="_build_message_xml">
+			<return type="String" />
+			<param index="0" name="message" type="GodotDoctorValidationMessage" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Builds and returns the XML string for a single validation [param message]. Uses [param treat_warnings_as_errors] to annotate promoted warnings.
+			</description>
+		</method>
+		<method name="_get_effective_error_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="messages" type="GodotDoctorValidationMessage[]" />
+			<param index="1" name="treat_warnings_as_errors" type="bool" />
+			<description>
+				Returns the effective error count from [param messages], counting warnings as errors when [param treat_warnings_as_errors] is [code]true[/code].
+			</description>
+		</method>
+		<method name="_basename">
+			<return type="String" />
+			<param index="0" name="path" type="String" />
+			<description>
+				Returns the filename portion of [param path], without any leading directory components.
+			</description>
+		</method>
+		<method name="_xml_escape">
+			<return type="String" />
+			<param index="0" name="value" type="String" />
+			<description>
+				Returns [param value] with XML special characters escaped.
+			</description>
+		</method>
+		<method name="_resolve_uid_path">
+			<return type="String" />
+			<param index="0" name="path" type="String" />
+			<description>
+				Resolves a [code]uid://[/code] path to its corresponding resource file path. Returns [param path] unchanged if it is not a UID.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="_DEFAULT_XML_REPORT_FILENAME" value="&quot;godot_doctor_report.xml&quot;">
+			The default filename used for the XML report when none is specified in settings.
+		</constant>
+		<constant name="_INDENT_SIZE" value="2">
+			The number of spaces per indent level in the XML output.
+		</constant>
+		<constant name="_INDENT_LEVEL_TESTSUITE" value="1">
+			Indent level for [code]&lt;testsuite&gt;[/code] elements.
+		</constant>
+		<constant name="_INDENT_LEVEL_TESTCASE" value="2">
+			Indent level for [code]&lt;testcase&gt;[/code] elements.
+		</constant>
+		<constant name="_INDENT_LEVEL_TEST_ITEM" value="3">
+			Indent level for [code]&lt;node&gt;[/code] and [code]&lt;resource&gt;[/code] elements.
+		</constant>
+		<constant name="_INDENT_LEVEL_MESSAGE" value="4">
+			Indent level for [code]&lt;harderror&gt;[/code], [code]&lt;warning&gt;[/code], and [code]&lt;info&gt;[/code] elements.
+		</constant>
+		<constant name="_RESOURCE_TESTS_COUNT" value="1">
+			The number of test items counted per resource (always 1, since each resource is a single item).
+		</constant>
+	</constants>
+</class>

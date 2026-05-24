@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SignalGraphNodeItem.Metadata" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="signal_name" type="String" />
+			<param index="1" name="method_signature" type="String" />
+			<param index="2" name="node_name" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="signal_name" type="String" setter="" getter="">
+		</member>
+		<member name="method_signature" type="String" setter="" getter="">
+		</member>
+		<member name="node_name" type="String" setter="" getter="">
+		</member>
+	</members>
+</class>

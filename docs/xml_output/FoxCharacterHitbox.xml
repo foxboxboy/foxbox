@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterHitbox" inherits="FoxNode3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="crouch">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="stand">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="prone">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_animate_shape">
+			<return type="void" />
+			<param index="0" name="target_h" type="float" />
+			<param index="1" name="target_y" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="collision_shape" type="CollisionShape3D" setter="" getter="">
+		</member>
+		<member name="stand_height" type="float" setter="" getter="" default="2.2">
+		</member>
+		<member name="crouch_height" type="float" setter="" getter="" default="1.8">
+		</member>
+		<member name="prone_height" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_stand_y" type="float" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_crouch_y" type="float" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_prone_y" type="float" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+	</members>
+</class>

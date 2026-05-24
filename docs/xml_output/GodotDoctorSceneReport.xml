@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorSceneReport" inherits="GodotDoctorReport" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Holds validation results for a single scene, aggregated from its node reports.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="scene_path" type="String" />
+			<param index="1" name="node_reports" type="GodotDoctorNodeReport[]" />
+			<description>
+				Creates a new [GodotDoctorSceneReport] for the scene at [param scene_path] with the given [param node_reports].
+			</description>
+		</method>
+		<method name="get_num_infos">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.INFO]-level validation messages across all nodes in this scene.
+			</description>
+		</method>
+		<method name="get_num_warnings">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.WARNING]-level validation messages across all nodes in this scene.
+			</description>
+		</method>
+		<method name="get_num_errors">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.ERROR]-level validation messages across all nodes in this scene.
+			</description>
+		</method>
+		<method name="get_validation_messages">
+			<return type="GodotDoctorValidationMessage[]" />
+			<description>
+				Returns all validation messages across all nodes in this scene.
+			</description>
+		</method>
+		<method name="get_node_reports">
+			<return type="GodotDoctorNodeReport[]" />
+			<description>
+				Returns all node reports within this scene.
+			</description>
+		</method>
+		<method name="get_scene_path">
+			<return type="String" />
+			<description>
+				Returns the resource path of this scene.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_scene_path" type="String" setter="" getter="">
+			The resource path of the validated scene.
+		</member>
+		<member name="_node_reports" type="GodotDoctorNodeReport[]" setter="" getter="" default="[]">
+			The list of node reports for all validated nodes within this scene.
+		</member>
+	</members>
+</class>

@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoxDashManager &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxJumpManager" href="class_foxjumpmanager.html" />
+    <link rel="prev" title="FoxEntityShadow" href="class_foxentityshadow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FoxDashManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FoxDashManager</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="foxdashmanager">
+<span id="class-foxdashmanager"></span><h1>FoxDashManager<a class="headerlink" href="#foxdashmanager" title="Link to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_foxnode.html#class-foxnode"><span class="std std-ref">FoxNode</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p>Component that manages the math, memory, and rules for a dash ability.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Acts as a specialized stopwatch and data container, tracking cooldowns and duration without directly applying physics.</p>
+</section>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-property-speed"><span class="std std-ref">speed</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">20.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-property-duration"><span class="std std-ref">duration</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-property-cooldown"><span class="std std-ref">cooldown</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-property-is-request-active"><span class="std std-ref">_is_request_active</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-property-last-dash-time"><span class="std std-ref">_last_dash_time</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-100000</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-method-request"><span class="std std-ref">request</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-method-cancel"><span class="std std-ref">cancel</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-method-has-request"><span class="std std-ref">has_request</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-method-is-available"><span class="std std-ref">is_available</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxdashmanager-method-consume"><span class="std std-ref">consume</span></a>()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
+<p class="classref-signal" id="class-foxdashmanager-signal-consumed"><strong>consumed</strong>() <a class="reference internal" href="#class-foxdashmanager-signal-consumed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a dash request is validated and consumed with <a class="reference internal" href="#class-foxdashmanager-method-consume"><span class="std std-ref">consume()</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxdashmanager-signal-requested"><strong>requested</strong>() <a class="reference internal" href="#class-foxdashmanager-signal-requested"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a dash is requested with <a class="reference internal" href="#class-foxdashmanager-method-request"><span class="std std-ref">request()</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxdashmanager-signal-request-cancelled"><strong>request_cancelled</strong>() <a class="reference internal" href="#class-foxdashmanager-signal-request-cancelled"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a pending dash is cancelled with <a class="reference internal" href="#class-foxdashmanager-method-cancel"><span class="std std-ref">cancel()</span></a>.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-property" id="class-foxdashmanager-property-speed"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>speed</strong> = <code class="docutils literal notranslate"><span class="pre">20.0</span></code> <a class="reference internal" href="#class-foxdashmanager-property-speed"><span class="std std-ref">🔗</span></a></p>
+<p>The burst speed applied to the character during the dash, in meters per second.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxdashmanager-property-duration"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>duration</strong> = <code class="docutils literal notranslate"><span class="pre">0.2</span></code> <a class="reference internal" href="#class-foxdashmanager-property-duration"><span class="std std-ref">🔗</span></a></p>
+<p>The total time the dash state remains active, in seconds.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxdashmanager-property-cooldown"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>cooldown</strong> = <code class="docutils literal notranslate"><span class="pre">1.0</span></code> <a class="reference internal" href="#class-foxdashmanager-property-cooldown"><span class="std std-ref">🔗</span></a></p>
+<p>The required wait time before another dash can be requested, in seconds.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxdashmanager-property-is-request-active"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_is_request_active</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-foxdashmanager-property-is-request-active"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxdashmanager-property-last-dash-time"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>_last_dash_time</strong> = <code class="docutils literal notranslate"><span class="pre">-100000</span></code> <a class="reference internal" href="#class-foxdashmanager-property-last-dash-time"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-method" id="class-foxdashmanager-method-request"><abbr title="No return value.">void</abbr> <strong>request</strong>() <a class="reference internal" href="#class-foxdashmanager-method-request"><span class="std std-ref">🔗</span></a></p>
+<p>Registers a request from the player or AI controller to perform a dash.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxdashmanager-method-cancel"><abbr title="No return value.">void</abbr> <strong>cancel</strong>() <a class="reference internal" href="#class-foxdashmanager-method-cancel"><span class="std std-ref">🔗</span></a></p>
+<p>Cancels a pending dash request manually.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxdashmanager-method-has-request"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_request</strong>() <a class="reference internal" href="#class-foxdashmanager-method-has-request"><span class="std std-ref">🔗</span></a></p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if a dash has been requested but not yet consumed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxdashmanager-method-is-available"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_available</strong>() <a class="reference internal" href="#class-foxdashmanager-method-is-available"><span class="std std-ref">🔗</span></a></p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the dash cooldown timer has fully elapsed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxdashmanager-method-consume"><abbr title="No return value.">void</abbr> <strong>consume</strong>() <a class="reference internal" href="#class-foxdashmanager-method-consume"><span class="std std-ref">🔗</span></a></p>
+<p>Clears the current dash request, records the time, and alerts external systems.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxentityshadow.html" class="btn btn-neutral float-left" title="FoxEntityShadow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_foxjumpmanager.html" class="btn btn-neutral float-right" title="FoxJumpManager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

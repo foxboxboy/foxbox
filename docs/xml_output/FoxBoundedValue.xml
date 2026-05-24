@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxBoundedValue" inherits="FoxResource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A resource that manages a [float] value within a defined minimum and maximum range.
+	</brief_description>
+	<description>
+		Emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="subtract">
+			<return type="void" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Decreases [member value] by [param amount].
+			</description>
+		</method>
+		<method name="add">
+			<return type="void" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Increases [member value] by [param amount].
+			</description>
+		</method>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="starting_value" type="float" default="1.0" />
+			<param index="1" name="p_max" type="float" default="1.0" />
+			<param index="2" name="p_min" type="float" default="0.0" />
+			<description>
+			</description>
+		</method>
+		<method name="_check_bounds">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="max_value" type="float" setter="@max_value_setter" getter="" default="1.0">
+			The maximum allowed value. Modifying this automatically clamps [member value].
+		</member>
+		<member name="min_value" type="float" setter="@min_value_setter" getter="" default="0.0">
+			The minimum allowed value. Modifying this automatically clamps [member value].
+		</member>
+		<member name="value" type="float" setter="@value_setter" getter="" default="1.0">
+			The current value. Automatically clamped between [member min_value] and [member max_value].
+		</member>
+	</members>
+	<signals>
+		<signal name="value_changed">
+			<param index="0" name="current" type="float" />
+			<param index="1" name="min" type="float" />
+			<param index="2" name="max" type="float" />
+			<description>
+				Emitted when [member value], [member min_value], or [member max_value] changes.
+			</description>
+		</signal>
+		<signal name="depleted">
+			<param index="0" name="underflow" type="float" />
+			<description>
+				Emitted when [member value] falls below [member min_value]. [param underflow] contains the absolute difference.
+			</description>
+		</signal>
+		<signal name="saturated">
+			<param index="0" name="overflow" type="float" />
+			<description>
+				Emitted when [member value] exceeds [member max_value]. [param overflow] contains the absolute difference.
+			</description>
+		</signal>
+	</signals>
+</class>

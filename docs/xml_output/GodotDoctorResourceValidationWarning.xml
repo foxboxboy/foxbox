@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorResourceValidationWarning" inherits="GodotDoctorValidationWarning" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A warning associated with a [Resource]. Clicking the warning opens [member origin_resource] in the inspector and navigates to it in the FileSystem dock. Used by [GodotDoctorDock] to show validation warnings related to resources.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_select_origin">
+			<return type="void" />
+			<description>
+				Opens [member origin_resource] in the inspector and navigates to it in the FileSystem dock.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="origin_resource" type="Resource" setter="" getter="">
+			The resource that caused the warning.
+		</member>
+	</members>
+</class>

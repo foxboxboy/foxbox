@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxStatPool" inherits="FoxResource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A resource that manages a dynamic value bounded by a modifiable maximum capacity.
+	</brief_description>
+	<description>
+		Combines a [FoxModifiableStat] for the maximum bound and a [FoxBoundedValue] for the current pool. [br][b]Note:[/b] Ensure [member Resource.resource_local_to_scene] is enabled when assigning to multiple instances to prevent shared state.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="subtract">
+			<return type="void" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Decreases [member current] by [param amount].
+			</description>
+		</method>
+		<method name="add">
+			<return type="void" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Increases [member current] by [param amount].
+			</description>
+		</method>
+		<method name="get_percent">
+			<return type="float" />
+			<description>
+				Returns the ratio of [member current] to [member max_value] as a value between 0.0 and 1.0.
+			</description>
+		</method>
+		<method name="add_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="type" type="int" enum="FoxModifiableStat.ModifierType" />
+			<param index="2" name="amount" type="float" />
+			<description>
+				Adds a modifier to the maximum capacity.
+			</description>
+		</method>
+		<method name="pop_max_modifier">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="type" type="int" enum="FoxModifiableStat.ModifierType" />
+			<description>
+				Removes the most recent modifier from the maximum capacity stack.
+			</description>
+		</method>
+		<method name="clear_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="type" type="int" enum="FoxModifiableStat.ModifierType" />
+			<description>
+				Instantly removes all modifiers matching the given [param id] and [param type] from the maximum capacity.
+			</description>
+		</method>
+		<method name="clear_all_max_modifiers">
+			<return type="void" />
+			<description>
+				Removes all modifiers, returning the maximum capacity to [member base_max].
+			</description>
+		</method>
+		<method name="add_flat_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="amount" type="float" />
+			<description>
+				Helper to quickly add a flat modifier to the max capacity.
+			</description>
+		</method>
+		<method name="add_multiplier_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="amount" type="float" />
+			<description>
+				Helper to quickly add a multiplier modifier to the max capacity.
+			</description>
+		</method>
+		<method name="pop_flat_max_modifier">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Helper to quickly pop the top flat modifier from the max capacity stack.
+			</description>
+		</method>
+		<method name="pop_multiplier_max_modifier">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Helper to quickly pop the top multiplier modifier from the max capacity stack.
+			</description>
+		</method>
+		<method name="clear_flat_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Helper to instantly remove all flat modifiers under a specific ID from the max capacity.
+			</description>
+		</method>
+		<method name="clear_multiplier_max_modifier">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Helper to instantly remove all multiplier modifiers under a specific ID from the max capacity.
+			</description>
+		</method>
+		<method name="_init">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_max_stat_changed">
+			<return type="void" />
+			<param index="0" name="new_max" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pool_changed">
+			<return type="void" />
+			<param index="0" name="curr" type="float" />
+			<param index="1" name="_min" type="float" />
+			<param index="2" name="_max" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="base_max" type="float" setter="@base_max_setter" getter="" default="100.0">
+			The initial, unmodified maximum capacity.
+		</member>
+		<member name="_max_stat" type="FoxModifiableStat" setter="" getter="">
+		</member>
+		<member name="_pool" type="FoxBoundedValue" setter="" getter="">
+		</member>
+		<member name="max_value" type="float" setter="" getter="@max_value_getter">
+			The current calculated maximum capacity, including all active modifiers.
+		</member>
+		<member name="current" type="float" setter="@current_setter" getter="@current_getter">
+			The current value of the pool. Automatically clamped by the minimum and maximum bounds.
+		</member>
+	</members>
+	<signals>
+		<signal name="updated">
+			<param index="0" name="current" type="float" />
+			<param index="1" name="max_value" type="float" />
+			<description>
+				Emitted when [member current] or the maximum capacity changes.
+			</description>
+		</signal>
+		<signal name="depleted">
+			<param index="0" name="underflow" type="float" />
+			<description>
+				Emitted when [member current] falls below 0.0. [param underflow] contains the absolute value of the excess.
+			</description>
+		</signal>
+		<signal name="saturated">
+			<param index="0" name="overflow" type="float" />
+			<description>
+				Emitted when [member current] exceeds the maximum capacity. [param overflow] contains the excess amount.
+			</description>
+		</signal>
+	</signals>
+</class>

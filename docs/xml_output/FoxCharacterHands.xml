@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterHands" inherits="FoxNode3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Handles IK and hand slots for things like items.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="empty_hands">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="empty_left_hand">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="empty_right_hand">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="hold_node">
+			<return type="bool" />
+			<param index="0" name="node" type="Node" />
+			<param index="1" name="left_handed" type="bool" default="false" />
+			<description>
+				Returns true if a node was replaced.
+			</description>
+		</method>
+		<method name="get_right_hand_node">
+			<return type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="get_left_hand_node">
+			<return type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="has_right_hand_node">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="has_left_hand_node">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="has_node_in_either_hand">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="hold_item">
+			<return type="void" />
+			<param index="0" name="item" type="FoxHoldableItem" />
+			<param index="1" name="left_handed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="enable_right_hand_ik">
+			<return type="void" />
+			<param index="0" name="target_node" type="Node3D" />
+			<param index="1" name="pole_node" type="Node3D" />
+			<description>
+			</description>
+		</method>
+		<method name="disable_right_hand_ik">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="enable_left_hand_ik">
+			<return type="void" />
+			<param index="0" name="target_node" type="Node3D" />
+			<param index="1" name="pole_node" type="Node3D" />
+			<description>
+			</description>
+		</method>
+		<method name="disable_left_hand_ik">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="left_hand_slot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="right_hand_slot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="left_hand_ik" type="TwoBoneIK3D" setter="" getter="">
+		</member>
+		<member name="right_hand_ik" type="TwoBoneIK3D" setter="" getter="">
+		</member>
+	</members>
+</class>

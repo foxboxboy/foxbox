@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorResourceHelper" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A utility class providing helpers for resolving resource paths. Converts [code]uid://[/code] paths to [code]res://[/code] paths when needed.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="to_res_path" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="path" type="String" />
+			<description>
+				Converts [param path] from a uid:// path to a res:// path if needed, otherwise returns it as-is if it's already a res:// path. If the path is not valid, logs an error and exits with failure if in headless mode.
+			</description>
+		</method>
+	</methods>
+</class>

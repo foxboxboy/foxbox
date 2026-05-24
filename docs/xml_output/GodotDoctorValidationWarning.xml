@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorValidationWarning" inherits="MarginContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A base class for validation warning UI components. Contains common UI elements like [member icon], [member label], and [member button]. Subclasses should implement [method _select_origin] to define behaviour when [member button] is pressed. Used by [GodotDoctorDock] to display validation warnings for nodes and resources.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+				Connects the [member button] pressed signal on entering the scene tree.
+			</description>
+		</method>
+		<method name="_connect_signals">
+			<return type="void" />
+			<description>
+				Connects the [member button] pressed signal to [method _on_button_pressed].
+			</description>
+		</method>
+		<method name="_on_button_pressed">
+			<return type="void" />
+			<description>
+				Called when [member button] is pressed; delegates to [method _select_origin].
+			</description>
+		</method>
+		<method name="_select_origin" qualifiers="abstract">
+			<return type="void" />
+			<description>
+				Selects or navigates to the warning's origin in the editor.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="icon" type="TextureRect" setter="" getter="">
+			The icon displayed in the warning.
+		</member>
+		<member name="label" type="RichTextLabel" setter="" getter="">
+			The label displaying the warning message.
+		</member>
+		<member name="button" type="Button" setter="" getter="">
+			The button that, when pressed, selects the origin of the warning.
+		</member>
+	</members>
+</class>

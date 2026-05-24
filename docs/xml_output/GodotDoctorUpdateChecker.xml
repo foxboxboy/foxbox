@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorUpdateChecker" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="check_for_updates">
+			<return type="void" />
+			<description>
+				Checks GitHub for the latest release of the plugin and compares it to the current version.
+			</description>
+		</method>
+		<method name="_on_request_completed">
+			<return type="void" />
+			<param index="0" name="result" type="int" />
+			<param index="1" name="response_code" type="int" />
+			<param index="2" name="_headers" type="PackedStringArray" />
+			<param index="3" name="body" type="PackedByteArray" />
+			<description>
+				Callback for when the HTTP request is completed. Parses the response and checks if an update is available.
+			</description>
+		</method>
+		<method name="_get_current_version">
+			<return type="String" />
+			<description>
+				Get the current version of the plugin from plugin.cfg, stripping any build metadata (e.g. "1.0.0+docs" → "1.0.0").
+			</description>
+		</method>
+		<method name="_is_newer">
+			<return type="bool" />
+			<param index="0" name="a" type="String" />
+			<param index="1" name="b" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_http" type="HTTPRequest" setter="" getter="">
+			The HTTPRequest node used to make the API request. Stored as a member variable to keep it alive during the request.
+		</member>
+	</members>
+	<signals>
+		<signal name="update_check_completed">
+			<description>
+				Emitted when the update check is completed, regardless of the result, allowing the update checker to be freed after the check is done.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="PLUGIN_CFG_PATH" value="&quot;res://addons/godot_doctor/plugin.cfg&quot;">
+			The path for the plugin.cfg file, used to get the current version of the plugin.
+		</constant>
+		<constant name="GITHUB_API_LATEST_RELEASE_URL" value="&quot;https://api.github.com/repos/codevogel/godot_doctor/releases/latest&quot;">
+			The GitHub API URL to check for the latest release of the plugin.
+		</constant>
+		<constant name="PLUGIN_RELEASE_PAGE_URL" value="&quot;https://github.com/codevogel/godot_doctor/releases/latest&quot;">
+			The URL for the latest release page, used in the update message if a new version is available.
+		</constant>
+		<constant name="SILENCE_HINT" value="&quot;(Note that the asset library version may lag behind the GitHub releases. You can disable this check in the plugin settings if you don\&apos;t want to see this message again.)&quot;">
+			A hint to the user that they can disable the update check if they don't want to see the message again.
+		</constant>
+	</constants>
+</class>

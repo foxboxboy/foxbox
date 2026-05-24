@@ -1,8 +1,0 @@
-
-- **body**: The `RigidBody3D` to grab.
-- **hit_point**: The global position where the grab occurs.
-- **profile** (Optional): A `FoxPhysicsDragProfile` to customize the drag behavior.
-
-### Releasing a RigidBody3D
-To release a grabbed `RigidBody3D`, use the `release` method:
-

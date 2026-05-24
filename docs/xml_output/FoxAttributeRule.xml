@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxAttributeRule" inherits="FoxRefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An abstract base class for defining mathematical or logical modifiers applied to data.
+	</brief_description>
+	<description>
+		Designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule). When added to a [FoxAttributeMap], the map automatically routes the correct data to [method apply_to] and [method remove_from] based on the [member target_key].
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="p_id" type="StringName" default="&amp;&quot;&quot;" />
+			<param index="1" name="p_target_key" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+			</description>
+		</method>
+		<method name="apply_to" qualifiers="abstract">
+			<return type="void" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Executes the rule's logic on the target [param data]. Must be overridden by subclasses to define exactly how the data is modified.
+			</description>
+		</method>
+		<method name="remove_from" qualifiers="abstract">
+			<return type="void" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Reverses the rule's logic, safely restoring the target [param data] to its previous state. Must be overridden by subclasses to define exactly how the modification is undone.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="id" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			The unique identifier used to track and remove this specific rule instance (e.g., [code]&amp;"fire_mage_buff_1"[/code]).
+		</member>
+		<member name="target_key" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			The specific dictionary key in the [FoxAttributeMap] that this rule targets (e.g., [code]&amp;"health"[/code], [code]&amp;"move_speed"[/code]).
+		</member>
+	</members>
+</class>

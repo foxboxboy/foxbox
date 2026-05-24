@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorEditorValidationCollector" inherits="GodotDoctorValidationCollector" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A [GodotDoctorValidationCollector] for the editor runner. Uses the default implementation of [GodotDoctorValidationCollector]; no additional overrides are needed.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+</class>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxShopMenu" inherits="FoxControl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A UI controller that populates and manages a list of shop items.
+	</brief_description>
+	<description>
+		Handles the instantiation of UI slots and routes purchase requests.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="populate">
+			<return type="void" />
+			<param index="0" name="catalog" type="FoxShopCatalog" />
+			<param index="1" name="wallet" type="FoxWallet" default="null" />
+			<description>
+				Clears the container and populates it with items from the given [param catalog].
+			</description>
+		</method>
+		<method name="add_item">
+			<return type="void" />
+			<param index="0" name="item" type="FoxShopItem" />
+			<description>
+				Instantiates a new slot for the given [param item] and connects its signals.
+			</description>
+		</method>
+		<method name="update_affordability">
+			<return type="void" />
+			<param index="0" name="wallet" type="FoxWallet" default="_current_wallet" />
+			<description>
+				Forces all child slots to recalculate affordability.
+			</description>
+		</method>
+		<method name="_clear_all_options">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_slot_pressed">
+			<return type="void" />
+			<param index="0" name="item" type="FoxShopItem" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="slot_scene" type="PackedScene" setter="" getter="">
+			The [PackedScene] to instantiate for each item.
+		</member>
+		<member name="container" type="Control" setter="" getter="">
+			The parent [Control] node where instantiated slots are added.
+		</member>
+		<member name="_current_wallet" type="FoxWallet" setter="" getter="" default="null">
+			The active wallet used to evaluate affordability.
+		</member>
+	</members>
+	<signals>
+		<signal name="item_purchased">
+			<param index="0" name="item" type="FoxShopItem" />
+			<description>
+				Emitted when an item is successfully purchased.
+			</description>
+		</signal>
+		<signal name="purchase_denied">
+			<param index="0" name="item" type="FoxShopItem" />
+			<param index="1" name="reason" type="StringName" />
+			<description>
+				Emitted when a purchase is attempted but fails.
+			</description>
+		</signal>
+		<signal name="item_focused">
+			<param index="0" name="item" type="FoxShopItem" />
+			<description>
+				Emitted when a specific item's slot gains UI focus.
+			</description>
+		</signal>
+		<signal name="item_unfocused">
+			<param index="0" name="item" type="FoxShopItem" />
+			<description>
+				Emitted when a specific item's slot loses UI focus.
+			</description>
+		</signal>
+		<signal name="catalog_populated">
+			<description>
+				Emitted after the menu finishes instantiating the new catalog.
+			</description>
+		</signal>
+	</signals>
+</class>

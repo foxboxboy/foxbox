@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxSprintManager" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Component that manages the intents and threshold math for sprinting.
+	</brief_description>
+	<description>
+		Tracks the player's sprint requests and provides the speed variables needed by the state machine, decoupling locomotion tuning from the root character.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="request">
+			<return type="void" />
+			<description>
+				Registers an intent from the controller to sprint.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Cancels a pending sprint intent.
+			</description>
+		</method>
+		<method name="has_request">
+			<return type="bool" />
+			<description>
+				Returns true if a sprint is currently being requested.
+			</description>
+		</method>
+		<method name="is_below_dropoff">
+			<return type="bool" />
+			<param index="0" name="current_velocity" type="float" />
+			<description>
+				Evaluates a given velocity against the dropoff threshold. Used by the state machine to force-cancel a sprint if the character hits a wall.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="speed" type="float" setter="" getter="" default="9.0">
+			The target speed when sprinting, in meters per second.
+		</member>
+		<member name="dropoff_threshold" type="float" setter="" getter="" default="0.05">
+			The percentage of sprint_speed the character's velocity must drop below to automatically break out of a sprint. (Default 0.05 = 5%).
+		</member>
+		<member name="_is_requested" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="requested">
+			<description>
+				Emitted when a sprint is requested.
+			</description>
+		</signal>
+		<signal name="cancelled">
+			<description>
+				Emitted when a sprint request is cancelled.
+			</description>
+		</signal>
+	</signals>
+</class>

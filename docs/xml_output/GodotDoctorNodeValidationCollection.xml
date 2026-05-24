@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorNodeValidationCollection" inherits="GodotDoctorValidationCollection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A collection of validation messages for nodes.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add_node_validation">
+			<return type="void" />
+			<param index="0" name="node_ancestor_path" type="String" />
+			<param index="1" name="messages" type="GodotDoctorValidationMessage[]" />
+			<description>
+				Adds the validation [param messages] for [param node_ancestor_path] to the collection. Fails if [param node_ancestor_path] already has validation messages in the collection.
+			</description>
+		</method>
+		<method name="get_node_ancestor_path_to_validation_messages_map">
+			<return type="Dictionary" />
+			<description>
+				Returns the map of node ancestor paths to their validation messages.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_node_ancestor_path_to_validation_messages_map" type="Dictionary" setter="" getter="" default="{}">
+			A dictionary mapping node ancestor paths to their validation messages. [code]key[/code] is the node ancestor path as a [String], and [code]value[/code] is [code]Array[lb]GodotDoctorValidationMessage[rb][/code].
+		</member>
+	</members>
+</class>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorNodeValidationWarning" inherits="GodotDoctorValidationWarning" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A warning associated with a [Node] in the scene tree. Clicking the warning selects [member origin_node] in the scene tree. Used by [GodotDoctorDock] to show validation warnings related to nodes.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_select_origin">
+			<return type="void" />
+			<description>
+				Selects [member origin_node] in the scene tree editor.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="origin_node" type="Node" setter="" getter="">
+			The node that caused the warning.
+		</member>
+		<member name="origin_node_root" type="Node" setter="" getter="">
+			The root node of the scene that contains [member origin_node].
+		</member>
+	</members>
+</class>

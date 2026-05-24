@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterModel" inherits="FoxNode3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Rotates the spine bone and provides simple API to work with an imported character model.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="update_strafe">
+			<return type="void" />
+			<param index="0" name="input_direction" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="update_pitch_and_yaw">
+			<return type="void" />
+			<param index="0" name="new_pitch" type="float" />
+			<param index="1" name="new_yaw" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="hide_meshes">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="show_meshes">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="stand">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="crouch">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="enter_air">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_move_speed">
+			<return type="void" />
+			<param index="0" name="speed_percent" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_vertical_speed">
+			<return type="void" />
+			<param index="0" name="vertical_speed" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_all_meshes">
+			<return type="MeshInstance3D[]" />
+			<param index="0" name="_under_node" type="Node" default="&lt;unknown&gt;" />
+			<param index="1" name="_array" type="MeshInstance3D[]" default="[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_first_skeleton">
+			<return type="Skeleton3D" />
+			<param index="0" name="_under_node" type="Node" default="&lt;unknown&gt;" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_spine_bone">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animation_tree" type="FoxCharacterAnimationTree" setter="" getter="">
+		</member>
+		<member name="hands" type="FoxCharacterHands" setter="" getter="">
+		</member>
+		<member name="skeleton" type="Skeleton3D" setter="" getter="">
+		</member>
+		<member name="accessories" type="FoxCharacterAccessories" setter="" getter="">
+		</member>
+		<member name="spine_bone_name" type="String" setter="" getter="" default="&quot;spine&quot;">
+		</member>
+		<member name="lean_into_turn_amount" type="float" setter="" getter="" default="0.7853981633974483">
+		</member>
+		<member name="animation_spine_pitch_offset" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_spine_bone_index" type="int" setter="" getter="">
+		</member>
+		<member name="_pelvis_bone_index" type="int" setter="" getter="">
+		</member>
+		<member name="_meshes" type="MeshInstance3D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_meshes_shown" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_smoothed_anim_transform" type="Transform3D" setter="" getter="">
+		</member>
+		<member name="pitch" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="yaw" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+	<signals>
+		<signal name="meshes_hidden">
+			<description>
+			</description>
+		</signal>
+		<signal name="meshes_shown">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

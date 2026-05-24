@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxEffectManager" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Handles the creation, lifecycle, and cleanup of [FoxEffectInstance] objects.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="add_effect">
+			<return type="FoxEffectInstance" />
+			<param index="0" name="effect" type="FoxEffect" />
+			<param index="1" name="target" type="Object" />
+			<description>
+				Applies a [FoxEffect] to the [param target]. [br][br]Depending on the effect's [member FoxEffect.stack_mode], this will either return an updated existing instance or instantiate a brand new one.
+			</description>
+		</method>
+		<method name="remove_instance">
+			<return type="void" />
+			<param index="0" name="instance" type="FoxEffectInstance" />
+			<description>
+				Removes a specific instance object from tracking and executes its cleanup logic.
+			</description>
+		</method>
+		<method name="remove_effect_by_id">
+			<return type="void" />
+			<param index="0" name="target_id" type="StringName" />
+			<param index="1" name="all_instances" type="bool" default="false" />
+			<description>
+				Removes active instances matching the specified [param target_id]. [br][br]If [param all_instances] is [code]false[/code], it will only remove the first one found.
+			</description>
+		</method>
+		<method name="remove_all_effects">
+			<return type="void" />
+			<description>
+				Purges every active effect currently managed and runs their cleanup logic.
+			</description>
+		</method>
+		<method name="get_all_effect_ids">
+			<return type="StringName[]" />
+			<description>
+				Returns an array of every unique [member FoxEffect.id] currently active on the target.
+			</description>
+		</method>
+		<method name="has_effect">
+			<return type="bool" />
+			<param index="0" name="target_id" type="StringName" />
+			<description>
+				A quick helper to check if a specific effect is currently active.
+			</description>
+		</method>
+		<method name="serialize">
+			<return type="Dictionary[]" />
+			<description>
+				Returns an array of dictionaries representing the active state of all managed effects.
+			</description>
+		</method>
+		<method name="load_state">
+			<return type="void" />
+			<param index="0" name="save_data" type="Array" />
+			<param index="1" name="target" type="Object" />
+			<param index="2" name="blueprint_lookup" type="Callable" />
+			<description>
+				Rebuilds the active effects from saved data. Requires the [param target] and a [Callable] that takes a [StringName] ID and returns a [FoxEffect].
+			</description>
+		</method>
+		<method name="_get_instance_by_id">
+			<return type="FoxEffectInstance" />
+			<param index="0" name="target_id" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_remove_instance_at">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_instance_request_destruction">
+			<return type="void" />
+			<param index="0" name="instance" type="FoxEffectInstance" />
+			<description>
+			</description>
+		</method>
+		<method name="_create_new_instance">
+			<return type="FoxEffectInstance" />
+			<param index="0" name="effect" type="FoxEffect" />
+			<param index="1" name="target" type="Object" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="effects" type="FoxEffectInstance[]" setter="" getter="" default="[]">
+			The internal list of currently active effect instances.
+		</member>
+	</members>
+	<signals>
+		<signal name="effect_added">
+			<param index="0" name="instance" type="FoxEffectInstance" />
+			<description>
+				Emitted immediately after a new [FoxEffectInstance] is instantiated and added.
+			</description>
+		</signal>
+		<signal name="effect_removed">
+			<param index="0" name="instance" type="FoxEffectInstance" />
+			<description>
+				Emitted immediately after a [FoxEffectInstance] is cleaned up and removed.
+			</description>
+		</signal>
+	</signals>
+</class>

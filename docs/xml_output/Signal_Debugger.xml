@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Signal_Debugger" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_signal_debugger_message_capture">
+			<return type="bool" />
+			<param index="0" name="message" type="String" />
+			<param index="1" name="data" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_signal_execution">
+			<return type="void" />
+			<param index="0" name="signal_name" type="String" />
+			<param index="1" name="node_name" type="String" />
+			<param index="2" name="args" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="generate_signal_graph">
+			<return type="SignalGraph" />
+			<description>
+			</description>
+		</method>
+		<method name="_connect_to_signal">
+			<return type="void" />
+			<param index="0" name="signal_item" type="SignalDescription" />
+			<description>
+			</description>
+		</method>
+		<method name="_disconnect_from_signal">
+			<return type="void" />
+			<param index="0" name="signal_item" type="SignalDescription" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_signal_graph" type="SignalGraph" setter="" getter="">
+		</member>
+		<member name="_lambda_map" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

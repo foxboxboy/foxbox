@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/Todo_Manager/plugin.gd&quot;" inherits="EditorPlugin" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="queue_remove">
+			<return type="void" />
+			<param index="0" name="file" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="find_tokens_from_path">
+			<return type="void" />
+			<param index="0" name="scripts" type="String[]" />
+			<description>
+			</description>
+		</method>
+		<method name="handle_built_in_scripts">
+			<return type="void" />
+			<param index="0" name="contents" type="String" />
+			<param index="1" name="resource_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="find_tokens">
+			<return type="void" />
+			<param index="0" name="text" type="String" />
+			<param index="1" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="create_todo_item">
+			<return type="&quot;addons/Todo_Manager/todoItem_class.gd&quot;" />
+			<param index="0" name="regex_results" type="RegExMatch[]" />
+			<param index="1" name="text" type="String" />
+			<param index="2" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="update_todo_item">
+			<return type="&quot;addons/Todo_Manager/todoItem_class.gd&quot;" />
+			<param index="0" name="todo_item" type="&quot;addons/Todo_Manager/todoItem_class.gd&quot;" />
+			<param index="1" name="regex_results" type="RegExMatch[]" />
+			<param index="2" name="text" type="String" />
+			<param index="3" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_line_number">
+			<return type="int" />
+			<param index="0" name="what" type="String" />
+			<param index="1" name="from" type="String" />
+			<param index="2" name="start" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_filesystem_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="find_scripts">
+			<return type="String[]" />
+			<description>
+			</description>
+		</method>
+		<method name="cache_todos">
+			<return type="void" />
+			<param index="0" name="todos" type="Array" />
+			<param index="1" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_cached_todos">
+			<return type="Array" />
+			<param index="0" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_dir_contents">
+			<return type="void" />
+			<param index="0" name="dir" type="DirAccess" />
+			<param index="1" name="scripts" type="String[]" />
+			<param index="2" name="directory_queue" type="String[]" />
+			<description>
+			</description>
+		</method>
+		<method name="dir_has_gdignore">
+			<return type="bool" />
+			<param index="0" name="dir" type="DirAccess" />
+			<description>
+			</description>
+		</method>
+		<method name="rescan_files">
+			<return type="void" />
+			<param index="0" name="clear_cache" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="combine_patterns">
+			<return type="String" />
+			<param index="0" name="patterns" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="create_todo">
+			<return type="&quot;addons/Todo_Manager/todo_class.gd&quot;" />
+			<param index="0" name="todo_string" type="String" />
+			<param index="1" name="script_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_active_script_changed">
+			<return type="void" />
+			<param index="0" name="script" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_dockUI" type="&quot;addons/Todo_Manager/Dock.gd&quot;" setter="" getter="">
+		</member>
+		<member name="todo_cache" type="Dictionary" setter="" getter="">
+		</member>
+		<member name="remove_queue" type="Array" setter="" getter="">
+		</member>
+		<member name="combined_pattern" type="String" setter="" getter="">
+		</member>
+		<member name="cased_patterns" type="String[]" setter="" getter="">
+		</member>
+		<member name="refresh_lock" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="DockScene" value="&lt;Object&gt;">
+		</constant>
+		<constant name="Dock" value="&lt;Object&gt;">
+		</constant>
+		<constant name="Todo" value="&lt;Object&gt;">
+		</constant>
+		<constant name="TodoItem" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

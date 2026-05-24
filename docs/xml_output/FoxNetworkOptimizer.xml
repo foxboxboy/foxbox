@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxNetworkOptimizer" inherits="FoxNode" deprecated="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="update_network_role">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="target_components" type="Node[]" setter="" getter="" default="[]">
+		</member>
+		<member name="notify_root" type="bool" setter="" getter="" default="true">
+			If true, it also notifies the parent node (the root of the scene).
+		</member>
+	</members>
+</class>

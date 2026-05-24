@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxHoldableItem" inherits="FoxNode3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An item that can be held by a FoxCharacter. Utilizes IK targets and poles to hold the item. When setting up, keep at 0,0,0.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="is_two_handed">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="main_hand_target" type="Marker3D" setter="" getter="">
+			The main hand that will be used for IK.
+		</member>
+		<member name="off_hand_target" type="Marker3D" setter="" getter="">
+			The off hand that will be used for IK. Leave blank for a one handed item.
+		</member>
+		<member name="main_elbow_pole" type="Marker3D" setter="" getter="">
+			The "pole" used for the elbow IK. In other words, where the elbow will be magnetized to. This is to prevent animation errors and give more control of the IK animation.
+		</member>
+		<member name="off_elbow_pole" type="Marker3D" setter="" getter="">
+			The "pole" used for the elbow IK. In other words, where the elbow will be magnetized to. This is to prevent animation errors and give more control of the IK animation. Leave blank for a one handed item.
+		</member>
+	</members>
+</class>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/foxbox/characters/demo/player.gd&quot;" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="do_first_person">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="do_third_person">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_look_input">
+			<return type="void" />
+			<param index="0" name="mouse_relative" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_move_input">
+			<return type="void" />
+			<param index="0" name="input_direction" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_free_cam_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_free_cam_released">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_jump_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_jump_held">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_dash_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_dash_released">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pc_input_controller_sprint_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="character" type="FoxCharacter" setter="" getter="">
+		</member>
+		<member name="camera" type="Camera3D" setter="" getter="">
+		</member>
+		<member name="look_sensitivity" type="float" setter="" getter="" default="0.0015">
+		</member>
+		<member name="vertical_sensitivity" type="float" setter="" getter="" default="0.5">
+		</member>
+		<member name="first_person_camera_pivot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="shoulder_camera_pivot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="_crouch_toggled" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_sprint_toggled" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="TOMMY_GUN" value="&lt;Object&gt;">
+		</constant>
+		<constant name="VEST" value="&lt;Object&gt;">
+		</constant>
+		<constant name="HELMET" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

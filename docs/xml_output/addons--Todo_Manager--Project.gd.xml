@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/Todo_Manager/Project.gd&quot;" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="build_tree">
+			<return type="void" />
+			<param index="0" name="todo_items" type="Array" />
+			<param index="1" name="ignore_paths" type="Array" />
+			<param index="2" name="patterns" type="Array" />
+			<param index="3" name="cased_patterns" type="String[]" />
+			<param index="4" name="sort_alphabetical" type="bool" />
+			<param index="5" name="full_path" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="sort_alphabetical">
+			<return type="bool" />
+			<param index="0" name="a" type="Variant" />
+			<param index="1" name="b" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="sort_backwards">
+			<return type="bool" />
+			<param index="0" name="a" type="Variant" />
+			<param index="1" name="b" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_sort_alphabetical" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_full_path" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="tree" type="Tree" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+	</members>
+	<signals>
+		<signal name="tree_built">
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="Todo" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

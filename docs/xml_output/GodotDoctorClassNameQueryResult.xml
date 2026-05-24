@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorClassNameQueryResult" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Holds the results for a class name query. Used by [ValidationCondition] to determine if a script has a class name and what it is.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="script_found" type="bool" />
+			<param index="1" name="class_name_found" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Initializes the result. [param script_found] indicates whether a script was found on the target node. [param class_name_found] is the class name found in the script, or an empty [StringName] if none was found.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="has_script" type="bool" setter="" getter="">
+			Whether a script was found on the queried node.
+		</member>
+		<member name="found_class_name" type="StringName" setter="" getter="">
+			The class name found in the script, or an empty [StringName] if none was found.
+		</member>
+		<member name="has_class_name" type="bool" setter="" getter="">
+			Whether a non-empty class name was found in the script.
+		</member>
+	</members>
+</class>

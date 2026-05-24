@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxSocketManager2D" inherits="FoxNode2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Manages a collection of [FoxSocket2D] nodes.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_available_socket_count">
+			<return type="int" />
+			<description>
+				Returns the total number of managed sockets that currently have no attachment.
+			</description>
+		</method>
+		<method name="try_attach">
+			<return type="bool" />
+			<param index="0" name="node" type="Node2D" />
+			<description>
+				Attempts to plug [param node] into the first available empty socket. Returns [code]true[/code] if successful, or [code]false[/code] if all sockets are full.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_socket_attached">
+			<return type="void" />
+			<param index="0" name="attachment" type="Node2D" />
+			<param index="1" name="socket" type="FoxSocket2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_socket_detached">
+			<return type="void" />
+			<param index="0" name="attachment" type="Node2D" />
+			<param index="1" name="socket" type="FoxSocket2D" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sockets" type="FoxSocket2D[]" setter="" getter="" default="[]">
+			A collection of all sockets managed by this component.
+		</member>
+	</members>
+	<signals>
+		<signal name="node_attached">
+			<param index="0" name="attachment" type="Node2D" />
+			<param index="1" name="socket" type="FoxSocket2D" />
+			<description>
+				Emitted when a node successfully attaches to any managed socket.
+			</description>
+		</signal>
+		<signal name="node_detached">
+			<param index="0" name="attachment" type="Node2D" />
+			<param index="1" name="socket" type="FoxSocket2D" />
+			<description>
+				Emitted when a node detaches from any managed socket.
+			</description>
+		</signal>
+	</signals>
+</class>

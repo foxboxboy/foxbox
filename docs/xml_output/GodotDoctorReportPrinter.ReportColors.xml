@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorReportPrinter.ReportColors" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Defines the display colors used for different parts of the report.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<constants>
+		<constant name="TOTALS" value="Color(0.74509805, 0.74509805, 0.74509805, 1)">
+		</constant>
+		<constant name="INFO" value="Color(1, 1, 1, 1)">
+		</constant>
+		<constant name="WARNING" value="Color(1, 0.64705884, 0, 1)">
+		</constant>
+		<constant name="ERROR" value="Color(1, 0, 0, 1)">
+		</constant>
+		<constant name="HEADER" value="Color(0.39215687, 0.58431375, 0.92941177, 1)">
+		</constant>
+		<constant name="SCENE" value="Color(0.27450982, 0.50980395, 0.7058824, 1)">
+		</constant>
+		<constant name="NODE" value="Color(0.74509805, 0.74509805, 0.74509805, 1)">
+		</constant>
+		<constant name="PASSED" value="Color(0, 1, 0, 1)">
+		</constant>
+		<constant name="FAILED" value="Color(1, 0, 0, 1)">
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorValidationSuiteReport" inherits="GodotDoctorReport" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Holds validation results for a single validation suite, including all scene and resource reports produced during its run.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="suite" type="GodotDoctorValidationSuite" />
+			<param index="1" name="scene_reports" type="GodotDoctorSceneReport[]" />
+			<param index="2" name="resource_reports" type="GodotDoctorResourceReport[]" />
+			<description>
+				Creates a new [GodotDoctorValidationSuiteReport] for [param suite] with the given [param scene_reports] and [param resource_reports].
+			</description>
+		</method>
+		<method name="get_num_infos">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.INFO]-level messages across all scenes and resources in this suite.
+			</description>
+		</method>
+		<method name="get_num_warnings">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.WARNING]-level messages across all scenes and resources in this suite.
+			</description>
+		</method>
+		<method name="get_num_errors">
+			<return type="int" />
+			<description>
+				Returns the total number of [constant ValidationCondition.Severity.ERROR]-level messages across all scenes and resources in this suite.
+			</description>
+		</method>
+		<method name="get_num_nodes">
+			<return type="int" />
+			<description>
+				Returns the total number of nodes validated across all scenes in this suite.
+			</description>
+		</method>
+		<method name="get_num_resources">
+			<return type="int" />
+			<description>
+				Returns the total number of resources validated in this suite.
+			</description>
+		</method>
+		<method name="get_validation_messages">
+			<return type="GodotDoctorValidationMessage[]" />
+			<description>
+				Returns all validation messages across all scenes and resources in this suite.
+			</description>
+		</method>
+		<method name="get_suite_resource_path">
+			<return type="String" />
+			<description>
+				Returns the resource path of the validation suite script.
+			</description>
+		</method>
+		<method name="get_suite">
+			<return type="GodotDoctorValidationSuite" />
+			<description>
+				Returns the validation suite that was run to produce this report.
+			</description>
+		</method>
+		<method name="get_scene_reports">
+			<return type="GodotDoctorSceneReport[]" />
+			<description>
+				Returns all scene reports in this suite.
+			</description>
+		</method>
+		<method name="get_resource_reports">
+			<return type="GodotDoctorResourceReport[]" />
+			<description>
+				Returns all resource reports in this suite.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_suite" type="GodotDoctorValidationSuite" setter="" getter="">
+			The validation suite that was run to produce this report.
+		</member>
+		<member name="_scene_reports" type="GodotDoctorSceneReport[]" setter="" getter="" default="[]">
+			The list of scene reports produced during this suite's validation run.
+		</member>
+		<member name="_resource_reports" type="GodotDoctorResourceReport[]" setter="" getter="" default="[]">
+			The list of resource reports produced during this suite's validation run.
+		</member>
+	</members>
+</class>

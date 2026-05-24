@@ -1,0 +1,1 @@
+ZoomSpringArm: An extended SpringArm3D component for camera controllers. It replaces standard length adjustments with smooth, frame-independent zoom interpolation, clamp limits, precise signal emissions for UI/visibility toggling, and built-in multiplayer authority checks.

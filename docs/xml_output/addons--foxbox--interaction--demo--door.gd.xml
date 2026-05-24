@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/foxbox/interaction/demo/door.gd&quot;" inherits="RigidBody3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_on_interactable_area_3d_interacted">
+			<return type="void" />
+			<param index="0" name="interactor" type="Node" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="drag_profile" type="FoxPhysicsDragProfile" setter="" getter="">
+		</member>
+	</members>
+</class>

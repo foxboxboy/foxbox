@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxJumpManager" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Component that manages the math, memory, and rules for jumping.
+	</brief_description>
+	<description>
+		Tracks jump buffers, coyote time, and multi-jump charges without directly interacting with the character motor or physics body.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="request">
+			<return type="void" />
+			<description>
+				Registers a request to jump and starts the buffer timer.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Cancels a pending jump request manually or when the buffer expires.
+			</description>
+		</method>
+		<method name="has_request">
+			<return type="bool" />
+			<description>
+				Returns [code]true[/code] if a jump is currently buffered.
+			</description>
+		</method>
+		<method name="is_available">
+			<return type="bool" />
+			<param index="0" name="is_grounded" type="bool" />
+			<description>
+				Returns true if a jump is legally allowed (grounded, coyote, or multi-jump).
+			</description>
+		</method>
+		<method name="consume">
+			<return type="void" />
+			<description>
+				Clears the buffer, increments the jump counter, and records the timestamp.
+			</description>
+		</method>
+		<method name="reset_count">
+			<return type="void" />
+			<description>
+				Resets the multi-jump counter to zero. Typically called when landing.
+			</description>
+		</method>
+		<method name="update_grounded_time">
+			<return type="void" />
+			<description>
+				Records the exact millisecond the character was last touching the ground.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="max_jumps" type="int" setter="" getter="" default="1">
+			Maximum number of jumps allowed before landing (1 = Normal, 2 = Double Jump).
+		</member>
+		<member name="coyote_duration" type="float" setter="" getter="" default="0.15">
+			How long the player can still jump after walking off a ledge, in seconds.
+		</member>
+		<member name="buffer_time" type="float" setter="" getter="" default="0.1">
+			How long a jump input is remembered before hitting the ground, in seconds.
+		</member>
+		<member name="crouch_multiplier" type="float" setter="" getter="" default="1.2">
+			The multiplier used for the jump force when jumping from a crouched position.
+		</member>
+		<member name="_is_request_active" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_jumps_made" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_last_grounded_time" type="int" setter="" getter="" default="-100000">
+		</member>
+		<member name="_last_jump_time" type="int" setter="" getter="" default="-100000">
+		</member>
+		<member name="_buffer_timer" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+	<signals>
+		<signal name="consumed">
+			<description>
+				Emitted when a jump request is validated and consumed with [method consume].
+			</description>
+		</signal>
+		<signal name="requested">
+			<description>
+				Emitted when a jump is requested with [method request].
+			</description>
+		</signal>
+		<signal name="request_cancelled">
+			<description>
+				Emitted when a pending jump is cancelled with [method cancel].
+			</description>
+		</signal>
+	</signals>
+</class>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterStateMachine" inherits="FoxStateMachine" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="physics_body" type="CharacterBody3D" setter="" getter="">
+		</member>
+		<member name="model" type="FoxCharacterModel" setter="" getter="">
+		</member>
+		<member name="character" type="FoxCharacter" setter="" getter="">
+		</member>
+	</members>
+</class>

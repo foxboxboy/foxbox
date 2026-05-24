@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxInteractionRayCast3D" inherits="RayCast3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A specialized raycast for detecting and managing focus on [FoxInteractableArea3D] nodes.
+	</brief_description>
+	<description>
+		[b]Note:[/b] Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_current_target">
+			<return type="FoxInteractableArea3D" />
+			<description>
+				Returns the [FoxInteractableArea3D] currently being hovered over, or [code]null[/code] if none.
+			</description>
+		</method>
+		<method name="interact_with_target">
+			<return type="void" />
+			<param index="0" name="context" type="Variant" default="null" />
+			<description>
+				Attempts to interact with the currently focused target, passing the given [param context].
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_clear_target">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="interaction_range" type="float" setter="@interaction_range_setter" getter="" default="-1.0">
+			How far the raycast will project along the local -Z axis. Leave as [code]-1.0[/code] to ignore and use the manual [member RayCast3D.target_position].
+		</member>
+		<member name="_current_target" type="FoxInteractableArea3D" setter="" getter="" default="null">
+		</member>
+	</members>
+	<signals>
+		<signal name="focused">
+			<param index="0" name="interactable" type="FoxInteractableArea3D" />
+			<description>
+				Emitted when a [FoxInteractableArea3D] enters focus.
+			</description>
+		</signal>
+		<signal name="unfocused">
+			<param index="0" name="interactable" type="FoxInteractableArea3D" />
+			<description>
+				Emitted when a [FoxInteractableArea3D] leaves focus.
+			</description>
+		</signal>
+		<signal name="interaction_range_changed">
+			<param index="0" name="new_range" type="float" />
+			<description>
+				Emitted when the [member interaction_range] is modified.
+			</description>
+		</signal>
+	</signals>
+</class>

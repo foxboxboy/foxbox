@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SignalGraphUtility" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create_signal_graph" qualifiers="static">
+			<return type="SignalGraph" />
+			<param index="0" name="name" type="String" />
+			<param index="1" name="signals" type="Array" />
+			<param index="2" name="edges" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="create_signal_graph_from_node" qualifiers="static">
+			<return type="Variant" />
+			<param index="0" name="root_node" type="Node" />
+			<param index="1" name="is_persistent_only" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="generate_signal_graph_nodes" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="signal_graph" type="SignalGraph" />
+			<param index="1" name="graph_node" type="GraphEdit" />
+			<param index="2" name="open_script_callable" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="generate_signal_graph_tree" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="signal_graph" type="SignalGraph" />
+			<param index="1" name="tree_node" type="Tree" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_graph_node_name" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_gather_nodes_from_node" qualifiers="static">
+			<return type="Node[]" />
+			<param index="0" name="root_node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="__gather_nodes_from_node" qualifiers="static">
+			<return type="Node[]" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="SignalGraphNode" type="Variant" setter="" getter="" default="&lt;Object&gt;">
+		</member>
+		<member name="GraphNodeItem" type="Variant" setter="" getter="" default="&lt;Object&gt;">
+		</member>
+	</members>
+	<constants>
+		<constant name="SOURCE_COLOR" value="Color(0.5294118, 0.80784315, 0.92156863, 1)">
+		</constant>
+		<constant name="DESTINATION_COLOR" value="Color(1, 0.49803922, 0.3137255, 1)">
+		</constant>
+		<constant name="CONNECTION_TYPE" value="0">
+		</constant>
+	</constants>
+</class>

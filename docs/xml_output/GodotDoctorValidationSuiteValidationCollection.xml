@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GodotDoctorValidationSuiteValidationCollection" inherits="GodotDoctorValidationCollection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A collection mapping [GodotDoctorValidationSuite] instances to their scene and resource validation collections. Used by [GodotDoctorCLIValidationCollector] to aggregate results across all suites during a CLI validation run.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add_scene_validations_collection">
+			<return type="void" />
+			<param index="0" name="validation_suite" type="GodotDoctorValidationSuite" />
+			<param index="1" name="scene_validation_collection" type="GodotDoctorSceneValidationCollection" />
+			<description>
+				Adds [param scene_validation_collection] for [param validation_suite] to this collection. Fails if [param validation_suite] already has a scene validation collection.
+			</description>
+		</method>
+		<method name="add_resource_validations_collection">
+			<return type="void" />
+			<param index="0" name="validation_suite" type="GodotDoctorValidationSuite" />
+			<param index="1" name="resource_validation_collection" type="GodotDoctorResourceValidationCollection" />
+			<description>
+				Adds [param resource_validation_collection] for [param validation_suite] to this collection. Fails if [param validation_suite] already has a resource validation collection.
+			</description>
+		</method>
+		<method name="get_validation_suite_to_scene_validation_collection_map">
+			<return type="Dictionary" />
+			<description>
+				Returns the map of [GodotDoctorValidationSuite] instances to their [GodotDoctorSceneValidationCollection]s.
+			</description>
+		</method>
+		<method name="get_validation_suite_to_resource_validation_collection_map">
+			<return type="Dictionary" />
+			<description>
+				Returns the map of [GodotDoctorValidationSuite] instances to their [GodotDoctorResourceValidationCollection]s.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_validation_suite_to_scene_validation_collection_map" type="Dictionary" setter="" getter="" default="{}">
+			A dictionary mapping each [GodotDoctorValidationSuite] to its [GodotDoctorSceneValidationCollection].
+		</member>
+		<member name="_validation_suite_to_resource_validation_collection_map" type="Dictionary" setter="" getter="" default="{}">
+			A dictionary mapping each [GodotDoctorValidationSuite] to its [GodotDoctorResourceValidationCollection].
+		</member>
+	</members>
+</class>

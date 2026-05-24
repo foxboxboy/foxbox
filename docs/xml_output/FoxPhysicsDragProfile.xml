@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxPhysicsDragProfile" inherits="FoxResource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A configuration profile defining the physics characteristics of a grab action.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="stiffness" type="float" setter="@stiffness_setter" getter="" default="200.0">
+			The "strength" of the pull. High values make it snappy, low values make it feel heavy.
+		</member>
+		<member name="damping" type="float" setter="@damping_setter" getter="" default="1.0">
+			The "control" of the pull. High values slow it down, low values make it bouncy.
+		</member>
+		<member name="keep_upright" type="bool" setter="" getter="" default="true">
+			If [code]true[/code], forces the object to try and maintain an upright orientation.
+		</member>
+	</members>
+</class>

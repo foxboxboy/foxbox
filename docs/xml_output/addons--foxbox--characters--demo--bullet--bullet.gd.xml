@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/foxbox/characters/demo/bullet/bullet.gd&quot;" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="speed" type="float" setter="" getter="" default="30.0">
+		</member>
+		<member name="lifetime" type="float" setter="" getter="" default="0.5">
+		</member>
+		<member name="_lifetime_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+</class>

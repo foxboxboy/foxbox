@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterPoseManager" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Component that manages the character's macro human configuration.
+	</brief_description>
+	<description>
+		Acts as the definitive source of truth for the character's physical shape and visual stance. Resolves player intents against physical constraints, and allows specialized physics states to lock custom poses.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="resolve_pose">
+			<return type="int" enum="FoxCharacterPoseManager.Type" />
+			<param index="0" name="is_grounded" type="bool" />
+			<description>
+				Resolves intents and physical constraints to determine the correct locomotion pose. Requires the current [param is_grounded] context from the active state.
+			</description>
+		</method>
+		<method name="is_standing">
+			<return type="bool" />
+			<description>
+				Returns [code]true[/code] if the character is currently in the [constant Type.STANDING] pose.
+			</description>
+		</method>
+		<method name="request_crouch">
+			<return type="void" />
+			<description>
+				Registers an intent to crouch during standard locomotion.
+			</description>
+		</method>
+		<method name="cancel_crouch">
+			<return type="void" />
+			<description>
+				Cancels a pending crouch intent.
+			</description>
+		</method>
+		<method name="is_crouching">
+			<return type="bool" />
+			<description>
+				Returns [code]true[/code] if the character is currently in the [constant Type.CROUCHING] pose.
+			</description>
+		</method>
+		<method name="request_prone">
+			<return type="void" />
+			<description>
+				Registers an intent to go prone during standard locomotion.
+			</description>
+		</method>
+		<method name="cancel_prone">
+			<return type="void" />
+			<description>
+				Cancels a pending prone intent.
+			</description>
+		</method>
+		<method name="lock_pose">
+			<return type="void" />
+			<param index="0" name="forced_pose" type="int" enum="FoxCharacterPoseManager.Type" />
+			<description>
+				Forces the manager into a specific pose, bypassing standard [method resolve_pose] rules.
+			</description>
+		</method>
+		<method name="unlock_pose">
+			<return type="void" />
+			<description>
+				Releases a previously locked pose, returning control to standard evaluation.
+			</description>
+		</method>
+		<method name="get_current_speed_limit">
+			<return type="float" />
+			<description>
+				Returns the appropriate maximum speed limit for the currently active pose.
+			</description>
+		</method>
+		<method name="can_stand_up">
+			<return type="bool" />
+			<description>
+				Casts the headroom sensor upward to ensure clearance for standing.
+			</description>
+		</method>
+		<method name="_set_pose">
+			<return type="void" />
+			<param index="0" name="new_pose" type="int" enum="FoxCharacterPoseManager.Type" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="headroom_sensor" type="ShapeCast3D" setter="" getter="">
+			The sensor used to detect if a ceiling blocks the character from standing.
+		</member>
+		<member name="walk_speed" type="float" setter="" getter="" default="5.0">
+			The maximum grounded speed when the character is standing.
+		</member>
+		<member name="crouch_speed" type="float" setter="" getter="" default="2.0">
+			The maximum grounded speed when the character is crouching.
+		</member>
+		<member name="prone_speed" type="float" setter="" getter="" default="1.0">
+			The maximum grounded speed when the character is prone.
+		</member>
+		<member name="current_pose" type="int" setter="" getter="" enum="FoxCharacterPoseManager.Type" default="0">
+		</member>
+		<member name="_is_crouch_requested" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_is_prone_requested" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_locked_pose" type="int" setter="" getter="" default="-1">
+		</member>
+	</members>
+	<signals>
+		<signal name="pose_changed">
+			<param index="0" name="new_pose" type="int" enum="FoxCharacterPoseManager.Type" />
+			<param index="1" name="old_pose" type="int" enum="FoxCharacterPoseManager.Type" />
+			<description>
+				Emitted whenever the active pose changes. The character facade routes this to the visual model, collision hitbox, and camera pivot.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="STANDING" value="0" enum="Type">
+		</constant>
+		<constant name="CROUCHING" value="1" enum="Type">
+		</constant>
+		<constant name="PRONE" value="2" enum="Type">
+		</constant>
+		<constant name="IN_AIR" value="3" enum="Type">
+		</constant>
+		<constant name="SITTING" value="4" enum="Type">
+		</constant>
+		<constant name="SWIMMING" value="5" enum="Type">
+		</constant>
+		<constant name="GLIDING" value="6" enum="Type">
+		</constant>
+	</constants>
+</class>

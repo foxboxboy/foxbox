@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxState" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Base class for all states within a [FoxStateMachine].
+	</brief_description>
+	<description>
+		Custom states should override [method enter], [method exit], [method update], and [method physics_update] as needed.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="enter" qualifiers="abstract">
+			<return type="void" />
+			<description>
+				Called by the [FoxStateMachine] when this state becomes the active state. Use this to initialize animations, reset variables, or apply initial forces.
+			</description>
+		</method>
+		<method name="exit" qualifiers="abstract">
+			<return type="void" />
+			<description>
+				Called by the [FoxStateMachine] immediately before transitioning away from this state. Use this to clean up variables or reset components before the next state takes over.
+			</description>
+		</method>
+		<method name="update" qualifiers="abstract">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+				Called every frame by the [FoxStateMachine]'s [method Node._process]. [param _delta] is the time elapsed since the previous frame.
+			</description>
+		</method>
+		<method name="physics_update" qualifiers="abstract">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+				Called every physics frame by the [FoxStateMachine]'s [method Node._physics_process]. [param _delta] is the time elapsed since the previous physics frame.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="state_id" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			An optional custom identifier for this state. If left empty, the [FoxStateMachine] will use this node's name instead.
+		</member>
+	</members>
+	<signals>
+		<signal name="transition_requested">
+			<param index="0" name="old_state" type="FoxState" />
+			<param index="1" name="new_state_name" type="StringName" />
+			<description>
+				Emitted when the state requests a transition to another state. [param old_state] is a reference to the state requesting the transition. [param new_state_name] is the string name of the target state.
+			</description>
+		</signal>
+	</signals>
+</class>

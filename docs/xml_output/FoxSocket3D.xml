@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxSocket3D" inherits="Marker3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A physical 3D location that reparents and holds a single attachment.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_empty">
+			<return type="bool" />
+			<description>
+				Returns [code]true[/code] if there is no current attachment.
+			</description>
+		</method>
+		<method name="get_attachment">
+			<return type="Node3D" />
+			<description>
+				Returns the current attachment node, or [code]null[/code] if empty.
+			</description>
+		</method>
+		<method name="attach">
+			<return type="void" />
+			<param index="0" name="new_attachment" type="Node3D" />
+			<description>
+				Reparents [param new_attachment] to this socket and snaps its transform to [member marker].
+			</description>
+		</method>
+		<method name="detach">
+			<return type="Node3D" />
+			<description>
+				Safely unplugs the attachment from the socket and returns it. [br][b]Note:[/b] This does not reparent the attachment anywhere else in the scene tree.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_attachment_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="marker" type="Node3D" setter="" getter="">
+			(Optional) The node that will be used for position, rotation, and scale. Leave blank to use this [Marker3D]'s transform.
+		</member>
+		<member name="snap_position" type="bool" setter="" getter="" default="true">
+			If [code]true[/code], the attachment's global position snaps to the socket's marker.
+		</member>
+		<member name="snap_rotation" type="bool" setter="" getter="" default="true">
+			If [code]true[/code], the attachment's global rotation snaps to the socket's marker.
+		</member>
+		<member name="snap_scale" type="bool" setter="" getter="" default="false">
+			If [code]true[/code], the attachment forcefully scales to match the socket marker's global scale.
+		</member>
+		<member name="attachment" type="Node3D" setter="" getter="" default="null">
+			The child node currently plugged into this socket.
+		</member>
+	</members>
+	<signals>
+		<signal name="attached">
+			<param index="0" name="attachment" type="Node3D" />
+			<param index="1" name="socket" type="FoxSocket3D" />
+			<description>
+				Emitted when this socket gains a new attachment.
+			</description>
+		</signal>
+		<signal name="detached">
+			<param index="0" name="attachment" type="Node3D" />
+			<param index="1" name="socket" type="FoxSocket3D" />
+			<description>
+				Emitted when the attachment leaves and is no longer a child.
+			</description>
+		</signal>
+		<signal name="attachment_changed">
+			<param index="0" name="attachment" type="Node3D" />
+			<param index="1" name="socket" type="FoxSocket3D" />
+			<description>
+				Emitted when the child order changes, useful for detecting deleted attachments.
+			</description>
+		</signal>
+	</signals>
+</class>

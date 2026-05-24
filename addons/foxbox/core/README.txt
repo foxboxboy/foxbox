@@ -1,1 +1,1 @@
-Rudimentary and abstract classes that are generic and used elsewhere.
+Core: Rudimentary and abstract classes, utilities, and generic helpers used universally across the Foxbox framework.

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/foxbox/characters/demo/gui.gd&quot;" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="_event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="pause">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="unpause">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pause_screen" type="Panel" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="w" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="a" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="s" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="d" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+	</members>
+</class>

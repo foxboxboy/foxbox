@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxSimplePrice" inherits="FoxPrice" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="can_be_paid_by">
+			<return type="bool" />
+			<param index="0" name="wallet" type="FoxWallet" />
+			<description>
+			</description>
+		</method>
+		<method name="pay">
+			<return type="void" />
+			<param index="0" name="wallet" type="FoxWallet" />
+			<description>
+			</description>
+		</method>
+		<method name="get_display_string">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="cost" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="currency_symbol" type="String" setter="" getter="" default="&quot;$&quot;">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoxCharacter &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxCharacterModel" href="class_foxcharactermodel.html" />
+    <link rel="prev" title="FoxStatPool" href="class_foxstatpool.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FoxCharacter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FoxCharacter</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="foxcharacter">
+<span id="class-foxcharacter"></span><h1>FoxCharacter<a class="headerlink" href="#foxcharacter" title="Link to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_foxnode3d.html#class-foxnode3d"><span class="std std-ref">FoxNode3D</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Node3D</span></code></p>
+<p>A high-level facade abstraction for a humanoid character that handles physics, animation, and interaction delegation.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Designed to be controlled by an outside controller. This class acts as the “muscle” rather than the “brain”, blindly executing inputs and routing data between specialized components (State Machine, Pose Manager, Motors).</p>
+<p>(<strong>WARNING</strong> this feature below is deprcated)</p>
+<p><strong>Note:</strong> If a <a class="reference internal" href="class_foxvisualoptimizer.html#class-foxvisualoptimizer"><span class="std std-ref">FoxVisualOptimizer</span></a> is assigned and the character is far away, visual processing and aim math are suspended to save performance.</p>
+</section>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxjumpmanager.html#class-foxjumpmanager"><span class="std std-ref">FoxJumpManager</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-jump"><span class="std std-ref">jump</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_foxdashmanager.html#class-foxdashmanager"><span class="std std-ref">FoxDashManager</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-dash"><span class="std std-ref">dash</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxcharacterposemanager.html#class-foxcharacterposemanager"><span class="std std-ref">FoxCharacterPoseManager</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-pose"><span class="std std-ref">pose</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_foxsprintmanager.html#class-foxsprintmanager"><span class="std std-ref">FoxSprintManager</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-sprint"><span class="std std-ref">sprint</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxcharacteraimmanager.html#class-foxcharacteraimmanager"><span class="std std-ref">FoxCharacterAimManager</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-aim"><span class="std std-ref">aim</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CharacterBody3D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-physics-body"><span class="std std-ref">_physics_body</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#class-foxadvancedcharactermotor3d"><span class="std std-ref">FoxAdvancedCharacterMotor3D</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-ground-motor"><span class="std std-ref">_ground_motor</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_foxcharactermodel.html#class-foxcharactermodel"><span class="std std-ref">FoxCharacterModel</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-model"><span class="std std-ref">model</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxcharacterhitbox.html#class-foxcharacterhitbox"><span class="std std-ref">FoxCharacterHitbox</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-hitbox"><span class="std std-ref">_hitbox</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RayCast3D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-ground-cast"><span class="std std-ref">_ground_cast</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_foxcharacterstatemachine.html#class-foxcharacterstatemachine"><span class="std std-ref">FoxCharacterStateMachine</span></a></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-state-machine"><span class="std std-ref">_state_machine</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-walk-speed"><span class="std std-ref">walk_speed</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5.0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-max-head-pitch"><span class="std std-ref">max_head_pitch</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">89.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-enter-air-animation-velocity"><span class="std std-ref">enter_air_animation_velocity</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.5</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-stop-sprinting-threshold"><span class="std std-ref">stop_sprinting_threshold</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.05</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Vector2</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-input-direction"><span class="std std-ref">input_direction</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Vector2(0,</span> <span class="pre">0)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-property-input-strength"><span class="std std-ref">input_strength</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-private-method-ready"><span class="std std-ref">_ready</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-private-method-process"><span class="std std-ref">_process</span></a>(delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-private-method-on-pose-changed"><span class="std std-ref">_on_pose_changed</span></a>(new_pose: <a class="reference internal" href="class_foxcharacterposemanager.html#enum-foxcharacterposemanager-type"><span class="std std-ref">Type</span></a>, _old_pose: <a class="reference internal" href="class_foxcharacterposemanager.html#enum-foxcharacterposemanager-type"><span class="std std-ref">Type</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-update-locomotion-visuals"><span class="std std-ref">update_locomotion_visuals</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-set-input-direction"><span class="std std-ref">set_input_direction</span></a>(direction: <code class="docutils literal notranslate"><span class="pre">Vector2</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-flush-inputs"><span class="std std-ref">flush_inputs</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-flying"><span class="std std-ref">is_flying</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-on-floor"><span class="std std-ref">is_on_floor</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-in-water"><span class="std std-ref">is_in_water</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-in-air"><span class="std std-ref">is_in_air</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-moving"><span class="std std-ref">is_moving</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-get-horizontal-velocity"><span class="std std-ref">get_horizontal_velocity</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-get-current-velocity"><span class="std std-ref">get_current_velocity</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-get-speed-percent"><span class="std std-ref">get_speed_percent</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-is-moving-fast-vertically"><span class="std std-ref">is_moving_fast_vertically</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-method-has-move-input"><span class="std std-ref">has_move_input</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-private-method-update-character-model"><span class="std std-ref">_update_character_model</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxcharacter-private-method-get-aim-torso-angle-difference"><span class="std std-ref">_get_aim_torso_angle_difference</span></a>()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
+<p class="classref-signal" id="class-foxcharacter-signal-jumped"><strong>jumped</strong>(strength: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxcharacter-signal-jumped"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-dashed"><strong>dashed</strong>() <a class="reference internal" href="#class-foxcharacter-signal-dashed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-landed"><strong>landed</strong>() <a class="reference internal" href="#class-foxcharacter-signal-landed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-proned"><strong>proned</strong>() <a class="reference internal" href="#class-foxcharacter-signal-proned"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-crouched"><strong>crouched</strong>() <a class="reference internal" href="#class-foxcharacter-signal-crouched"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-stood"><strong>stood</strong>() <a class="reference internal" href="#class-foxcharacter-signal-stood"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-entered-air"><strong>entered_air</strong>() <a class="reference internal" href="#class-foxcharacter-signal-entered-air"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-started-sprinting"><strong>started_sprinting</strong>() <a class="reference internal" href="#class-foxcharacter-signal-started-sprinting"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-stopped-sprinting"><strong>stopped_sprinting</strong>() <a class="reference internal" href="#class-foxcharacter-signal-stopped-sprinting"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxcharacter-signal-character-model-changed"><strong>character_model_changed</strong>(visible: <code class="docutils literal notranslate"><span class="pre">bool</span></code>) <a class="reference internal" href="#class-foxcharacter-signal-character-model-changed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-property" id="class-foxcharacter-property-jump"><a class="reference internal" href="class_foxjumpmanager.html#class-foxjumpmanager"><span class="std std-ref">FoxJumpManager</span></a> <strong>jump</strong> <a class="reference internal" href="#class-foxcharacter-property-jump"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-dash"><a class="reference internal" href="class_foxdashmanager.html#class-foxdashmanager"><span class="std std-ref">FoxDashManager</span></a> <strong>dash</strong> <a class="reference internal" href="#class-foxcharacter-property-dash"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-pose"><a class="reference internal" href="class_foxcharacterposemanager.html#class-foxcharacterposemanager"><span class="std std-ref">FoxCharacterPoseManager</span></a> <strong>pose</strong> <a class="reference internal" href="#class-foxcharacter-property-pose"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-sprint"><a class="reference internal" href="class_foxsprintmanager.html#class-foxsprintmanager"><span class="std std-ref">FoxSprintManager</span></a> <strong>sprint</strong> <a class="reference internal" href="#class-foxcharacter-property-sprint"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-aim"><a class="reference internal" href="class_foxcharacteraimmanager.html#class-foxcharacteraimmanager"><span class="std std-ref">FoxCharacterAimManager</span></a> <strong>aim</strong> <a class="reference internal" href="#class-foxcharacter-property-aim"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-physics-body"><code class="docutils literal notranslate"><span class="pre">CharacterBody3D</span></code> <strong>_physics_body</strong> <a class="reference internal" href="#class-foxcharacter-property-physics-body"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-ground-motor"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#class-foxadvancedcharactermotor3d"><span class="std std-ref">FoxAdvancedCharacterMotor3D</span></a> <strong>_ground_motor</strong> <a class="reference internal" href="#class-foxcharacter-property-ground-motor"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-model"><a class="reference internal" href="class_foxcharactermodel.html#class-foxcharactermodel"><span class="std std-ref">FoxCharacterModel</span></a> <strong>model</strong> <a class="reference internal" href="#class-foxcharacter-property-model"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-hitbox"><a class="reference internal" href="class_foxcharacterhitbox.html#class-foxcharacterhitbox"><span class="std std-ref">FoxCharacterHitbox</span></a> <strong>_hitbox</strong> <a class="reference internal" href="#class-foxcharacter-property-hitbox"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-ground-cast"><code class="docutils literal notranslate"><span class="pre">RayCast3D</span></code> <strong>_ground_cast</strong> <a class="reference internal" href="#class-foxcharacter-property-ground-cast"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-state-machine"><a class="reference internal" href="class_foxcharacterstatemachine.html#class-foxcharacterstatemachine"><span class="std std-ref">FoxCharacterStateMachine</span></a> <strong>_state_machine</strong> <a class="reference internal" href="#class-foxcharacter-property-state-machine"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-walk-speed"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>walk_speed</strong> = <code class="docutils literal notranslate"><span class="pre">5.0</span></code> <a class="reference internal" href="#class-foxcharacter-property-walk-speed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-max-head-pitch"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>max_head_pitch</strong> = <code class="docutils literal notranslate"><span class="pre">89.0</span></code> <a class="reference internal" href="#class-foxcharacter-property-max-head-pitch"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-enter-air-animation-velocity"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>enter_air_animation_velocity</strong> = <code class="docutils literal notranslate"><span class="pre">3.5</span></code> <a class="reference internal" href="#class-foxcharacter-property-enter-air-animation-velocity"><span class="std std-ref">🔗</span></a></p>
+<p>Velocity required to trigger aerial blend animations.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-stop-sprinting-threshold"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>stop_sprinting_threshold</strong> = <code class="docutils literal notranslate"><span class="pre">0.05</span></code> <a class="reference internal" href="#class-foxcharacter-property-stop-sprinting-threshold"><span class="std std-ref">🔗</span></a></p>
+<p>Velocity ratio (relative to sprint speed) required to maintain a sprint.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-input-direction"><code class="docutils literal notranslate"><span class="pre">Vector2</span></code> <strong>input_direction</strong> = <code class="docutils literal notranslate"><span class="pre">Vector2(0,</span> <span class="pre">0)</span></code> <a class="reference internal" href="#class-foxcharacter-property-input-direction"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_input_direction</strong>(direction: <code class="docutils literal notranslate"><span class="pre">Vector2</span></code>)</p></li>
+</ul>
+<p>The raw normalized directional input intent (usually from a joystick or WASD).</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxcharacter-property-input-strength"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>input_strength</strong> = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> <a class="reference internal" href="#class-foxcharacter-property-input-strength"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>&#64;input_strength_setter</strong>(value: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
+<p>The magnitude of the input intent (0.0 to 1.0).</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-method" id="class-foxcharacter-private-method-ready"><abbr title="No return value.">void</abbr> <strong>_ready</strong>() <a class="reference internal" href="#class-foxcharacter-private-method-ready"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-private-method-process"><abbr title="No return value.">void</abbr> <strong>_process</strong>(delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxcharacter-private-method-process"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-private-method-on-pose-changed"><abbr title="No return value.">void</abbr> <strong>_on_pose_changed</strong>(new_pose: <a class="reference internal" href="class_foxcharacterposemanager.html#enum-foxcharacterposemanager-type"><span class="std std-ref">Type</span></a>, _old_pose: <a class="reference internal" href="class_foxcharacterposemanager.html#enum-foxcharacterposemanager-type"><span class="std std-ref">Type</span></a>) <a class="reference internal" href="#class-foxcharacter-private-method-on-pose-changed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-update-locomotion-visuals"><abbr title="No return value.">void</abbr> <strong>update_locomotion_visuals</strong>() <a class="reference internal" href="#class-foxcharacter-method-update-locomotion-visuals"><span class="std std-ref">🔗</span></a></p>
+<p>Feeds the physical velocity data into the visual model’s animation tree.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-set-input-direction"><abbr title="No return value.">void</abbr> <strong>set_input_direction</strong>(direction: <code class="docutils literal notranslate"><span class="pre">Vector2</span></code>) <a class="reference internal" href="#class-foxcharacter-method-set-input-direction"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-flush-inputs"><abbr title="No return value.">void</abbr> <strong>flush_inputs</strong>() <a class="reference internal" href="#class-foxcharacter-method-flush-inputs"><span class="std std-ref">🔗</span></a></p>
+<p>Clears any momentary action intents (Jump, Dash) to prevent input ghosting. Note: This deliberately does NOT clear persistent stances like Crouch or Sprint.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-flying"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_flying</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-flying"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-on-floor"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_on_floor</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-on-floor"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-in-water"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_in_water</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-in-water"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-in-air"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_in_air</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-in-air"><span class="std std-ref">🔗</span></a></p>
+<p>Verifies aerial state via the physics body floor normal, corroborated by the ground cast.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-moving"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_moving</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-moving"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-get-horizontal-velocity"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>get_horizontal_velocity</strong>() <a class="reference internal" href="#class-foxcharacter-method-get-horizontal-velocity"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-get-current-velocity"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>get_current_velocity</strong>() <a class="reference internal" href="#class-foxcharacter-method-get-current-velocity"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-get-speed-percent"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>get_speed_percent</strong>() <a class="reference internal" href="#class-foxcharacter-method-get-speed-percent"><span class="std std-ref">🔗</span></a></p>
+<p>Calculates the normalized speed ratio relative to the current state’s max speed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-is-moving-fast-vertically"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_moving_fast_vertically</strong>() <a class="reference internal" href="#class-foxcharacter-method-is-moving-fast-vertically"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-method-has-move-input"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_move_input</strong>() <a class="reference internal" href="#class-foxcharacter-method-has-move-input"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-private-method-update-character-model"><abbr title="No return value.">void</abbr> <strong>_update_character_model</strong>() <a class="reference internal" href="#class-foxcharacter-private-method-update-character-model"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxcharacter-private-method-get-aim-torso-angle-difference"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>_get_aim_torso_angle_difference</strong>() <a class="reference internal" href="#class-foxcharacter-private-method-get-aim-torso-angle-difference"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxstatpool.html" class="btn btn-neutral float-left" title="FoxStatPool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_foxcharactermodel.html" class="btn btn-neutral float-right" title="FoxCharacterModel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterState" inherits="FoxState" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Base state for all character-driven states in the Foxbox framework.
+	</brief_description>
+	<description>
+		[FoxCharacterState] extends the generic [FoxState] by introducing strictly typed variables for core character components. These variables are automatically injected by the parent [FoxCharacterStateMachine] during initialization.  Specific implementations should extend this class and use [annotation @export] to define their own specific motor needs.
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="physics_body" type="CharacterBody3D" setter="" getter="">
+			The physics node of the character. Used by states and motors to apply velocity, detect floors, and handle world collisions.
+		</member>
+		<member name="model" type="FoxCharacterModel" setter="" getter="">
+			The visual and animation controller for the character. Used by states to command stances (e.g., crouch, stand) and trigger animations.
+		</member>
+		<member name="character" type="FoxCharacter" setter="" getter="">
+			Mediator for the entire character that exposes a huge API and inputs.
+		</member>
+	</members>
+</class>

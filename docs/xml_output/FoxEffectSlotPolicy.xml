@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxEffectSlotPolicy" inherits="FoxNode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Acts as a gatekeeper for a [FoxEffectManager], enforcing a maximum limit on how many distinct [FoxEffectInstance] objects can exist simultaneously.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="add_effect">
+			<return type="bool" />
+			<param index="0" name="effect" type="FoxEffect" />
+			<param index="1" name="target" type="Object" />
+			<description>
+				Attempts to add an effect via the Manager, enforcing the slot limit. Returns [code]true[/code] if successful.
+			</description>
+		</method>
+		<method name="remove_effect">
+			<return type="void" />
+			<param index="0" name="effect_id" type="StringName" />
+			<description>
+				Manually removes a tracked slot by its effect ID.
+			</description>
+		</method>
+		<method name="clear_slots">
+			<return type="void" />
+			<description>
+				Clears all tracked slots and forces the Manager to purge them.
+			</description>
+		</method>
+		<method name="_on_manager_effect_removed">
+			<return type="void" />
+			<param index="0" name="instance" type="FoxEffectInstance" />
+			<description>
+			</description>
+		</method>
+		<method name="_push_out_oldest">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="max_slots" type="int" setter="" getter="" default="3">
+			The maximum number of distinct effect instances this policy will allow.
+		</member>
+		<member name="slots" type="FoxEffectInstance[]" setter="" getter="" default="[]">
+			The internal array tracking the currently managed instances.
+		</member>
+		<member name="is_full" type="bool" setter="" getter="@is_full_getter">
+			Returns [code]true[/code] if the policy has reached its maximum slot capacity.
+		</member>
+		<member name="filled_slots" type="int" setter="" getter="@filled_slots_getter">
+			Returns the number of slots currently occupied.
+		</member>
+		<member name="available_slots" type="int" setter="" getter="@available_slots_getter">
+			Returns the number of empty slots remaining.
+		</member>
+		<member name="manager" type="FoxEffectManager" setter="" getter="" default="get_parent()">
+		</member>
+	</members>
+	<signals>
+		<signal name="slots_updated">
+			<param index="0" name="current_slots" type="FoxEffectInstance[]" />
+			<description>
+				Emitted whenever the tracked slots change (added, removed, or refreshed).
+			</description>
+		</signal>
+	</signals>
+</class>

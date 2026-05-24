@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FoxCharacterCameraPivot" inherits="FoxNode3D" deprecated="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="crouch">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="stand">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_animate_shape">
+			<return type="void" />
+			<param index="0" name="target_y" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="shoulder_camera_pivot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="first_person_camera_pivot" type="Marker3D" setter="" getter="">
+		</member>
+		<member name="stand_height" type="float" setter="" getter="" default="2.0">
+		</member>
+		<member name="crouch_height" type="float" setter="" getter="" default="1.8">
+		</member>
+	</members>
+</class>

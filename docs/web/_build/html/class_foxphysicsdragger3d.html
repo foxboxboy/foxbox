@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoxPhysicsDragger3D &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxPhysicsDragProfile" href="class_foxphysicsdragprofile.html" />
+    <link rel="prev" title="FoxHoldableItem" href="class_foxholdableitem.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FoxPhysicsDragger3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FoxPhysicsDragger3D</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="foxphysicsdragger3d">
+<span id="class-foxphysicsdragger3d"></span><h1>FoxPhysicsDragger3D<a class="headerlink" href="#foxphysicsdragger3d" title="Link to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_foxnode3d.html#class-foxnode3d"><span class="std std-ref">FoxNode3D</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Node3D</span></code></p>
+<p>Manipulates a <code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code> by applying localized forces and torques to match this node’s global position and rotation.</p>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-default-stiffness"><span class="std std-ref">default_stiffness</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">800.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-default-damping"><span class="std std-ref">default_damping</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">25.0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-max-pull-force"><span class="std std-ref">max_pull_force</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4000.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-current-body"><span class="std std-ref">_current_body</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Vector3</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-grab-offset-local"><span class="std std-ref">_grab_offset_local</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-skip-first-frame"><span class="std std-ref">_skip_first_frame</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-current-stiffness"><span class="std std-ref">_current_stiffness</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-property-current-damping"><span class="std std-ref">_current_damping</span></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-method-grab"><span class="std std-ref">grab</span></a>(body: <code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code>, hit_point: <code class="docutils literal notranslate"><span class="pre">Vector3</span></code>, profile: <a class="reference internal" href="class_foxphysicsdragprofile.html#class-foxphysicsdragprofile"><span class="std std-ref">FoxPhysicsDragProfile</span></a> = null)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-method-release"><span class="std std-ref">release</span></a>(dampen_spin: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = true)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-private-method-physics-process"><span class="std std-ref">_physics_process</span></a>(_delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-private-method-apply-positional-force"><span class="std std-ref">_apply_positional_force</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxphysicsdragger3d-private-method-apply-rotational-torque"><span class="std std-ref">_apply_rotational_torque</span></a>()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-property" id="class-foxphysicsdragger3d-property-default-stiffness"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>default_stiffness</strong> = <code class="docutils literal notranslate"><span class="pre">800.0</span></code> <a class="reference internal" href="#class-foxphysicsdragger3d-property-default-stiffness"><span class="std std-ref">🔗</span></a></p>
+<p>The default strength of the pull if no profile is provided.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-default-damping"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>default_damping</strong> = <code class="docutils literal notranslate"><span class="pre">25.0</span></code> <a class="reference internal" href="#class-foxphysicsdragger3d-property-default-damping"><span class="std std-ref">🔗</span></a></p>
+<p>The default control of the pull if no profile is provided.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-max-pull-force"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>max_pull_force</strong> = <code class="docutils literal notranslate"><span class="pre">4000.0</span></code> <a class="reference internal" href="#class-foxphysicsdragger3d-property-max-pull-force"><span class="std std-ref">🔗</span></a></p>
+<p>The absolute maximum force this dragger can apply to a body in a single frame.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-current-body"><code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code> <strong>_current_body</strong> <a class="reference internal" href="#class-foxphysicsdragger3d-property-current-body"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-grab-offset-local"><code class="docutils literal notranslate"><span class="pre">Vector3</span></code> <strong>_grab_offset_local</strong> <a class="reference internal" href="#class-foxphysicsdragger3d-property-grab-offset-local"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-skip-first-frame"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_skip_first_frame</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-foxphysicsdragger3d-property-skip-first-frame"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-current-stiffness"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>_current_stiffness</strong> <a class="reference internal" href="#class-foxphysicsdragger3d-property-current-stiffness"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxphysicsdragger3d-property-current-damping"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>_current_damping</strong> <a class="reference internal" href="#class-foxphysicsdragger3d-property-current-damping"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-method" id="class-foxphysicsdragger3d-method-grab"><abbr title="No return value.">void</abbr> <strong>grab</strong>(body: <code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code>, hit_point: <code class="docutils literal notranslate"><span class="pre">Vector3</span></code>, profile: <a class="reference internal" href="class_foxphysicsdragprofile.html#class-foxphysicsdragprofile"><span class="std std-ref">FoxPhysicsDragProfile</span></a> = null) <a class="reference internal" href="#class-foxphysicsdragger3d-method-grab"><span class="std std-ref">🔗</span></a></p>
+<p>Grabs a <code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code> at a specific global hit point. Optionally pass a <a class="reference internal" href="class_foxphysicsdragprofile.html#class-foxphysicsdragprofile"><span class="std std-ref">FoxPhysicsDragProfile</span></a> to override the default stiffness and damping.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxphysicsdragger3d-method-release"><abbr title="No return value.">void</abbr> <strong>release</strong>(dampen_spin: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = true) <a class="reference internal" href="#class-foxphysicsdragger3d-method-release"><span class="std std-ref">🔗</span></a></p>
+<p>Releases the currently held <code class="docutils literal notranslate"><span class="pre">RigidBody3D</span></code>. If <code class="docutils literal notranslate"><span class="pre">dampen_spin</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it will aggressively kill residual angular velocity to prevent unrealistic spinning upon release.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxphysicsdragger3d-private-method-physics-process"><abbr title="No return value.">void</abbr> <strong>_physics_process</strong>(_delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxphysicsdragger3d-private-method-physics-process"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxphysicsdragger3d-private-method-apply-positional-force"><abbr title="No return value.">void</abbr> <strong>_apply_positional_force</strong>() <a class="reference internal" href="#class-foxphysicsdragger3d-private-method-apply-positional-force"><span class="std std-ref">🔗</span></a></p>
+<p>Applies a positional force to the grabbed RigidBody3D based on its current position and velocity.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxphysicsdragger3d-private-method-apply-rotational-torque"><abbr title="No return value.">void</abbr> <strong>_apply_rotational_torque</strong>() <a class="reference internal" href="#class-foxphysicsdragger3d-private-method-apply-rotational-torque"><span class="std std-ref">🔗</span></a></p>
+<p>Applies a rotational torque to the grabbed RigidBody3D based on its current orientation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxholdableitem.html" class="btn btn-neutral float-left" title="FoxHoldableItem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_foxphysicsdragprofile.html" class="btn btn-neutral float-right" title="FoxPhysicsDragProfile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

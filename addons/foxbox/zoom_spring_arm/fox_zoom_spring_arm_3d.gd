@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 
 
 func _update_zoom(delta: float) -> void:
-	var should_zoom := is_equal_approx(spring_length, target_length)
+	var should_zoom := not is_equal_approx(spring_length, target_length)
 	if not should_zoom:
 		return
 		

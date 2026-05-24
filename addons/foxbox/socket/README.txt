@@ -1,7 +1,1 @@
-Occupancy system that allows for reparenting nodes
-to different "seats".
-
-Some use cases are sitting characters on a bench or
-in a vehicle. Can be used for more abstract things like
-moving resources to physically be on a backpack 
-(such as in the game Astroneer).
+Socket: A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." Useful for character vehicles, bench sitting, or physically mounting dynamic items to a player's model.

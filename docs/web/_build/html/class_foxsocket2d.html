@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoxSocket2D &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxSocketManager2D" href="class_foxsocketmanager2d.html" />
+    <link rel="prev" title="FoxSocketManager3D" href="class_foxsocketmanager3d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FoxSocket2D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FoxSocket2D</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="foxsocket2d">
+<span id="class-foxsocket2d"></span><h1>FoxSocket2D<a class="headerlink" href="#foxsocket2d" title="Link to this heading"></a></h1>
+<p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">Marker2D</span></code></p>
+<p>A physical 2D location that reparents and holds a single attachment.</p>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Node2D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-property-marker"><span class="std std-ref">marker</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-property-snap-position"><span class="std std-ref">snap_position</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-property-snap-rotation"><span class="std std-ref">snap_rotation</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-property-snap-scale"><span class="std std-ref">snap_scale</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Node2D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-property-attachment"><span class="std std-ref">attachment</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-method-is-empty"><span class="std std-ref">is_empty</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Node2D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-method-get-attachment"><span class="std std-ref">get_attachment</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-method-attach"><span class="std std-ref">attach</span></a>(new_attachment: <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Node2D</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-method-detach"><span class="std std-ref">detach</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-private-method-ready"><span class="std std-ref">_ready</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxsocket2d-private-method-attachment-changed"><span class="std std-ref">_attachment_changed</span></a>()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
+<p class="classref-signal" id="class-foxsocket2d-signal-attached"><strong>attached</strong>(attachment: <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>, socket: <a class="reference internal" href="#class-foxsocket2d"><span class="std std-ref">FoxSocket2D</span></a>) <a class="reference internal" href="#class-foxsocket2d-signal-attached"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when this socket gains a new attachment.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxsocket2d-signal-detached"><strong>detached</strong>(attachment: <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>, socket: <a class="reference internal" href="#class-foxsocket2d"><span class="std std-ref">FoxSocket2D</span></a>) <a class="reference internal" href="#class-foxsocket2d-signal-detached"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when the attachment leaves and is no longer a child.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxsocket2d-signal-attachment-changed"><strong>attachment_changed</strong>(attachment: <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>, socket: <a class="reference internal" href="#class-foxsocket2d"><span class="std std-ref">FoxSocket2D</span></a>) <a class="reference internal" href="#class-foxsocket2d-signal-attachment-changed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when the child order changes, useful for detecting deleted attachments.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-property" id="class-foxsocket2d-property-marker"><code class="docutils literal notranslate"><span class="pre">Node2D</span></code> <strong>marker</strong> <a class="reference internal" href="#class-foxsocket2d-property-marker"><span class="std std-ref">🔗</span></a></p>
+<p>(Optional) The node that will be used for position, rotation, and scale. Leave blank to use this <code class="docutils literal notranslate"><span class="pre">Marker2D</span></code>’s transform.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxsocket2d-property-snap-position"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>snap_position</strong> = <code class="docutils literal notranslate"><span class="pre">true</span></code> <a class="reference internal" href="#class-foxsocket2d-property-snap-position"><span class="std std-ref">🔗</span></a></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, the attachment’s global position snaps to the socket’s marker.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxsocket2d-property-snap-rotation"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>snap_rotation</strong> = <code class="docutils literal notranslate"><span class="pre">true</span></code> <a class="reference internal" href="#class-foxsocket2d-property-snap-rotation"><span class="std std-ref">🔗</span></a></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, the attachment’s global rotation snaps to the socket’s marker.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxsocket2d-property-snap-scale"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>snap_scale</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-foxsocket2d-property-snap-scale"><span class="std std-ref">🔗</span></a></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, the attachment forcefully scales to match the socket marker’s global scale.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxsocket2d-property-attachment"><code class="docutils literal notranslate"><span class="pre">Node2D</span></code> <strong>attachment</strong> = <code class="docutils literal notranslate"><span class="pre">null</span></code> <a class="reference internal" href="#class-foxsocket2d-property-attachment"><span class="std std-ref">🔗</span></a></p>
+<p>The child node currently plugged into this socket.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-method" id="class-foxsocket2d-method-is-empty"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_empty</strong>() <a class="reference internal" href="#class-foxsocket2d-method-is-empty"><span class="std std-ref">🔗</span></a></p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if there is no current attachment.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxsocket2d-method-get-attachment"><code class="docutils literal notranslate"><span class="pre">Node2D</span></code> <strong>get_attachment</strong>() <a class="reference internal" href="#class-foxsocket2d-method-get-attachment"><span class="std std-ref">🔗</span></a></p>
+<p>Returns the current attachment node, or <code class="docutils literal notranslate"><span class="pre">null</span></code> if empty.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxsocket2d-method-attach"><abbr title="No return value.">void</abbr> <strong>attach</strong>(new_attachment: <code class="docutils literal notranslate"><span class="pre">Node2D</span></code>) <a class="reference internal" href="#class-foxsocket2d-method-attach"><span class="std std-ref">🔗</span></a></p>
+<p>Reparents <code class="docutils literal notranslate"><span class="pre">new_attachment</span></code> to this socket and snaps its transform to <a class="reference internal" href="#class-foxsocket2d-property-marker"><span class="std std-ref">marker</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxsocket2d-method-detach"><code class="docutils literal notranslate"><span class="pre">Node2D</span></code> <strong>detach</strong>() <a class="reference internal" href="#class-foxsocket2d-method-detach"><span class="std std-ref">🔗</span></a></p>
+<p>Safely unplugs the attachment from the socket and returns it.</p>
+<p><strong>Note:</strong> This does not reparent the attachment anywhere else in the scene tree.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxsocket2d-private-method-ready"><abbr title="No return value.">void</abbr> <strong>_ready</strong>() <a class="reference internal" href="#class-foxsocket2d-private-method-ready"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxsocket2d-private-method-attachment-changed"><abbr title="No return value.">void</abbr> <strong>_attachment_changed</strong>() <a class="reference internal" href="#class-foxsocket2d-private-method-attachment-changed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxsocketmanager3d.html" class="btn btn-neutral float-left" title="FoxSocketManager3D" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_foxsocketmanager2d.html" class="btn btn-neutral float-right" title="FoxSocketManager2D" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

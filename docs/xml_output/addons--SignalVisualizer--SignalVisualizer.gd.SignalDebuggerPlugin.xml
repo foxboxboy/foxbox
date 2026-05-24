@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/SignalVisualizer/SignalVisualizer.gd&quot;.SignalDebuggerPlugin" inherits="EditorDebuggerPlugin" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_has_capture">
+			<return type="bool" />
+			<param index="0" name="prefix" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="_capture">
+			<return type="bool" />
+			<param index="0" name="message" type="Variant" />
+			<param index="1" name="data" type="Variant" />
+			<param index="2" name="session_id" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="_setup_session">
+			<return type="void" />
+			<param index="0" name="session_id" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="SignalDebuggerPanelScene" type="Variant" setter="" getter="" default="&lt;Object&gt;">
+		</member>
+		<member name="debugger_panel" type="Variant" setter="" getter="">
+		</member>
+	</members>
+	<signals>
+		<signal name="open_script">
+			<description>
+			</description>
+		</signal>
+		<signal name="start_signal_debugging">
+			<description>
+			</description>
+		</signal>
+		<signal name="stop_signal_debugging">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

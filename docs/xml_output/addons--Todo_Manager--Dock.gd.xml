@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;addons/Todo_Manager/Dock.gd&quot;" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="build_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="get_active_script">
+			<return type="&quot;addons/Todo_Manager/todoItem_class.gd&quot;" />
+			<description>
+			</description>
+		</method>
+		<method name="go_to_script">
+			<return type="void" />
+			<param index="0" name="script_path" type="String" />
+			<param index="1" name="line_number" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="get_exec_flags">
+			<return type="PackedStringArray" />
+			<param index="0" name="editor_path" type="String" />
+			<param index="1" name="script_path" type="String" />
+			<param index="2" name="line_number" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="sort_alphabetical">
+			<return type="bool" />
+			<param index="0" name="a" type="Variant" />
+			<param index="1" name="b" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="sort_backwards">
+			<return type="bool" />
+			<param index="0" name="a" type="Variant" />
+			<param index="1" name="b" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="populate_settings">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="rebuild_settings">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="add_toggle_buttons">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="create_config_file">
+			<return type="void" />
+			<description>
+				## CONFIG FILE ####
+			</description>
+		</method>
+		<method name="load_config">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="fix_missing_values">
+			<return type="void" />
+			<param index="0" name="patterns" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_SettingsButton_toggled">
+			<return type="void" />
+			<param index="0" name="button_pressed" type="bool" />
+			<description>
+				## Events ####
+			</description>
+		</method>
+		<method name="_on_Tree_item_activated">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_FullPathCheckBox_toggled">
+			<return type="void" />
+			<param index="0" name="button_pressed" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_ScriptColourPickerButton_color_changed">
+			<return type="void" />
+			<param index="0" name="color" type="Color" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_RescanButton_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="change_colour">
+			<return type="void" />
+			<param index="0" name="colour" type="Color" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="change_pattern">
+			<return type="void" />
+			<param index="0" name="value" type="String" />
+			<param index="1" name="index" type="int" />
+			<param index="2" name="this_colour" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="remove_pattern">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="this" type="Node" />
+			<param index="2" name="this_colour" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="toggle_pattern_enabled">
+			<return type="void" />
+			<param index="0" name="active" type="bool" />
+			<param index="1" name="pattern" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="case_sensitive_pattern">
+			<return type="void" />
+			<param index="0" name="active" type="bool" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_DefaultButton_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_AlphSortCheckBox_toggled">
+			<return type="void" />
+			<param index="0" name="button_pressed" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_AddPatternButton_pressed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_RefreshCheckButton_toggled">
+			<return type="void" />
+			<param index="0" name="button_pressed" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_Timer_timeout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_ignore_paths_changed">
+			<return type="void" />
+			<param index="0" name="new_text" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_TabContainer_tab_changed">
+			<return type="void" />
+			<param index="0" name="tab" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_BuiltInCheckButton_toggled">
+			<return type="void" />
+			<param index="0" name="button_pressed" type="bool" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="plugin" type="EditorPlugin" setter="" getter="">
+		</member>
+		<member name="todo_items" type="Array" setter="" getter="">
+		</member>
+		<member name="script_colour" type="Color" setter="" getter="" default="Color(0.8, 0.80784315, 0.827451, 1)">
+		</member>
+		<member name="ignore_paths" type="String[]" setter="" getter="" default="[]">
+		</member>
+		<member name="full_path" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="auto_refresh" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="builtin_enabled" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_sort_alphabetical" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="patterns" type="Array" setter="" getter="" default="[...]">
+		</member>
+		<member name="tabs" type="TabContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="project" type="&quot;addons/Todo_Manager/Project.gd&quot;" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="current" type="&quot;addons/Todo_Manager/Current.gd&quot;" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="project_tree" type="Tree" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="project_toggles_container" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="current_tree" type="Tree" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="current_toggles_container" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="settings_panel" type="Panel" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="colours_container" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="pattern_container" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="ignore_textbox" type="LineEdit" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="auto_refresh_button" type="CheckButton" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+	</members>
+	<constants>
+		<constant name="CASE_INSENSITIVE" value="0" enum="@unnamed_enums">
+		</constant>
+		<constant name="CASE_SENSITIVE" value="1" enum="@unnamed_enums">
+		</constant>
+		<constant name="Project" value="&lt;Object&gt;">
+		</constant>
+		<constant name="Current" value="&lt;Object&gt;">
+		</constant>
+		<constant name="Todo" value="&lt;Object&gt;">
+		</constant>
+		<constant name="TodoItem" value="&lt;Object&gt;">
+		</constant>
+		<constant name="ColourPicker" value="&lt;Object&gt;">
+		</constant>
+		<constant name="PatternEdit" value="&lt;Object&gt;">
+		</constant>
+		<constant name="PatternEditScene" value="&lt;Object&gt;">
+		</constant>
+		<constant name="ToggleButton" value="&lt;Object&gt;">
+		</constant>
+		<constant name="DEFAULT_PATTERNS" value="[[&quot;\\bTODO\\b&quot;, Color(0.5882353, 0.94509804, 0.6784314, 1), 0, true], [&quot;\\bHACK\\b&quot;, Color(0.8352941, 0.7372549, 0.4392157, 1), 0, true], [&quot;\\bFIXME\\b&quot;, Color(0.8352941, 0.4392157, 0.4392157, 1), 0, true]]">
+		</constant>
+		<constant name="DEFAULT_SCRIPT_COLOUR" value="Color(0.8, 0.80784315, 0.827451, 1)">
+		</constant>
+		<constant name="DEFAULT_SCRIPT_NAME" value="false">
+		</constant>
+		<constant name="DEFAULT_SORT" value="true">
+		</constant>
+	</constants>
+</class>

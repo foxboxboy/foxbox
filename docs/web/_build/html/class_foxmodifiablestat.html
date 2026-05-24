@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoxModifiableStat &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxStatPool" href="class_foxstatpool.html" />
+    <link rel="prev" title="FoxBoundedValue" href="class_foxboundedvalue.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FoxModifiableStat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FoxModifiableStat</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="foxmodifiablestat">
+<span id="class-foxmodifiablestat"></span><h1>FoxModifiableStat<a class="headerlink" href="#foxmodifiablestat" title="Link to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_foxresource.html#class-foxresource"><span class="std std-ref">FoxResource</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Resource</span></code></p>
+<p>A resource that calculates a final <code class="docutils literal notranslate"><span class="pre">float</span></code> value based on flat and multiplier modifiers.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Flat modifiers are added to <a class="reference internal" href="#class-foxmodifiablestat-property-base-value"><span class="std std-ref">base_value</span></a> first. The total is then multiplied by the sum of all multiplier modifiers.</p>
+</section>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-property-base-value"><span class="std std-ref">base_value</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-property-flat-modifiers"><span class="std std-ref">_flat_modifiers</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-property-multiplier-modifiers"><span class="std std-ref">_multiplier_modifiers</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-property-current-value"><span class="std std-ref">_current_value</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-property-value"><span class="std std-ref">value</span></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-add-modifier"><span class="std std-ref">add_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-pop-modifier"><span class="std std-ref">pop_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-clear-modifier"><span class="std std-ref">clear_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-clear-all-modifiers"><span class="std std-ref">clear_all_modifiers</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-has-modifier"><span class="std std-ref">has_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-remove-specific-modifier"><span class="std std-ref">remove_specific_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, specific_amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-add-flat-modifier"><span class="std std-ref">add_flat_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-add-multiplier-modifier"><span class="std std-ref">add_multiplier_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-pop-flat-modifier"><span class="std std-ref">pop_flat_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-method-pop-multiplier-modifier"><span class="std std-ref">pop_multiplier_modifier</span></a>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-private-method-init"><span class="std std-ref">_init</span></a>(p_base: <code class="docutils literal notranslate"><span class="pre">float</span></code> = 0.0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-private-method-get-dict"><span class="std std-ref">_get_dict</span></a>(type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-foxmodifiablestat-private-method-recalculate"><span class="std std-ref">_recalculate</span></a>()</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Link to this heading"></a></h2>
+<p class="classref-signal" id="class-foxmodifiablestat-signal-value-changed"><strong>value_changed</strong>(new_value: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-signal-value-changed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when the calculated <a class="reference internal" href="#class-foxmodifiablestat-property-value"><span class="std std-ref">value</span></a> changes.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxmodifiablestat-signal-modifier-added"><strong>modifier_added</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-signal-modifier-added"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a modifier is added via <a class="reference internal" href="#class-foxmodifiablestat-method-add-modifier"><span class="std std-ref">add_modifier()</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxmodifiablestat-signal-modifier-removed"><strong>modifier_removed</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-signal-modifier-removed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a modifier is removed via <a class="reference internal" href="#class-foxmodifiablestat-method-pop-modifier"><span class="std std-ref">pop_modifier()</span></a>, <a class="reference internal" href="#class-foxmodifiablestat-method-clear-modifier"><span class="std std-ref">clear_modifier()</span></a>, or <a class="reference internal" href="#class-foxmodifiablestat-method-remove-specific-modifier"><span class="std std-ref">remove_specific_modifier()</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-foxmodifiablestat-signal-all-modifiers-cleared"><strong>all_modifiers_cleared</strong>() <a class="reference internal" href="#class-foxmodifiablestat-signal-all-modifiers-cleared"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when <a class="reference internal" href="#class-foxmodifiablestat-method-clear-all-modifiers"><span class="std std-ref">clear_all_modifiers()</span></a> is called.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading"></a></h2>
+<p class="classref-enumeration" id="enum-foxmodifiablestat-modifiertype">enum <strong>ModifierType</strong>: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">🔗</span></a></p>
+<p class="classref-enumeration-constant" id="class-foxmodifiablestat-constant-flat"><a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a> <strong>FLAT</strong> = <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this enum. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<p class="classref-enumeration-constant" id="class-foxmodifiablestat-constant-multiplier"><a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a> <strong>MULTIPLIER</strong> = <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this enum. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-property" id="class-foxmodifiablestat-property-base-value"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>base_value</strong> = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> <a class="reference internal" href="#class-foxmodifiablestat-property-base-value"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>&#64;base_value_setter</strong>(value: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
+<p>The base, unmodified value.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxmodifiablestat-property-flat-modifiers"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>_flat_modifiers</strong> = <code class="docutils literal notranslate"><span class="pre">{}</span></code> <a class="reference internal" href="#class-foxmodifiablestat-property-flat-modifiers"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxmodifiablestat-property-multiplier-modifiers"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>_multiplier_modifiers</strong> = <code class="docutils literal notranslate"><span class="pre">{}</span></code> <a class="reference internal" href="#class-foxmodifiablestat-property-multiplier-modifiers"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxmodifiablestat-property-current-value"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>_current_value</strong> = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> <a class="reference internal" href="#class-foxmodifiablestat-property-current-value"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-foxmodifiablestat-property-value"><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>value</strong> <a class="reference internal" href="#class-foxmodifiablestat-property-value"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>&#64;value_setter</strong>(value: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code> <strong>&#64;value_getter</strong>()</p></li>
+</ul>
+<p>The final, calculated value. This property is read-only.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h2>
+<p class="classref-method" id="class-foxmodifiablestat-method-add-modifier"><abbr title="No return value.">void</abbr> <strong>add_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-add-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Adds a modifier of <code class="docutils literal notranslate"><span class="pre">type</span></code> with the specified <code class="docutils literal notranslate"><span class="pre">amount</span></code> to the stack identified by <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-pop-modifier"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>pop_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>) <a class="reference internal" href="#class-foxmodifiablestat-method-pop-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Removes the most recently added modifier from the <code class="docutils literal notranslate"><span class="pre">id</span></code> stack. Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if successful.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-clear-modifier"><abbr title="No return value.">void</abbr> <strong>clear_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>) <a class="reference internal" href="#class-foxmodifiablestat-method-clear-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Instantly removes all instances of a modifier identified by <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-clear-all-modifiers"><abbr title="No return value.">void</abbr> <strong>clear_all_modifiers</strong>() <a class="reference internal" href="#class-foxmodifiablestat-method-clear-all-modifiers"><span class="std std-ref">🔗</span></a></p>
+<p>Removes all modifiers and resets <a class="reference internal" href="#class-foxmodifiablestat-property-value"><span class="std std-ref">value</span></a> to <a class="reference internal" href="#class-foxmodifiablestat-property-base-value"><span class="std std-ref">base_value</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-has-modifier"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>) <a class="reference internal" href="#class-foxmodifiablestat-method-has-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the stack for <code class="docutils literal notranslate"><span class="pre">id</span></code> exists and is not empty.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-remove-specific-modifier"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>remove_specific_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>, specific_amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-remove-specific-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Removes the first instance matching <code class="docutils literal notranslate"><span class="pre">specific_amount</span></code> from the <code class="docutils literal notranslate"><span class="pre">id</span></code> stack. Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if successful.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-add-flat-modifier"><abbr title="No return value.">void</abbr> <strong>add_flat_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-add-flat-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Helper to quickly add a flat modifier without typing the enum.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-add-multiplier-modifier"><abbr title="No return value.">void</abbr> <strong>add_multiplier_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-add-multiplier-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Helper to quickly add a multiplier modifier without typing the enum.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-pop-flat-modifier"><abbr title="No return value.">void</abbr> <strong>pop_flat_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-pop-flat-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Helper to quickly pop a multiplier modifier without typing the enum.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-method-pop-multiplier-modifier"><abbr title="No return value.">void</abbr> <strong>pop_multiplier_modifier</strong>(id: <code class="docutils literal notranslate"><span class="pre">StringName</span></code>) <a class="reference internal" href="#class-foxmodifiablestat-method-pop-multiplier-modifier"><span class="std std-ref">🔗</span></a></p>
+<p>Helper to quickly pop a multiplier modifier without typing the enum.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-private-method-init"><abbr title="No return value.">void</abbr> <strong>_init</strong>(p_base: <code class="docutils literal notranslate"><span class="pre">float</span></code> = 0.0) <a class="reference internal" href="#class-foxmodifiablestat-private-method-init"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-private-method-get-dict"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>_get_dict</strong>(type: <a class="reference internal" href="#enum-foxmodifiablestat-modifiertype"><span class="std std-ref">ModifierType</span></a>) <a class="reference internal" href="#class-foxmodifiablestat-private-method-get-dict"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-foxmodifiablestat-private-method-recalculate"><abbr title="No return value.">void</abbr> <strong>_recalculate</strong>() <a class="reference internal" href="#class-foxmodifiablestat-private-method-recalculate"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <a class="reference external" href="https://contributing.godotengine.org/en/latest/documentation/class_reference.html">contributing one</a>!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxboundedvalue.html" class="btn btn-neutral float-left" title="FoxBoundedValue" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_foxstatpool.html" class="btn btn-neutral float-right" title="FoxStatPool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

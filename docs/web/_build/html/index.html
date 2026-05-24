@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the Foxbox Documentation &mdash; FoxBox 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9f674763" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FoxNode" href="class_foxnode.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/fox_docs_logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">FoxBox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to the Foxbox Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-the-foxbox-documentation">
+<h1>Welcome to the Foxbox Documentation<a class="headerlink" href="#welcome-to-the-foxbox-documentation" title="Link to this heading"></a></h1>
+<p>This is the official framework manual for Foxbox.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode.html">FoxNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode2d.html">FoxNode2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnode3d.html">FoxNode3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxbox.html">FoxBox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxbox.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxbox.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcontrol.html">FoxControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxrefcounted.html">FoxRefCounted</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxresource.html">FoxResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxnetworkoptimizer.html">FoxNetworkOptimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxnetworkoptimizer.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxnetworkoptimizer.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxnetworkoptimizer.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxnetworkoptimizer.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxvisualoptimizer.html">FoxVisualOptimizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxvisualoptimizer.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxvisualoptimizer.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxvisualoptimizer.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxvisualoptimizer.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Attribute Maps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributemap.html">FoxAttributeMap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributemap.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxattributerule.html">FoxAttributeRule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributerule.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributerule.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributerule.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributerule.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxattributerule.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxboundedvalue.html">FoxBoundedValue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxboundedvalue.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxmodifiablestat.html">FoxModifiableStat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxmodifiablestat.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatpool.html">FoxStatPool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatpool.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Characters</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacter.html">FoxCharacter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacter.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermodel.html">FoxCharacterModel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermodel.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermodel.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermodel.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermodel.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermodel.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactermotor3d.html">FoxCharacterMotor3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermotor3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermotor3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermotor3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermotor3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactermotor3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html">FoxAdvancedCharacterMotor3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxadvancedcharactermotor3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactercamerapivot.html">FoxCharacterCameraPivot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactercamerapivot.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactercamerapivot.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactercamerapivot.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactercamerapivot.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterposemanager.html">FoxCharacterPoseManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterposemanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraimmanager.html">FoxCharacterAimManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraimmanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraimmanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraimmanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraimmanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteranimationtree.html">FoxCharacterAnimationTree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteranimationtree.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhands.html">FoxCharacterHands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhands.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhands.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhands.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhands.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacteraccessories.html">FoxCharacterAccessories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraccessories.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraccessories.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraccessories.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraccessories.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacteraccessories.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterhitbox.html">FoxCharacterHitbox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhitbox.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhitbox.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhitbox.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterhitbox.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxentityshadow.html">FoxEntityShadow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxentityshadow.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxentityshadow.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxentityshadow.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxentityshadow.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxentityshadow.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxdashmanager.html">FoxDashManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxdashmanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxjumpmanager.html">FoxJumpManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxjumpmanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsprintmanager.html">FoxSprintManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsprintmanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">State Machine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstatemachine.html">FoxStateMachine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatemachine.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatemachine.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatemachine.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstatemachine.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxstate.html">FoxState</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxstate.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstatemachine.html">FoxCharacterStateMachine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstatemachine.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstatemachine.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstatemachine.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstatemachine.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterstate.html">FoxCharacterState</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstate.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstate.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterstate.html#property-descriptions">Property Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterairstate.html">FoxCharacterAirState</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterairstate.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterairstate.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterairstate.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterairstate.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterairstate.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharacterdashstate.html">FoxCharacterDashState</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterdashstate.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterdashstate.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterdashstate.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharacterdashstate.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxcharactergroundedstate.html">FoxCharacterGroundedState</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactergroundedstate.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactergroundedstate.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactergroundedstate.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactergroundedstate.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxcharactergroundedstate.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Effects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffect.html">FoxEffect</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffect.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectmanager.html">FoxEffectManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectmanager.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectmanager.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectmanager.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectmanager.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectmanager.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectinstance.html">FoxEffectInstance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectinstance.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxeffectslotpolicy.html">FoxEffectSlotPolicy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectslotpolicy.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectslotpolicy.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectslotpolicy.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectslotpolicy.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxeffectslotpolicy.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Interaction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitarea3d.html">FoxHitArea3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitarea3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitraycast3d.html">FoxHitRayCast3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitraycast3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhitshapecast3d.html">FoxHitShapeCast3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhitshapecast3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxhurtarea3d.html">FoxHurtArea3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxhurtarea3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractablearea3d.html">FoxInteractableArea3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractablearea3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractablearea3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractablearea3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractablearea3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxinteractionraycast3d.html">FoxInteractionRayCast3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxinteractionraycast3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxholdableitem.html">FoxHoldableItem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxholdableitem.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxholdableitem.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxholdableitem.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxholdableitem.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Physics Dragging</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragger3d.html">FoxPhysicsDragger3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragger3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragger3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragger3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragger3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxphysicsdragprofile.html">FoxPhysicsDragProfile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragprofile.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxphysicsdragprofile.html#property-descriptions">Property Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Shop</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopcatalog.html">FoxShopCatalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopcatalog.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopcatalog.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopcatalog.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopcatalog.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopitem.html">FoxShopItem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopitem.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopitem.html#property-descriptions">Property Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopmenu.html">FoxShopMenu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopmenu.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxshopslot.html">FoxShopSlot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxshopslot.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimplewallet.html">FoxSimpleWallet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimplewallet.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimplewallet.html#property-descriptions">Property Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxwallet.html">FoxWallet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxprice.html">FoxPrice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxprice.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxprice.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsimpleprice.html">FoxSimplePrice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimpleprice.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimpleprice.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimpleprice.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsimpleprice.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Socket</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket3d.html">FoxSocket3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager3d.html">FoxSocketManager3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocket2d.html">FoxSocket2D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket2d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket2d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket2d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket2d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocket2d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="class_foxsocketmanager2d.html">FoxSocketManager2D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager2d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager2d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager2d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager2d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxsocketmanager2d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Zoom Spring Arm</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_foxzoomspringarm3d.html">FoxZoomSpringArm3D</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#properties">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#signals">Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_foxzoomspringarm3d.html#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_foxnode.html" class="btn btn-neutral float-right" title="FoxNode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, foxboxboy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
