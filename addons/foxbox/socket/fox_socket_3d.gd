@@ -1,3 +1,4 @@
+@icon("uid://b1yqa4yj5tra0")
 class_name FoxSocket3D
 extends Marker3D
 ## A physical 3D location that reparents and holds a single attachment.

@@ -1,3 +1,4 @@
+@icon("uid://dn15lpwie55n8")
 class_name FoxSocket2D
 extends Marker2D
 ## A physical 2D location that reparents and holds a single attachment.

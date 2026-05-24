@@ -1,3 +1,4 @@
+@icon("uid://rslo1cra60dd")
 class_name FoxSocketManager2D
 extends FoxNode2D
 ## Manages a collection of [FoxSocket2D] nodes.
