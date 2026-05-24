@@ -44,12 +44,12 @@ enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://add
 [file_customization]
 
 folder_colors={
-"res://addons/foxbox/attribute_maps/": "red",
-"res://addons/foxbox/characters/": "gray",
+"res://addons/foxbox/attribute_map/": "red",
+"res://addons/foxbox/character/": "gray",
 "res://addons/foxbox/core/": "orange",
 "res://addons/foxbox/damage/": "pink",
 "res://addons/foxbox/deprecated/": "yellow",
-"res://addons/foxbox/effects/": "purple",
+"res://addons/foxbox/effect/": "purple",
 "res://addons/foxbox/interaction/": "teal",
 "res://addons/foxbox/physics_dragging/": "blue",
 "res://addons/foxbox/shop/": "red",

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cajgsd7cqowsa"]
+
+[ext_resource type="Script" uid="uid://ddmtowmyqtryh" path="res://addons/foxbox/character/components/aim/fox_character_aim_manager.gd" id="1_bwbh0"]
+[ext_resource type="Script" uid="uid://bkdays5b1q8f3" path="res://addons/foxbox/zoom_spring_arm/fox_zoom_spring_arm_3d.gd" id="1_q4t6f"]
+
+[node name="CameraPivot" type="Marker3D" unique_id=1380073160 node_paths=PackedStringArray("shoulder_camera_pivot", "first_person_camera_pivot")]
+script = ExtResource("1_bwbh0")
+shoulder_camera_pivot = NodePath("ZoomSpringArm/ShoulderCameraMarker")
+first_person_camera_pivot = NodePath("FirstPersonCameraMarker")
+
+[node name="ZoomSpringArm" type="SpringArm3D" parent="." unique_id=794924454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+spring_length = 3.0
+script = ExtResource("1_q4t6f")
+
+[node name="ShoulderCameraMarker" type="Marker3D" parent="ZoomSpringArm" unique_id=144182632]
+
+[node name="FirstPersonCameraMarker" type="Marker3D" parent="." unique_id=1841413346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14999998, 0)

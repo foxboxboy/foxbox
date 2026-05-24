@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://foxbox_demos/characters/triplanar.png" id="1_i6m7q"]
 [ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://foxbox_demos/characters/pc_input_controller.gd" id="2_81bif"]
-[ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://addons/foxbox/characters/core/fox_character.tscn" id="2_hbwi6"]
+[ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://addons/foxbox/character/core/fox_character.tscn" id="2_hbwi6"]
 [ext_resource type="Script" uid="uid://d1ayyn78ij210" path="res://foxbox_demos/characters/ai_brain.gd" id="2_phlfe"]
 [ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://foxbox_demos/characters/player.gd" id="7_3ryqn"]
 [ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://foxbox_demos/characters/gui.tscn" id="7_aq0ug"]
