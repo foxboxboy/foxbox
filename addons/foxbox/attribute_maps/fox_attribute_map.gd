@@ -250,29 +250,28 @@ func add_rule(rule: FoxAttributeRule) -> void:
 		return
 		
 	# prevent duplicate rules in memory
-	# (if a buff is refreshed, handle overwriting here)
 	if _active_rules.has(rule):
 		return
 		
 	_active_rules.append(rule)
 	rule_added.emit(rule)
 	
-	# apply rule to local data
+	# Apply rule to the map itself!
 	if _data.has(rule.target_key):
-		rule.apply_to(_data[rule.target_key])
+		rule.apply_to(self)
 	
 	if can_send_rules:
 		for child in _child_maps:
 			child.add_rule(rule)
 
 
-## Removes a [FoxAttributeRule] by matching its [member FoxAttributeRule.rule_id]. 
+## Removes a [FoxAttributeRule] by matching its [member FoxAttributeRule.id]. 
 ## Reverses the rule's mathematical effects on the local data and emits [signal rule_removed].
-func remove_rule(rule_id: StringName) -> void:
-	# find rule in data with rule_id
+func remove_rule(id: StringName) -> void:
+	# find rule in data with id
 	var rule_to_remove: FoxAttributeRule = null
 	for rule in _active_rules:
-		if rule.rule_id == rule_id:
+		if rule.id == id:
 			rule_to_remove = rule
 			break
 	
@@ -282,13 +281,13 @@ func remove_rule(rule_id: StringName) -> void:
 	_active_rules.erase(rule_to_remove)
 	rule_removed.emit(rule_to_remove)
 	
-	# remove rule from local data
+	# Remove rule from the map itself!
 	if _data.has(rule_to_remove.target_key):
-		rule_to_remove.remove_from(_data[rule_to_remove.target_key])
+		rule_to_remove.remove_from(self)
 	
 	if can_send_rules:
 		for child in _child_maps:
-			child.remove_rule(rule_id)
+			child.remove_rule(id)
 
 
 ## Returns the array of currently active and applied [FoxAttributeRule]s.
@@ -358,7 +357,7 @@ func unregister_child_map(child: FoxAttributeMap) -> void:
 	
 	# remove the _parent_map's rules from the departing child
 	for rule in _active_rules:
-		child.remove_rule(rule.rule_id)
+		child.remove_rule(rule.id)
 		
 	# remove the _parent_map's visual states from the departing child
 	for flag in _flags:

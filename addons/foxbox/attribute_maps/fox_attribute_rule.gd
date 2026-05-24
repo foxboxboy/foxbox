@@ -17,10 +17,10 @@ func _init(p_id: StringName = &"", p_target_key: StringName = &"") -> void:
 	id = p_id
 	target_key = p_target_key
 
-## Executes the rule's logic on the target [param data]. 
+## Executes the rule's logic using the map as a reference. 
 ## Must be overridden by subclasses to define exactly how the data is modified.
-@abstract func apply_to(data: Variant) -> void
+@abstract func apply_to(map: FoxAttributeMap) -> void
 
-## Reverses the rule's logic, safely restoring the target [param data] to its previous state. 
+## Reverses the rule's logic, safely restoring the target data to its previous state. 
 ## Must be overridden by subclasses to define exactly how the modification is undone.
-@abstract func remove_from(data: Variant) -> void
+@abstract func remove_from(map: FoxAttributeMap) -> void
