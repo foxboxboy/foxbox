@@ -21,6 +21,17 @@ signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 ## Leave blank to use this [Marker3D]'s transform.
 @export var marker: Node3D
 
+@export_group("Snap Settings")
+
+## If [code]true[/code], the attachment's global position snaps to the socket's marker.
+@export var snap_position: bool = true
+
+## If [code]true[/code], the attachment's global rotation snaps to the socket's marker.
+@export var snap_rotation: bool = true
+
+## If [code]true[/code], the attachment forcefully scales to match the socket marker's global scale.
+@export var snap_scale: bool = false
+
 ## The child node currently plugged into this socket.
 var attachment: Node3D = null
 
@@ -47,9 +58,17 @@ func attach(new_attachment: Node3D) -> void:
 	attachment = new_attachment
 	new_attachment.reparent(self)
 	
-	# Safely snaps position, rotation, and scale all at once
-	new_attachment.global_transform = marker.global_transform
-	
+	if snap_position:
+		new_attachment.global_position = marker.global_position
+		
+	if snap_rotation:
+		new_attachment.global_rotation = marker.global_rotation
+		
+	if snap_scale:
+		var target_scale = marker.global_transform.basis.get_scale()
+		# We orthonormalize first to clear any existing scale/shear, then apply the new scale
+		new_attachment.global_transform.basis = new_attachment.global_transform.basis.orthonormalized().scaled(target_scale)
+		
 	attached.emit(new_attachment, self)
 
 
