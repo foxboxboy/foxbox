@@ -1,5 +1,8 @@
 ## Reads hardware inputs and passes them as intents to a FoxCharacter.
 ## Intented to be a template.
+## @deprecated
+## Inputs dont belong in a character module! Anything "input"
+## is its own module and should be shelved for later.
 extends FoxNode
 
 ## The puppet we are controlling.
