@@ -6,8 +6,11 @@ extends FoxCharacterState
 ## Responsible for walking, crouching, and sprinting. Reads intents 
 ## from specialized managers and delegates speed to the assigned motor.
 
-@export var state_id: StringName = &"Grounded"
 @export var motor: FoxCharacterMotor3D 
+
+
+func _ready() -> void:
+	state_id = &"Grounded"
 
 
 func enter() -> void:

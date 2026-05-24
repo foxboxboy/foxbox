@@ -4,11 +4,13 @@ extends FoxCharacterState
 ## Handles a quick, directional burst of movement that ignores gravity.
 ## Relies on [FoxDashManager] for configuration and state timing.
 
-@export var state_id: StringName = &"Dash"
 @export var motor: FoxAdvancedCharacterMotor3D
 
 var _dash_timer: float = 0.0
 var _dash_direction: Vector3 = Vector3.ZERO
+
+func _ready() -> void:
+	state_id = &"Dash"
 
 
 func enter() -> void:    

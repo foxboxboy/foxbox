@@ -32,6 +32,25 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/foxbox/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/foxbox/attribute_maps/": "red",
+"res://addons/foxbox/characters/": "gray",
+"res://addons/foxbox/core/": "orange",
+"res://addons/foxbox/damage/": "pink",
+"res://addons/foxbox/deprecated/": "yellow",
+"res://addons/foxbox/effects/": "purple",
+"res://addons/foxbox/interaction/": "teal",
+"res://addons/foxbox/physics_dragging/": "blue",
+"res://addons/foxbox/shop/": "red",
+"res://addons/foxbox/socket/": "gray",
+"res://addons/foxbox/state_machine/": "orange",
+"res://addons/foxbox/view_model/": "pink",
+"res://addons/foxbox/world_environments/": "yellow",
+"res://addons/foxbox/zoom_spring_arm/": "purple"
+}
+
 [input]
 
 ui_left={

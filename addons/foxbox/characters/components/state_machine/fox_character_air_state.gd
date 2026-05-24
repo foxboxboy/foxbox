@@ -6,8 +6,12 @@ extends FoxCharacterState
 ## Manages the transition back to grounded states and handles aerial 
 ## mobility via the assigned motor.
 
-@export var state_id: StringName = &"Air"
+
 @export var motor: FoxCharacterMotor3D 
+
+
+func _ready() -> void:
+	state_id = &"Air"
 
 
 func enter() -> void:
