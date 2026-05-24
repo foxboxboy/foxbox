@@ -1,3 +1,4 @@
+@icon("uid://bseln2v3x3gem")
 @abstract
 class_name FoxState
 extends FoxNode

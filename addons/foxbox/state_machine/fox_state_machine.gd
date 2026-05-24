@@ -1,3 +1,4 @@
+@icon("uid://cubhr3bg1ga6k")
 class_name FoxStateMachine
 extends FoxNode
 ## A node-based State Machine that manages [FoxState] children.
