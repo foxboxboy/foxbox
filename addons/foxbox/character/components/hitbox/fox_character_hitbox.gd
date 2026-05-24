@@ -21,10 +21,10 @@ func crouch() -> void:
 	_animate_shape(crouch_height, _crouch_y)
 
 func stand() -> void:
-	_animate_shape(prone_height, _stand_y)
+	_animate_shape(stand_height, _stand_y)
 
 func prone() -> void:
-	_animate_shape(stand_height, _stand_y)
+	_animate_shape(prone_height, _stand_y)
 
 func _animate_shape(target_h: float, target_y: float) -> void:
 	# The exact same logic as before, just encapsulated

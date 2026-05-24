@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://6fjomgb318ai"]
 
-[ext_resource type="Script" uid="uid://if81gwhfjgh7" path="res://addons/foxbox/characters/components/model/hands/fox_character_hands.gd" id="1_5qssd"]
+[ext_resource type="Script" uid="uid://d3lsljg2bfvo1" path="res://addons/foxbox/character/components/model/hands/fox_character_hands.gd" id="1_5qssd"]
 
 [node name="FoxCharacterHands" type="Marker3D" unique_id=2029250302 node_paths=PackedStringArray("left_hand_slot", "right_hand_slot")]
 script = ExtResource("1_5qssd")
