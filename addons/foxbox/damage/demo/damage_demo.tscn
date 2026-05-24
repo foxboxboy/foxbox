@@ -8,17 +8,17 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q817n"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nki2e"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_xd3bc"]
-material = SubResource("StandardMaterial3D_nki2e")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_riwr5"]
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_kpa4a"]
 material = SubResource("StandardMaterial3D_riwr5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nki2e"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xd3bc"]
+material = SubResource("StandardMaterial3D_nki2e")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhy6b"]
 albedo_color = Color(1, 0, 0, 1)
@@ -46,15 +46,7 @@ height = 2.0
 [node name="DamageDemo" type="Node3D" unique_id=418162659]
 script = ExtResource("1_yx5km")
 
-[node name="Target" type="Area3D" parent="." unique_id=1145924505]
-script = ExtResource("2_wmrhg")
-metadata/_custom_type_script = "uid://m6td05ia4n38"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target" unique_id=487604911]
-shape = SubResource("BoxShape3D_q817n")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=1906138044]
-mesh = SubResource("BoxMesh_xd3bc")
+[node name="Area3D" type="Area3D" parent="." unique_id=1975866368]
 
 [node name="Attacker" type="Area3D" parent="." unique_id=416667236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
@@ -66,6 +58,16 @@ shape = SubResource("BoxShape3D_q817n")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Attacker" unique_id=1786422706]
 mesh = SubResource("BoxMesh_kpa4a")
+
+[node name="Target" type="Area3D" parent="." unique_id=1145924505]
+script = ExtResource("2_wmrhg")
+metadata/_custom_type_script = "uid://m6td05ia4n38"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target" unique_id=487604911]
+shape = SubResource("BoxShape3D_q817n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=1906138044]
+mesh = SubResource("BoxMesh_xd3bc")
 
 [node name="Raygun" type="RayCast3D" parent="." unique_id=457649398]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
