@@ -1,8 +1,8 @@
 extends Node
 
 var manager: FoxEffectManager
-const DummyData = preload("res://addons/foxbox/effects/demo/demo_dummy.gd")
-const PoisonSpell = preload("res://addons/foxbox/effects/demo/poison_effect.gd")
+const DummyData = preload("uid://c1n7lj4kr70nq")
+const PoisonSpell = preload("uid://bpkfk8k61s1sk")
 
 func _ready() -> void:
 	manager = FoxEffectManager.new()

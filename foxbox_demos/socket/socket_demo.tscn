@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
 
-[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://addons/foxbox/socket/demo/socket_demo.gd" id="1_njwab"]
+[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://foxbox_demos/socket/socket_demo.gd" id="1_njwab"]
 [ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxbox/socket/fox_socket_manager_2d.gd" id="2_k0o5c"]
 [ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxbox/socket/fox_socket_2d.gd" id="3_qbdgk"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icons/old_icon.png" id="4_wg6ym"]
