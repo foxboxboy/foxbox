@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sv6wvig87vje"
-path="res://.godot/imported/triplanar.png-e5d975a2d5709a6408d5533c30f4b615.ctex"
+path="res://.godot/imported/triplanar.png-5b4b9b6922579ff88b56e62af19dd543.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://foxbox_demos/characters/triplanar.png"
-dest_files=["res://.godot/imported/triplanar.png-e5d975a2d5709a6408d5533c30f4b615.ctex"]
+source_file="res://foxbox_demos/character/triplanar.png"
+dest_files=["res://.godot/imported/triplanar.png-5b4b9b6922579ff88b56e62af19dd543.ctex"]
 
 [params]
 
