@@ -20,6 +20,9 @@ size = Vector3(3, 1, 3)
 [sub_resource type="BoxMesh" id="BoxMesh_kityc"]
 size = Vector3(3, 1, 3)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yaipd"]
+albedo_color = Color(0.16924527, 0.1692453, 0.16924527, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_n7rtu"]
 size = Vector3(4, 1, 4)
 
@@ -157,6 +160,7 @@ shape = SubResource("SphereShape3D_aq0ug")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=1264586414]
 mesh = SubResource("SphereMesh_r0tlq")
+surface_material_override/0 = SubResource("StandardMaterial3D_yaipd")
 
 [node name="MovingCube" type="AnimatableBody3D" parent="." unique_id=1835207632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 14)

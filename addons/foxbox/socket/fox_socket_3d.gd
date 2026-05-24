@@ -2,10 +2,6 @@ class_name FoxSocket3D
 extends Marker3D
 ## A physical 3D location that reparents and holds a single attachment.
 
-
-
-
-
 #region Signals
 
 ## Emitted when this socket gains a new attachment.
@@ -14,18 +10,14 @@ signal attached(attachment: Node3D, socket: FoxSocket3D)
 ## Emitted when the attachment leaves and is no longer a child.
 signal detached(attachment: Node3D, socket: FoxSocket3D)
 
-## Emitted when the child order changes.
+## Emitted when the child order changes, useful for detecting deleted attachments.
 signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 
 #endregion
 
-
-
-
-
 #region Variables
 
-## (Optional) The node that will be used for position and rotation. 
+## (Optional) The node that will be used for position, rotation, and scale. 
 ## Leave blank to use this [Marker3D]'s transform.
 @export var marker: Node3D
 
@@ -33,10 +25,6 @@ signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 var attachment: Node3D = null
 
 #endregion
-
-
-
-
 
 #region Public API
 
@@ -59,8 +47,8 @@ func attach(new_attachment: Node3D) -> void:
 	attachment = new_attachment
 	new_attachment.reparent(self)
 	
-	new_attachment.global_position = marker.global_position
-	new_attachment.global_rotation = marker.global_rotation
+	# Safely snaps position, rotation, and scale all at once
+	new_attachment.global_transform = marker.global_transform
 	
 	attached.emit(new_attachment, self)
 
@@ -78,10 +66,6 @@ func detach() -> Node3D:
 	return detached_node
 
 #endregion
-
-
-
-
 
 #region Private Logic
 

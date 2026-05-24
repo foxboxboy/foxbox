@@ -9,6 +9,15 @@ extends SpringArm3D
 ## Emitted when the arm's zoom distance visually changes.
 signal length_changed(new_length: float)
 
+## Emitted the moment the arm's length reaches 0.0. Useful for hiding the player mesh.
+signal zoom_min_reached
+
+## Emitted the moment the arm reaches its [member max_length].
+signal zoom_max_reached
+
+## Emitted when the arm finishes interpolating and completely settles on the [member target_length].
+signal zoom_finished
+
 @export_group("Zoom Settings")
 
 ## The maximum distance the arm can zoom out.
@@ -70,18 +79,37 @@ func _process(delta: float) -> void:
 
 
 func _update_zoom(delta: float) -> void:
-	if is_equal_approx(spring_length, target_length):
+	var should_zoom := is_equal_approx(spring_length, target_length)
+	if not should_zoom:
 		return
 		
 	var old_length := spring_length
+	
+	spring_length = _calculate_smooth_length(delta)
+	
+	_emit_zoom_signals(old_length)
+
+
+func _calculate_smooth_length(delta: float) -> float:
 	var new_length := lerpf(spring_length, target_length, 1.0 - exp(-zoom_speed * delta))
 	
 	if absf(new_length - target_length) < 0.01:
-		new_length = target_length
+		return target_length
 		
-	spring_length = new_length
-	
+	return new_length
+
+
+func _emit_zoom_signals(old_length: float) -> void:
 	if spring_length != old_length:
 		length_changed.emit(spring_length)
+	
+	# Check for limits and completion
+	if is_equal_approx(spring_length, target_length):
+		zoom_finished.emit()
+		
+		if is_equal_approx(spring_length, 0.0):
+			zoom_min_reached.emit()
+		elif is_equal_approx(spring_length, max_length):
+			zoom_max_reached.emit()
 
 #endregion
