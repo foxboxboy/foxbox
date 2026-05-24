@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://do8yal883w2ue"]
 
 [ext_resource type="Script" uid="uid://dc18dgl7sxhwd" path="res://addons/foxbox/effects/demo/effect_demo.gd" id="1_qsktj"]
-[ext_resource type="Script" uid="uid://cna0i02btk60n" path="res://addons/foxbox/core/components/fox_control.gd" id="2_a36a2"]
 
 [node name="EffectDemo" type="Node" unique_id=598011985]
 script = ExtResource("1_qsktj")
@@ -19,11 +18,3 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Check Console"
-
-[node name="FoxControl" type="Control" parent="." unique_id=2004024947]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2_a36a2")
-metadata/_custom_type_script = "uid://cna0i02btk60n"
