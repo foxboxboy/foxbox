@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://ccrmaaw423qt4"]
+
+[ext_resource type="Script" uid="uid://sspuo0nf0uo7" path="res://addons/foxbox/damage/demo/damage_demo.gd" id="1_yx5km"]
+[ext_resource type="Script" uid="uid://m6td05ia4n38" path="res://addons/foxbox/damage/fox_hurt_area_3d.gd" id="2_wmrhg"]
+[ext_resource type="Script" uid="uid://de5n7x4e06cyt" path="res://addons/foxbox/damage/fox_hit_area_3d.gd" id="3_rhy6b"]
+[ext_resource type="Script" uid="uid://d2fmdwvcjgp80" path="res://addons/foxbox/damage/fox_hit_raycast_3d.gd" id="4_a3eav"]
+[ext_resource type="Script" uid="uid://6eluwmcb7nj8" path="res://addons/foxbox/damage/fox_hit_shape_cast_3d.gd" id="5_wmrhg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q817n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nki2e"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xd3bc"]
+material = SubResource("StandardMaterial3D_nki2e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_riwr5"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kpa4a"]
+material = SubResource("StandardMaterial3D_riwr5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhy6b"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wmrhg"]
+material = SubResource("StandardMaterial3D_rhy6b")
+top_radius = 0.1
+bottom_radius = 0.01
+height = 6.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rhy6b"]
+radius = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wmrhg"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmrhg"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rhy6b"]
+material = SubResource("StandardMaterial3D_wmrhg")
+radius = 1.0
+height = 2.0
+
+[node name="DamageDemo" type="Node3D" unique_id=418162659]
+script = ExtResource("1_yx5km")
+
+[node name="Target" type="Area3D" parent="." unique_id=1145924505]
+script = ExtResource("2_wmrhg")
+metadata/_custom_type_script = "uid://m6td05ia4n38"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target" unique_id=487604911]
+shape = SubResource("BoxShape3D_q817n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=1906138044]
+mesh = SubResource("BoxMesh_xd3bc")
+
+[node name="Attacker" type="Area3D" parent="." unique_id=416667236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+script = ExtResource("3_rhy6b")
+metadata/_custom_type_script = "uid://de5n7x4e06cyt"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Attacker" unique_id=115334943]
+shape = SubResource("BoxShape3D_q817n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Attacker" unique_id=1786422706]
+mesh = SubResource("BoxMesh_kpa4a")
+
+[node name="Raygun" type="RayCast3D" parent="." unique_id=457649398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+target_position = Vector3(0, -6, 0)
+hit_from_inside = true
+collide_with_areas = true
+script = ExtResource("4_a3eav")
+metadata/_custom_type_script = "uid://d2fmdwvcjgp80"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Raygun" unique_id=922419531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+mesh = SubResource("CylinderMesh_wmrhg")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2041047408]
+transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.9659258, 0, 3, 5)
+
+[node name="Sweeper" type="ShapeCast3D" parent="." unique_id=1732840942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 0)
+shape = SubResource("SphereShape3D_rhy6b")
+target_position = Vector3(-4, -5, 0)
+collide_with_areas = true
+script = ExtResource("5_wmrhg")
+metadata/_custom_type_script = "uid://6eluwmcb7nj8"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sweeper" unique_id=2039664883]
+shape = SubResource("SphereShape3D_wmrhg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sweeper" unique_id=284220759]
+mesh = SubResource("SphereMesh_rhy6b")

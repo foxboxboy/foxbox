@@ -1,6 +1,7 @@
 @tool
+class_name FoxBox
 extends EditorPlugin
-
+## Lightweight framework for Godot. By foxboxboy.
 
 func _enable_plugin() -> void:
 	# Add autoloads here.

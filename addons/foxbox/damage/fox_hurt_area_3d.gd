@@ -1,20 +1,20 @@
+@icon("uid://bihwfrg2mota4")
 class_name FoxHurtArea3D
 extends Area3D
-## Receives payloads from damage-dealing sources and routes them.
+## Receives [Variant] payloads from physical interactions and routes them.
 ##
-## Acts as a standardized data relay. It exists to be found by collision 
-## queries and routes the delivered [Variant] payload via a signal.
+## Acts as the receiving end of the Foxbox interaction pipeline. It listens
+## for overlapping [FoxHitArea3D] nodes and broadcasts their payload.
 
 
-## Emitted immediately when a payload is delivered via [method receive_hit]. 
+## Emitted immediately when a [param payload] is successfully delivered to this area.
 signal hit_received(payload: Variant)
 
-
-## If false, incoming payloads are silently ignored without emitting a signal.
+## If [code]false[/code], incoming payloads are silently ignored and no signals are emitted.
 @export var is_active: bool = true
 
 
-## Accepts a [param payload] from an external source and emits [signal hit_received].
+## Accepts a [Variant] [param payload] from an external source and emits [signal hit_received].
 func receive_hit(payload: Variant) -> void:
 	if is_active:
 		hit_received.emit(payload)
