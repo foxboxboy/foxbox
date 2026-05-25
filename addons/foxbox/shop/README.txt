@@ -1,1 +1,1 @@
-Shop: A highly abstracted, decoupled transaction system. Instead of relying on hardcoded "number" currencies, it routes arbitrary data between generic Wallets and Shops, allowing currency to be anything from integers to physical items. (You were right, your original definition undersold how good your wallet abstraction was!)
+Shop: A highly abstracted, decoupled transaction system. Instead of relying on hardcoded "number" currencies, it routes arbitrary data between generic Wallets and Shops, allowing currency to be anything from integers to physical items.
