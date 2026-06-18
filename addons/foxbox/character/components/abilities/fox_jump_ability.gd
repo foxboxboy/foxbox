@@ -1,4 +1,4 @@
-class_name FoxJumpManager
+class_name FoxJumpAbility
 extends FoxNode
 
 ## Component that manages the math, memory, and rules for jumping.

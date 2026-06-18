@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ww7unfyqu7q8"]
 
 [ext_resource type="PackedScene" uid="uid://384do1qwb655" path="res://addons/foxbox/character/assets/gun/tommy_gun.gltf" id="1_53yox"]
-[ext_resource type="Script" uid="uid://c2ghpdgg0oxw7" path="res://addons/foxbox/character/components/model/item/fox_holdable_item.gd" id="1_ik5yt"]
+[ext_resource type="Script" uid="uid://c2ghpdgg0oxw7" path="res://addons/foxbox/character/refactor/model/item/fox_holdable_item.gd" id="1_ik5yt"]
 
 [node name="TommyGunItem" type="Node3D" unique_id=1371064466 node_paths=PackedStringArray("main_hand_target", "off_hand_target", "main_elbow_pole", "off_elbow_pole")]
 script = ExtResource("1_ik5yt")

@@ -1,4 +1,4 @@
-class_name FoxDashManager
+class_name FoxDashAbility
 extends FoxNode
 
 ## Component that manages the math, memory, and rules for a dash ability.

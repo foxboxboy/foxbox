@@ -1,4 +1,4 @@
-class_name FoxSprintManager
+class_name FoxSprintAbility
 extends FoxNode
 
 ## Component that manages the intents and threshold math for sprinting.
