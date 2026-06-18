@@ -1,1 +1,1 @@
-Socket: A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." Useful for character vehicles, bench sitting, or physically mounting dynamic items to a player's model.
+Socket: A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." 
