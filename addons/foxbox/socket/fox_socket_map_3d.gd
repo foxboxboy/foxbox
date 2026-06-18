@@ -1,7 +1,9 @@
 @icon("uid://gn5af2lswkru")
-class_name FoxSocketManager3D
+class_name FoxSocketMap3D
 extends FoxNode3D
-## Manages a collection of [FoxSocket3D] nodes.
+## Manages a collection of [FoxSocket3D] nodes, mapped by their node names.
+
+
 
 #region Signals
 
@@ -13,35 +15,56 @@ signal node_detached(attachment: Node3D, socket: FoxSocket3D)
 
 #endregion
 
+
+
 #region Variables
 
-## A collection of all sockets managed by this component.
-var sockets: Array[FoxSocket3D] = []
+## A dictionary mapping socket names (StringName) to their [FoxSocket3D] nodes.
+var sockets: Dictionary = {}
 
 #endregion
+
+
 
 #region Public API
 
 ## Returns the total number of managed sockets that currently have no attachment.
 func get_available_socket_count() -> int:
 	var count: int = 0
-	for socket in sockets:
+	for socket: FoxSocket3D in sockets.values():
 		if socket.is_empty():
 			count += 1
 	return count
 
 
-## Attempts to plug [param node] into the first available empty socket.
-## Returns [code]true[/code] if successful, or [code]false[/code] if all sockets are full.
-func try_attach(node: Node3D) -> bool:
-	for socket in sockets:
+## Plugs [param node] into a socket. If [param target_socket] is specified, it targets that 
+## exact socket. If left empty, it will auto-attach to the first available empty socket.
+## Returns [code]true[/code] on success.
+func attach(node: Node3D, target_socket: StringName = &"") -> bool:
+	# No specific target_socket
+	if target_socket != &"":
+		var socket: FoxSocket3D = sockets.get(target_socket)
+		if socket and socket.is_empty():
+			socket.attach(node)
+			return true
+		return false
+	
+	# Specific target_socket 
+	for socket: FoxSocket3D in sockets.values():
 		if socket.is_empty():
 			socket.attach(node)
 			return true
 			
 	return false
 
+
+## Safely retrieves a socket by name, returning null if it doesn't exist.
+func get_socket(socket_name: StringName) -> FoxSocket3D:
+	return sockets.get(socket_name)
+
 #endregion
+
+
 
 #region Private Logic
 
@@ -50,8 +73,10 @@ func _ready() -> void:
 	for child in find_children("*", "FoxSocket3D", true, false):
 		var socket = child as FoxSocket3D
 		if socket:
-			sockets.append(socket)
-			# Route all socket signals up through the manager
+			# Update sockets Dictionary
+			sockets[StringName(socket.name)] = socket
+			
+			# Connect signals
 			socket.attached.connect(_on_socket_attached)
 			socket.detached.connect(_on_socket_detached)
 
