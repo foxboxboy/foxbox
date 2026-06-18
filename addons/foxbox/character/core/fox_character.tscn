@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cajgsd7cqowsa" path="res://addons/foxbox/character/components/camera_pivot/fox_camera_pivot.tscn" id="3_osto5"]
 [ext_resource type="Script" uid="uid://c1qqhyvin62tl" path="res://addons/foxbox/character/components/hitbox/fox_character_hitbox.gd" id="4_irypd"]
 [ext_resource type="PackedScene" uid="uid://bd5g3v65ulm7d" path="res://addons/foxbox/character/components/model/fox_character_model.tscn" id="5_vwgx6"]
-[ext_resource type="Script" uid="uid://bvjessm2ux1nn" path="res://addons/foxbox/character/components/state_machine/fox_character_state_machine.gd" id="6_gyrcu"]
+[ext_resource type="Script" uid="uid://cwr4tuo3bm2je" path="res://addons/foxbox/state_machine/fox_state_machine.gd" id="6_mv332"]
 [ext_resource type="Script" uid="uid://b6bxv4yvhnqiw" path="res://addons/foxbox/character/components/state_machine/fox_character_grounded_state.gd" id="7_7128x"]
 [ext_resource type="Script" uid="uid://civ7m3j5iqawi" path="res://addons/foxbox/character/components/state_machine/fox_character_air_state.gd" id="8_0ex66"]
 [ext_resource type="Script" uid="uid://d1xgb1ro0jnow" path="res://addons/foxbox/character/components/state_machine/fox_character_dash_state.gd" id="9_osto5"]
@@ -37,7 +37,7 @@ _ground_motor = NodePath("GroundMotor")
 model = NodePath("Model")
 _hitbox = NodePath("Hitbox")
 _ground_cast = NodePath("GroundCast")
-_state_machine = NodePath("StateMachine")
+_state_machine = NodePath("")
 
 [node name="GroundMotor" type="Node3D" parent="." unique_id=507443324 node_paths=PackedStringArray("body")]
 script = ExtResource("2_0ex66")
@@ -69,12 +69,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 shape = SubResource("SphereShape3D_oy2pm")
 target_position = Vector3(0, 0, 0)
 
-[node name="StateMachine" type="Node" parent="." unique_id=1867456045 node_paths=PackedStringArray("physics_body", "model", "character", "initial_state")]
-script = ExtResource("6_gyrcu")
-physics_body = NodePath("..")
-model = NodePath("../Model")
-character = NodePath("..")
-initial_state = NodePath("GroundedState")
+[node name="StateMachine" type="Node" parent="." unique_id=187815858]
+script = ExtResource("6_mv332")
+metadata/_custom_type_script = "uid://cwr4tuo3bm2je"
 
 [node name="GroundedState" type="Node" parent="StateMachine" unique_id=1830978882 node_paths=PackedStringArray("motor")]
 script = ExtResource("7_7128x")
