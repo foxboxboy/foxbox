@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://crxfm0w31nb7f"]
 
-[ext_resource type="Script" uid="uid://ddmtowmyqtryh" path="res://addons/foxbox/core/math/fox_aim_gimbal_3d.gd" id="1_3k8km"]
+[ext_resource type="Script" uid="uid://ddmtowmyqtryh" path="res://addons/foxbox/aim_gimbal/fox_aim_gimbal_3d.gd" id="1_3k8km"]
 [ext_resource type="Script" uid="uid://ciiaym4uymycx" path="res://foxbox_demos/gimbal/gimbal_demo.gd" id="1_xh70e"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xh70e"]

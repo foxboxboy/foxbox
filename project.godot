@@ -44,6 +44,7 @@ enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://add
 [file_customization]
 
 folder_colors={
+"res://addons/foxbox/aim_gimbal/": "teal",
 "res://addons/foxbox/attribute_map/": "red",
 "res://addons/foxbox/character/": "gray",
 "res://addons/foxbox/core/": "orange",
