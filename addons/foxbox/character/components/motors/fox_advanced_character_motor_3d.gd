@@ -7,7 +7,7 @@ class_name FoxAdvancedCharacterMotor3D
 ## [br]
 ## This gives it an overall higher fidelity "feel".
 
-@export_group("Smoothing")
+
 ## How responsive input is.
 @export var acceleration := 1000.0
 ## How quickly the character will slow down.

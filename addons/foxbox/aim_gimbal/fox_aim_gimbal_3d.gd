@@ -46,8 +46,8 @@ var yaw: float = 0.0 :
 ## Accumulates a 2D input delta (e.g., from a mouse or joystick) and applies it to the node's rotation.
 ## The Y component affects pitch (X-axis) and the X component affects yaw (Y-axis).
 func apply_rotation_input(input_delta: Vector2) -> void:
-	pitch += input_delta.y
-	yaw += input_delta.x
+	pitch -= input_delta.y
+	yaw -= input_delta.x
 
 
 ## Intercepts native look_at calls to prevent internal pitch/yaw desyncs.

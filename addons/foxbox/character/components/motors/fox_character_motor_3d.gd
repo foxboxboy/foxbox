@@ -1,17 +1,12 @@
 extends FoxNode3D
 class_name FoxCharacterMotor3D
-## Moves itself based on an input direction and the strength of the input. 
-## Built in speed and jump_strength to control how fast the body moves and
-## how high it can jump.
+## Moves a CharacterBody3D based on an input direction and the strength of the input. 
 
-signal jumped
 
 ## The body that will be acted upon. If unspecified, the node this is attached to will become the body.
 @export var body : CharacterBody3D
 ## How fast the body will move.
 @export var speed := 5.0
-## How high the body will jump. Set to zero to disable jumping.
-@export var jump_strength := 9.5
 ## How much the default gravity will apply. Makes the character 
 ## feel more floaty (less than 1) or heavier (greater than 1).  
 @export var gravity_multiplier := 2.5
@@ -24,8 +19,6 @@ var input_strength := 1.0
 var active := true:
 	set(new_value):
 		active = new_value
-
-
 
 
 
@@ -54,8 +47,6 @@ func _physics_process(delta) -> void:
 
 
 
-
-
 #region Public API
 
 ## Enables the motor to work.
@@ -68,15 +59,7 @@ func enable():
 func disable():
 	active = false
 
-
-## Makes the body jump based on jump_strength multiplied by the multiplier passed in.
-func jump(multiplier := 1.0) -> void:
-	body.velocity.y = jump_strength * multiplier
-	jumped.emit()
-
 #endregion
-
-
 
 
 

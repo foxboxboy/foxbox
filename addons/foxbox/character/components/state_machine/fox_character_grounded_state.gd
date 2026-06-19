@@ -1,4 +1,4 @@
-class_name FoxGroundedState
+class_name FoxGroundState
 extends FoxState
 ## Applies floor-based speed and direction to a FoxCharacterMotor3D.
 
@@ -9,7 +9,7 @@ var current_speed: float = 5.0
 var input_direction: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-	state_id = &"Grounded"
+	state_id = &"Ground"
 
 func enter() -> void:
 	motor.enable()
@@ -24,4 +24,4 @@ func physics_update(delta: float) -> void:
 	motor.speed = current_speed
 	motor.input_direction = input_direction
 	
-	motor._physics_process(delta)
+	#motor._physics_process(delta)

@@ -15,7 +15,7 @@ var states: Dictionary = {}
 #region Public API
 
 ## Transitions to a [FoxState] matching the provided [param new_state_name].
-func transition_to_state(new_state_name: StringName) -> void:
+func transition_to(new_state_name: StringName) -> void:
 	var new_state: FoxState = states.get(new_state_name)
 	
 	if not new_state:
@@ -72,6 +72,6 @@ func _on_child_transition_requested(old_state: FoxState, new_state_name: StringN
 	if old_state != current_state:
 		return
 		
-	transition_to_state(new_state_name)
+	transition_to(new_state_name)
 
 #endregion

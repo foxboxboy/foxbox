@@ -13,8 +13,6 @@ signal requested
 ## Emitted when a pending jump is cancelled with [method cancel].
 signal request_cancelled
 
-@export_group("Physics")
-
 ## Maximum number of jumps allowed before landing (1 = Normal, 2 = Double Jump).
 @export var max_jumps: int = 1
 
@@ -24,9 +22,17 @@ signal request_cancelled
 ## How long a jump input is remembered before hitting the ground, in seconds.
 @export var buffer_time: float = 0.1
 
-## The multiplier used for the jump force when jumping from a crouched position.
-@export var crouch_multiplier: float = 1.2
+## Documentation needed
+@export var jump_cut_multiplier: float = 0.5
+@export var strength : float = 2.0
 
+var is_grounded: bool = false :
+	set(value):
+		is_grounded = value
+		if is_grounded == true and is_grounded == false:
+			_last_grounded_time = Time.get_ticks_msec()
+		elif is_grounded == false and is_grounded == true:
+			reset_count()
 
 var _is_request_active: bool = false
 var _jumps_made: int = 0
@@ -95,7 +101,7 @@ func consume() -> void:
 	
 	var time_since_ground: float = (Time.get_ticks_msec() - _last_grounded_time) / 1000.0
 	
-	# If they used a double-jump after falling off a ledge, we must charge them for 2 jumps.
+	# If used a double-jump after falling off a ledge consume 2 jumps.
 	if _jumps_made == 0 and time_since_ground > coyote_duration:
 		_jumps_made = 2
 	else:
@@ -108,8 +114,3 @@ func consume() -> void:
 ## Resets the multi-jump counter to zero. Typically called when landing.
 func reset_count() -> void:
 	_jumps_made = 0
-
-
-## Records the exact millisecond the character was last touching the ground.
-func update_grounded_time() -> void:
-	_last_grounded_time = Time.get_ticks_msec()

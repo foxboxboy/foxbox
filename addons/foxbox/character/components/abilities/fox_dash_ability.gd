@@ -13,8 +13,6 @@ signal requested
 ## Emitted when a pending dash is cancelled with [method cancel].
 signal request_cancelled
 
-@export_group("Physics")
-
 ## The burst speed applied to the character during the dash, in meters per second.
 @export var speed: float = 20.0
 
@@ -59,3 +57,9 @@ func consume() -> void:
 	_is_request_active = false
 	_last_dash_time = Time.get_ticks_msec()
 	consumed.emit()
+
+
+## Returns true if the dash duration has not yet expired.
+func is_dashing() -> bool:
+	var time_since: float = (Time.get_ticks_msec() - _last_dash_time) / 1000.0
+	return time_since < duration

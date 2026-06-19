@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bl46ajiolcqtg" path="res://addons/foxbox/world_environments/mobile_world_environment.tscn" id="1_7781v"]
 [ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://addons/foxbox/character/components/trash/core/fox_character.tscn" id="1_eehrr"]
-[ext_resource type="Script" uid="uid://b7lyt1o1q1ssm" path="res://foxbox_demos/character/stress_test/info_label.gd" id="2_wnx6f"]
+[ext_resource type="Script" uid="uid://b7lyt1o1q1ssm" path="res://foxbox_demos/old_character/stress_test/info_label.gd" id="2_wnx6f"]
 
 [node name="StressTestDemo" type="Node3D" unique_id=505460979]
 

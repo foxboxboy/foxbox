@@ -11,8 +11,6 @@ signal requested
 ## Emitted when a sprint request is cancelled.
 signal cancelled
 
-@export_group("Physics")
-
 ## The target speed when sprinting, in meters per second.
 @export var speed: float = 9.0
 
