@@ -4,7 +4,6 @@ extends FoxState
 
 @export var motor: FoxCharacterMotor3D
 
-## Pushed by the project's brain every frame
 var current_speed: float = 5.0
 var input_direction: Vector2 = Vector2.ZERO
 
@@ -23,5 +22,3 @@ func update(_delta: float) -> void:
 func physics_update(delta: float) -> void:
 	motor.speed = current_speed
 	motor.input_direction = input_direction
-	
-	#motor._physics_process(delta)

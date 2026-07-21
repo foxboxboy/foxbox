@@ -36,18 +36,18 @@ signal character_model_changed(visible: bool)
 #region Exports
 
 @export_group("Components")
-@export var jump: FoxJumpManager
-@export var dash: FoxDashManager
+@export var jump: FoxJumpAbility
+@export var dash: FoxDashAbility
 @export var pose: FoxCharacterPoseManager
-@export var sprint: FoxSprintManager
-@export var aim: FoxCharacterAimManager
+@export var sprint: FoxSprintAbility
+@export var aim: FoxAimGimbal3D
 
 @export var _physics_body: CharacterBody3D
 @export var _ground_motor: FoxAdvancedCharacterMotor3D
 @export var model: FoxCharacterModel
 @export var _hitbox: FoxCharacterHitbox
 @export var _ground_cast: RayCast3D
-@export var _state_machine: FoxCharacterStateMachine
+@export var _state_machine: FoxStateMachine
 
 @export_group("Movement Settings")
 @export var walk_speed: float = 5.0
@@ -121,7 +121,6 @@ func _on_pose_changed(new_pose: FoxCharacterPoseManager.Type, _old_pose: FoxChar
 			_hitbox.stand()
 			
 			# Needs refactored this doesn't read well
-			# Should be something camera_pivot.stand()
 			aim.stand()
 			
 			stood.emit()

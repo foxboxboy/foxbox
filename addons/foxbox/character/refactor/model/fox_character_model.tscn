@@ -51,7 +51,7 @@ right_hand_ik = NodePath("../Mannequin/armature/Skeleton3D/RightHandIK")
 
 [node name="Mannequin" parent="." unique_id=601530213 instance=ExtResource("2_7oa71")]
 
-[node name="Skeleton3D" parent="Mannequin/armature" parent_id_path=PackedInt32Array(601530213, 919447920) index="0" unique_id=377446097 node_paths=PackedStringArray("skeleton")]
+[node name="Skeleton3D" parent="Mannequin/armature" parent_id_path=PackedInt32Array(601530213, 983921767) index="0" unique_id=876694299 node_paths=PackedStringArray("skeleton")]
 script = ExtResource("4_b5bb4")
 skeleton = NodePath(".")
 

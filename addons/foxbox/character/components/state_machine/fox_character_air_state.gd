@@ -8,7 +8,7 @@ extends FoxState
 @export var air_control_multiplier: float = 0.5
 
 var input_direction: Vector2 = Vector2.ZERO
-var current_speed: float = 5.0 # Now it can receive the Pawn's speed!
+var current_speed: float = 5.0
 
 func _ready() -> void:
 	state_id = &"Air"
@@ -27,9 +27,5 @@ func update(_delta: float) -> void:
 
 
 func physics_update(_delta: float) -> void:
-	# Pass the variables down to the muscle.
 	motor.speed = current_speed
 	motor.input_direction = input_direction * air_control_multiplier
-	
-	# We DO NOT call motor.move_and_slide() or motor._physics_process()
-	# The motor handles its own execution!

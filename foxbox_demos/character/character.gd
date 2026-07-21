@@ -59,8 +59,6 @@ func _process_intents() -> void:
 	if intent_jump: jump_ability.request()
 	if intent_dash: dash_ability.request()
 	
-	print(intent_jump)
-	
 	if intent_sprint: sprint_ability.request()
 	else: sprint_ability.cancel()
 
@@ -121,7 +119,13 @@ func _handle_ground_logic() -> void:
 
 
 func _handle_air_logic() -> void:
-	air_state.current_speed = walk_speed # Apply your air control speed here
+	var target_speed: float = walk_speed
+	
+	# If they are holding the sprint button in the air, let them keep their momentum!
+	if sprint_ability.has_request():
+		target_speed = sprint_ability.speed
+		
+	air_state.current_speed = target_speed
 	air_state.input_direction = intent_movement
 
 
@@ -129,16 +133,15 @@ func _handle_dash_logic() -> void:
 	if dash_ability.has_request():
 		dash_ability.consume() 
 		
-		# 1. Get the 2D intent. If no WASD is pressed, default to Forward (Y = -1)
+		# 1. Get the 2D intent. If no WASD is pressed, default to Forward (-Y)
 		var dir_2d = intent_movement if intent_movement != Vector2.ZERO else Vector2(0, -1)
 		
-		# 2. Get the character's CURRENT global facing directions
-		var forward = -global_basis.z
-		var right = global_basis.x
+		# 2. Map the 2D input to a flat 3D local vector (X becomes X, Y becomes Z)
+		var local_3d = Vector3(dir_2d.x, 0.0, dir_2d.y)
 		
-		# 3. Multiply the input by the facing directions to get a GLOBAL 3D vector!
-		var dash_dir_3d = (right * dir_2d.x) + (forward * dir_2d.y)
-		dash_dir_3d = dash_dir_3d.normalized()
+		# 3. Multiply it by the character's global_basis! 
+		# Godot perfectly calculates that a local Z of -1 means global Forward.
+		var dash_dir_3d = (global_basis * local_3d).normalized()
 		
 		# 4. Push the global velocity to the state
 		dash_state.dash_velocity = dash_dir_3d * dash_ability.speed
