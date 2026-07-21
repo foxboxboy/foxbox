@@ -1,12 +1,14 @@
 class_name FoxDynamicCapsule
 extends CollisionShape3D
 
-## Smoothly animates the capsule's height while 
-## automatically adjusting its Y-position to keep the base grounded.
+## A specialized [CollisionShape3D] that animates its height while remaining grounded.
+##
+## Automatically calculates the [member Node3D.position] Y-offset needed to keep the 
+## base of a [CapsuleShape3D] flush with the floor when its height changes.
 
-@export var transition_time: float = 0.2
 
-func lerp_height_to(target_height: float) -> void:
+## Smoothly interpolates the capsule's height to the [param target_height] over [param duration] seconds.
+func lerp_height_to(target_height: float, duration: float = 0.2) -> void:
 	if not shape is CapsuleShape3D:
 		push_warning("FoxDynamicCapsule requires a CapsuleShape3D.")
 		return
@@ -14,5 +16,5 @@ func lerp_height_to(target_height: float) -> void:
 	var target_y: float = target_height / 2.0
 	var tween := create_tween().set_parallel(true)
 	
-	tween.tween_property(shape, "height", target_height, transition_time)
-	tween.tween_property(self, "position:y", target_y, transition_time)
+	tween.tween_property(shape, "height", target_height, duration)
+	tween.tween_property(self, "position:y", target_y, duration)
