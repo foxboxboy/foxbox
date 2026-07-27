@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://d1xgb1ro0jnow" path="res://addons/foxbox/character/components/state_machine/fox_character_dash_state.gd" id="9_osto5"]
 [ext_resource type="Script" uid="uid://gmhgt0olourg" path="res://addons/foxbox/character/components/abilities/fox_dash_ability.gd" id="10_irypd"]
 [ext_resource type="Script" uid="uid://bg0lcrygh0gxa" path="res://addons/foxbox/character/components/abilities/fox_jump_ability.gd" id="11_vwgx6"]
-[ext_resource type="Script" uid="uid://cci564yocrg5u" path="res://addons/foxbox/character/components/trash/pose/fox_character_pose_manager.gd" id="12_433hr"]
 [ext_resource type="Script" uid="uid://bq1vvbojqs7vc" path="res://addons/foxbox/character/components/abilities/fox_sprint_ability.gd" id="13_egagp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e87n2"]
@@ -29,7 +28,7 @@ platform_floor_layers = 4294967293
 script = ExtResource("1_7128x")
 jump = NodePath("Abilities/Jump")
 dash = NodePath("Abilities/Dash")
-pose = NodePath("Abilities/Pose")
+pose = NodePath("")
 sprint = NodePath("Abilities/Sprint")
 aim = NodePath("CameraPivot")
 _physics_body = NodePath(".")
@@ -42,15 +41,15 @@ _ground_cast = NodePath("GroundCast")
 script = ExtResource("6_mv332")
 metadata/_custom_type_script = "uid://cwr4tuo3bm2je"
 
-[node name="GroundState" type="Node" parent="MotorStateMachine" unique_id=1830978882 node_paths=PackedStringArray("motor")]
+[node name="Ground" type="Node" parent="MotorStateMachine" unique_id=1830978882 node_paths=PackedStringArray("motor")]
 script = ExtResource("7_7128x")
 motor = NodePath("../../GroundMotor")
 
-[node name="AirState" type="Node" parent="MotorStateMachine" unique_id=1903171990 node_paths=PackedStringArray("motor")]
+[node name="Air" type="Node" parent="MotorStateMachine" unique_id=1903171990 node_paths=PackedStringArray("motor")]
 script = ExtResource("8_0ex66")
 motor = NodePath("../../GroundMotor")
 
-[node name="DashState" type="Node" parent="MotorStateMachine" unique_id=352923845 node_paths=PackedStringArray("motor")]
+[node name="Dash" type="Node" parent="MotorStateMachine" unique_id=352923845 node_paths=PackedStringArray("motor")]
 script = ExtResource("9_osto5")
 motor = NodePath("../../GroundMotor")
 
@@ -91,9 +90,9 @@ cooldown = 2.0
 [node name="Jump" type="Node" parent="Abilities" unique_id=733823146]
 script = ExtResource("11_vwgx6")
 
-[node name="Pose" type="Node" parent="Abilities" unique_id=1853024140 node_paths=PackedStringArray("headroom_sensor")]
-script = ExtResource("12_433hr")
-headroom_sensor = NodePath("../../HeadClearanceSensor")
-
 [node name="Sprint" type="Node" parent="Abilities" unique_id=289677418]
 script = ExtResource("13_egagp")
+
+[node name="Crouch" type="Node" parent="Abilities" unique_id=1043742330]
+
+[node name="Crawl" type="Node" parent="Abilities" unique_id=1967307155]

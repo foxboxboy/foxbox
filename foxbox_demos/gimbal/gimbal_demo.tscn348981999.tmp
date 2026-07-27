@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://crxfm0w31nb7f"]
+
+[ext_resource type="Script" uid="uid://ddmtowmyqtryh" path="res://addons/foxbox/aim_gimbal/fox_aim_gimbal_3d.gd" id="1_3k8km"]
+[ext_resource type="Script" uid="uid://ciiaym4uymycx" path="res://foxbox_demos/gimbal/gimbal_demo.gd" id="1_xh70e"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xh70e"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xh70e"]
+height = 1.0
+
+[node name="GimbalDemo" type="Node3D" unique_id=1445585597]
+script = ExtResource("1_xh70e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1593087669]
+mesh = SubResource("PlaneMesh_xh70e")
+
+[node name="Label" type="Label" parent="." unique_id=258307910]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -11.5
+offset_right = 59.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Use arrow keys"
+
+[node name="Cylinder" type="MeshInstance3D" parent="." unique_id=1578605416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.63349, 0.8775841, -2.5117583)
+mesh = SubResource("CylinderMesh_xh70e")
+
+[node name="Offset" type="Node3D" parent="." unique_id=1102886463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71052396, 0, 0.3827203)
+
+[node name="FoxAimGimbal3D" type="Node3D" parent="Offset" unique_id=2083035852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19806123, 0.40685862, 0.599496)
+script = ExtResource("1_3k8km")
+clamp_pitch = null
+min_pitch_deg = null
+max_pitch_deg = null
+clamp_yaw = null
+min_yaw_deg = null
+max_yaw_deg = null
+metadata/_custom_type_script = "uid://ddmtowmyqtryh"
+
+[node name="Camera3D" type="Camera3D" parent="Offset/FoxAimGimbal3D" unique_id=837246884]

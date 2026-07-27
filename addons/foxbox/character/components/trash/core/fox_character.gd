@@ -45,7 +45,7 @@ signal character_model_changed(visible: bool)
 @export var _physics_body: CharacterBody3D
 @export var _ground_motor: FoxAdvancedCharacterMotor3D
 @export var model: FoxCharacterModel
-@export var _hitbox: FoxCharacterHitbox
+@export var _hitbox: FoxDynamicCapsule
 @export var _ground_cast: RayCast3D
 @export var _state_machine: FoxStateMachine
 
@@ -169,7 +169,6 @@ func update_locomotion_visuals() -> void:
 
 func set_input_direction(direction: Vector2) -> void:
 	input_direction = direction.normalized()
-
 
 ## Clears any momentary action intents (Jump, Dash) to prevent input ghosting.
 ## Note: This deliberately does NOT clear persistent stances like Crouch or Sprint.
