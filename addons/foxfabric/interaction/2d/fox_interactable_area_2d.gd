@@ -1,4 +1,4 @@
-﻿@icon("uid://bvhaphrwe2grr")
+@icon("uid://d1kwkeuoiwmv")
 class_name FoxInteractableArea2D
 extends Area2D
 ## A physical volume that can be detected and interacted with.

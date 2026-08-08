@@ -23,6 +23,8 @@ const ALLOWED: Dictionary = {
 func run() -> void:
 	suite = "module_independence"
 	_modules_only_reach_core()
+	_icons_point_at_something()
+	_no_byte_order_marks()
 
 
 func _modules_only_reach_core() -> void:
@@ -125,3 +127,57 @@ func _code_of(line: String) -> String:
 
 	var hash_at: int = line.find("#")
 	return line.substr(0, hash_at) if hash_at != -1 else line
+
+
+## Every @icon points at something that exists.
+## [br][br]
+## Regression: three classes carried uids left over from before their icon was reimported, so
+## the editor logged "Unrecognized UID" and drew no icon. Nothing else notices, because a class
+## with a missing icon simply falls back to its base type's.
+func _icons_point_at_something() -> void:
+	case("icons resolve")
+	var files: Array[String] = []
+	_collect(ADDON, files)
+
+	var broken: Array[String] = []
+	var checked: int = 0
+
+	for path: String in files:
+		for line: String in _lines(path):
+			var stripped: String = line.strip_edges()
+			if not stripped.begins_with("@icon("):
+				continue
+
+			var opened: int = stripped.find("\"")
+			var closed: int = stripped.rfind("\"")
+			if opened == -1 or closed <= opened:
+				continue
+
+			var target: String = stripped.substr(opened + 1, closed - opened - 1)
+			checked += 1
+			if not ResourceLoader.exists(target):
+				broken.append("%s -> %s" % [path.trim_prefix(ADDON), target])
+
+	check(checked > 10, "found icons to check")
+	eq(broken.size(), 0, "every @icon resolves: %s" % ", ".join(broken))
+
+
+## No file carries a byte order mark.
+## [br][br]
+## Regression: Windows PowerShell writes one with Set-Content -Encoding utf8, and three files
+## picked one up during an edit. Godot parses them anyway, so nothing complains and the stray
+## bytes just sit at the top of the file forever.
+func _no_byte_order_marks() -> void:
+	case("no byte order marks")
+	var files: Array[String] = []
+	_collect(ADDON, files)
+
+	var marked: Array[String] = []
+	for path: String in files:
+		var f: FileAccess = FileAccess.open(path, FileAccess.READ)
+		if f == null:
+			continue
+		if f.get_8() == 0xEF and f.get_8() == 0xBB and f.get_8() == 0xBF:
+			marked.append(path.trim_prefix(ADDON))
+
+	eq(marked.size(), 0, "no file starts with a BOM: %s" % ", ".join(marked))

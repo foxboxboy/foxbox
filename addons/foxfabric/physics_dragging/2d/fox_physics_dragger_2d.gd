@@ -1,4 +1,4 @@
-﻿@icon("uid://ckvcb2guj1yj")
+@icon("uid://8ov6aqrt3g77")
 class_name FoxPhysicsDragger2D
 extends Node2D
 ## Manipulates a [RigidBody2D] by applying localized forces and torques
@@ -18,6 +18,17 @@ extends Node2D
 ## The hit point handed to [method grab] is where the body was actually struck, and the body
 ## pivots around that point rather than its centre. Grabbing a plank by one end swings it like a
 ## plank. [member max_pull_force] caps the whole thing so a stiff profile cannot launch anything.
+
+
+
+
+## Gains applied to the profile when it drives rotation rather than position.
+## [br][br]
+## Turning needs proportionally more damping than pulling does, because the spring works against
+## the body's inertia rather than its mass. Sharing the pull's ratio leaves rotation barely
+## damped, so a spun crate overshoots and wobbles instead of settling where you put it.
+const TORQUE_SPRING_GAIN: float = 0.5
+const TORQUE_DAMPING_GAIN: float = 1.5
 
 
 
@@ -46,6 +57,7 @@ var _skip_first_frame: bool = false
 var _current_stiffness: float
 var _current_damping: float
 var _current_keep_upright: bool
+var _current_torque_scale: float = 1.0
 
 #endregion
 
@@ -65,6 +77,7 @@ func grab(body: RigidBody2D, hit_point: Vector2, profile: FoxPhysicsDragProfile 
 	_current_stiffness = profile.stiffness if profile else default_stiffness
 	_current_damping = profile.damping if profile else default_damping
 	_current_keep_upright = profile.keep_upright if profile else default_keep_upright
+	_current_torque_scale = torque_scale_for(body)
 
 	# Reset the velocity of the grabbed body to stop any movement
 	_current_body.linear_velocity = Vector2.ZERO
@@ -74,6 +87,29 @@ func grab(body: RigidBody2D, hit_point: Vector2, profile: FoxPhysicsDragProfile 
 	_grab_offset_local = _current_body.to_local(hit_point)
 
 	_skip_first_frame = true
+
+
+## How much to multiply a raw torque by so [member FoxPhysicsDragProfile.stiffness] means the
+## same thing for turning as it does for pulling.
+## [br][br]
+## A body's inertia is measured in pixels squared, so it is numerically enormous next to its
+## mass: a crate of mass 30 has an inertia around 15000. Feeding the spring straight to
+## [method RigidBody2D.apply_torque] therefore produces an angular acceleration near 0.03 rad/s,
+## which is correct arithmetic and a motionless object. Scaling by inertia over mass, which has
+## units of length squared, cancels that out and leaves angular acceleration in the same terms
+## as the linear side: spring over mass.
+## [br][br]
+## Returns 1.0 when the body has no rotational inertia to speak of, so a locked or degenerate
+## body is left alone rather than multiplied by nonsense.
+static func torque_scale_for(body: RigidBody2D) -> float:
+	if not is_instance_valid(body) or body.mass <= 0.0:
+		return 1.0
+
+	var state: PhysicsDirectBodyState2D = PhysicsServer2D.body_get_direct_state(body.get_rid())
+	if state == null or state.inverse_inertia <= 0.0:
+		return 1.0
+
+	return (1.0 / state.inverse_inertia) / body.mass
 
 
 ## The rotation a held body is pulled towards, given the dragger's [param rotation].
@@ -152,10 +188,11 @@ func _apply_rotational_torque() -> void:
 
 	# Deadzone to stop micro-jitter
 	if absf(rad_to_deg(diff)) < 1.0:
-		_current_body.apply_torque(-_current_body.angular_velocity * _current_damping * 0.1)
+		var settle := -_current_body.angular_velocity * _current_damping * TORQUE_DAMPING_GAIN
+		_current_body.apply_torque(settle * _current_torque_scale)
 	else:
-		var torque := (diff * (_current_stiffness * 0.5)) \
-			- (_current_body.angular_velocity * (_current_damping * 0.2))
-		_current_body.apply_torque(torque)
+		var torque := (diff * (_current_stiffness * TORQUE_SPRING_GAIN)) \
+			- (_current_body.angular_velocity * (_current_damping * TORQUE_DAMPING_GAIN))
+		_current_body.apply_torque(torque * _current_torque_scale)
 
 #endregion

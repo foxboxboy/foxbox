@@ -111,13 +111,13 @@ default_color = Color(1, 1, 1, 0.235294)
 
 [node name="Dragger" type="Node2D" parent="."]
 script = ExtResource("5_dragger")
-max_pull_force = 60000.0
+max_pull_force = 170000.0
 
 [node name="Props" type="Node2D" parent="."]
 
 [node name="Crate" type="RigidBody2D" parent="Props"]
 position = Vector2(60, -60)
-mass = 30.0
+mass = 60.0
 linear_damp = 0.8
 angular_damp = 1.2
 script = ExtResource("2_grab")

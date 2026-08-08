@@ -14,6 +14,7 @@ func run() -> void:
 	_off_copies_the_dragger()
 	_on_holds_it_level()
 	_profile_is_shared_with_3d()
+	_torque_scale_guards_bad_input()
 
 
 func _defaults_leave_rotation_free() -> void:
@@ -81,3 +82,23 @@ func _profile_is_shared_with_3d() -> void:
 
 	flat.release()
 	solid.release()
+
+
+## A body's inertia is in pixels squared, so it dwarfs its mass and an unscaled torque turns
+## nothing. The scale cancels that, but only the guards are checkable here: the real figure comes
+## from the physics server, which has nothing to report until a body has been through a physics
+## step, and this harness never runs one.
+func _torque_scale_guards_bad_input() -> void:
+	case("torque scale guards")
+	almost(Dragger.torque_scale_for(null), 1.0, "a null body scales by one")
+
+	# There is no massless case to cover. RigidBody2D refuses a mass of zero, so the guard against
+	# it is unreachable from outside and testing it would only prove the engine clamps.
+
+	# No shape means no rotational inertia for the server to report.
+	var shapeless: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
+	almost(Dragger.torque_scale_for(shapeless), 1.0, "a body with no shape scales by one")
+
+	case("the gains favour damping for rotation")
+	check(Dragger.TORQUE_DAMPING_GAIN > Dragger.TORQUE_SPRING_GAIN,
+		"turning is damped harder than it is sprung, or a spun body wobbles")

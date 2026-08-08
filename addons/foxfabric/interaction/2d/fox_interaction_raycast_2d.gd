@@ -1,5 +1,5 @@
-﻿@tool
-@icon("uid://ch4lg7akkdioy")
+@tool
+@icon("uid://coybwpldwj18h")
 class_name FoxInteractionRayCast2D
 extends RayCast2D
 ## A specialized raycast for detecting and managing focus on [FoxInteractableArea2D] nodes.
