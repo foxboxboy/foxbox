@@ -4,10 +4,9 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 ## Editor
 
-- `FoxSocket3D` gizmo: draw position, snap orientation, colour by occupancy
 - `FoxAttributeMap` inspector: live data, flag stacks, active rules at runtime
 - `FoxEffectManager` dock: active effects with stacks and time remaining
-- `FoxAimGimbal3D` gizmo: draw the clamp arc
+- `FoxZoomSpringArm3D` gizmo: draw the min and max length
 
 ## Modules
 

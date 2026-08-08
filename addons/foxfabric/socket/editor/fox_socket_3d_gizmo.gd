@@ -13,21 +13,17 @@ const SIZE: float = 0.12
 ## Length of the facing arrow, in metres.
 const ARROW: float = 0.4
 
-const EMPTY: String = "fox_socket_empty"
-const OCCUPIED: String = "fox_socket_occupied"
+const Colors = preload("res://addons/foxfabric/core/editor/fox_gizmo_colors.gd")
 
-## Where the colours live in Editor Settings.
-## [br][br]
-## Under [code]foxfabric/[/code] rather than the engine's [code]editors/3d_gizmos/[/code], so
-## the library's settings stay together and cannot collide with a future engine one. The search
-## box finds them either way.
-## [br][br]
-## The editor shows "No description available" against these. Nothing can be done about that
-## from a script: [method EditorSettings.add_property_info] takes a name, type and hint, and the
-## tooltips come from the engine's own class reference, which a plugin cannot add to.
-const SETTINGS: Dictionary[String, String] = {
-	EMPTY: "foxfabric/gizmo_colors/socket_empty",
-	OCCUPIED: "foxfabric/gizmo_colors/socket_occupied",
+const EMPTY: String = "socket_empty"
+const OCCUPIED: String = "socket_occupied"
+
+## Blue against orange rather than green against amber. The two most common forms of colour
+## blindness collapse green and amber into the same yellow, and occupancy is the whole point of
+## the colour. The nested diamond carries the same information without relying on it.
+const COLORS: Dictionary[String, Color] = {
+	EMPTY: Color(0.35, 0.70, 1.0),
+	OCCUPIED: Color(1.0, 0.55, 0.1),
 }
 
 ## Settings from an earlier layout, removed on load so they do not linger in the editor.
@@ -36,55 +32,16 @@ const RETIRED_SETTINGS: Array[String] = [
 	"editors/3d_gizmos/gizmo_colors/fox_socket_occupied",
 ]
 
-## Blue against orange rather than green against amber. The two most common forms of colour
-## blindness collapse green and amber into the same yellow, and occupancy is the whole point of
-## the colour. The nested diamond carries the same information without relying on it.
-const DEFAULTS: Dictionary[String, Color] = {
-	EMPTY: Color(0.35, 0.70, 1.0),
-	OCCUPIED: Color(1.0, 0.55, 0.1),
-}
-
 
 func _init() -> void:
-	var settings: EditorSettings = EditorInterface.get_editor_settings()
-
-	for key: String in SETTINGS:
-		var path: String = SETTINGS[key]
-		var fallback: Color = DEFAULTS[key]
-
-		if settings == null:
-			create_material(key, fallback)
-			continue
-
-		if not settings.has_setting(path):
-			settings.set_setting(path, fallback)
-
-		settings.set_initial_value(path, fallback, false)
-		settings.add_property_info({
-			"name": path,
-			"type": TYPE_COLOR,
-		})
-		create_material(key, settings.get_setting(path))
-
-	if settings != null:
-		for stale: String in RETIRED_SETTINGS:
-			if settings.has_setting(stale):
-				settings.erase(stale)
-
-	if settings != null and not settings.settings_changed.is_connected(_settings_changed):
-		settings.settings_changed.connect(_settings_changed)
+	Colors.install(self, COLORS)
+	Colors.retire(RETIRED_SETTINGS)
+	Colors.watch(_settings_changed)
 
 
 ## Picks up a recoloured gizmo without an editor restart.
 func _settings_changed() -> void:
-	var settings: EditorSettings = EditorInterface.get_editor_settings()
-	if settings == null:
-		return
-
-	for key: String in SETTINGS:
-		var material: StandardMaterial3D = get_material(key) as StandardMaterial3D
-		if material != null:
-			material.albedo_color = settings.get_setting(SETTINGS[key])
+	Colors.refresh(self, COLORS)
 
 
 func _get_gizmo_name() -> String:

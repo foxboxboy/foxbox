@@ -10,6 +10,7 @@ extends EditorPlugin
 ## Gizmo plugins to register, by path. Each one lives inside the module it draws for.
 const GIZMOS: Array[String] = [
 	"res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd",
+	"res://addons/foxfabric/aim_gimbal/editor/fox_aim_gimbal_3d_gizmo.gd",
 ]
 
 var _gizmos: Array[EditorNode3DGizmoPlugin] = []
@@ -34,6 +35,10 @@ func _enter_tree() -> void:
 
 		add_node_3d_gizmo_plugin(gizmo)
 		_gizmos.append(gizmo)
+
+		# Only with --verbose. A gizmo that silently fails to register looks identical to one
+		# that draws nothing, and this is the difference.
+		print_verbose("FoxFabric: registered gizmo %s" % path)
 
 
 func _exit_tree() -> void:
