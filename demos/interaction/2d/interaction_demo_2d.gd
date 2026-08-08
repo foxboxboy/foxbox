@@ -1,8 +1,8 @@
 # 2D counterpart to interaction_demo.tscn.
 #
 # Arrow keys move the player. The sensor turns to face the mouse, so what you can reach depends
-# on where you stand as well as where you point. Click a prop to pick it up, release to drop it,
-# and press Space to toggle keep_upright.
+# on where you stand as well as where you point. Click a prop to pick it up and click again to
+# put it down, right drag to spin it, and press Space to toggle keep_upright.
 #
 # Mouse buttons are read as raw events rather than named actions, so the scene works in a project
 # that has not set up an input map.
@@ -93,11 +93,19 @@ func _process(_delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	var button := event as InputEventMouseButton
-	if button and button.button_index == MOUSE_BUTTON_LEFT:
-		if button.pressed:
-			_try_grab()
-		else:
+
+	# Click to pick up, click again to put down, rather than holding the button the whole time.
+	# Releasing the capture at the end of a spin makes the window manager report the left button
+	# as released, and while holding meant held that silently dropped whatever you were turning
+	# the instant you stopped turning it. A toggle cannot be undone by an event nobody sent.
+	if button and button.button_index == MOUSE_BUTTON_LEFT and button.pressed:
+		if is_instance_valid(_held):
 			_release()
+		else:
+			_try_grab()
+		return
+
+	if button and button.button_index == MOUSE_BUTTON_LEFT:
 		return
 
 	if button and button.button_index == MOUSE_BUTTON_RIGHT:
@@ -226,7 +234,7 @@ func _refresh_readout() -> void:
 	}
 
 	readout.text = "\n".join([
-		"Arrows move, mouse aims, left click grabs",
+		"Arrows move, mouse aims, left click picks up and puts down",
 		"Right drag spins what you are holding, Space toggles upright",
 		"",
 		"pointing at:  %s" % pointing,
