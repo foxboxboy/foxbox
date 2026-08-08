@@ -14,6 +14,25 @@ FoxFabric
 
 A lightweight, general purpose library of modular systems. By tateorrtot.
 
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+Registers the editor extras that individual modules ship. Modules are meant to be deletable, so anything listed here is loaded only if it is still on disk.
+
+.. rst-class:: classref-reftable-group
+
+Properties
+----------
+
+.. table::
+   :widths: auto
+
+   +--------------------------------------------------------------------------------------------+--------------------------------------------------+--------+
+   | :ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] | :ref:`_gizmos<class_FoxFabric_property__gizmos>` | ``[]`` |
+   +--------------------------------------------------------------------------------------------+--------------------------------------------------+--------+
+
 .. rst-class:: classref-reftable-group
 
 Methods
@@ -22,15 +41,47 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+------------------------------------------------------------------------------+
-   | |void| | :ref:`_enable_plugin<class_FoxFabric_private_method__enable_plugin>`\ (\ )   |
-   +--------+------------------------------------------------------------------------------+
-   | |void| | :ref:`_disable_plugin<class_FoxFabric_private_method__disable_plugin>`\ (\ ) |
-   +--------+------------------------------------------------------------------------------+
-   | |void| | :ref:`_enter_tree<class_FoxFabric_private_method__enter_tree>`\ (\ )         |
-   +--------+------------------------------------------------------------------------------+
-   | |void| | :ref:`_exit_tree<class_FoxFabric_private_method__exit_tree>`\ (\ )           |
-   +--------+------------------------------------------------------------------------------+
+   +--------+----------------------------------------------------------------------+
+   | |void| | :ref:`_enter_tree<class_FoxFabric_private_method__enter_tree>`\ (\ ) |
+   +--------+----------------------------------------------------------------------+
+   | |void| | :ref:`_exit_tree<class_FoxFabric_private_method__exit_tree>`\ (\ )   |
+   +--------+----------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Constants
+---------
+
+.. _class_FoxFabric_constant_GIZMOS:
+
+.. rst-class:: classref-constant
+
+**GIZMOS** = ``Array[String](["res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd"])`` :ref:`🔗<class_FoxFabric_constant_GIZMOS>`
+
+Gizmo plugins to register, by path. Each one lives inside the module it draws for.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Property Descriptions
+---------------------
+
+.. _class_FoxFabric_property__gizmos:
+
+.. rst-class:: classref-property
+
+:ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] **_gizmos** = ``[]`` :ref:`🔗<class_FoxFabric_property__gizmos>`
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 
@@ -40,34 +91,6 @@ Methods
 
 Method Descriptions
 -------------------
-
-.. _class_FoxFabric_private_method__enable_plugin:
-
-.. rst-class:: classref-method
-
-|void| **_enable_plugin**\ (\ ) :ref:`🔗<class_FoxFabric_private_method__enable_plugin>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxFabric_private_method__disable_plugin:
-
-.. rst-class:: classref-method
-
-|void| **_disable_plugin**\ (\ ) :ref:`🔗<class_FoxFabric_private_method__disable_plugin>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxFabric_private_method__enter_tree:
 
