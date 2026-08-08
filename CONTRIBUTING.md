@@ -91,6 +91,11 @@ no errors before a change lands. See `docs/README.txt`.
 * Every `class_name` starts with `Fox`
 * Spatial classes end in `2D` or `3D`, matching the engine
 
+The prefix is not decoration. GDScript has one global namespace for `class_name` and no namespace
+support, so `State`, `Effect`, `Price` and `Wallet` would be published into the global scope of
+every project that installs FoxFabric. A collision there is not a warning, it stops the other
+project from loading. `FoxSocketMap3D` is clunky, and that is the cheaper of the two problems.
+
 ## Signals in resources
 
 Connect with a method reference, not a lambda:
@@ -103,6 +108,51 @@ _pool.depleted.connect(func(u): depleted.emit(u))     # holds self
 A lambda that touches `self` captures it. When a `RefCounted` connects to something it owns, that
 closes a cycle, and nothing in the pair is ever freed. Nodes are exempt because they are freed by
 hand, but the method form reads better anyway.
+
+## Configuration warnings
+
+Warn about what the engine does not. Before adding one, drop the node in a scene and read what
+Godot already says about it. `Area3D` reports a missing shape, `ShapeCast3D` reports a missing
+resource, and repeating either makes the node show the same problem twice, worded worse.
+
+Check the claim against the engine before writing it. A warning that says
+`force_raycast_update()` needs `enabled` is wrong, the documentation says the opposite, and a
+warning that sends people to fix a working setting is worse than no warning at all.
+
+Warnings are covered in `tests/modules/test_configuration_warnings.gd`, in both directions. One
+that fires when it should not is as much a bug as one that never fires.
+
+## Editor extras
+
+Gizmos and inspectors live inside the module they belong to, so deleting the module takes them
+with it. `addons/foxfabric/foxfabric.gd` registers them and loads each one **by path**:
+
+```gdscript
+if not ResourceLoader.exists(path):
+    continue
+var script: GDScript = load(path) as GDScript
+```
+
+Never `preload` one. `preload` resolves when the plugin script is parsed, so a deleted module
+would stop the entire plugin from loading rather than dropping one gizmo.
+
+Editor settings go under `foxfabric/`, typed with `add_property_info`. Two limits are not worth
+fighting: custom settings cannot carry a description, and they only appear with Advanced turned
+on. Both come from `add_property_info` accepting name, type and hint and nothing else.
+
+Never let colour be the only difference between two states. Green against amber is the pair the
+two most common forms of colour blindness collapse into one. The socket gizmo nests a second
+diamond for an occupied socket so the shape carries the meaning and the colour repeats it.
+
+A gizmo redraws when the editor asks, which is not when your data changes. The node has to call
+`update_gizmos()` itself, the same way it calls `update_configuration_warnings()`.
+
+## Line endings
+
+LF, enforced by `.gitattributes`. Godot's doc comment parser leaves the carriage return on the
+end of a CRLF line and then cannot join the next line onto it, so a paragraph wrapped across
+several `##` lines silently renders as an indented blockquote. It was wrong on 21 pages before
+anyone noticed. `docs/build_docs.py` repairs it and warns if it ever has to.
 
 ## Module independence
 
