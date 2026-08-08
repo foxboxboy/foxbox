@@ -141,6 +141,10 @@ Property Descriptions
 
 :ref:`PackedScene<class_PackedScene>` **slot_scene** :ref:`🔗<class_FoxShopMenu_property_slot_scene>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@slot_scene_setter**\ (\ value\: :ref:`PackedScene<class_PackedScene>`\ )
+
 The :ref:`PackedScene<class_PackedScene>` to instantiate for each item.
 
 .. rst-class:: classref-item-separator
@@ -152,6 +156,10 @@ The :ref:`PackedScene<class_PackedScene>` to instantiate for each item.
 .. rst-class:: classref-property
 
 :ref:`Control<class_Control>` **container** :ref:`🔗<class_FoxShopMenu_property_container>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **@container_setter**\ (\ value\: :ref:`Control<class_Control>`\ )
 
 The parent :ref:`Control<class_Control>` node where instantiated slots are added.
 

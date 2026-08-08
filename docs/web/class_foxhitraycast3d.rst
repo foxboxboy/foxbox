@@ -43,11 +43,13 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`fire<class_FoxHitRayCast3D_method_fire>`\ (\ )                                                       |
-   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxHitRayCast3D_private_method__get_configuration_warnings>`\ (\ ) |
-   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                            | :ref:`fire<class_FoxHitRayCast3D_method_fire>`\ (\ )                                                                                                 |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                           | :ref:`_set<class_FoxHitRayCast3D_private_method__set>`\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxHitRayCast3D_private_method__get_configuration_warnings>`\ (\ )                                           |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -99,6 +101,20 @@ Method Descriptions
 |void| **fire**\ (\ ) :ref:`🔗<class_FoxHitRayCast3D_method_fire>`
 
 Forces the raycast to update immediately and attempts to deliver the :ref:`payload<class_FoxHitRayCast3D_property_payload>`.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxHitRayCast3D_private_method__set:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **_set**\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxHitRayCast3D_private_method__set>`
+
+:ref:`RayCast3D.collide_with_areas<class_RayCast3D_property_collide_with_areas>` belongs to the parent class, so it cannot be given a setter here. :ref:`Object._set()<class_Object_private_method__set>` sees the assignment first; returning ``false`` leaves the engine to apply it as normal. 
+
+The refresh is deferred because this runs before the new value lands, and the warning is computed from it.
 
 .. rst-class:: classref-item-separator
 

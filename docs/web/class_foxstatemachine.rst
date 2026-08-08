@@ -95,6 +95,10 @@ Property Descriptions
 
 :ref:`FoxState<class_FoxState>` **initial_state** :ref:`🔗<class_FoxStateMachine_property_initial_state>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@initial_state_setter**\ (\ value\: :ref:`FoxState<class_FoxState>`\ )
+
 The state that becomes active as soon as the machine is ready.
 
 .. rst-class:: classref-item-separator

@@ -139,6 +139,10 @@ Property Descriptions
 
 :ref:`float<class_float>` **max_length** = ``200.0`` :ref:`🔗<class_FoxZoomSpringArm3D_property_max_length>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@max_length_setter**\ (\ value\: :ref:`float<class_float>`\ )
+
 The maximum distance the arm can zoom out.
 
 .. rst-class:: classref-item-separator
@@ -162,6 +166,10 @@ The amount of length added or subtracted per zoom input.
 .. rst-class:: classref-property
 
 :ref:`float<class_float>` **zoom_speed** = ``10.0`` :ref:`🔗<class_FoxZoomSpringArm3D_property_zoom_speed>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **@zoom_speed_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
 How quickly the camera interpolates to the target zoom. Higher values mean faster zooming.
 

@@ -114,6 +114,10 @@ Property Descriptions
 
 :ref:`int<class_int>` **max_slots** = ``3`` :ref:`🔗<class_FoxEffectSlotPolicy_property_max_slots>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@max_slots_setter**\ (\ value\: :ref:`int<class_int>`\ )
+
 The maximum number of distinct effect instances this policy will allow.
 
 .. rst-class:: classref-item-separator
