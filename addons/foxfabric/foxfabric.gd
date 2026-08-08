@@ -1,7 +1,7 @@
 @tool
 class_name FoxFabric
 extends EditorPlugin
-## Lightweight framework for Godot. By foxboxboy.
+## A library of reusable, self-contained gameplay systems. By tateorrtot.
 
 func _enable_plugin() -> void:
 	# Add autoloads here.

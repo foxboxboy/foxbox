@@ -2,7 +2,7 @@
 .godot/
 /android/
 
-# Export output — built demo binaries. Regenerate from export_presets.cfg.
+# Export output. Built demo binaries, regenerate from export_presets.cfg.
 exports/
 
 # Editor & tooling artifacts
@@ -13,7 +13,7 @@ exports/
 __pycache__/
 *.py[cod]
 
-# Sphinx build output — regenerate with `make html` in docs/web
+# Sphinx build output. Regenerate with `make html` in docs/web
 docs/web/_build/
 
 # OS cruft

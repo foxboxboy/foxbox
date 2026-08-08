@@ -1,0 +1,1 @@
+Physics Dragging: Manipulates a RigidBody3D by applying localized forces and torques to pull it toward a target node. Stiffness, damping, and force limits live in swappable FoxPhysicsDragProfile resources.

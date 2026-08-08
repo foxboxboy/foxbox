@@ -1,0 +1,1 @@
+Damage: A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (FoxHitArea3D, FoxHitRayCast3D, FoxHitShapeCast3D) and receivers (FoxHurtArea3D) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic.

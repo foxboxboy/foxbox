@@ -1,1 +1,1 @@
-Interaction: A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (FoxHitArea3D, FoxHitRayCast3D) and receivers (FoxHurtArea3D) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic.
+Interaction: A raycast-driven focus and activation pipeline. FoxInteractionRayCast3D focuses and triggers FoxInteractableArea3D volumes, which emit an arbitrary Variant context so the initiator decides what interacting actually means.
