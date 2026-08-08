@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'FoxBox'
-copyright = '2026, foxboxboy'
-author = 'foxboxboy'
+project = 'FoxFabric'
+copyright = '2026, tateorrtot'
+author = 'tateorrtot'
 release = '0.1'
 
 # -- General configuration ---------------------------------------------------
