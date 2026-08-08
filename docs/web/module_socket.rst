@@ -1,10 +1,11 @@
 Socket
 ======
 
-A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats."
+A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." The 2d and 3d folders hold the same pair of socket and map for each dimension.
 
 A slot that holds one node, reparenting it and optionally snapping its transform.
-:ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes.
+:ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes, and live in the
+``2d`` folder so one dimension can be copied out without the other.
 
 :ref:`class_FoxSocket3D` extends ``Marker3D``. ``snap_position``, ``snap_rotation`` and
 ``snap_scale`` are independent. A socket watches its own children, and clears itself if the
@@ -33,7 +34,5 @@ attachment is reparented elsewhere without calling ``detach``.
 .. toctree::
    :maxdepth: 1
 
-   class_foxsocket2d
-   class_foxsocket3d
-   class_foxsocketmap2d
-   class_foxsocketmap3d
+   module_socket-2d
+   module_socket-3d

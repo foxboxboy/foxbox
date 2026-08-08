@@ -1,5 +1,6 @@
 A slot that holds one node, reparenting it and optionally snapping its transform.
-:ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes.
+:ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes, and live in the
+``2d`` folder so one dimension can be copied out without the other.
 
 :ref:`class_FoxSocket3D` extends ``Marker3D``. ``snap_position``, ``snap_rotation`` and
 ``snap_scale`` are independent. A socket watches its own children, and clears itself if the

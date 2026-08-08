@@ -60,7 +60,7 @@ Constants
 
 .. rst-class:: classref-constant
 
-**GIZMOS** = ``Array[String](["res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd", "res://addons/foxfabric/aim_gimbal/editor/fox_aim_gimbal_3d_gizmo.gd"])`` :ref:`🔗<class_FoxFabric_constant_GIZMOS>`
+**GIZMOS** = ``Array[String](["res://addons/foxfabric/socket/3d/editor/fox_socket_3d_gizmo.gd", "res://addons/foxfabric/aim_gimbal/editor/fox_aim_gimbal_3d_gizmo.gd"])`` :ref:`🔗<class_FoxFabric_constant_GIZMOS>`
 
 Gizmo plugins to register, by path. Each one lives inside the module it draws for.
 

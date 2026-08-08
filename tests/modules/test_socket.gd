@@ -2,7 +2,7 @@ extends "res://tests/fox_test.gd"
 
 ## The editor gizmo, loaded rather than preloaded. It extends an editor only class, so on a
 ## build without one this stays null and the gizmo cases are skipped instead of failing.
-const GIZMO_PATH: String = "res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd"
+const GIZMO_PATH: String = "res://addons/foxfabric/socket/3d/editor/fox_socket_3d_gizmo.gd"
 
 
 func run() -> void:
@@ -72,7 +72,7 @@ func _gizmo_registers(gizmo: GDScript, holder: Node3D) -> void:
 	check(gizmo.handles(_socket(holder)), "it claims FoxSocket3D nodes")
 	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
 
-	var listed: String = "res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd"
+	var listed: String = "res://addons/foxfabric/socket/3d/editor/fox_socket_3d_gizmo.gd"
 	check(FoxFabric.GIZMOS.has(listed), "the plugin lists this gizmo")
 	check(ResourceLoader.exists(listed), "and the path it lists resolves")
 

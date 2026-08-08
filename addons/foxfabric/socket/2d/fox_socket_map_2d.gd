@@ -1,5 +1,5 @@
 @tool
-@icon("uid://gn5af2lswkru")
+@icon("uid://rslo1cra60dd")
 class_name FoxSocketMap2D
 extends FoxNode2D
 ## Manages a collection of [FoxSocket2D] nodes, mapped by their node names.

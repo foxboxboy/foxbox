@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
 
 [ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://demos/socket/socket_demo.gd" id="1_njwab"]
-[ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxfabric/socket/fox_socket_map_2d.gd" id="2_k0o5c"]
-[ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxfabric/socket/fox_socket_2d.gd" id="3_qbdgk"]
+[ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxfabric/socket/2d/fox_socket_map_2d.gd" id="2_k0o5c"]
+[ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxfabric/socket/2d/fox_socket_2d.gd" id="3_qbdgk"]
 [ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icons/old_icon.png" id="4_wg6ym"]
 
 [node name="Demo" type="Node" unique_id=1752730093]

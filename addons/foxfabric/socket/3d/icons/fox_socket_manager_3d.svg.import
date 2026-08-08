@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1yqa4yj5tra0"
-path="res://.godot/imported/fox_socket_3d.svg-d9b5be86c61014cf0617dd4ed33f8b44.ctex"
+uid="uid://gn5af2lswkru"
+path="res://.godot/imported/fox_socket_manager_3d.svg-52c52fe16e765541454a626a4af328b4.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/foxfabric/socket/icons/fox_socket_3d.svg"
-dest_files=["res://.godot/imported/fox_socket_3d.svg-d9b5be86c61014cf0617dd4ed33f8b44.ctex"]
+source_file="res://addons/foxfabric/socket/3d/icons/fox_socket_manager_3d.svg"
+dest_files=["res://.godot/imported/fox_socket_manager_3d.svg-52c52fe16e765541454a626a4af328b4.ctex"]
 
 [params]
 
