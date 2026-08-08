@@ -30,7 +30,11 @@ extends FoxNode3D
 @export var default_stiffness: float = 800.0 
 
 ## The default control of the pull if no profile is provided.
-@export var default_damping: float = 25.0 
+@export var default_damping: float = 25.0
+
+## The default upright behaviour if no profile is provided.
+## See [member FoxPhysicsDragProfile.keep_upright].
+@export var default_keep_upright: bool = false
 
 ## The absolute maximum force this dragger can apply to a body in a single frame.
 @export var max_pull_force: float = 4000.0
@@ -41,6 +45,7 @@ var _skip_first_frame: bool = false
 
 var _current_stiffness: float
 var _current_damping: float
+var _current_keep_upright: bool
 
 #endregion
 
@@ -60,6 +65,7 @@ func grab(body: RigidBody3D, hit_point: Vector3, profile: FoxPhysicsDragProfile 
 	_current_body = body
 	_current_stiffness = profile.stiffness if profile else default_stiffness
 	_current_damping = profile.damping if profile else default_damping
+	_current_keep_upright = profile.keep_upright if profile else default_keep_upright
 	
 	# Reset the velocity of the grabbed body to stop any movement
 	_current_body.linear_velocity = Vector3.ZERO
@@ -69,6 +75,35 @@ func grab(body: RigidBody3D, hit_point: Vector3, profile: FoxPhysicsDragProfile 
 	_grab_offset_local = _current_body.to_local(hit_point)
 	
 	_skip_first_frame = true
+
+
+## The orientation a held body is pulled towards, given the dragger's [param basis].
+## [br][br]
+## With [param keep_upright] off this is the dragger's own basis, so the body copies it exactly.
+## With it on, the facing is flattened onto the horizon: the body still yaws to follow the
+## dragger but never tips, which is what stops a camera mounted dragger from pitching whatever
+## it is carrying every time you look up or down.
+## [br][br]
+## Static so the result can be checked without a body in hand.
+static func target_basis_for(basis: Basis, keep_upright: bool) -> Basis:
+	if not keep_upright:
+		return basis
+
+	var forward := -basis.z
+	forward.y = 0.0
+
+	# Pointing straight up or down leaves nothing to flatten. The dragger's own up axis lies on
+	# the horizon in exactly that case, so it carries the yaw instead.
+	if forward.length_squared() < 0.0001:
+		forward = basis.y
+		forward.y = 0.0
+
+	# An orthonormal basis cannot have two vertical axes, so this is unreachable in practice.
+	# Bailing out beats handing a zero vector to looking_at.
+	if forward.length_squared() < 0.0001:
+		return basis
+
+	return Basis.looking_at(forward, Vector3.UP)
 
 
 ## Releases the currently held [RigidBody3D].
@@ -128,7 +163,7 @@ func _apply_positional_force() -> void:
 
 ## Applies a rotational torque to the grabbed RigidBody3D based on its current orientation.
 func _apply_rotational_torque() -> void:
-	var target_basis = global_transform.basis
+	var target_basis = target_basis_for(global_transform.basis, _current_keep_upright)
 	var current_basis = _current_body.global_transform.basis
 	
 	var diff = (target_basis * current_basis.inverse()).get_rotation_quaternion()
