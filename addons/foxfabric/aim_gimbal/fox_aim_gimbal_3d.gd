@@ -10,6 +10,11 @@ extends Node3D
 @export_group("Pitch")
 ## If [code]true[/code], restricts the X-axis rotation between [member min_pitch_deg] and [member max_pitch_deg].
 ## If [code]false[/code], wraps the rotation infinitely.
+## [br][br]
+## The defaults stop one degree short of straight up and down, which is where the gimbal lock in
+## this class's description comes from. At exactly ninety the forward direction is parallel to
+## the up axis, and anything rebuilding a basis out of it has nothing left to work with. Yaw
+## never runs into that, so its defaults are a round ninety.
 @export var clamp_pitch: bool = true:
 	set(value):
 		clamp_pitch = value
@@ -28,6 +33,9 @@ extends Node3D
 @export_group("Yaw")
 ## If [code]true[/code], restricts the Y-axis rotation between [member min_yaw_deg] and [member max_yaw_deg].
 ## If [code]false[/code], wraps the rotation infinitely.
+## [br][br]
+## Off by default, so [member min_yaw_deg] and [member max_yaw_deg] are only a starting point
+## until you turn it on. A turret wants this; a first person camera usually does not.
 @export var clamp_yaw: bool = false:
 	set(value):
 		clamp_yaw = value
