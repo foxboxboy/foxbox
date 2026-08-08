@@ -62,7 +62,9 @@ html_theme_options = {
     'navigation_depth': 2,
     'sticky_navigation': True,
     'style_external_links': True,
-    'prev_next_buttons_location': 'both',
+    # Godot puts these at the foot of the page only. 'both' also stacks them above the title,
+    # which pushes the actual content down and reads as clutter.
+    'prev_next_buttons_location': 'bottom',
 }
 
 html_logo = "_static/fox_docs_logo.svg"
