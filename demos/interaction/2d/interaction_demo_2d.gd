@@ -90,6 +90,11 @@ func _process(_delta: float) -> void:
 	if is_instance_valid(_held) and not _spinning:
 		dragger.global_rotation = _held.global_rotation
 
+	# Every frame, not just when something happens. The cursor and dragger lines move constantly
+	# and refreshing them only on events left them showing wherever they happened to be the last
+	# time you grabbed something.
+	_refresh_readout()
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	var button := event as InputEventMouseButton
