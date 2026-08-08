@@ -1,14 +1,14 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene format=3 uid="uid://3c2fq8nrscwk"]
 
-[ext_resource type="Script" path="res://demos/interaction/2d/player_2d.gd" id="1_player"]
-[ext_resource type="Script" path="res://demos/interaction/2d/hands_2d.gd" id="8_hands"]
-[ext_resource type="Script" path="res://demos/interaction/2d/hud_2d.gd" id="9_hud"]
-[ext_resource type="Texture2D" path="res://icon.png" id="7_icon"]
-[ext_resource type="Script" path="res://demos/interaction/2d/grabbable_2d.gd" id="2_grab"]
-[ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interaction_raycast_2d.gd" id="3_sensor"]
-[ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interactable_area_2d.gd" id="4_area"]
-[ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/2d/fox_physics_dragger_2d.gd" id="5_dragger"]
-[ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="6_profile"]
+[ext_resource type="Script" uid="uid://kxbrpivcd4j0" path="res://demos/interaction/2d/player_2d.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://40va0rqufvai" path="res://demos/interaction/2d/grabbable_2d.gd" id="2_grab"]
+[ext_resource type="Script" uid="uid://c66qluaxsun11" path="res://addons/foxfabric/interaction/2d/fox_interaction_raycast_2d.gd" id="3_sensor"]
+[ext_resource type="Script" uid="uid://db2mg2svyuln6" path="res://addons/foxfabric/interaction/2d/fox_interactable_area_2d.gd" id="4_area"]
+[ext_resource type="Script" uid="uid://17ubfgfi4jkq" path="res://addons/foxfabric/physics_dragging/2d/fox_physics_dragger_2d.gd" id="5_dragger"]
+[ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="6_profile"]
+[ext_resource type="Texture2D" uid="uid://c3ntasv61n17c" path="res://icon.png" id="7_icon"]
+[ext_resource type="Script" uid="uid://b12n5pqopktej" path="res://demos/interaction/2d/hands_2d.gd" id="8_hands"]
+[ext_resource type="Script" uid="uid://dcpu3ayhxb8dc" path="res://demos/interaction/2d/hud_2d.gd" id="9_hud"]
 
 [sub_resource type="RectangleShape2D" id="Shape_wall_h"]
 size = Vector2(880, 64)
@@ -19,84 +19,82 @@ size = Vector2(64, 560)
 [sub_resource type="CircleShape2D" id="Shape_player"]
 radius = 18.0
 
-[sub_resource type="RectangleShape2D" id="Shape_crate"]
-size = Vector2(56, 56)
-
-[sub_resource type="RectangleShape2D" id="Shape_plank"]
-size = Vector2(160, 24)
-
 [sub_resource type="Resource" id="Profile_heavy"]
 script = ExtResource("6_profile")
 stiffness = 700.0
 damping = 300.0
-keep_upright = false
+
+[sub_resource type="RectangleShape2D" id="Shape_crate"]
+size = Vector2(56, 56)
 
 [sub_resource type="Resource" id="Profile_light"]
 script = ExtResource("6_profile")
 stiffness = 700.0
 damping = 150.0
-keep_upright = false
 
-[node name="InteractionDemo2D" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="Shape_plank"]
+size = Vector2(160, 24)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="InteractionDemo2D" type="Node2D" unique_id=1104952441]
 
-[node name="Floor" type="Polygon2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1105710172]
+
+[node name="Floor" type="Polygon2D" parent="." unique_id=448979204]
 color = Color(0.129412, 0.133333, 0.164706, 1)
 polygon = PackedVector2Array(-424, -264, 424, -264, 424, 264, -424, 264)
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="." unique_id=1355147892]
 
-[node name="Top" type="CollisionShape2D" parent="Walls"]
+[node name="Top" type="CollisionShape2D" parent="Walls" unique_id=1393321972]
 position = Vector2(0, -280)
 shape = SubResource("Shape_wall_h")
 
-[node name="TopFace" type="Polygon2D" parent="Walls"]
+[node name="TopFace" type="Polygon2D" parent="Walls" unique_id=1216662093]
 position = Vector2(0, -280)
 color = Color(0.301961, 0.317647, 0.396078, 1)
 polygon = PackedVector2Array(-440, -32, 440, -32, 440, 32, -440, 32)
 
-[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+[node name="Bottom" type="CollisionShape2D" parent="Walls" unique_id=1246443976]
 position = Vector2(0, 280)
 shape = SubResource("Shape_wall_h")
 
-[node name="BottomFace" type="Polygon2D" parent="Walls"]
+[node name="BottomFace" type="Polygon2D" parent="Walls" unique_id=1019131]
 position = Vector2(0, 280)
 color = Color(0.301961, 0.317647, 0.396078, 1)
 polygon = PackedVector2Array(-440, -32, 440, -32, 440, 32, -440, 32)
 
-[node name="Left" type="CollisionShape2D" parent="Walls"]
+[node name="Left" type="CollisionShape2D" parent="Walls" unique_id=691822034]
 position = Vector2(-440, 0)
 shape = SubResource("Shape_wall_v")
 
-[node name="LeftFace" type="Polygon2D" parent="Walls"]
+[node name="LeftFace" type="Polygon2D" parent="Walls" unique_id=583947086]
 position = Vector2(-440, 0)
 color = Color(0.301961, 0.317647, 0.396078, 1)
 polygon = PackedVector2Array(-32, -280, 32, -280, 32, 280, -32, 280)
 
-[node name="Right" type="CollisionShape2D" parent="Walls"]
+[node name="Right" type="CollisionShape2D" parent="Walls" unique_id=1315555923]
 position = Vector2(440, 0)
 shape = SubResource("Shape_wall_v")
 
-[node name="RightFace" type="Polygon2D" parent="Walls"]
+[node name="RightFace" type="Polygon2D" parent="Walls" unique_id=675196324]
 position = Vector2(440, 0)
 color = Color(0.301961, 0.317647, 0.396078, 1)
 polygon = PackedVector2Array(-32, -280, 32, -280, 32, 280, -32, 280)
 
-[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sensor", "reach_line")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1747828925 node_paths=PackedStringArray("sensor", "reach_line")]
 position = Vector2(-220, 120)
 script = ExtResource("1_player")
 sensor = NodePath("Sensor")
 reach_line = NodePath("Sensor/Reach")
 
-[node name="Shape" type="CollisionShape2D" parent="Player"]
+[node name="Shape" type="CollisionShape2D" parent="Player" unique_id=1609062812]
 shape = SubResource("Shape_player")
 
-[node name="Body" type="Sprite2D" parent="Player"]
+[node name="Body" type="Sprite2D" parent="Player" unique_id=418092402]
 scale = Vector2(0.32, 0.32)
 texture = ExtResource("7_icon")
 
-[node name="Sensor" type="RayCast2D" parent="Player"]
+[node name="Sensor" type="RayCast2D" parent="Player" unique_id=357951396]
 target_position = Vector2(190, 0)
 collision_mask = 2
 collide_with_areas = true
@@ -104,89 +102,89 @@ collide_with_bodies = false
 script = ExtResource("3_sensor")
 interaction_range = 190.0
 
-[node name="Reach" type="Line2D" parent="Player/Sensor"]
+[node name="Reach" type="Line2D" parent="Player/Sensor" unique_id=1554007092]
 points = PackedVector2Array(0, 0, 190, 0)
 width = 3.0
 default_color = Color(1, 1, 1, 0.235294)
 
-[node name="Hands" type="Node2D" parent="." node_paths=PackedStringArray("player", "dragger", "grab_marker")]
+[node name="Hands" type="Node2D" parent="." unique_id=275950552 node_paths=PackedStringArray("player", "dragger", "grab_marker")]
 script = ExtResource("8_hands")
 player = NodePath("../Player")
 dragger = NodePath("Dragger")
 grab_marker = NodePath("GrabMarker")
 
-[node name="Dragger" type="Node2D" parent="Hands"]
+[node name="Dragger" type="Node2D" parent="Hands" unique_id=417732735]
 script = ExtResource("5_dragger")
 max_pull_force = 90000.0
 
-[node name="Props" type="Node2D" parent="."]
+[node name="GrabMarker" type="Polygon2D" parent="Hands" unique_id=1601027691]
+visible = false
+z_index = 10
+color = Color(1, 1, 1, 0.9)
+polygon = PackedVector2Array(0, -7, 7, 0, 0, 7, -7, 0)
 
-[node name="Crate" type="RigidBody2D" parent="Props"]
+[node name="Props" type="Node2D" parent="." unique_id=2004774863]
+
+[node name="Crate" type="RigidBody2D" parent="Props" unique_id=2087291175]
 position = Vector2(60, -60)
 mass = 60.0
+continuous_cd = 2
 linear_damp = 0.8
 angular_damp = 1.2
-continuous_cd = 2
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_heavy")
 label = "crate"
 
-[node name="Shape" type="CollisionShape2D" parent="Props/Crate"]
+[node name="Shape" type="CollisionShape2D" parent="Props/Crate" unique_id=1403598973]
 shape = SubResource("Shape_crate")
 
-[node name="Body" type="Polygon2D" parent="Props/Crate"]
+[node name="Body" type="Polygon2D" parent="Props/Crate" unique_id=102344509]
 color = Color(1, 0.552941, 0.101961, 1)
 polygon = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
 
-[node name="Interact" type="Area2D" parent="Props/Crate"]
+[node name="Interact" type="Area2D" parent="Props/Crate" unique_id=1474519304]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("4_area")
 
-[node name="Shape" type="CollisionShape2D" parent="Props/Crate/Interact"]
+[node name="Shape" type="CollisionShape2D" parent="Props/Crate/Interact" unique_id=76840598]
 shape = SubResource("Shape_crate")
 
-[node name="Plank" type="RigidBody2D" parent="Props"]
+[node name="Plank" type="RigidBody2D" parent="Props" unique_id=1365451708]
 position = Vector2(220, 60)
 mass = 20.0
+continuous_cd = 2
 linear_damp = 0.3
 angular_damp = 0.5
-continuous_cd = 2
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_light")
 label = "plank"
 
-[node name="Shape" type="CollisionShape2D" parent="Props/Plank"]
+[node name="Shape" type="CollisionShape2D" parent="Props/Plank" unique_id=1183852513]
 shape = SubResource("Shape_plank")
 
-[node name="Body" type="Polygon2D" parent="Props/Plank"]
+[node name="Body" type="Polygon2D" parent="Props/Plank" unique_id=412688256]
 color = Color(0.827451, 0.643137, 0.372549, 1)
 polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
 
-[node name="Interact" type="Area2D" parent="Props/Plank"]
+[node name="Interact" type="Area2D" parent="Props/Plank" unique_id=2099633427]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("4_area")
 
-[node name="Shape" type="CollisionShape2D" parent="Props/Plank/Interact"]
+[node name="Shape" type="CollisionShape2D" parent="Props/Plank/Interact" unique_id=1399585297]
 shape = SubResource("Shape_plank")
 
-[node name="GrabMarker" type="Polygon2D" parent="Hands"]
-z_index = 10
-visible = false
-color = Color(1, 1, 1, 0.9)
-polygon = PackedVector2Array(0, -7, 7, 0, 0, 7, -7, 0)
+[node name="HUD" type="CanvasLayer" parent="." unique_id=267079758]
 
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="Readout" type="Label" parent="HUD" node_paths=PackedStringArray("player", "hands")]
-script = ExtResource("9_hud")
-player = NodePath("../../Player")
-hands = NodePath("../../Hands")
+[node name="Readout" type="Label" parent="HUD" unique_id=1635330610 node_paths=PackedStringArray("player", "hands")]
 offset_left = 16.0
 offset_top = 12.0
 offset_right = 620.0
 offset_bottom = 140.0
+script = ExtResource("9_hud")
+player = NodePath("../../Player")
+hands = NodePath("../../Hands")
 
 [connection signal="interacted" from="Props/Crate/Interact" to="Props/Crate" method="_on_interacted"]
 [connection signal="interacted" from="Props/Plank/Interact" to="Props/Plank" method="_on_interacted"]

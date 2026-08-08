@@ -1,5 +1,3 @@
-# Carrying. Moving and aiming live in player_2d.gd.
-#
 # Left click picks up and puts down, right drag turns what is held, Space toggles keep_upright.
 extends Node2D
 

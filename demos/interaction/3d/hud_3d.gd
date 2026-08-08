@@ -1,4 +1,3 @@
-# The readout.
 extends Label
 
 

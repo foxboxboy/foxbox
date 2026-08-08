@@ -1,4 +1,4 @@
-# Moving and aiming. Carrying lives in hands_2d.gd.
+# Walks with the arrow keys and points the interaction sensor at the cursor.
 extends CharacterBody2D
 
 

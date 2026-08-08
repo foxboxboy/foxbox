@@ -1,5 +1,3 @@
-# Carrying. Aiming lives in player_3d.gd.
-#
 # Left click picks up and puts down, right drag turns what is held, the wheel raises and lowers it.
 extends Node3D
 

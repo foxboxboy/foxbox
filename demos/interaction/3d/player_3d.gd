@@ -1,7 +1,5 @@
-# Aiming. Carrying lives in hands_3d.gd.
-#
-# The camera is fixed, so aiming means turning two raycasts to follow the cursor: one for what you
-# are pointing at, one for where the cursor lands in the world.
+# The camera is fixed, so aiming means turning two raycasts to follow the cursor: one for what
+# you are pointing at, one for where the cursor lands in the world.
 extends Camera3D
 
 
