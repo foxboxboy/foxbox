@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://dqkcecbmubhmd"]
 
-[ext_resource type="Script" uid="uid://bks5tm3a525gl" path="res://demos/interaction/3d/player.gd" id="1_7g04l"]
+[ext_resource type="Script" path="res://demos/interaction/3d/player_3d.gd" id="1_7g04l"]
 [ext_resource type="Script" uid="uid://ce774eul7obos" path="res://addons/foxfabric/interaction/3d/fox_interaction_raycast_3d.gd" id="1_cggxt"]
 [ext_resource type="Script" uid="uid://djwv6u7igq0r3" path="res://demos/interaction/3d/red_box.gd" id="1_vvqvw"]
 [ext_resource type="Script" uid="uid://c5l17vfl0thck" path="res://addons/foxfabric/interaction/3d/fox_interactable_area_3d.gd" id="2_tt8h7"]
 [ext_resource type="PackedScene" uid="uid://bxtgywveontjj" path="res://addons/foxfabric/core/assets/camera/import/camera.gltf" id="3_a1jta"]
 [ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="3_dcams"]
 [ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxfabric/physics_dragging/3d/fox_physics_dragger_3d.gd" id="7_hju5i"]
+[ext_resource type="Script" path="res://demos/interaction/3d/hands_3d.gd" id="8_hands"]
+[ext_resource type="Script" path="res://demos/interaction/3d/hud_3d.gd" id="9_hud"]
 [ext_resource type="Script" uid="uid://8lyo1dj2251p" path="res://demos/interaction/3d/door.gd" id="8_sfwh4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcams"]
@@ -73,13 +75,11 @@ shadow_enabled = true
 use_collision = true
 size = Vector3(25, 1, 25)
 
-[node name="Player" type="Camera3D" parent="." unique_id=234214075 node_paths=PackedStringArray("dragger_raycast", "interaction_sensor", "dragger", "grab_marker")]
+[node name="Player" type="Camera3D" parent="." unique_id=234214075 node_paths=PackedStringArray("interaction_sensor", "cursor_raycast")]
 transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.9659258, 0, 6, 12.787858)
 script = ExtResource("1_7g04l")
-dragger_raycast = NodePath("DraggerRaycast")
 interaction_sensor = NodePath("InteractionSensor")
-dragger = NodePath("Dragger")
-grab_marker = NodePath("../GrabMarker")
+cursor_raycast = NodePath("DraggerRaycast")
 
 [node name="DraggerRaycast" type="RayCast3D" parent="Player" unique_id=1419106677]
 target_position = Vector3(0, 0, -50)
@@ -94,20 +94,25 @@ interaction_range = 30.0
 
 [node name="blockbench_export" parent="Player" unique_id=248557822 instance=ExtResource("3_a1jta")]
 
-[node name="Dragger" type="Node3D" parent="Player" unique_id=2015179067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5881908, -9.659259)
+[node name="Hands" type="Node3D" parent="." node_paths=PackedStringArray("player", "dragger", "grab_marker")]
+script = ExtResource("8_hands")
+player = NodePath("../Player")
+dragger = NodePath("Dragger")
+grab_marker = NodePath("../GrabMarker")
+
+[node name="Dragger" type="Node3D" parent="Hands"]
 script = ExtResource("7_hju5i")
 
-[node name="DragPoint" type="StaticBody3D" parent="Player/Dragger" unique_id=852333493]
+[node name="DragPoint" type="StaticBody3D" parent="Hands/Dragger" unique_id=852333493]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, -0.25881907, 0, 0.25881907, 0.9659259, 0, 0, 0)
 collision_layer = 0
 collision_mask = 0
 
-[node name="Mesh" type="MeshInstance3D" parent="Player/Dragger/DragPoint" unique_id=977347308]
+[node name="Mesh" type="MeshInstance3D" parent="Hands/Dragger/DragPoint" unique_id=977347308]
 mesh = SubResource("SphereMesh_dcams")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Dragger/DragPoint" unique_id=1160256317]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hands/Dragger/DragPoint" unique_id=1160256317]
 shape = SubResource("SphereShape3D_dcams")
 
 [node name="RedBox" type="RigidBody3D" parent="." unique_id=264834979]
@@ -211,14 +216,14 @@ shape = SubResource("BoxShape3D_bound_lid")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=451581112]
 
-[node name="Instructions" type="Label" parent="HUD" unique_id=2097171864]
+[node name="Instructions" type="Label" parent="HUD" node_paths=PackedStringArray("player", "hands")]
+script = ExtResource("9_hud")
+player = NodePath("../../Player")
+hands = NodePath("../../Hands")
 offset_left = 16.0
 offset_top = 12.0
 offset_right = 680.0
 offset_bottom = 96.0
-text = "Mouse aims.  Left click picks up and puts down.
-Hold right mouse and move to turn what you are holding.
-Mouse wheel raises and lowers it."
 
 [connection signal="interacted" from="RedBox/InteractableArea3D" to="RedBox" method="_on_interactable_area_3d_interacted"]
 [connection signal="interacted" from="Door/RigidBody3D/InteractableArea3D" to="Door/RigidBody3D" method="_on_interactable_area_3d_interacted"]

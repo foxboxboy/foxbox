@@ -1,6 +1,8 @@
 [gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://demos/interaction/2d/interaction_demo_2d.gd" id="1_demo"]
+[ext_resource type="Script" path="res://demos/interaction/2d/player_2d.gd" id="1_player"]
+[ext_resource type="Script" path="res://demos/interaction/2d/hands_2d.gd" id="8_hands"]
+[ext_resource type="Script" path="res://demos/interaction/2d/hud_2d.gd" id="9_hud"]
 [ext_resource type="Texture2D" path="res://icon.png" id="7_icon"]
 [ext_resource type="Script" path="res://demos/interaction/2d/grabbable_2d.gd" id="2_grab"]
 [ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interaction_raycast_2d.gd" id="3_sensor"]
@@ -35,14 +37,7 @@ stiffness = 700.0
 damping = 150.0
 keep_upright = false
 
-[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line", "grab_marker")]
-script = ExtResource("1_demo")
-player = NodePath("Player")
-sensor = NodePath("Player/Sensor")
-dragger = NodePath("Dragger")
-readout = NodePath("HUD/Readout")
-reach_line = NodePath("Player/Sensor/Reach")
-grab_marker = NodePath("GrabMarker")
+[node name="InteractionDemo2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -88,8 +83,11 @@ position = Vector2(440, 0)
 color = Color(0.301961, 0.317647, 0.396078, 1)
 polygon = PackedVector2Array(-32, -280, 32, -280, 32, 280, -32, 280)
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sensor", "reach_line")]
 position = Vector2(-220, 120)
+script = ExtResource("1_player")
+sensor = NodePath("Sensor")
+reach_line = NodePath("Sensor/Reach")
 
 [node name="Shape" type="CollisionShape2D" parent="Player"]
 shape = SubResource("Shape_player")
@@ -110,7 +108,13 @@ points = PackedVector2Array(0, 0, 190, 0)
 width = 3.0
 default_color = Color(1, 1, 1, 0.235294)
 
-[node name="Dragger" type="Node2D" parent="."]
+[node name="Hands" type="Node2D" parent="." node_paths=PackedStringArray("player", "dragger", "grab_marker")]
+script = ExtResource("8_hands")
+player = NodePath("../Player")
+dragger = NodePath("Dragger")
+grab_marker = NodePath("GrabMarker")
+
+[node name="Dragger" type="Node2D" parent="Hands"]
 script = ExtResource("5_dragger")
 max_pull_force = 90000.0
 
@@ -166,7 +170,7 @@ script = ExtResource("4_area")
 [node name="Shape" type="CollisionShape2D" parent="Props/Plank/Interact"]
 shape = SubResource("Shape_plank")
 
-[node name="GrabMarker" type="Polygon2D" parent="."]
+[node name="GrabMarker" type="Polygon2D" parent="Hands"]
 z_index = 10
 visible = false
 color = Color(1, 1, 1, 0.9)
@@ -174,7 +178,10 @@ polygon = PackedVector2Array(0, -7, 7, 0, 0, 7, -7, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Readout" type="Label" parent="HUD"]
+[node name="Readout" type="Label" parent="HUD" node_paths=PackedStringArray("player", "hands")]
+script = ExtResource("9_hud")
+player = NodePath("../../Player")
+hands = NodePath("../../Hands")
 offset_left = 16.0
 offset_top = 12.0
 offset_right = 620.0
