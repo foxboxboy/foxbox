@@ -122,6 +122,21 @@ warning that sends people to fix a working setting is worse than no warning at a
 Warnings are covered in `tests/modules/test_configuration_warnings.gd`, in both directions. One
 that fires when it should not is as much a bug as one that never fires.
 
+**Refresh them yourself.** Nothing recomputes a warning when the value behind it changes, so
+every property a warning reads needs a setter that calls `update_configuration_warnings()`, and
+a warning about children needs `child_order_changed` connected under `Engine.is_editor_hint()`.
+A warning that only appears after reselecting the node reads as no warning at all.
+
+An inherited property cannot be given a setter. `_set` sees the assignment first, so intercept
+it there and defer, since the value has not landed yet:
+
+```gdscript
+func _set(property: StringName, _value: Variant) -> bool:
+    if property == &"collide_with_areas":
+        update_configuration_warnings.call_deferred()
+    return false
+```
+
 ## Editor extras
 
 Gizmos and inspectors live inside the module they belong to, so deleting the module takes them

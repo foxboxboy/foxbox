@@ -107,6 +107,19 @@ func _clear_target() -> void:
 
 #region Editor
 
+## [member RayCast3D.collide_with_areas] belongs to the parent class, so it cannot be given a
+## setter here. [method Object._set] sees the assignment first; returning [code]false[/code]
+## leaves the engine to apply it as normal.
+## [br][br]
+## The refresh is deferred because this runs before the new value lands, and the warning is
+## computed from it.
+func _set(property: StringName, _value: Variant) -> bool:
+	if property == &"collide_with_areas":
+		update_configuration_warnings.call_deferred()
+
+	return false
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 

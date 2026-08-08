@@ -38,7 +38,10 @@ signal slots_updated(current_slots: Array[FoxEffectInstance])
 #region Variables
 
 ## The maximum number of distinct effect instances this policy will allow.
-@export var max_slots: int = 3
+@export var max_slots: int = 3:
+	set(value):
+		max_slots = value
+		update_configuration_warnings()
 
 ## The internal array tracking the currently managed instances.
 var slots: Array[FoxEffectInstance] = []

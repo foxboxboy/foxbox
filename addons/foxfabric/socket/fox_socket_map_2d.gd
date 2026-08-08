@@ -90,6 +90,10 @@ func get_socket(socket_name: StringName) -> FoxSocket2D:
 func _ready() -> void:
 	# @tool runs this in the editor too, where it would touch live state.
 	if Engine.is_editor_hint():
+		# The warnings are questions about the sockets underneath, so they go stale when one
+		# comes or goes. This only catches direct children. Sockets are collected recursively,
+		# so a socket buried deeper still needs the map reselecting to refresh.
+		child_order_changed.connect(update_configuration_warnings)
 		return
 
 	# Recursively find all sockets in the tree beneath this manager

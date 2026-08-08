@@ -7,10 +7,16 @@ extends FoxControl
 ## Handles the instantiation of UI slots and routes purchase requests.
 
 ## The [PackedScene] to instantiate for each item.
-@export var slot_scene: PackedScene
+@export var slot_scene: PackedScene:
+	set(value):
+		slot_scene = value
+		update_configuration_warnings()
 
 ## The parent [Control] node where instantiated slots are added.
-@export var container: Control
+@export var container: Control:
+	set(value):
+		container = value
+		update_configuration_warnings()
 
 ## The active wallet used to evaluate affordability.
 var _current_wallet: FoxWallet = null

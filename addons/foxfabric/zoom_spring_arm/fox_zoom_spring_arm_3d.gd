@@ -22,13 +22,19 @@ signal zoom_finished
 @export_group("Zoom Settings")
 
 ## The maximum distance the arm can zoom out.
-@export var max_length: float = 200.0
+@export var max_length: float = 200.0:
+	set(value):
+		max_length = value
+		update_configuration_warnings()
 
 ## The amount of length added or subtracted per zoom input.
 @export var zoom_step: float = 1.0
 
 ## How quickly the camera interpolates to the target zoom. Higher values mean faster zooming.
-@export var zoom_speed: float = 10.0
+@export var zoom_speed: float = 10.0:
+	set(value):
+		zoom_speed = value
+		update_configuration_warnings()
 
 ## Determines if the node currently accepts zoom inputs.
 @export var zoom_enabled: bool = true

@@ -38,9 +38,12 @@ signal attachment_changed(attachment: Node2D, socket: FoxSocket2D)
 
 #region Variables
 
-## (Optional) The node that will be used for position, rotation, and scale. 
+## (Optional) The node that will be used for position, rotation, and scale.
 ## Leave blank to use this [Marker2D]'s transform.
-@export var marker: Node2D
+@export var marker: Node2D:
+	set(value):
+		marker = value
+		update_configuration_warnings()
 
 @export_group("Snap Settings")
 

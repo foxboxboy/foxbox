@@ -26,7 +26,10 @@ extends FoxNode
 ## machine performs the swap, so states stay unaware of each other.
 
 ## The state that becomes active as soon as the machine is ready.
-@export var initial_state: FoxState
+@export var initial_state: FoxState:
+	set(value):
+		initial_state = value
+		update_configuration_warnings()
 
 ## The currently active state.
 var current_state: FoxState
@@ -76,6 +79,9 @@ func _ready() -> void:
 	# @tool runs this in the editor too. Entering a state there would run game logic every time
 	# the scene is opened.
 	if Engine.is_editor_hint():
+		# Most of the warnings are questions about the children, so they go stale the moment a
+		# state is added or removed.
+		child_order_changed.connect(update_configuration_warnings)
 		return
 
 	for child in get_children():
