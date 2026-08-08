@@ -109,6 +109,10 @@ hand, but the method form reads better anyway.
 A module may depend on `core` and on nothing else. If two modules need to share something, it
 belongs in `core` or it belongs in neither.
 
+`tests/modules/test_module_independence.gd` scans the addon and fails on anything else. The one
+allowed exception is listed at the top of that file. Adding to it means the module is no longer
+something you can copy out on its own, so it needs a reason.
+
 Modules do not assume what a project means by damage, currency, or interacting. They move a
 `Variant` payload and let the receiver decide. A module that reads inside a payload has taken a
 position it should not have.

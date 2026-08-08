@@ -2,10 +2,13 @@
 
 A lightweight, general purpose library for Godot 4.
 
-Every module stands on its own. Copy the whole `addons/foxfabric` folder or pull out the
-single directory you need. Most of them route arbitrary `Variant` payloads rather than
-hardcoding what your project means by any given concept, so a module never has to know
-anything about the game or tool it ends up in.
+Every module stands on its own. Take the whole `addons/foxfabric` folder, or copy `core/`
+plus the one directory you want. `character` also needs `state_machine`, and that is the
+only cross-module dependency in the library. A test enforces it.
+
+Most modules route arbitrary `Variant` payloads rather than hardcoding what your project
+means by any given concept, so a module never has to know anything about the game or tool
+it ends up in.
 
 ## Modules
 
