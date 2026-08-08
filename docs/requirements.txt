@@ -1,0 +1,4 @@
+# Needed for the Sphinx step of docs/build_docs.py, and by Read the Docs.
+# Godot handles the earlier steps and is not a python package.
+sphinx>=7.0
+sphinx-rtd-theme>=2.0

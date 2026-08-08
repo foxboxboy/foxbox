@@ -51,6 +51,9 @@ XML_DIR = DOCS / "xml_output"
 XML_ENGINE = DOCS / "xml_engine"
 RST_DIR = DOCS / "rst_output"
 WEB_DIR = DOCS / "web"
+# Hand written prose, one file per module, spliced into the generated module pages so that
+# regenerating never destroys anything a human wrote.
+INTROS = WEB_DIR / "intros"
 HTML_DIR = WEB_DIR / "_build" / "html"
 
 # Only this folder is documented. Pointing doctool at the whole project sweeps in every other
@@ -201,6 +204,15 @@ def module_blurb(name):
     return re.sub(r"^[A-Za-z ]+:\s*", "", first)
 
 
+def intro_for(name):
+    """Hand written prose for a module, kept in web/intros/ so regenerating a module page never
+    overwrites it. Returns an empty string when there is none."""
+    path = INTROS / ("%s.rst" % name)
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8").strip()
+
+
 def step_modules():
     print("\n[5/6] Grouping pages by module")
     for stale in WEB_DIR.glob("module_*.rst"):
@@ -218,15 +230,25 @@ def step_modules():
 
         title = module_title(name)
         body = [title, "=" * len(title), ""]
+
         blurb = module_blurb(name)
         if blurb:
             body += [blurb, ""]
-        body += [".. toctree::", "   :maxdepth: 1", ""]
+
+        intro = intro_for(name)
+        if intro:
+            body += [intro, ""]
+
+        body += [".. toctree::", "   :maxdepth: 1", "   :caption: Classes", ""]
         body += ["   " + p for p in pages]
         body.append("")
 
         (WEB_DIR / ("module_%s.rst" % name)).write_text("\n".join(body), encoding="utf-8")
         written.append(name)
+
+    missing_intro = [m for m in written if not intro_for(m)]
+    if missing_intro:
+        print("      no intro yet: %s" % ", ".join(missing_intro))
 
     unlisted = [m for m in written if m not in MODULE_ORDER]
     if unlisted:

@@ -26,7 +26,14 @@ intersphinx_mapping = {
 intersphinx_disabled_reftypes = []
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# intros/ holds hand written prose that build_docs.py splices into the generated module pages.
+# Those files are fragments, not pages, so Sphinx must not try to build them on their own.
+exclude_patterns = ['_build', 'intros', 'Thumbs.db', '.DS_Store']
+
+# Pygments' gdscript lexer does not understand @export and friends, so it falls back to relaxed
+# mode and still highlights fine. The warning is about the lexer, not about our code.
+suppress_warnings = ['misc.highlighting_failure']
 
 # Godot 4.7 emits an "abstract" method qualifier, and make_rst.py turns every qualifier into an
 # RST substitution. The vendored copy of make_rst.py predates @abstract, so its make_footer()
@@ -70,4 +77,10 @@ html_title = "FoxFabric documentation"
 
 html_css_files = [
     'custom.css',
+]
+
+# custom.css styles sidebar captions as clickable and hides their contents until a class is
+# added. custom.js is what adds it. Without the pair, sections never open.
+html_js_files = [
+    'custom.js',
 ]
