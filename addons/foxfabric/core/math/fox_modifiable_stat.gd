@@ -6,6 +6,25 @@ class_name FoxModifiableStat
 ## Flat modifiers are added to [member base_value] first. That total is then multiplied by
 ## [code]1.0[/code] plus the sum of all multiplier modifiers, so a single [code]0.5[/code]
 ## multiplier scales the result by [code]1.5[/code] rather than halving it.
+## [codeblock]
+## var attack := FoxModifiableStat.new(100.0)
+##
+## attack.add_flat_modifier(&"gear", 50.0)
+## attack.add_multiplier_modifier(&"rage", 0.5)
+## attack.value                                  # (100 + 50) * 1.5 = 225
+##
+## attack.pop_modifier(&"gear", ModifierType.FLAT)
+## attack.value                                  # 100 * 1.5 = 150
+## [/codeblock]
+## Modifiers are stacked per id, so the same source can apply more than once and be removed one
+## layer at a time. [method pop_modifier] takes the most recent off the stack,
+## [method clear_modifier] removes every layer under that id at once.
+## [codeblock]
+## attack.add_flat_modifier(&"poison", -5.0)
+## attack.add_flat_modifier(&"poison", -5.0)     # two stacks of the same debuff
+## attack.pop_modifier(&"poison", ModifierType.FLAT)   # one wears off
+## attack.clear_modifier(&"poison", ModifierType.FLAT) # cured, all layers gone
+## [/codeblock]
 
 
 

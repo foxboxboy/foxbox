@@ -94,8 +94,8 @@ func _lowering_the_max_clamps_current() -> void:
 func _signals() -> void:
 	case("signals")
 	var p: FoxStatPool = FoxStatPool.new()
-	var updates: Array = [0]
-	var depleted: Array = [0]
+	var updates: Array[int] = [0]
+	var depleted: Array[int] = [0]
 	p.updated.connect(func(_c: float, _m: float) -> void: updates[0] += 1)
 	p.depleted.connect(func(_u: float) -> void: depleted[0] += 1)
 

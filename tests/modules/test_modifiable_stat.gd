@@ -128,7 +128,7 @@ func _remove_specific() -> void:
 func _change_signal_only_fires_on_change() -> void:
 	case("value_changed")
 	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
-	var count: Array = [0]
+	var count: Array[int] = [0]
 	s.value_changed.connect(func(_v: float) -> void: count[0] += 1)
 
 	s.add_flat_modifier(&"a", 5.0)

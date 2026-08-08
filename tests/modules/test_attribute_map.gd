@@ -44,9 +44,9 @@ func _new_map() -> FoxAttributeMap:
 func _data_storage() -> void:
 	case("data")
 	var m: FoxAttributeMap = _new_map()
-	var added: Array = [0]
-	var replaced: Array = [0]
-	var removed: Array = [0]
+	var added: Array[int] = [0]
+	var replaced: Array[int] = [0]
+	var removed: Array[int] = [0]
 	m.data_added.connect(func(_k: StringName, _v: Variant) -> void: added[0] += 1)
 	m.data_replaced.connect(func(_k: StringName, _v: Variant) -> void: replaced[0] += 1)
 	m.data_removed.connect(func(_k: StringName, _v: Variant) -> void: removed[0] += 1)
@@ -103,8 +103,8 @@ func _groups() -> void:
 func _flags_stack() -> void:
 	case("flags are stacked, not boolean")
 	var m: FoxAttributeMap = _new_map()
-	var added: Array = [0]
-	var removed: Array = [0]
+	var added: Array[int] = [0]
+	var removed: Array[int] = [0]
 	m.flag_added.connect(func(_f: StringName) -> void: added[0] += 1)
 	m.flag_removed.connect(func(_f: StringName) -> void: removed[0] += 1)
 

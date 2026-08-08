@@ -4,6 +4,50 @@
  */
 
 /**
+ * Landing page tiles. Godot's docs use the same idea to route people by what they came for,
+ * but the styling for them does not ship in custom.css.
+ */
+.ff-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.ff-tile {
+    display: block;
+    padding: 1rem 1.15rem;
+    border-radius: 4px;
+    border: 1px solid rgb(255 255 255 / 12%);
+    text-decoration: none !important;
+    color: #fff !important;
+    transition: filter 0.15s;
+}
+
+.ff-tile:hover {
+    filter: brightness(1.18);
+}
+
+.ff-tile strong {
+    display: block;
+    color: #fff;
+    font-size: 1.05em;
+    margin-bottom: 0.25rem;
+}
+
+.ff-tile span {
+    display: block;
+    font-size: 0.92em;
+    opacity: 0.85;
+    line-height: 1.4;
+}
+
+.ff-tile-start { background-color: #1d6d4c; }
+.ff-tile-build { background-color: #1a6070; }
+.ff-tile-api   { background-color: #2a4d80; }
+.ff-tile-repo  { background-color: #7a2b45; }
+
+/**
  * custom.css reserves 348px at the foot of the sidebar for the Read the Docs version panel and
  * the ethical-ads slot. Neither exists here, so the menu stops well short of the bottom and its
  * scrollbar looks cut off. Reclaim everything except the logo and the search box.

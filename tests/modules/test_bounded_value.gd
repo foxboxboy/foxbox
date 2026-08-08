@@ -40,7 +40,7 @@ func _arithmetic() -> void:
 func _saturation() -> void:
 	case("saturation")
 	var v: FoxBoundedValue = FoxBoundedValue.new(8.0, 10.0, 0.0)
-	var overflow: Array = [-1.0]
+	var overflow: Array[float] = [-1.0]
 	v.saturated.connect(func(o: float) -> void: overflow[0] = o)
 
 	v.add(5.0)
@@ -51,7 +51,7 @@ func _saturation() -> void:
 func _depletion() -> void:
 	case("depletion")
 	var v: FoxBoundedValue = FoxBoundedValue.new(2.0, 10.0, 0.0)
-	var underflow: Array = [-1.0]
+	var underflow: Array[float] = [-1.0]
 	v.depleted.connect(func(u: float) -> void: underflow[0] = u)
 
 	v.subtract(6.0)
@@ -64,7 +64,7 @@ func _depletion() -> void:
 func _signal_argument_order() -> void:
 	case("value_changed argument order")
 	var v: FoxBoundedValue = FoxBoundedValue.new(5.0, 100.0, 10.0)
-	var got: Array = [0.0, 0.0, 0.0]
+	var got: Array[float] = [0.0, 0.0, 0.0]
 	v.value_changed.connect(func(c: float, mn: float, mx: float) -> void:
 		got[0] = c
 		got[1] = mn
