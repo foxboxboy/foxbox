@@ -64,9 +64,10 @@ html_static_path = ['_static']
 
 html_theme_options = {
     'logo_only': True,
-    # Godot expands only the branch you are in and leaves siblings behind a + box. Expanding
-    # everything at once is unreadable now that folders are nested.
-    'collapse_navigation': True,
+    # False makes Sphinx emit the whole tree and let CSS collapse it, which is what puts a + box
+    # on every branch. True emits only the current branch, so siblings have no children in the
+    # markup and get no box at all.
+    'collapse_navigation': False,
     # Deep enough to reach a class's own sections, the way Godot shows Description, Properties
     # and Methods under the class you are reading.
     'navigation_depth': 5,
