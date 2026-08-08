@@ -70,7 +70,7 @@ func resolve_pose(is_grounded: bool) -> Type:
 	return target_pose
 
 
-## Returns [code]true[/code] if the character is currently in the [constant Type.STANDING] pose.
+## Returns [code]true[/code] if the character is currently in the [constant STANDING] pose.
 func is_standing() -> bool:
 	return current_pose == Type.STANDING
 
@@ -85,7 +85,7 @@ func cancel_crouch() -> void:
 	_is_crouch_requested = false
 
 
-## Returns [code]true[/code] if the character is currently in the [constant Type.CROUCHING] pose.
+## Returns [code]true[/code] if the character is currently in the [constant CROUCHING] pose.
 func is_crouching() -> bool:
 	return current_pose == Type.CROUCHING
 

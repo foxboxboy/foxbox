@@ -183,7 +183,7 @@ func load_state(data: Dictionary) -> void:
 #region Built-In Overrides
 
 ## Overrides the default print() behavior to show readable, human-friendly data 
-## instead of a raw memory ID (e.g., "[poison x2 (4.5s)]").
+## instead of a raw memory ID (e.g., [lb]poison x2 (4.5s)]).
 func _to_string() -> String:
 	if effect:
 		var time_str = "Perm" if _time_left == -1.0 else "%.1fs" % _time_left

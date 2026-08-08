@@ -15,6 +15,7 @@ __pycache__/
 
 # Generated API docs. See docs/README.txt to rebuild.
 docs/xml_output/
+docs/xml_engine/
 docs/rst_output/
 docs/web/class_*.rst
 docs/web/_build/

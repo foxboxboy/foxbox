@@ -65,6 +65,22 @@ The old index listed every class by hand and had drifted to fifteen that no long
 
 NOTES
 
+The engine class reference is dumped to xml_engine/ and cached, because make_rst.py resolves
+every type against the classes it is handed. Without it, float, Node3D and every other built-in
+comes back "unresolved" and the run dies with over a thousand errors. --filter keeps the output
+to our classes only. Pass --refresh-engine after upgrading Godot.
+
+conf.py defines the |abstract| substitution. Godot 4.7 emits an "abstract" method qualifier and
+make_rst.py turns every qualifier into an RST substitution, but the vendored copy predates
+@abstract and does not define that one.
+
+conf.py also enables intersphinx against docs.godotengine.org, so engine types link out to the
+official docs instead of producing an undefined-label warning per reference. The first build
+needs network to fetch the inventory, after which Sphinx caches it.
+
+
+VERSION NOTES
+
 version.py sits at the repo root looking out of place because make_rst.py line 14 puts the
 repo root on sys.path and then does "import version". There is a copy at tools/version.py, so
 deleting the root one may just fall through to that, but it is untested. If you tidy it away

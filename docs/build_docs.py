@@ -23,6 +23,10 @@ from pathlib import Path
 DOCS = Path(__file__).resolve().parent
 PROJECT = DOCS.parent
 XML_DIR = DOCS / "xml_output"
+# make_rst.py resolves every type against the classes it is given, so it needs the built-in
+# engine documentation too, or float, Node3D and friends all come back unresolved. Kept in a
+# separate folder so --filter can restrict output to our classes only.
+XML_ENGINE = DOCS / "xml_engine"
 RST_DIR = DOCS / "rst_output"
 WEB_DIR = DOCS / "web"
 HTML_DIR = WEB_DIR / "_build" / "html"
@@ -63,8 +67,38 @@ def reset(path):
     path.mkdir(parents=True, exist_ok=True)
 
 
+def engine_count():
+    if not XML_ENGINE.exists():
+        return 0
+    return len(list(XML_ENGINE.rglob("*.xml")))
+
+
+def engine_paths():
+    """The three roots doctool writes to. make_rst.py treats 'modules' and 'platform'
+    specially, walking them for doc_classes folders, so they are passed by name."""
+    return [
+        XML_ENGINE / "doc" / "classes",
+        XML_ENGINE / "modules",
+        XML_ENGINE / "platform",
+    ]
+
+
+def step_engine_xml(godot, force=False):
+    print("\n[1/4] Engine class reference")
+    if engine_count() > 0 and not force:
+        print("      cached, %d classes (--refresh-engine to redo)" % engine_count())
+        return
+    reset(XML_ENGINE)
+    # doctool lays these out like the Godot source tree: doc/classes, modules/*/doc_classes
+    # and platform/*/doc_classes, not one flat folder.
+    run([godot, "--headless", "--path", PROJECT, "--doctool", XML_ENGINE])
+    if engine_count() == 0:
+        fail("Godot wrote no engine XML to %s" % XML_ENGINE)
+    print("      %d classes" % engine_count())
+
+
 def step_xml(godot):
-    print("\n[1/4] Generating class XML from source comments")
+    print("\n[2/4] Generating FoxFabric XML from source comments")
     reset(XML_DIR)
     run([
         godot, "--headless", "--path", PROJECT,
@@ -79,15 +113,21 @@ def step_xml(godot):
 
 
 def step_rst():
-    print("\n[2/4] Converting XML to reStructuredText")
+    print("\n[3/4] Converting XML to reStructuredText")
     reset(RST_DIR)
-    # make_rst.py puts the repo root on sys.path so it can "import version"
-    run([sys.executable, DOCS / "tools" / "make_rst.py", XML_DIR, "--output", RST_DIR], cwd=DOCS)
+    # Both folders go in so types resolve, but --filter keeps the output to ours.
+    # make_rst.py puts the repo root on sys.path so it can "import version".
+    run([
+        sys.executable, DOCS / "tools" / "make_rst.py",
+        *engine_paths(), XML_DIR,
+        "--output", RST_DIR,
+        "--filter", XML_DIR.name,
+    ], cwd=DOCS)
     print("      %d pages" % len(list(RST_DIR.glob("class_*.rst"))))
 
 
 def step_collect():
-    print("\n[3/4] Collecting pages into web/")
+    print("\n[4/4] Collecting pages into web/")
     for stale in WEB_DIR.glob("class_*.rst"):
         stale.unlink()
     count = 0
@@ -99,23 +139,33 @@ def step_collect():
 
 
 def step_html():
-    print("\n[4/4] Building HTML")
-    if shutil.which("sphinx-build") is None:
+    print("\n[5/5] Building HTML")
+    # Invoked as a module rather than the sphinx-build binary, which only works when the
+    # interpreter's Scripts directory happens to be on PATH.
+    probe = subprocess.run(
+        [sys.executable, "-c", "import sphinx, sphinx_rtd_theme"],
+        capture_output=True,
+    )
+    if probe.returncode != 0:
         fail(
-            "sphinx-build is not on PATH.\n"
+            "Sphinx is not installed for this interpreter (%s).\n"
             "  Install it with:  pip install sphinx sphinx-rtd-theme\n"
             "  Or rerun with --skip-html to stop after the reStructuredText step."
+            % sys.executable
         )
-    run(["sphinx-build", "-b", "html", WEB_DIR, HTML_DIR])
+    run([sys.executable, "-m", "sphinx", "-b", "html", WEB_DIR, HTML_DIR])
 
 
 def main():
     parser = argparse.ArgumentParser(description="Build the FoxFabric API docs.")
     parser.add_argument("--skip-html", action="store_true", help="stop before Sphinx")
     parser.add_argument("--open", action="store_true", help="open the result in a browser")
+    parser.add_argument("--refresh-engine", action="store_true",
+                        help="re-dump the engine class reference (only needed after a Godot upgrade)")
     args = parser.parse_args()
 
     godot = find_godot()
+    step_engine_xml(godot, force=args.refresh_engine)
     step_xml(godot)
     step_rst()
     step_collect()

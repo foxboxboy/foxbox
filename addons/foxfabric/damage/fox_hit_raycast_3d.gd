@@ -4,7 +4,7 @@ extends RayCast3D
 ## Delivers a [Variant] payload to the first [FoxHurtArea3D] it strikes.
 ##
 ## Acts as the hitscan trigger for the FoxFabric interaction pipeline.
-## [br][b]Note:[/b] Ensure [member collide_with_areas] is enabled in the inspector.
+## [br][b]Note:[/b] Ensure [member RayCast3D.collide_with_areas] is enabled in the inspector.
 
 
 ## Emitted when this raycast successfully delivers its [param payload] to a [param target].

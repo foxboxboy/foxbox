@@ -5,7 +5,7 @@ extends SubViewportContainer
 ## never clip into nearby geometry. Put a camera and the view model inside the [SubViewport]
 ## child, and keep its field of view in sync with the world camera yourself.
 
-## The child viewport that gets resized. Expected to be a direct child named [code]SubViewport[/code].
+## The child viewport that gets resized. Expected to be a direct child named [SubViewport].
 @onready var sub_viewport: SubViewport = $SubViewport
 
 
