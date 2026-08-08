@@ -17,9 +17,10 @@ __pycache__/
 docs/xml_output/
 docs/xml_engine/
 docs/rst_output/
-docs/web/class_*.rst
-docs/web/module_*.rst
 docs/web/_build/
+
+# docs/web/class_*.rst and module_*.rst are deliberately NOT ignored. Read the Docs has no
+# Godot to run, so it can only render pages that are committed. CI regenerates and pushes them.
 
 # Vendored Godot engine files the doc tooling does not use
 docs/tools/misc/*

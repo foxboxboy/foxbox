@@ -2,13 +2,10 @@
 # every push to main.
 #
 # Read the Docs cannot run Godot, so it cannot regenerate the class pages. It builds whatever
-# reStructuredText is committed. To publish an update:
+# reStructuredText is committed, which is why docs/web/class_*.rst and module_*.rst are tracked.
 #
-#     python docs/build_docs.py --skip-html
-#     git add -f docs/web/class_*.rst docs/web/module_*.rst
-#     git commit
-#
-# The -f is needed because generated pages are gitignored for local builds.
+# Keeping them current is not your job. .github/workflows/docs.yml runs Godot on every push
+# that touches addons/ or docs/, and pushes the regenerated pages back.
 
 version: 2
 

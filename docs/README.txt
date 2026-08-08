@@ -22,15 +22,18 @@ once, otherwise Godot has no class list to document.
 
 HOSTING
 
-.github/workflows/docs.yml builds the site on GitHub Actions and publishes it to GitHub Pages
-on every push to main that touches addons/ or docs/. It downloads Godot and runs the same six
-steps, so nothing generated is committed and the site cannot drift from the source comments.
+Read the Docs, the same host the Godot documentation uses, which is where the version and
+language flyout in the bottom corner comes from.
 
-It needs Pages turned on once, under Settings > Pages > Source > GitHub Actions. Until then the
-build step passes and the deploy step fails.
+Read the Docs has no Godot to run, so it can only render reStructuredText that is already in
+the repo. That is why class_*.rst and module_*.rst are tracked rather than ignored, and it is
+how the engine's own docs work too.
 
-.readthedocs.yaml is the older path and is now redundant. Read the Docs cannot run Godot, so it
-only builds reStructuredText that has been committed by hand.
+Keeping them current is automated. .github/workflows/docs.yml downloads Godot on every push
+that touches addons/ or docs/, runs the build, and pushes the regenerated pages back with
+[skip ci] so it does not retrigger itself. You never regenerate them by hand.
+
+Connect the repo once at https://readthedocs.org and it publishes on every push to main.
 
 
 THE STEPS BY HAND
@@ -53,9 +56,9 @@ GodotDoctor classes that way.
 
 WHAT IS TRACKED
 
-Only the tooling and the hand written pages:
+The tooling, the hand written pages, and the generated pages Read the Docs renders:
 
-    build_docs.py            the four step build
+    build_docs.py            the six step build
     tools/make_rst.py        Godot's XML to reStructuredText converter
     tools/doc_status.py      coverage report for documented classes
     tools/misc/utility/      colour helpers, imported by both scripts
@@ -64,13 +67,17 @@ Only the tooling and the hand written pages:
     web/conf.py              Sphinx settings
     web/Makefile, make.bat   Sphinx entry points
     web/_static/             css and logos
+    web/class_*.rst          generated, tracked only because Read the Docs cannot make them
+    web/module_*.rst         generated, same reason
 
-Everything generated is ignored, so the output can never drift from the source:
+The intermediate output stays ignored:
 
     xml_output/              class XML from Godot
     rst_output/              converted reStructuredText
-    web/class_*.rst          the pages Sphinx renders
     web/_build/              final HTML
+
+A local build will therefore show class_*.rst as modified. That is expected. Leave them, CI
+regenerates and commits them on push.
 
 index.rst uses a glob toctree over class_*, so adding or removing a class needs no edit here.
 The old index listed every class by hand and had drifted to fifteen that no longer existed.

@@ -1,9 +1,10 @@
 name: Docs
 
-# Builds the class reference and publishes it to GitHub Pages.
+# Regenerates the class reference and commits it back, so Read the Docs has something to build.
 #
-# The whole pipeline runs here, Godot included, so nothing generated is ever committed and the
-# site cannot drift from the source comments.
+# Read the Docs cannot run Godot, so it only renders reStructuredText that is already in the
+# repo. This job does the Godot half and pushes the result. It is the same arrangement the
+# engine's own documentation uses, with the sync automated rather than done by hand.
 
 on:
   push:
@@ -15,20 +16,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Never let two deploys race. A queued run waits rather than cancelling a deploy midway.
 concurrency:
-  group: pages
+  group: docs
   cancel-in-progress: false
 
 env:
   GODOT_VERSION: "4.7.1"
 
 jobs:
-  build:
+  classref:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -58,24 +56,21 @@ jobs:
           godot --headless --path . --editor --quit || true
           godot --headless --path . --editor --quit || true
 
-      - name: Build the docs
+      - name: Build
+        # The HTML this produces is not published anywhere. It runs so a broken Sphinx build
+        # fails here rather than turning up on Read the Docs later.
         run: python docs/build_docs.py
 
-      - name: Mark the output as not Jekyll
-        # Sphinx puts the stylesheets in _static. Anything Jekyll touches drops underscore
-        # folders, and the site comes up with no CSS at all.
-        run: touch docs/web/_build/html/.nojekyll
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/web/_build/html
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-24.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Commit the class reference
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/web/class_*.rst docs/web/module_*.rst
+          if git diff --cached --quiet; then
+            echo "Class reference unchanged."
+            exit 0
+          fi
+          # [skip ci] matters. This push touches docs/, which is what triggers the workflow,
+          # so without it the job would retrigger itself forever.
+          git commit -m "Regenerate the class reference [skip ci]"
+          git push
