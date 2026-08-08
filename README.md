@@ -55,9 +55,10 @@ The `character` module needs a heavy refactor and does not reflect how the rest 
 library is written. Parts of it still hardcode things they should not, like a `crouch()`
 on the hitbox. Read any other module for the intended style.
 
-`docs/` is an experiment that generates a browsable web version of the API using Godot's
-own documentation tooling. The checked in output is stale. Regenerate it with `make html`
-inside `docs/web`.
+`docs/` is an experiment that builds a browsable web version of the API using Godot's own
+documentation tooling. Only the tooling and the hand written pages are tracked, so the
+generated output can never drift from the source. See [docs/README.txt](docs/README.txt)
+to rebuild it.
 
 There are no automated tests yet. The demo scenes act as the smoke tests.
 
