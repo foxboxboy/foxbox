@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://csyyxnvtd7qjc"]
 
 [ext_resource type="Script" uid="uid://cwfhq8xve31ou" path="res://addons/foxfabric/attribute_map/fox_attribute_map.gd" id="1_map"]
-[ext_resource type="Script" path="res://demos/attribute_map/runner.gd" id="2_runner"]
-[ext_resource type="Script" path="res://demos/attribute_map/controls.gd" id="3_controls"]
-[ext_resource type="Script" path="res://demos/attribute_map/hud.gd" id="4_hud"]
+[ext_resource type="Script" path="res://demos/attribute_map/part.gd" id="2_part"]
+[ext_resource type="Script" path="res://demos/attribute_map/target.gd" id="3_target"]
+[ext_resource type="Script" path="res://demos/attribute_map/controls.gd" id="4_controls"]
+[ext_resource type="Script" path="res://demos/attribute_map/hud.gd" id="5_hud"]
 
 [sub_resource type="SystemFont" id="SystemFont_mono"]
 font_names = PackedStringArray("monospace")
@@ -13,113 +14,144 @@ font_names = PackedStringArray("monospace")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
 
-[node name="Track" type="Node2D" parent="."]
+[node name="Wall" type="Node2D" parent="." node_paths=PackedStringArray("bar")]
+position = Vector2(900, 300)
+script = ExtResource("3_target")
+max_health = 600.0
+bar = NodePath("Bar")
+bar_size = Vector2(240, 220)
 
-[node name="LaneFox" type="Polygon2D" parent="Track"]
-color = Color(0.26, 0.28, 0.33, 1)
-polygon = PackedVector2Array(40, 399, 1112, 399, 1112, 402, 40, 402)
+[node name="Back" type="Polygon2D" parent="Wall"]
+color = Color(0.2, 0.21, 0.23, 1)
+polygon = PackedVector2Array(0, 0, 240, 0, 240, 220, 0, 220)
 
-[node name="LaneHare" type="Polygon2D" parent="Track"]
-color = Color(0.26, 0.28, 0.33, 1)
-polygon = PackedVector2Array(40, 489, 1112, 489, 1112, 492, 40, 492)
+[node name="Bar" type="Polygon2D" parent="Wall"]
+color = Color(0.76, 0.36, 0.3, 1)
+polygon = PackedVector2Array(0, 0, 240, 0, 240, 220, 0, 220)
 
-[node name="LaneBadger" type="Polygon2D" parent="Track"]
-color = Color(0.26, 0.28, 0.33, 1)
-polygon = PackedVector2Array(40, 579, 1112, 579, 1112, 582, 40, 582)
-
-[node name="Pack" type="Node2D" parent="Track"]
-
-[node name="Attributes" type="Node" parent="Track/Pack"]
-script = ExtResource("1_map")
-metadata/_custom_type_script = "uid://cwfhq8xve31ou"
-
-[node name="Fox" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes")]
-position = Vector2(70, 379)
-script = ExtResource("2_runner")
-label = "fox"
-starting_speed = 5.0
-attributes = NodePath("Attributes")
-
-[node name="Body" type="Polygon2D" parent="Track/Pack/Fox"]
-color = Color(1, 0.55, 0.1, 1)
-polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
-
-[node name="Name" type="Label" parent="Track/Pack/Fox"]
-offset_left = -40.0
-offset_top = -52.0
-offset_right = 40.0
-offset_bottom = -28.0
+[node name="Name" type="Label" parent="Wall"]
+offset_left = 0.0
+offset_top = 228.0
+offset_right = 240.0
+offset_bottom = 252.0
 horizontal_alignment = 1
-text = "fox"
+text = "wall"
 
-[node name="Attributes" type="Node" parent="Track/Pack/Fox"]
-script = ExtResource("1_map")
-metadata/_custom_type_script = "uid://cwfhq8xve31ou"
-
-[node name="Hare" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes")]
-position = Vector2(70, 469)
-script = ExtResource("2_runner")
-label = "hare"
-starting_speed = 4.0
+[node name="Tank" type="Node2D" parent="." node_paths=PackedStringArray("attributes")]
+position = Vector2(480, 470)
+script = ExtResource("2_part")
+label = "tank"
 attributes = NodePath("Attributes")
+stats = {
+"armour": 60.0,
+"crew": 4.0
+}
+group = &"survivability"
 
-[node name="Body" type="Polygon2D" parent="Track/Pack/Hare"]
-color = Color(0.78, 0.8, 0.84, 1)
-polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
-
-[node name="Name" type="Label" parent="Track/Pack/Hare"]
-offset_left = -40.0
-offset_top = -52.0
-offset_right = 40.0
-offset_bottom = -28.0
-horizontal_alignment = 1
-text = "hare"
-
-[node name="Attributes" type="Node" parent="Track/Pack/Hare"]
+[node name="Attributes" type="Node" parent="Tank"]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Badger" type="Node2D" parent="Track" node_paths=PackedStringArray("attributes")]
-position = Vector2(70, 559)
-script = ExtResource("2_runner")
-label = "badger"
-starting_speed = 3.0
+[node name="Hull" type="Polygon2D" parent="Tank"]
+color = Color(0.29, 0.33, 0.28, 1)
+polygon = PackedVector2Array(-110, -30, 110, -30, 110, 30, -110, 30)
+
+[node name="Turret" type="Node2D" parent="Tank" node_paths=PackedStringArray("attributes")]
+position = Vector2(10, -30)
+script = ExtResource("2_part")
+label = "turret"
 attributes = NodePath("Attributes")
+stats = {
+"traverse": 25.0
+}
+group = &"mounting"
 
-[node name="Body" type="Polygon2D" parent="Track/Badger"]
-color = Color(0.45, 0.72, 0.55, 1)
-polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
-
-[node name="Name" type="Label" parent="Track/Badger"]
-offset_left = -40.0
-offset_top = -52.0
-offset_right = 40.0
-offset_bottom = -28.0
-horizontal_alignment = 1
-text = "badger"
-
-[node name="Attributes" type="Node" parent="Track/Badger"]
+[node name="Attributes" type="Node" parent="Tank/Turret"]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Controls" type="Node" parent="." node_paths=PackedStringArray("pack", "pack_node", "track", "fox")]
-script = ExtResource("3_controls")
-pack = NodePath("../Track/Pack/Attributes")
-pack_node = NodePath("../Track/Pack")
-track = NodePath("../Track")
-fox = NodePath("../Track/Pack/Fox")
+[node name="Base" type="Polygon2D" parent="Tank/Turret"]
+color = Color(0.35, 0.4, 0.33, 1)
+polygon = PackedVector2Array(-45, -28, 45, -28, 45, 0, -45, 0)
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="Cannon" type="Node2D" parent="Tank/Turret" node_paths=PackedStringArray("attributes", "target")]
+position = Vector2(45, -14)
+script = ExtResource("2_part")
+label = "cannon"
+attributes = NodePath("Attributes")
+stats = {
+"calibre": 90.0,
+"damage": 30.0,
+"fire_rate": 0.5
+}
+group = &"firepower"
+target = NodePath("../../../Wall")
 
-[node name="Readout" type="Label" parent="HUD" node_paths=PackedStringArray("pack", "fox", "hare", "badger")]
-offset_left = 16.0
+[node name="Attributes" type="Node" parent="Tank/Turret/Cannon"]
+script = ExtResource("1_map")
+metadata/_custom_type_script = "uid://cwfhq8xve31ou"
+
+[node name="Barrel" type="Polygon2D" parent="Tank/Turret/Cannon"]
+color = Color(0.44, 0.49, 0.41, 1)
+polygon = PackedVector2Array(0, -6, 130, -6, 130, 6, 0, 6)
+
+[node name="Name" type="Label" parent="Tank/Turret/Cannon"]
+offset_left = 10.0
+offset_top = -34.0
+offset_right = 120.0
+offset_bottom = -10.0
+text = "cannon"
+
+[node name="MachineGun" type="Node2D" parent="Tank" node_paths=PackedStringArray("attributes", "target")]
+position = Vector2(-70, -30)
+script = ExtResource("2_part")
+label = "machine gun"
+attributes = NodePath("Attributes")
+stats = {
+"damage": 3.0,
+"fire_rate": 5.0
+}
+group = &"firepower"
+target = NodePath("../../Wall")
+
+[node name="Attributes" type="Node" parent="Tank/MachineGun"]
+script = ExtResource("1_map")
+metadata/_custom_type_script = "uid://cwfhq8xve31ou"
+
+[node name="Barrel" type="Polygon2D" parent="Tank/MachineGun"]
+color = Color(0.56, 0.59, 0.52, 1)
+polygon = PackedVector2Array(0, -5, 60, -5, 60, 5, 0, 5)
+
+[node name="Name" type="Label" parent="Tank/MachineGun"]
+offset_left = -55.0
+offset_top = 70.0
+offset_right = 85.0
+offset_bottom = 94.0
+text = "machine gun"
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Readout" type="Label" parent="UI" node_paths=PackedStringArray("tank", "turret", "cannon", "machine_gun", "target")]
+offset_left = 20.0
 offset_top = 12.0
-offset_right = 740.0
-offset_bottom = 290.0
+offset_right = 1140.0
+offset_bottom = 250.0
 theme_override_fonts/font = SubResource("SystemFont_mono")
-theme_override_font_sizes/font_size = 15
-script = ExtResource("4_hud")
-pack = NodePath("../../Track/Pack/Attributes")
-fox = NodePath("../../Track/Pack/Fox")
-hare = NodePath("../../Track/Pack/Hare")
-badger = NodePath("../../Track/Badger")
+theme_override_font_sizes/font_size = 13
+script = ExtResource("5_hud")
+tank = NodePath("../../Tank")
+turret = NodePath("../../Tank/Turret")
+cannon = NodePath("../../Tank/Turret/Cannon")
+machine_gun = NodePath("../../Tank/MachineGun")
+target = NodePath("../../Wall")
+
+[node name="Controls" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("tank", "cannon", "target")]
+offset_left = 20.0
+offset_top = 268.0
+offset_right = 270.0
+offset_bottom = 480.0
+theme_override_constants/separation = 6
+script = ExtResource("4_controls")
+tank = NodePath("../../Tank/Attributes")
+cannon = NodePath("../../Tank/Turret/Cannon/Attributes")
+target = NodePath("../../Wall")

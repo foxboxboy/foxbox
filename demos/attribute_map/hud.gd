@@ -5,15 +5,16 @@ extends Label
 
 #region Variables
 
-const Runner = preload("res://demos/attribute_map/runner.gd")
+const Part = preload("res://demos/attribute_map/part.gd")
 
-const MUD: StringName = &"mud"
+## In tree order, with the indent each one is drawn at. The tank owns the turret, the turret owns
+## the cannon, and the machine gun hangs off the tank beside the turret.
+@export var tank: Part
+@export var turret: Part
+@export var cannon: Part
+@export var machine_gun: Part
 
-@export var pack: FoxAttributeMap
-
-@export var fox: Runner
-@export var hare: Runner
-@export var badger: Runner
+@export var target: Node
 
 #endregion
 
@@ -22,19 +23,17 @@ const MUD: StringName = &"mud"
 
 func _process(_delta: float) -> void:
 	text = "\n".join([
-		"1      mud on the pack             %s" % _on_off(pack.get_rule_summary().has(MUD)),
-		"2 / 3  slow and unslow the pack",
-		"4 / 5  the fox slows itself",
-		"Space  the fox is                  %s" % ("in the pack" if fox.is_in_a_pack() else "running alone"),
+		"wall  %d" % roundi(target.get(&"health")),
 		"",
-		_line("", "move_speed", "going at", "flags", "rules"),
-		_line("pack", "-", "-", _stacks(pack), _rules(pack)),
-		_runner(fox),
-		_runner(hare),
-		_runner(badger),
+		_line("part", "damage", "its own stats", "group", "rules it tracks", "flags"),
+		_part(tank, ""),
+		_part(turret, "  "),
+		_part(cannon, "    "),
+		_part(machine_gun, "  "),
 		"",
-		"mud is a rule. It changes move_speed itself, and the pack passes it down.",
-		"slowed is a flag. It changes no data at all, and the runners ease off anyway.",
+		"Rules travel to every map below where they were added, and land only on the ones",
+		"holding the key they target. The hull and turret hold no damage, so they track the",
+		"boost without it doing a thing to them.",
 	])
 
 #endregion
@@ -42,45 +41,50 @@ func _process(_delta: float) -> void:
 
 #region Private
 
-## Runners in the pack are indented under it, so leaving the pack is visible in the table as well
-## as on the track.
-func _runner(runner: Runner) -> String:
-	var indent: String = "  " if runner.is_in_a_pack() else ""
+func _part(part: Part, indent: String) -> String:
 	return _line(
-		indent + runner.label,
-		"%.1f" % runner.get_speed(),
-		"%.1f" % runner.get_pace(),
-		_stacks(runner.attributes),
-		_rules(runner.attributes),
+		indent + part.label,
+		_damage(part),
+		_stats(part),
+		String(part.group),
+		_rules(part.attributes),
+		_flags(part.attributes),
 	)
 
 
-## move_speed and the pace it produces get their own columns, because the whole difference between
-## a rule and a flag is which of the two they move.
-func _line(name: String, speed: String, pace: String, flags: String, rules: String) -> String:
-	return "%-13s%-12s%-11s%-30s%s" % [name, speed, pace, flags, rules]
+## The group gets a column of its own. It is the thing deciding what "knocked out" reaches, so it
+## is worth being able to see at a glance which stats are filed where.
+func _line(name: String, damage: String, stats: String, group: String, rules: String, flags: String) -> String:
+	return "%-15s%-9s%-29s%-16s%-34s%s" % [name, damage, stats, group, rules, flags]
 
 
-## A stack count on its own cannot say where it came from, so anything handed down by a parent map
-## is called out. Take the fox out of the pack and the inherited part is what disappears.
-func _stacks(map: FoxAttributeMap) -> String:
-	# Declared empty and filled in, because a bare {} in a ternary is an untyped Dictionary and
-	# assigning one to a typed variable fails at runtime.
-	var handed_down: Dictionary[StringName, int] = {}
-	var parent: FoxAttributeMap = map.get_parent_map()
-	if parent != null:
-		handed_down = parent.get_flags()
+## Blank rather than 0.0 for the parts that carry no damage at all, so a part that has none reads
+## differently from a weapon that has been knocked down to none.
+func _damage(part: Part) -> String:
+	if not part.attributes.has_data(&"damage"):
+		return "-"
 
+	return _number(part.get_stat(&"damage"))
+
+
+## Everything except damage, which has a column to itself.
+func _stats(part: Part) -> String:
 	var parts: PackedStringArray = []
-	for flag: StringName in map.get_flags():
-		var total: int = map.get_flag_stacks(flag)
-		var inherited: int = handed_down.get(flag, 0)
-		if inherited > 0:
-			parts.append("%s x%-4d(%d inherited)" % [flag, total, inherited])
-		else:
-			parts.append("%s x%d" % [flag, total])
+	for key: StringName in part.get_stats():
+		if key == &"damage":
+			continue
+
+		parts.append("%s %s" % [key, _number(part.get_stat(key))])
 
 	return ", ".join(parts) if not parts.is_empty() else "-"
+
+
+## A fire rate of 0.5 is not 1, and an armour of 60 does not need a decimal point.
+func _number(value: float) -> String:
+	if is_equal_approx(value, roundf(value)):
+		return "%d" % roundi(value)
+
+	return "%.1f" % value
 
 
 func _rules(map: FoxAttributeMap) -> String:
@@ -91,7 +95,21 @@ func _rules(map: FoxAttributeMap) -> String:
 	return ", ".join(parts) if not parts.is_empty() else "-"
 
 
-func _on_off(value: bool) -> String:
-	return "on" if value else "off"
+## Anything handed down by a parent map is called out, since a stack count cannot say where it
+## came from on its own.
+func _flags(map: FoxAttributeMap) -> String:
+	var handed_down: Dictionary[StringName, int] = {}
+	var parent: FoxAttributeMap = map.get_parent_map()
+	if parent != null:
+		handed_down = parent.get_flags()
+
+	var parts: PackedStringArray = []
+	for flag: StringName in map.get_flags():
+		if handed_down.has(flag):
+			parts.append("%s (inherited)" % flag)
+		else:
+			parts.append(String(flag))
+
+	return ", ".join(parts) if not parts.is_empty() else "-"
 
 #endregion

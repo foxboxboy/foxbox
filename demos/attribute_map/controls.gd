@@ -1,77 +1,99 @@
-# Number keys act on the pack, Space takes the fox out of it and puts it back.
-#
-# Keys are read as raw events rather than named actions, so this works in a project that has not
-# set up an input map.
-extends Node
+# The buttons. Each one is something you can do to the tank, and the tree works out the rest.
+extends VBoxContainer
 
 
 #region Variables
 
-const FlatRule = preload("res://demos/attribute_map/flat_rule.gd")
-const Runner = preload("res://demos/attribute_map/runner.gd")
+const FlatRule = preload("res://demos/attribute_map/rules/flat_rule.gd")
+const BiggerCannon = preload("res://demos/attribute_map/rules/bigger_cannon.gd")
+const KnockedOut = preload("res://demos/attribute_map/rules/knocked_out.gd")
 
-const MUD: StringName = &"mud"
-const SLOWED: StringName = &"slowed"
+const BOOST: StringName = &"boost"
+const BIGGER: StringName = &"bigger cannon"
+const WRECKED: StringName = &"knocked out"
+const STUNNED: StringName = &"crew_stunned"
 
-## How much move_speed the mud rule takes off, everywhere it reaches.
-const MUD_AMOUNT: float = -2.0
+## The top of the tree. Everything added here reaches every part below it.
+@export var tank: FoxAttributeMap
 
-## The pack's own map. Rules and flags put here reach every runner in the pack.
-@export var pack: FoxAttributeMap
+## The knocked-out rule remembers what it took, so it goes straight on the weapon it applies to.
+@export var cannon: FoxAttributeMap
 
-## The node the runners in the pack sit under. Being under it is what puts a runner in the pack.
-@export var pack_node: Node2D
+@export var target: Node
 
-## Where the fox goes when it leaves. Nothing here holds a map, so out here it inherits nothing.
-@export var track: Node2D
-
-@export var fox: Runner
+## How much the boost is currently worth. Rules are not edited in place, so changing it means
+## taking the old rule off and putting a new one on under the same id.
+var _boost: int = 0
 
 #endregion
 
 
 #region Built-In Virtuals
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	var key: InputEventKey = event as InputEventKey
-	if key == null or not key.pressed or key.echo:
-		return
-
-	match key.keycode:
-		KEY_1:
-			_toggle_mud()
-		KEY_2:
-			pack.increment_flag(SLOWED)
-		KEY_3:
-			pack.decrement_flag(SLOWED)
-		KEY_4:
-			fox.attributes.increment_flag(SLOWED)
-		KEY_5:
-			fox.attributes.decrement_flag(SLOWED)
-		KEY_SPACE:
-			_toggle_pack()
+func _ready() -> void:
+	_button("+1 damage on the tank", _boost_up)
+	_button("-1 damage on the tank", _boost_down)
+	_button("bigger cannon", _toggle_bigger_cannon)
+	_button("cannon knocked out", _toggle_knocked_out)
+	_button("stun the crew", _toggle_stun)
+	_button("repair the wall", _repair)
 
 #endregion
 
 
 #region Private
 
-## One rule on the pack slows every runner in it, because add_rule passes it down. The badger runs
-## outside the pack and keeps its pace.
-func _toggle_mud() -> void:
-	if pack.get_rule_summary().has(MUD):
-		pack.remove_rule(MUD)
+func _button(text: String, pressed: Callable) -> void:
+	var button: Button = Button.new()
+	button.text = text
+	button.pressed.connect(pressed)
+	add_child(button)
+
+
+func _boost_up() -> void:
+	_set_boost(_boost + 1)
+
+
+func _boost_down() -> void:
+	_set_boost(_boost - 1)
+
+
+## Targets damage, so it reaches every map under the tank and lands on the two that shoot. The hull
+## and the turret track it and are not touched, because neither of them holds a damage.
+func _set_boost(amount: int) -> void:
+	_boost = amount
+	tank.remove_rule(BOOST)
+
+	if _boost != 0:
+		tank.add_rule(FlatRule.new(BOOST, &"damage", float(_boost)))
+
+
+func _toggle_bigger_cannon() -> void:
+	if tank.get_rule_summary().has(BIGGER):
+		tank.remove_rule(BIGGER)
 		return
 
-	pack.add_rule(FlatRule.new(MUD, &"move_speed", MUD_AMOUNT))
+	tank.add_rule(BiggerCannon.new(BIGGER))
 
 
-## Moving the fox out from under the pack unregisters its map, which takes back the rules and flag
-## stacks the pack had given it. Stacks the fox raised on itself are its own and stay.
-func _toggle_pack() -> void:
-	if fox.get_parent() == pack_node:
-		fox.reparent(track, true)
-	else:
-		fox.reparent(pack_node, true)
+func _toggle_knocked_out() -> void:
+	if cannon.get_rule_summary().has(WRECKED):
+		cannon.remove_rule(WRECKED)
+		return
+
+	cannon.add_rule(KnockedOut.new(WRECKED))
+
+
+## A flag on the tank reaches every part under it, and each part decides for itself what it means.
+func _toggle_stun() -> void:
+	if tank.has_flag(STUNNED):
+		tank.erase_flag(STUNNED)
+		return
+
+	tank.increment_flag(STUNNED)
+
+
+func _repair() -> void:
+	target.call(&"reset")
 
 #endregion
