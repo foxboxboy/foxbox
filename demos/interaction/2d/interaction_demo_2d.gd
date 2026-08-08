@@ -19,6 +19,16 @@ const REACH: float = 190.0
 ## enough to squeeze it through. Clamping keeps the target somewhere a prop can actually be.
 const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
 
+## Degrees of spin per pixel of mouse movement while the right button is down.
+const SPIN_PER_PIXEL: float = 0.4
+
+## How far ahead of the prop the commanded angle may get, in radians.
+## [br][br]
+## A quarter turn. The torque takes the shortest way to its target, so once the target is more
+## than half a turn ahead the shortest way is backwards and the prop unwinds against the
+## direction you are dragging. Half that leaves room to lag without ever crossing over.
+const MAX_SPIN_LEAD: float = PI / 2.0
+
 ## The reach line, drawn so it is obvious how far the sensor actually sees. Without it the range
 ## is invisible and pointing at a prop that is simply too far away looks like a broken demo.
 const IDLE_COLOUR: Color = Color(1.0, 1.0, 1.0, 0.24)
@@ -32,16 +42,6 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
-
-## Degrees of spin per pixel of mouse movement while the right button is down.
-const SPIN_PER_PIXEL: float = 0.4
-
-## How far ahead of the prop the commanded angle may get, in radians.
-## [br][br]
-## A quarter turn. The torque takes the shortest way to its target, so once the target is more
-## than half a turn ahead the shortest way is backwards and the prop unwinds against the
-## direction you are dragging. Half that leaves room to lag without ever crossing over.
-const MAX_SPIN_LEAD: float = PI / 2.0
 
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
@@ -80,7 +80,6 @@ func _process(_delta: float) -> void:
 	# it still does. Either way the dragger holds exactly where it was, so nothing lurches.
 	if _spinning or _awaiting_cursor:
 		dragger.global_position = _dragger_before_spin
-		_refresh_readout()
 		return
 
 	# Following the cursor happens on the render tick, not the physics one. Doing it in physics
@@ -105,11 +104,6 @@ func _process(_delta: float) -> void:
 	# prop back over it would undo the turn as fast as it was made.
 	if is_instance_valid(_held) and not _spinning:
 		dragger.global_rotation = _held.global_rotation
-
-	# Every frame, not just when something happens. The cursor and dragger lines move constantly
-	# and refreshing them only on events left them showing wherever they happened to be the last
-	# time you grabbed something.
-	_refresh_readout()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -262,40 +256,11 @@ func _refresh_readout() -> void:
 		# Worth saying, or right dragging looks broken rather than overruled.
 		upright += "  (held level, so spinning has no effect)"
 
-	# The mouse state is on screen on purpose. Capturing the cursor is the part of this demo most
-	# likely to misbehave, and it is impossible to describe what went wrong without seeing it.
-	var modes := {
-		Input.MOUSE_MODE_VISIBLE: "visible",
-		Input.MOUSE_MODE_HIDDEN: "hidden",
-		Input.MOUSE_MODE_CAPTURED: "captured",
-		Input.MOUSE_MODE_CONFINED: "confined",
-		Input.MOUSE_MODE_CONFINED_HIDDEN: "confined hidden",
-	}
-
 	readout.text = "\n".join([
 		"Arrows move, mouse aims, left click picks up and puts down",
 		"Right drag spins what you are holding, Space toggles upright",
 		"",
 		"pointing at:  %s" % pointing,
 		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
-		"spinning:     %s" % ("yes" if _spinning else "no"),
 		"keep upright: %s" % upright,
-		"",
-		# The prop's own spin and the lever it is held by. If a flick makes it turn one way and
-		# then back, one of these says why: either the spin reverses on its own, or the lever has
-		# swung past the centre and is now pulling the other way.
-		"prop spin:    %s" % (
-			"%.0f deg/s" % rad_to_deg(_held.angular_velocity) if is_instance_valid(_held) else "-"),
-		"grab lever:   %s" % (
-			"%.0f px  %s" % [dragger._grab_offset_local.length(), str(dragger._grab_offset_local.round())]
-				if is_instance_valid(_held) else "-"),
-		"",
-		"mouse mode:   %s" % modes.get(Input.mouse_mode, str(Input.mouse_mode)),
-		"cursor:       %s%s" % [
-			str(get_viewport().get_mouse_position().round()),
-			"   (holding, waiting for the warp)" if _awaiting_cursor else ""],
-		"dragger:      %s%s" % [
-			str(dragger.global_position.round()),
-			"   (clamped, cursor is off the room)"
-				if not ARENA.has_point(get_global_mouse_position()) else ""],
 	])

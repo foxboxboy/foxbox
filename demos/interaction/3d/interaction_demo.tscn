@@ -43,6 +43,15 @@ size = Vector3(2, 4, 0.3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfwh4"]
 size = Vector3(2, 4, 0.3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_bound_z"]
+size = Vector3(25, 12, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bound_x"]
+size = Vector3(1, 12, 25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bound_lid"]
+size = Vector3(25, 1, 25)
+
 [node name="InteractionDemo" type="Node3D" unique_id=342451955]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1025683934]
@@ -168,3 +177,36 @@ shape = SubResource("BoxShape3D_sfwh4")
 
 [connection signal="interacted" from="RedBox/InteractableArea3D" to="RedBox" method="_on_interactable_area_3d_interacted"]
 [connection signal="interacted" from="Door/RigidBody3D/InteractableArea3D" to="Door/RigidBody3D" method="_on_interactable_area_3d_interacted"]
+
+[node name="Bounds" type="StaticBody3D" parent="."]
+
+[node name="North" type="CollisionShape3D" parent="Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -12.5)
+shape = SubResource("BoxShape3D_bound_z")
+
+[node name="South" type="CollisionShape3D" parent="Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 12.5)
+shape = SubResource("BoxShape3D_bound_z")
+
+[node name="West" type="CollisionShape3D" parent="Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 6, 0)
+shape = SubResource("BoxShape3D_bound_x")
+
+[node name="East" type="CollisionShape3D" parent="Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 6, 0)
+shape = SubResource("BoxShape3D_bound_x")
+
+[node name="Lid" type="CollisionShape3D" parent="Bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.5, 0)
+shape = SubResource("BoxShape3D_bound_lid")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 680.0
+offset_bottom = 96.0
+text = "Mouse aims.  Left click picks up and puts down.
+Hold right mouse and move to turn what you are holding.
+Mouse wheel raises and lowers it."
