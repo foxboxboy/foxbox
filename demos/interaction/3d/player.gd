@@ -9,6 +9,9 @@ const MAX_SPIN_LEAD : float = PI / 2.0
 @export var interaction_sensor : FoxInteractionRayCast3D
 @export var dragger : FoxPhysicsDragger3D
 
+## Sits on the spot the object is being pulled by, which is not its centre and not the cursor.
+@export var grab_marker : MeshInstance3D
+
 # State
 var _dragged_object : RigidBody3D
 var is_rotating_mode: bool = false
@@ -24,6 +27,13 @@ func _ready() -> void:
 
 
 func _physics_process(_delta : float) -> void:
+	# The grab point rides along with the object, so it has to be followed every frame rather
+	# than placed once. Where you took hold is the whole reason a long object swings as it does.
+	if is_instance_valid(grab_marker):
+		grab_marker.visible = dragger.is_holding()
+		if grab_marker.visible:
+			grab_marker.global_position = dragger.get_grab_point()
+
 	# 1. Update Raycasts
 	var mouse_pos : Vector2 = get_viewport().get_mouse_position()
 	var local_ray_dir : Vector3 = get_local_mouse_direction(mouse_pos)

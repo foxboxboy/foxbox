@@ -75,21 +75,25 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`grab<class_FoxPhysicsDragger2D_method_grab>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`, hit_point\: :ref:`Vector2<class_Vector2>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`float<class_float>` | :ref:`torque_scale_for<class_FoxPhysicsDragger2D_method_torque_scale_for>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`\ ) |static|                                                                                       |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`float<class_float>` | :ref:`target_rotation_for<class_FoxPhysicsDragger2D_method_target_rotation_for>`\ (\ rotation\: :ref:`float<class_float>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static|                                                 |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`release<class_FoxPhysicsDragger2D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_physics_process<class_FoxPhysicsDragger2D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_apply_positional_force<class_FoxPhysicsDragger2D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`grab<class_FoxPhysicsDragger2D_method_grab>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`, hit_point\: :ref:`Vector2<class_Vector2>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Vector2<class_Vector2>` | :ref:`get_grab_point<class_FoxPhysicsDragger2D_method_get_grab_point>`\ (\ )                                                                                                                                                  |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`       | :ref:`is_holding<class_FoxPhysicsDragger2D_method_is_holding>`\ (\ )                                                                                                                                                          |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`     | :ref:`torque_scale_for<class_FoxPhysicsDragger2D_method_torque_scale_for>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`\ ) |static|                                                                                       |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`     | :ref:`target_rotation_for<class_FoxPhysicsDragger2D_method_target_rotation_for>`\ (\ rotation\: :ref:`float<class_float>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static|                                                 |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`release<class_FoxPhysicsDragger2D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`_physics_process<class_FoxPhysicsDragger2D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`_apply_positional_force<class_FoxPhysicsDragger2D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -305,6 +309,39 @@ Method Descriptions
 |void| **grab**\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`, hit_point\: :ref:`Vector2<class_Vector2>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_grab>`
 
 Grabs a :ref:`RigidBody2D<class_RigidBody2D>` at a specific global hit point. Optionally pass a :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` to override the default stiffness and damping.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_method_get_grab_point:
+
+.. rst-class:: classref-method
+
+:ref:`Vector2<class_Vector2>` **get_grab_point**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_get_grab_point>`
+
+The point on the held body that is being pulled, in global space. 
+
+Follows the body as it moves and turns, since it is a fixed spot on the body rather than a spot in the world. Useful for drawing where a grab landed, or spawning something there.
+
+::
+
+    if dragger.is_holding():
+        $GrabMarker.global_position = dragger.get_grab_point()
+
+Returns the dragger's own position when nothing is held, so a marker parked on it does not jump to the origin between grabs.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_method_is_holding:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **is_holding**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_is_holding>`
+
+Whether a body is currently being dragged.
 
 .. rst-class:: classref-item-separator
 

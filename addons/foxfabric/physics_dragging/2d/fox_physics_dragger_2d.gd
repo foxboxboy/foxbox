@@ -101,6 +101,28 @@ func grab(body: RigidBody2D, hit_point: Vector2, profile: FoxPhysicsDragProfile 
 	_skip_first_frame = true
 
 
+## The point on the held body that is being pulled, in global space.
+## [br][br]
+## Follows the body as it moves and turns, since it is a fixed spot on the body rather than a
+## spot in the world. Useful for drawing where a grab landed, or spawning something there.
+## [codeblock]
+## if dragger.is_holding():
+##     $GrabMarker.global_position = dragger.get_grab_point()
+## [/codeblock]
+## Returns the dragger's own position when nothing is held, so a marker parked on it does not
+## jump to the origin between grabs.
+func get_grab_point() -> Vector2:
+	if not is_instance_valid(_current_body):
+		return global_position
+
+	return _current_body.to_global(_grab_offset_local)
+
+
+## Whether a body is currently being dragged.
+func is_holding() -> bool:
+	return is_instance_valid(_current_body)
+
+
 ## How much to multiply a raw torque by so [member FoxPhysicsDragProfile.stiffness] means the
 ## same thing for turning as it does for pulling.
 ## [br][br]

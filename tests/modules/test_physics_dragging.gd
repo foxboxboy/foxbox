@@ -13,6 +13,7 @@ const TILT_EPSILON: float = 0.0001
 
 func run() -> void:
 	suite = "physics_dragging"
+	_grab_point_rides_the_body()
 	_defaults_leave_rotation_free()
 	_off_copies_the_dragger()
 	_on_stays_level()
@@ -103,3 +104,31 @@ func _random_orientations_never_tip() -> void:
 
 	eq(degenerate, 0, "no orientation produced an unusable basis")
 	eq(tipped, 0, "no orientation tipped the target across 300 tries")
+
+
+## Where a body is being held, for drawing a marker or spawning something there. It is a fixed
+## spot on the body, so it has to travel with it rather than stay put in the world.
+func _grab_point_rides_the_body() -> void:
+	case("grab point")
+	var dragger: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D
+	dragger.global_position = Vector3(10, 20, 0)
+
+	check(not dragger.is_holding(), "nothing is held to begin with")
+	check(dragger.get_grab_point().is_equal_approx(Vector3(10, 20, 0)),
+		"with nothing held it reports its own position, so a marker parked on it stays put")
+
+	var body: RigidBody3D = track(RigidBody3D.new()) as RigidBody3D
+	body.global_position = Vector3(100, 100, 0)
+	dragger.grab(body, Vector3(140, 100, 0))
+
+	check(dragger.is_holding(), "holding once a grab lands")
+	check(dragger.get_grab_point().is_equal_approx(Vector3(140, 100, 0)),
+		"the point is where the body was taken hold of, not its centre")
+
+	case("and travels with the body")
+	body.global_position = Vector3(300, 100, 0)
+	check(dragger.get_grab_point().is_equal_approx(Vector3(340, 100, 0)),
+		"moving the body carries the grab point along")
+
+	dragger.release()
+	check(not dragger.is_holding(), "not holding once released")

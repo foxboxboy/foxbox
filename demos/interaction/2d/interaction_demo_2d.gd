@@ -40,6 +40,9 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 @export var readout: Label
 @export var reach_line: Line2D
 
+## Sits on the spot the prop is being pulled by, which is not its centre and not the cursor.
+@export var grab_marker: Polygon2D
+
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
 
@@ -76,6 +79,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	# The grab point rides along with the prop, so it has to be followed every frame rather than
+	# placed once. Where you took hold is the whole reason a plank swings the way it does.
+	grab_marker.visible = dragger.is_holding()
+	if grab_marker.visible:
+		grab_marker.global_position = dragger.get_grab_point()
+
 	# A captured cursor reports the middle of the window, and for a frame or two after releasing
 	# it still does. Either way the dragger holds exactly where it was, so nothing lurches.
 	if _spinning or _awaiting_cursor:

@@ -35,13 +35,14 @@ stiffness = 700.0
 damping = 150.0
 keep_upright = false
 
-[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line")]
+[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line", "grab_marker")]
 script = ExtResource("1_demo")
 player = NodePath("Player")
 sensor = NodePath("Player/Sensor")
 dragger = NodePath("Dragger")
 readout = NodePath("HUD/Readout")
 reach_line = NodePath("Player/Sensor/Reach")
+grab_marker = NodePath("GrabMarker")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -164,6 +165,12 @@ script = ExtResource("4_area")
 
 [node name="Shape" type="CollisionShape2D" parent="Props/Plank/Interact"]
 shape = SubResource("Shape_plank")
+
+[node name="GrabMarker" type="Polygon2D" parent="."]
+z_index = 10
+visible = false
+color = Color(1, 1, 1, 0.9)
+polygon = PackedVector2Array(0, -7, 7, 0, 0, 7, -7, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

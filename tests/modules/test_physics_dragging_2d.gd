@@ -10,6 +10,7 @@ const Dragger = preload("res://addons/foxfabric/physics_dragging/2d/fox_physics_
 
 func run() -> void:
 	suite = "physics_dragging_2d"
+	_grab_point_rides_the_body()
 	_defaults_leave_rotation_free()
 	_off_copies_the_dragger()
 	_on_holds_it_level()
@@ -120,3 +121,31 @@ func _swing_cannot_outrun_the_spring() -> void:
 		"some of the lever survives, or a plank held by one end would not trail behind")
 	check(dragger.swing_response < 1.0,
 		"but not all of it, or the pull out torques the spring and the prop never settles")
+
+
+## Where a body is being held, for drawing a marker or spawning something there. It is a fixed
+## spot on the body, so it has to travel with it rather than stay put in the world.
+func _grab_point_rides_the_body() -> void:
+	case("grab point")
+	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
+	dragger.global_position = Vector2(10, 20)
+
+	check(not dragger.is_holding(), "nothing is held to begin with")
+	check(dragger.get_grab_point().is_equal_approx(Vector2(10, 20)),
+		"with nothing held it reports its own position, so a marker parked on it stays put")
+
+	var body: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
+	body.global_position = Vector2(100, 100)
+	dragger.grab(body, Vector2(140, 100))
+
+	check(dragger.is_holding(), "holding once a grab lands")
+	check(dragger.get_grab_point().is_equal_approx(Vector2(140, 100)),
+		"the point is where the body was taken hold of, not its centre")
+
+	case("and travels with the body")
+	body.global_position = Vector2(300, 100)
+	check(dragger.get_grab_point().is_equal_approx(Vector2(340, 100)),
+		"moving the body carries the grab point along")
+
+	dragger.release()
+	check(not dragger.is_holding(), "not holding once released")
