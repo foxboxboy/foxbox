@@ -97,17 +97,17 @@ func grab_body(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 #region Input
 
 func _unhandled_input(event: InputEvent) -> void:
-	var button := event as InputEventMouseButton
+	var button: InputEventMouseButton = event as InputEventMouseButton
 	if button:
 		_on_mouse_button(button)
 		return
 
-	var motion := event as InputEventMouseMotion
+	var motion: InputEventMouseMotion = event as InputEventMouseMotion
 	if motion:
 		_on_mouse_motion(motion)
 		return
 
-	var key := event as InputEventKey
+	var key: InputEventKey = event as InputEventKey
 	if key and key.pressed and not key.echo and key.keycode == KEY_SPACE:
 		_toggle_upright()
 
@@ -142,7 +142,7 @@ func _toggle_upright() -> void:
 
 	# Re-grab so the change reaches whatever is already in hand.
 	if is_holding():
-		var body := _held
+		var body: RigidBody2D = _held
 		_release()
 		_grab(body, null)
 
@@ -172,7 +172,7 @@ func _show_grab_point() -> void:
 
 
 func _try_grab() -> void:
-	var target := player.get_target()
+	var target: FoxInteractableArea2D = player.get_target()
 	if target:
 		target.interact(self)
 

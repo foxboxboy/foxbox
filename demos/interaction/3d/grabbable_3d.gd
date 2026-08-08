@@ -1,5 +1,5 @@
 # A prop that can be picked up. Answers an interaction by asking whoever poked it to carry it.
-extends RigidBody2D
+extends RigidBody3D
 
 ## Passed straight to the dragger. Leave it null to use the dragger's own defaults.
 @export var drag_profile: FoxPhysicsDragProfile

@@ -38,7 +38,7 @@ func _physics_process(_delta: float) -> void:
 	if aiming_frozen:
 		return
 
-	var direction := _local_mouse_direction()
+	var direction: Vector3 = _local_mouse_direction()
 	interaction_sensor.target_position = direction * interaction_sensor.interaction_range
 	cursor_raycast.target_position = direction * CURSOR_RANGE
 	cursor_raycast.force_raycast_update()
@@ -82,7 +82,7 @@ func get_cursor_world_point() -> Vector3:
 ## The cursor's direction through the world, expressed in this camera's own space so it can be
 ## handed straight to a child raycast's target_position.
 func _local_mouse_direction() -> Vector3:
-	var world_normal := project_ray_normal(get_viewport().get_mouse_position())
+	var world_normal: Vector3 = project_ray_normal(get_viewport().get_mouse_position())
 	return global_transform.basis.inverse() * world_normal
 
 #endregion

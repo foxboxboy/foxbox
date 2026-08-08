@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" path="res://demos/interaction/3d/player_3d.gd" id="1_7g04l"]
 [ext_resource type="Script" uid="uid://ce774eul7obos" path="res://addons/foxfabric/interaction/3d/fox_interaction_raycast_3d.gd" id="1_cggxt"]
-[ext_resource type="Script" uid="uid://djwv6u7igq0r3" path="res://demos/interaction/3d/red_box.gd" id="1_vvqvw"]
+[ext_resource type="Script" path="res://demos/interaction/3d/grabbable_3d.gd" id="1_vvqvw"]
 [ext_resource type="Script" uid="uid://c5l17vfl0thck" path="res://addons/foxfabric/interaction/3d/fox_interactable_area_3d.gd" id="2_tt8h7"]
 [ext_resource type="PackedScene" uid="uid://bxtgywveontjj" path="res://addons/foxfabric/core/assets/camera/import/camera.gltf" id="3_a1jta"]
 [ext_resource type="Script" uid="uid://vuoua610pnu7" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="3_dcams"]
 [ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxfabric/physics_dragging/3d/fox_physics_dragger_3d.gd" id="7_hju5i"]
 [ext_resource type="Script" path="res://demos/interaction/3d/hands_3d.gd" id="8_hands"]
 [ext_resource type="Script" path="res://demos/interaction/3d/hud_3d.gd" id="9_hud"]
-[ext_resource type="Script" uid="uid://8lyo1dj2251p" path="res://demos/interaction/3d/door.gd" id="8_sfwh4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcams"]
 albedo_color = Color(0, 0, 0, 1)
@@ -120,6 +119,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 0)
 can_sleep = false
 script = ExtResource("1_vvqvw")
 drag_profile = SubResource("Resource_sfwh4")
+label = "red box"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="RedBox" unique_id=73211651]
 layers = 2
@@ -172,8 +172,9 @@ node_a = NodePath("../RigidBody3D")
 angular_limit/enable = true
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Door" unique_id=707770188]
-script = ExtResource("8_sfwh4")
+script = ExtResource("1_vvqvw")
 drag_profile = SubResource("Resource_mlkjn")
+label = "door"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door/RigidBody3D" unique_id=1797146635]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 0)
@@ -225,8 +226,8 @@ offset_top = 12.0
 offset_right = 680.0
 offset_bottom = 96.0
 
-[connection signal="interacted" from="RedBox/InteractableArea3D" to="RedBox" method="_on_interactable_area_3d_interacted"]
-[connection signal="interacted" from="Door/RigidBody3D/InteractableArea3D" to="Door/RigidBody3D" method="_on_interactable_area_3d_interacted"]
+[connection signal="interacted" from="RedBox/InteractableArea3D" to="RedBox" method="_on_interacted"]
+[connection signal="interacted" from="Door/RigidBody3D/InteractableArea3D" to="Door/RigidBody3D" method="_on_interacted"]
 
 [node name="GrabMarker" type="MeshInstance3D" parent="."]
 visible = false

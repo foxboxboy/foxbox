@@ -22,7 +22,7 @@ const Hands2D = preload("res://demos/interaction/2d/hands_2d.gd")
 #region Built-In Virtuals
 
 func _process(_delta: float) -> void:
-	var upright := "on" if hands.is_upright() else "off"
+	var upright: String = "on" if hands.is_upright() else "off"
 	if hands.is_upright():
 		# Worth saying, or right dragging looks broken rather than overruled.
 		upright += "  (held level, so turning has no effect)"
@@ -44,12 +44,21 @@ func _process(_delta: float) -> void:
 #region Private
 
 ## The name of whatever the sensor has found, using the prop's own label when it has one.
+## [br][br]
+## The label is asked for by name, so the readout never has to know what kind of node it is
+## looking at. An interactable sitting under something with no label falls back to the node name.
 func _pointing_at() -> String:
-	var target := player.get_target()
+	var target: FoxInteractableArea2D = player.get_target()
 	if target == null:
 		return "nothing"
 
-	var prop := target.get_parent()
-	return str(prop.label) if prop and "label" in prop else prop.name
+	var prop: Node = target.get_parent()
+	if prop == null:
+		return String(target.name)
+
+	if &"label" in prop:
+		return String(prop.get(&"label"))
+
+	return String(prop.name)
 
 #endregion

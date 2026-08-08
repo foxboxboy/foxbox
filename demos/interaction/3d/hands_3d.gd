@@ -97,12 +97,12 @@ func grab_body(body: RigidBody3D, profile: FoxPhysicsDragProfile) -> void:
 #region Input
 
 func _unhandled_input(event: InputEvent) -> void:
-	var button := event as InputEventMouseButton
+	var button: InputEventMouseButton = event as InputEventMouseButton
 	if button:
 		_on_mouse_button(button)
 		return
 
-	var motion := event as InputEventMouseMotion
+	var motion: InputEventMouseMotion = event as InputEventMouseMotion
 	if motion and _turning and is_holding():
 		_turn_held(motion.relative)
 
@@ -144,7 +144,7 @@ func _show_grab_point() -> void:
 
 
 func _try_grab() -> void:
-	var target := player.get_target()
+	var target: FoxInteractableArea3D = player.get_target()
 	if target:
 		target.interact(self)
 
@@ -212,8 +212,8 @@ func _turn_held(mouse_delta: Vector2) -> void:
 
 ## Never let the command run further ahead than the object can follow. See MAX_SPIN_LEAD.
 func _rein_in_turn() -> void:
-	var held := _held.global_transform.basis.orthonormalized()
-	var lead := (dragger.global_transform.basis.orthonormalized() * held.inverse()).get_rotation_quaternion()
+	var held: Basis = _held.global_transform.basis.orthonormalized()
+	var lead: Quaternion = (dragger.global_transform.basis.orthonormalized() * held.inverse()).get_rotation_quaternion()
 
 	var angle: float = lead.get_angle()
 	if angle > PI:
@@ -222,7 +222,7 @@ func _rein_in_turn() -> void:
 	if absf(angle) <= MAX_SPIN_LEAD:
 		return
 
-	var reined := dragger.global_transform
+	var reined: Transform3D = dragger.global_transform
 	reined.basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_SPIN_LEAD, MAX_SPIN_LEAD))
 	dragger.global_transform = reined
 
