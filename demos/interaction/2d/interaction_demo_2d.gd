@@ -32,6 +32,9 @@ var _held: RigidBody2D = null
 var _keep_upright: bool = false
 var _spinning: bool = false
 
+## Where the cursor was when spinning started, so it can be put back.
+var _cursor_before_spin: Vector2 = Vector2.ZERO
+
 
 func _ready() -> void:
 	sensor.interaction_range = REACH
@@ -66,8 +69,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if button and button.button_index == MOUSE_BUTTON_RIGHT:
-		_spinning = button.pressed
-		_refresh_readout()
+		if button.pressed:
+			_start_spinning()
+		else:
+			_stop_spinning()
 		return
 
 	# Turning the dragger turns what it is holding, because the torque targets the dragger's
@@ -94,6 +99,33 @@ func grab_body(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 	_grab(body, profile)
 
 
+## Captures the cursor for the duration of a spin.
+## [br][br]
+## Without this the pointer keeps travelling while the object stays put, so letting go teleports
+## the dragger to wherever the cursor drifted to and the object is flung after it. Capturing
+## freezes it in place and still delivers relative motion, which is all a spin needs.
+func _start_spinning() -> void:
+	if _spinning or not is_instance_valid(_held):
+		return
+
+	_spinning = true
+	_cursor_before_spin = get_viewport().get_mouse_position()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_refresh_readout()
+
+
+## Puts the cursor back exactly where it was, so the dragger has not moved and the object stays
+## where you left it.
+func _stop_spinning() -> void:
+	if not _spinning:
+		return
+
+	_spinning = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_viewport().warp_mouse(_cursor_before_spin)
+	_refresh_readout()
+
+
 func _try_grab() -> void:
 	var target := sensor.get_current_target()
 	if target:
@@ -116,6 +148,9 @@ func _grab(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 func _release() -> void:
 	if not is_instance_valid(_held):
 		return
+
+	# Dropping mid spin would otherwise leave the cursor captured with nothing to turn.
+	_stop_spinning()
 
 	dragger.release()
 	_held = null
