@@ -48,15 +48,26 @@ func _physics_process(_delta: float) -> void:
 	player.velocity = direction * move_speed
 	player.move_and_slide()
 
+
+func _process(_delta: float) -> void:
+	# Following the cursor happens on the render tick, not the physics one. Doing it in physics
+	# stepped the arm at sixty hertz while the rest of the frame drew faster, which reads as
+	# jitter even though nothing is actually wrong.
+	if _spinning:
+		# A captured mouse is locked to the middle of the window, so asking where it is would
+		# swing the arm to the centre of the screen and shake it there. Everything the spin needs
+		# arrives as relative motion instead.
+		return
+
+	var cursor := get_global_mouse_position()
+
 	# The sensor is the player's reach, so it turns to face the cursor. FoxInteractionRayCast2D
 	# casts along +X, which is what look_at points at, so aiming it is a single call.
-	sensor.look_at(get_global_mouse_position())
+	sensor.look_at(cursor)
 
 	# The dragger is a target the held body is pulled towards, not a hand that carries it. Put it
-	# under the cursor and the physics does the rest. While spinning it stays put, so the mouse
-	# is free to mean rotation instead of position.
-	if not _spinning:
-		dragger.global_position = get_global_mouse_position()
+	# under the cursor and the physics does the rest.
+	dragger.global_position = cursor
 
 
 func _unhandled_input(event: InputEvent) -> void:
