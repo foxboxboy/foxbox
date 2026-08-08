@@ -132,6 +132,10 @@ Property Descriptions
 
 :ref:`Node3D<class_Node3D>` **marker** :ref:`🔗<class_FoxSocket3D_property_marker>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@marker_setter**\ (\ value\: :ref:`Node3D<class_Node3D>`\ )
+
 (Optional) The node that will be used for position, rotation, and scale. Leave blank to use this :ref:`Marker3D<class_Marker3D>`'s transform.
 
 .. rst-class:: classref-item-separator
