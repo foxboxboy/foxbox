@@ -4,7 +4,6 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 ## Editor
 
-- Configuration warnings on every node (no plugin needed, catches silent misconfiguration)
 - `FoxSocket3D` gizmo: draw position, snap orientation, colour by occupancy
 - `FoxAttributeMap` inspector: live data, flag stacks, active rules at runtime
 - `FoxEffectManager` dock: active effects with stacks and time remaining
@@ -22,7 +21,6 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 - Guide: interaction and pickup loop
 - Guide: shop transaction end to end
 - `@tutorial()` tags linking classes to their guide
-- Host on Read the Docs (`.readthedocs.yaml` is written, repo not connected)
 
 ## Project
 
