@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://cbpei56mx0aue"]
 
-[ext_resource type="Script" path="res://tests/test_runner.gd" id="1_runner"]
+[ext_resource type="Script" uid="uid://dctdwriwfsce8" path="res://tests/test_runner/test_runner.gd" id="1_runner"]
 
-[node name="TestRunner" type="Control"]
+[node name="TestRunner" type="Control" unique_id=441077793]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_runner")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=698495570]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09, 0.1, 0.12, 1)
 
-[node name="Report" type="RichTextLabel" parent="."]
+[node name="Report" type="RichTextLabel" parent="." unique_id=575594505]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,6 +31,7 @@ offset_right = -24.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 bbcode_enabled = true
 scroll_following = true
 selection_enabled = true

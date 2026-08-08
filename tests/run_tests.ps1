@@ -24,7 +24,7 @@ if (-not $godot -or -not (Test-Path $godot)) {
 
 # this script lives in tests/, so the project root is one level up
 $projectRoot = Split-Path $PSScriptRoot -Parent
-$testArgs = @("--headless", "--path", $projectRoot, "--script", "res://tests/run_all.gd")
+$testArgs = @("--headless", "--path", $projectRoot, "--script", "res://tests/terminal/run_all.gd")
 if ($Suite -ne "") { $testArgs += "--suite=$Suite" }
 if ($Seed -ne 0)   { $testArgs += "--seed=$Seed" }
 

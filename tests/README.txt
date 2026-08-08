@@ -3,7 +3,7 @@ install is required, so a fresh clone can run it immediately.
 
 IN THE EDITOR
 
-Open tests/test_runner.tscn and press F6. Results appear on screen and in the Output panel.
+Open tests/test_runner/test_runner.tscn and press F6. Results appear on screen and in the Output panel.
 
 Select the TestRunner node to filter in the inspector:
     Suite Filter    leave blank for everything, or type "effect" for one module
@@ -14,9 +14,9 @@ FROM THE COMMAND LINE
 
 For CI, or when you do not want to open the editor:
 
-    godot --headless --path . --script res://tests/run_all.gd
-    godot --headless --path . --script res://tests/run_all.gd --suite=effect
-    godot --headless --path . --script res://tests/run_all.gd --seed=12345
+    godot --headless --path . --script res://tests/terminal/run_all.gd
+    godot --headless --path . --script res://tests/terminal/run_all.gd --suite=effect
+    godot --headless --path . --script res://tests/terminal/run_all.gd --seed=12345
 
 Exits 0 when everything passes and 1 when anything fails, so CI can gate on it. The wrapper
 scripts next to this file do the same thing and locate Godot for you:

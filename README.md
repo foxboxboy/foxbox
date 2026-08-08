@@ -55,17 +55,23 @@ The `character` module needs a heavy refactor and does not reflect how the rest 
 library is written. Parts of it still hardcode things they should not, like a `crouch()`
 on the hitbox. Read any other module for the intended style.
 
-`docs/` is an experiment that builds a browsable web version of the API using Godot's own
-documentation tooling. Only the tooling and the hand written pages are tracked, so the
-generated output can never drift from the source. See [docs/README.txt](docs/README.txt)
-to rebuild it.
+`docs/` builds a browsable web version of the API from the same `##` comments the editor help
+uses, via Godot's own doc tooling. Only the tooling and the hand written pages are tracked, so
+the output cannot drift from the source.
+
+```
+pip install sphinx sphinx-rtd-theme
+python docs/build_docs.py --open
+```
+
+See [docs/README.txt](docs/README.txt) for the steps it runs and how to do them by hand.
 
 ## Tests
 
 `tests/` holds a self-contained suite covering every module except `character`. It needs no
 addon and no install, so a fresh clone can run it straight away.
 
-**In the editor:** open `tests/test_runner.tscn` and press F6. Results render on screen and in
+**In the editor:** open `tests/test_runner/test_runner.tscn` and press F6. Results render on screen and in
 the Output panel. Select the `TestRunner` node to filter to one module or change the seed.
 
 **From the command line**, for CI:
@@ -79,7 +85,7 @@ Godot directly works too, but only once the project has been imported at least o
 `--script` skips the import pass and without it no `class_name` resolves:
 
 ```
-godot --headless --path . --script res://tests/run_all.gd
+godot --headless --path . --script res://tests/terminal/run_all.gd
 ```
 
 It exits 0 on success and 1 on any failure. Some tests deliberately drive failure paths, so

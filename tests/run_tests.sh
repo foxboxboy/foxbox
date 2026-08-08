@@ -26,5 +26,5 @@ if [ ! -f "$PROJECT_ROOT/.godot/global_script_class_cache.cfg" ]; then
 	"$GODOT" --headless --path "$PROJECT_ROOT" --editor --quit >/dev/null 2>&1
 fi
 
-"$GODOT" --headless --path "$PROJECT_ROOT" --script "res://tests/run_all.gd" "$@"
+"$GODOT" --headless --path "$PROJECT_ROOT" --script "res://tests/terminal/run_all.gd" "$@"
 exit $?

@@ -1,8 +1,12 @@
 extends RefCounted
 ## Shared engine behind both test entry points.
 ##
-## res://tests/run_all.gd drives this from the command line for CI.
-## res://tests/test_runner.tscn drives it from the editor so results can be read on screen.
+## res://tests/terminal/run_all.gd drives this from the command line for CI.
+## res://tests/test_runner/test_runner.tscn drives it from the editor so results can be read
+## on screen.
+##
+## Suites are found by scanning res://tests/ recursively for test_*.gd, so they can be
+## organised into any folder layout.
 
 const TESTS_DIR := "res://tests/"
 const DEFAULT_SEED := 20260808
@@ -107,17 +111,24 @@ func is_green(results: Dictionary) -> bool:
 
 func _discover(filter: String) -> Array[String]:
 	var found: Array[String] = []
-	var dir := DirAccess.open(TESTS_DIR)
+	_scan(TESTS_DIR, filter, found)
+	return found
+
+
+func _scan(path: String, filter: String, found: Array[String]) -> void:
+	var dir := DirAccess.open(path)
 	if dir == null:
-		return found
+		return
 
 	dir.list_dir_begin()
 	var entry := dir.get_next()
 	while entry != "":
-		if not dir.current_is_dir() and entry.begins_with("test_") and entry.ends_with(".gd"):
+		var full := path.path_join(entry)
+		if dir.current_is_dir():
+			_scan(full, filter, found)
+		elif entry.begins_with("test_") and entry.ends_with(".gd"):
 			# test_runner.gd is an entry point, not a suite
 			if entry != "test_runner.gd" and (filter == "" or entry.contains(filter)):
-				found.append(TESTS_DIR + entry)
+				found.append(full)
 		entry = dir.get_next()
 	dir.list_dir_end()
-	return found
