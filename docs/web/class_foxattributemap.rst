@@ -23,7 +23,6 @@ Acts as a centralized data hub for an entity. It can store any arbitrary :ref:`V
 
 ::
 
-
     var stats := $AttributeMap as FoxAttributeMap
 
     # Store anything, then group keys for bulk queries.

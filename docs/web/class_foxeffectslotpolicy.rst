@@ -23,7 +23,6 @@ Sits as a child of the manager it gates. Route calls through the policy rather t
 
 ::
 
-
     # Fighter
     # └─ Effects           (FoxEffectManager)
     #    └─ SlotPolicy     (max_slots -> 3)
@@ -33,13 +32,7 @@ Sits as a child of the manager it gates. Route calls through the policy rather t
     slots.add_effect(haste, self)
     slots.slots_updated.connect(_refresh_buff_bar)
 
-
-
-Adding to a full policy pushes the oldest instance out rather than refusing the new one.
-
- 
-
-
+Adding to a full policy pushes the oldest instance out rather than refusing the new one. 
 
 Effects added straight through the manager are not tracked here and do not count against :ref:`max_slots<class_FoxEffectSlotPolicy_property_max_slots>`, so pick one route and stay on it.
 
@@ -193,11 +186,7 @@ Returns the number of empty slots remaining.
 
 :ref:`FoxEffectManager<class_FoxEffectManager>` **manager** = ``<unknown>`` :ref:`🔗<class_FoxEffectSlotPolicy_property_manager>`
 
-The manager this policy gates. Defaults to the parent node, so a policy normally just sits as a child of the :ref:`FoxEffectManager<class_FoxEffectManager>` it governs.
-
- 
-
-
+The manager this policy gates. Defaults to the parent node, so a policy normally just sits as a child of the :ref:`FoxEffectManager<class_FoxEffectManager>` it governs. 
 
 Resolves to ``null`` rather than erroring when the parent is something else. The cast matters: assigning an unrelated parent straight into a typed variable throws, and because this is an ``@onready`` it throws before :ref:`Node._ready()<class_Node_private_method__ready>` can guard it.
 

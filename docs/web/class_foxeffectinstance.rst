@@ -90,11 +90,7 @@ Signals
 
 **stack_changed**\ (\ previous_stack\: :ref:`int<class_int>`, new_stack\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxEffectInstance_signal_stack_changed>`
 
-Emitted when the :ref:`stack<class_FoxEffectInstance_property_stack>` count changes, carrying the ``previous_stack`` and the ``new_stack``.
-
- 
-
-
+Emitted when the :ref:`stack<class_FoxEffectInstance_property_stack>` count changes, carrying the ``previous_stack`` and the ``new_stack``. 
 
 \ **Note:** This is ideal for connecting directly to UI elements to update visual counters (e.g., changing a poison icon from "x1" to "x2") without polling.
 
@@ -156,8 +152,6 @@ The specific entity in memory currently being modified.
 
 The remaining duration of the effect in seconds. 
 
- 
-
 \ **Note:** This property is Read-Only.
 
 .. rst-class:: classref-item-separator
@@ -177,8 +171,6 @@ The remaining duration of the effect in seconds.
 
 The current intensity level of the effect. 
 
- 
-
 \ **Note:** This property is Read-Only. Use :ref:`increase_stack()<class_FoxEffectInstance_method_increase_stack>` or :ref:`decrease_stack()<class_FoxEffectInstance_method_decrease_stack>` to modify.
 
 .. rst-class:: classref-item-separator
@@ -195,11 +187,7 @@ The current intensity level of the effect.
 
 - :ref:`bool<class_bool>` **@is_expired_getter**\ (\ )
 
-Returns ``true`` if the timer has reached zero. Permanent effects always return ``false``.
-
- 
-
-
+Returns ``true`` if the timer has reached zero. Permanent effects always return ``false``. 
 
 \ :ref:`time_left<class_FoxEffectInstance_property_time_left>` is floored at zero rather than running negative, so it can never collide with the ``-1.0`` sentinel that marks an effect permanent.
 
@@ -272,17 +260,9 @@ Initializes the instance. This should only be called once immediately after crea
 
 |void| **increase_stack**\ (\ amount\: :ref:`int<class_int>` = 1\ ) :ref:`🔗<class_FoxEffectInstance_method_increase_stack>`
 
-Increases the :ref:`stack<class_FoxEffectInstance_property_stack>` count, capped by :ref:`FoxEffect.max_stacks<class_FoxEffect_property_max_stacks>`.
+Increases the :ref:`stack<class_FoxEffectInstance_property_stack>` count, capped by :ref:`FoxEffect.max_stacks<class_FoxEffect_property_max_stacks>`. 
 
- 
-
-
-
-\ **Note:** A :ref:`FoxEffect.max_stacks<class_FoxEffect_property_max_stacks>` of ``0`` means unlimited, not zero. The cap is only applied when it is greater than ``0``.
-
- 
-
-
+\ **Note:** A :ref:`FoxEffect.max_stacks<class_FoxEffect_property_max_stacks>` of ``0`` means unlimited, not zero. The cap is only applied when it is greater than ``0``. 
 
 If the stack successfully increases, this automatically triggers the effect's :ref:`FoxEffect.reapply()<class_FoxEffect_method_reapply>` logic and emits :ref:`stack_changed<class_FoxEffectInstance_signal_stack_changed>`.
 
@@ -298,10 +278,6 @@ If the stack successfully increases, this automatically triggers the effect's :r
 
 Decreases the :ref:`stack<class_FoxEffectInstance_property_stack>` count. 
 
- 
-
-
-
 If the stack reaches ``0``, it immediately emits :ref:`request_destruction<class_FoxEffectInstance_signal_request_destruction>` so the manager can purge it. Otherwise, it triggers :ref:`FoxEffect.reapply()<class_FoxEffect_method_reapply>` to scale down the math.
 
 .. rst-class:: classref-item-separator
@@ -315,10 +291,6 @@ If the stack reaches ``0``, it immediately emits :ref:`request_destruction<class
 |void| **process_time**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxEffectInstance_method_process_time>`
 
 Ticks down the internal timer. 
-
- 
-
-
 
 \ **Note:** This does not automatically destroy the instance. The manager must check :ref:`is_expired<class_FoxEffectInstance_property_is_expired>` and handle cleanup.
 

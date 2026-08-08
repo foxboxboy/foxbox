@@ -23,7 +23,6 @@ Sockets are collected recursively from everything beneath this node when it ente
 
 ::
 
-
     var seats := $Vehicle/Seats as FoxSocketMap3D
 
     # Take any free seat, or name one explicitly.

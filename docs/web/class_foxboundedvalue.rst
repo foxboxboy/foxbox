@@ -163,11 +163,7 @@ The minimum allowed value. Modifying this automatically clamps :ref:`value<class
 
 - |void| **@value_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
-The current value. Automatically clamped between :ref:`min_value<class_FoxBoundedValue_property_min_value>` and :ref:`max_value<class_FoxBoundedValue_property_max_value>`.
-
- 
-
-
+The current value. Automatically clamped between :ref:`min_value<class_FoxBoundedValue_property_min_value>` and :ref:`max_value<class_FoxBoundedValue_property_max_value>`. 
 
 If the bounds are ever inverted, the narrower of the two is still respected rather than the value bouncing between them.
 
@@ -210,11 +206,7 @@ Increases :ref:`value<class_FoxBoundedValue_property_value>` by ``amount``.
 
 |void| **_init**\ (\ starting_value\: :ref:`float<class_float>` = 1.0, p_max\: :ref:`float<class_float>` = 1.0, p_min\: :ref:`float<class_float>` = 0.0\ ) :ref:`🔗<class_FoxBoundedValue_private_method__init>`
 
-Builds a value of ``starting_value`` bounded by ``p_min`` and ``p_max``.
-
- 
-
-
+Builds a value of ``starting_value`` bounded by ``p_min`` and ``p_max``. 
 
 Note the argument order: the value comes first, then the maximum, then the minimum. The value is clamped into range immediately.
 

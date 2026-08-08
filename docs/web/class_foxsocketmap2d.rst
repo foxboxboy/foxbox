@@ -23,7 +23,6 @@ Sockets are collected recursively from everything beneath this node when it ente
 
 ::
 
-
     var slots := $Belt/Pouches as FoxSocketMap2D
 
     # Take any free socket, or name one explicitly.

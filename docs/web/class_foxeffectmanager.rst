@@ -23,7 +23,6 @@ An effect is a :ref:`FoxEffect<class_FoxEffect>` resource plus a target. The man
 
 ::
 
-
     @onready var effects: FoxEffectManager = $Effects
 
     func _on_poison_hit() -> void:
@@ -32,13 +31,7 @@ An effect is a :ref:`FoxEffect<class_FoxEffect>` resource plus a target. The man
     func cure() -> void:
         effects.remove_effect_by_id(&"poison", true)
 
-
-
-Applying an effect that is already running does not always create a second instance. :ref:`FoxEffect.stack_mode<class_FoxEffect_property_stack_mode>` decides whether the duration refreshes, the stack count rises, or a separate instance runs alongside the first.
-
- 
-
-
+Applying an effect that is already running does not always create a second instance. :ref:`FoxEffect.stack_mode<class_FoxEffect_property_stack_mode>` decides whether the duration refreshes, the stack count rises, or a separate instance runs alongside the first. 
 
 Processing is switched off whenever nothing is active, so an idle manager costs nothing. :ref:`load_state()<class_FoxEffectManager_method_load_state>` deliberately skips :ref:`FoxEffect.execute()<class_FoxEffect_method_execute>`, so restoring a save does not re-fire the initial burst of an effect that was already applied.
 
@@ -183,10 +176,6 @@ Method Descriptions
 
 Applies a :ref:`FoxEffect<class_FoxEffect>` to the ``target``. 
 
- 
-
-
-
 Depending on the effect's :ref:`FoxEffect.stack_mode<class_FoxEffect_property_stack_mode>`, this will either return an updated existing instance or instantiate a brand new one.
 
 .. rst-class:: classref-item-separator
@@ -211,11 +200,7 @@ Removes a specific instance object from tracking and executes its cleanup logic.
 
 |void| **remove_effect_by_id**\ (\ target_id\: :ref:`StringName<class_StringName>`, all_instances\: :ref:`bool<class_bool>` = false\ ) :ref:`🔗<class_FoxEffectManager_method_remove_effect_by_id>`
 
-Removes active instances matching the specified ``target_id``.
-
- 
-
-
+Removes active instances matching the specified ``target_id``. 
 
 If ``all_instances`` is ``false``, it will only remove the first one found.
 

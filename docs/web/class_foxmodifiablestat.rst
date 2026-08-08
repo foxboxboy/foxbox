@@ -23,7 +23,6 @@ Flat modifiers are added to :ref:`base_value<class_FoxModifiableStat_property_ba
 
 ::
 
-
     var attack := FoxModifiableStat.new(100.0)
 
     attack.add_flat_modifier(&"gear", 50.0)
@@ -33,12 +32,9 @@ Flat modifiers are added to :ref:`base_value<class_FoxModifiableStat_property_ba
     attack.pop_modifier(&"gear", ModifierType.FLAT)
     attack.value                                  # 100 * 1.5 = 150
 
-
-
 Modifiers are stacked per id, so the same source can apply more than once and be removed one layer at a time. :ref:`pop_modifier()<class_FoxModifiableStat_method_pop_modifier>` takes the most recent off the stack, :ref:`clear_modifier()<class_FoxModifiableStat_method_clear_modifier>` removes every layer under that id at once.
 
 ::
-
 
     attack.add_flat_modifier(&"poison", -5.0)
     attack.add_flat_modifier(&"poison", -5.0)     # two stacks of the same debuff
@@ -328,11 +324,7 @@ Removes all modifiers and resets :ref:`value<class_FoxModifiableStat_property_va
 
 :ref:`bool<class_bool>` **has_modifier**\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ ) :ref:`🔗<class_FoxModifiableStat_method_has_modifier>`
 
-Returns ``true`` if a stack exists for ``id``.
-
- 
-
-
+Returns ``true`` if a stack exists for ``id``. 
 
 Empty stacks are erased on removal, so an existing stack always holds at least one modifier.
 

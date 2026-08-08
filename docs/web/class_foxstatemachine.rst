@@ -23,7 +23,6 @@ States are direct children of this node. Each one is keyed by its :ref:`FoxState
 
 ::
 
-
     # Player
     # └─ StateMachine        (initial_state -> Idle)
     #    ├─ Idle             (idle.gd)
@@ -38,8 +37,6 @@ States are direct children of this node. Each one is keyed by its :ref:`FoxState
     func physics_update(_delta: float) -> void:
         if Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down"):
             transition_requested.emit(self, &"Running")
-
-
 
 A state never switches itself. It emits :ref:`FoxState.transition_requested<class_FoxState_signal_transition_requested>` and the machine performs the swap, so states stay unaware of each other.
 
