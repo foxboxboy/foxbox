@@ -65,20 +65,18 @@ to rebuild it.
 `tests/` holds a self-contained suite covering every module except `character`. It needs no
 addon and no install, so a fresh clone can run it straight away.
 
-```
-./run_tests.sh                 # or .\run_tests.ps1 on Windows
-./run_tests.sh --suite=effect  # one module
-```
+**In the editor:** open `tests/test_runner.tscn` and press F6. Results render on screen and in
+the Output panel. Select the `TestRunner` node to filter to one module or change the seed.
 
-Or call Godot directly:
+**From the command line**, for CI:
 
 ```
 godot --headless --path . --script res://tests/run_all.gd
 ```
 
-It exits 0 on success and 1 on any failure, so CI can gate on it. Some tests deliberately drive
-failure paths, so warnings appear during a passing run. Read the report at the bottom, not the
-warnings above it. See [tests/README.txt](tests/README.txt) for how to add one.
+It exits 0 on success and 1 on any failure. Some tests deliberately drive failure paths, so
+warnings appear during a passing run. Read the report at the bottom, not the warnings above it.
+See [tests/README.txt](tests/README.txt) for how to add a suite.
 
 The roadmap is in [TODO.txt](TODO.txt).
 

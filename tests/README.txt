@@ -1,16 +1,40 @@
 Tests: A self-contained suite covering every FoxFabric module except character. No addon or
 install is required, so a fresh clone can run it immediately.
 
-To run everything:
+IN THE EDITOR
+
+Open tests/test_runner.tscn and press F6. Results appear on screen and in the Output panel.
+
+Select the TestRunner node to filter in the inspector:
+    Suite Filter    leave blank for everything, or type "effect" for one module
+    Random Seed     change it to shuffle the randomised cases
+
+
+FROM THE COMMAND LINE
+
+For CI, or when you do not want to open the editor:
+
     godot --headless --path . --script res://tests/run_all.gd
-
-To run one module:
     godot --headless --path . --script res://tests/run_all.gd --suite=effect
-
-To reproduce a specific random run:
     godot --headless --path . --script res://tests/run_all.gd --seed=12345
 
-Exits 0 when everything passes and 1 when anything fails, so CI can gate on it.
+Exits 0 when everything passes and 1 when anything fails, so CI can gate on it. The wrapper
+scripts in the repo root do the same thing and find Godot for you:
+
+    ./run_tests.sh                 or .\run_tests.ps1
+    ./run_tests.sh --suite=effect
+
+Set FOXFABRIC_GODOT if the godot binary is not on PATH.
+
+
+LAYOUT
+
+    fox_test.gd          base class every suite extends
+    fox_test_runner.gd   discovery, execution and report formatting
+    run_all.gd           command line entry point (SceneTree)
+    test_runner.tscn     editor entry point, press F6
+    test_runner.gd       script behind that scene
+    test_<module>.gd     the suites themselves
 
 
 WRITING A TEST
