@@ -32,6 +32,20 @@ var _held: RigidBody2D = null
 var _keep_upright: bool = false
 var _spinning: bool = false
 
+## Where the cursor was when spinning started, so it can be put back.
+var _cursor_before_spin: Vector2 = Vector2.ZERO
+
+## Where the dragger was when spinning started. Held there for the whole spin.
+var _dragger_before_spin: Vector2 = Vector2.ZERO
+
+## Set on release, cleared by the first real mouse movement afterwards.
+## [br][br]
+## warp_mouse does not take effect until the window manager delivers the next motion event, so
+## for a frame or two after uncapturing the reported cursor is still the middle of the window,
+## which is where a captured cursor sits. Following it would fling whatever is held to the
+## centre of the screen at the exact moment you let go.
+var _awaiting_cursor: bool = false
+
 
 func _ready() -> void:
 	sensor.interaction_range = REACH
@@ -47,6 +61,13 @@ func _physics_process(_delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	# A captured cursor reports the middle of the window, and for a frame or two after releasing
+	# it still does. Either way the dragger holds exactly where it was, so nothing lurches.
+	if _spinning or _awaiting_cursor:
+		dragger.global_position = _dragger_before_spin
+		_refresh_readout()
+		return
+
 	# Following the cursor happens on the render tick, not the physics one. Doing it in physics
 	# stepped the arm at sixty hertz while the rest of the frame drew faster, which reads as
 	# jitter even though nothing is actually wrong.
@@ -80,15 +101,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if button and button.button_index == MOUSE_BUTTON_RIGHT:
-		# Nothing is captured or frozen. The dragger keeps following the cursor the whole time,
-		# so letting go cannot teleport it anywhere and the prop has nothing to fly towards.
-		_spinning = button.pressed
-		_refresh_readout()
+		if button.pressed:
+			_start_spinning()
+		else:
+			_stop_spinning()
 		return
+
+	var motion := event as InputEventMouseMotion
+
+	# The first movement after uncapturing is the one carrying a believable position, so this is
+	# the moment it becomes safe to follow the cursor again.
+	if motion and _awaiting_cursor:
+		_awaiting_cursor = false
 
 	# Turning the dragger turns what it is holding, because the torque targets the dragger's
 	# rotation. With keep_upright on that target is level instead, so spinning does nothing.
-	var motion := event as InputEventMouseMotion
 	if motion and _spinning and is_instance_valid(_held):
 		dragger.rotate(deg_to_rad(motion.relative.x * SPIN_PER_PIXEL))
 		return
@@ -108,6 +135,35 @@ func _unhandled_input(event: InputEvent) -> void:
 ## means being picked up; this is the half that can actually do it.
 func grab_body(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 	_grab(body, profile)
+
+
+## Hides and locks the cursor for the duration of a spin, and pins the dragger where it stands.
+## [br][br]
+## Refused with nothing in hand, since hiding the cursor for no reason is worse than not
+## spinning at all.
+func _start_spinning() -> void:
+	if _spinning or not is_instance_valid(_held):
+		return
+
+	_spinning = true
+	_cursor_before_spin = get_viewport().get_mouse_position()
+	_dragger_before_spin = dragger.global_position
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_refresh_readout()
+
+
+## Gives the cursor back exactly where it was taken from.
+func _stop_spinning() -> void:
+	if not _spinning:
+		return
+
+	_spinning = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_viewport().warp_mouse(_cursor_before_spin)
+
+	# The warp is not visible to us until the next motion event, so keep holding until then.
+	_awaiting_cursor = true
+	_refresh_readout()
 
 
 func _try_grab() -> void:
@@ -133,6 +189,9 @@ func _release() -> void:
 	if not is_instance_valid(_held):
 		return
 
+	# Dropping mid spin would otherwise leave the cursor hidden with nothing to turn.
+	_stop_spinning()
+
 	dragger.release()
 	_held = null
 	_refresh_readout()
@@ -156,6 +215,16 @@ func _refresh_readout() -> void:
 		# Worth saying, or right dragging looks broken rather than overruled.
 		upright += "  (held level, so spinning has no effect)"
 
+	# The mouse state is on screen on purpose. Capturing the cursor is the part of this demo most
+	# likely to misbehave, and it is impossible to describe what went wrong without seeing it.
+	var modes := {
+		Input.MOUSE_MODE_VISIBLE: "visible",
+		Input.MOUSE_MODE_HIDDEN: "hidden",
+		Input.MOUSE_MODE_CAPTURED: "captured",
+		Input.MOUSE_MODE_CONFINED: "confined",
+		Input.MOUSE_MODE_CONFINED_HIDDEN: "confined hidden",
+	}
+
 	readout.text = "\n".join([
 		"Arrows move, mouse aims, left click grabs",
 		"Right drag spins what you are holding, Space toggles upright",
@@ -164,4 +233,10 @@ func _refresh_readout() -> void:
 		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
 		"spinning:     %s" % ("yes" if _spinning else "no"),
 		"keep upright: %s" % upright,
+		"",
+		"mouse mode:   %s" % modes.get(Input.mouse_mode, str(Input.mouse_mode)),
+		"cursor:       %s%s" % [
+			str(get_viewport().get_mouse_position().round()),
+			"   (holding, waiting for the warp)" if _awaiting_cursor else ""],
+		"dragger:      %s" % str(dragger.global_position.round()),
 	])
