@@ -1,8 +1,6 @@
-# What you are holding. Nothing about walking or aiming lives here.
+# Carrying. Moving and aiming live in player_2d.gd.
 #
 # Left click picks up and puts down, right drag turns what is held, Space toggles keep_upright.
-# Mouse buttons are read as raw events rather than named actions, so this works in a project that
-# has not set up an input map.
 extends Node2D
 
 
@@ -10,39 +8,35 @@ extends Node2D
 
 #region Variables
 
-## Typed against the preloaded script rather than a class_name, so the demo does not put a name
-## as ordinary as Player2D into every project that opens it.
 const Player2D = preload("res://demos/interaction/2d/player_2d.gd")
 
-## Where the dragger may go, matching the inside of the walls. The cursor can leave the window
-## and Godot keeps reporting where it went, which would drag a prop out through the wall.
+## Where the dragger may go, matching the inside of the walls. The cursor can leave the window and
+## Godot keeps reporting where it went, which would drag a prop out through a wall.
 const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
 
-## Degrees of turn per pixel of mouse movement while the right button is down.
+## Degrees of turn per pixel of mouse movement.
 const SPIN_PER_PIXEL: float = 0.4
 
-## How far ahead of the prop the commanded angle may get. The torque takes the shortest way to
-## its target, so past half a turn the shortest way is backwards and the prop unwinds against
-## the drag. A quarter turn leaves room to lag without ever crossing over.
+## How far ahead of the prop the commanded angle may get. The torque takes the shortest way to its
+## target, so past half a turn the shortest way is backwards and the prop unwinds against the drag.
 const MAX_SPIN_LEAD: float = PI / 2.0
 
 @export var player: Player2D
 @export var dragger: FoxPhysicsDragger2D
 
-## Sits on the spot the prop is pulled by, which is neither its centre nor the cursor.
+## Marks the spot the prop is pulled by, which is neither its centre nor the cursor.
 @export var grab_marker: Polygon2D
 
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
 var _turning: bool = false
 
-## Where the cursor and the dragger were when a turn started, so both can be put back.
+## Where the cursor and dragger were when a turn started, so both can be put back.
 var _cursor_before_turn: Vector2 = Vector2.ZERO
 var _dragger_before_turn: Vector2 = Vector2.ZERO
 
-## Set when a turn ends, cleared by the first real mouse movement after it. warp_mouse does not
-## land until the window manager sends the next motion, so until then the cursor still reads as
-## the middle of the window and following it would fling the prop there.
+## warp_mouse does not land until the window manager sends the next motion event. Until then the
+## cursor still reads as the middle of the window, and following it would fling the prop there.
 var _awaiting_cursor: bool = false
 
 #endregion
@@ -52,12 +46,10 @@ var _awaiting_cursor: bool = false
 
 #region Built-In Virtuals
 
-## Carrying follows the cursor, so it belongs on the render tick alongside aiming.
 func _process(_delta: float) -> void:
 	_show_grab_point()
 
 	if _turning or _awaiting_cursor:
-		# Hold everything exactly where it was. The cursor is not trustworthy right now.
 		dragger.global_position = _dragger_before_turn
 		return
 
@@ -70,7 +62,6 @@ func _process(_delta: float) -> void:
 
 #region Public API
 
-## Whether something is in hand. Read by the readout.
 func is_holding() -> bool:
 	return is_instance_valid(_held)
 
@@ -79,8 +70,7 @@ func is_upright() -> bool:
 	return _keep_upright
 
 
-## Called back by a prop that was interacted with. The prop decides that being interacted with
-## means being picked up; this is the half that can actually do it.
+## Called by a prop that was interacted with.
 func grab_body(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 	_grab(body, profile)
 
@@ -107,9 +97,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_upright()
 
 
-## Picking up is a toggle rather than a hold. Ending the cursor capture at the end of a turn
-## makes the window manager report the left button as released, and while holding meant held that
-## silently dropped whatever was being turned. A toggle cannot be undone by an event nobody sent.
+# Picking up toggles instead of holding, because ending the cursor capture at the end of a turn
+# makes the window manager report the left button as released, which silently dropped whatever was
+# being turned.
 func _on_mouse_button(button: InputEventMouseButton) -> void:
 	if button.button_index == MOUSE_BUTTON_LEFT and button.pressed:
 		if is_holding():
@@ -148,7 +138,7 @@ func _toggle_upright() -> void:
 
 #region Carrying
 
-## The dragger is a target the prop is pulled towards, not a hand that carries it.
+# The dragger is a target the prop is pulled towards, so moving it does not move the prop directly.
 func _carry_towards_cursor() -> void:
 	dragger.global_position = get_global_mouse_position().clamp(ARENA.position, ARENA.end)
 
@@ -159,7 +149,6 @@ func _carry_towards_cursor() -> void:
 		dragger.global_rotation = _held.global_rotation
 
 
-## The grab point is a fixed spot on the prop, so it travels as the prop moves and turns.
 func _show_grab_point() -> void:
 	grab_marker.visible = dragger.is_holding()
 	if grab_marker.visible:
@@ -185,7 +174,7 @@ func _release() -> void:
 	if not is_holding():
 		return
 
-	# Dropping mid turn would otherwise leave the cursor hidden with nothing to turn.
+	# Dropping mid turn would leave the cursor hidden with nothing to turn.
 	_stop_turning()
 
 	dragger.release()
@@ -198,8 +187,7 @@ func _release() -> void:
 
 #region Turning
 
-## Hides and locks the cursor for the duration of a turn, and pins the dragger where it stands.
-## Refused with nothing in hand, since hiding the cursor for no reason is worse than not turning.
+## Hides and locks the cursor, and pins the dragger where it stands.
 func _start_turning() -> void:
 	if _turning or not is_holding():
 		return
@@ -224,11 +212,11 @@ func _stop_turning() -> void:
 
 
 ## Turning the dragger turns what it holds, because the torque targets the dragger's angle. With
-## keep_upright on that target is level instead, so turning does nothing.
+## keep_upright on that target is level, so turning does nothing.
 func _turn_held(mouse_dx: float) -> void:
 	dragger.rotate(deg_to_rad(mouse_dx * SPIN_PER_PIXEL))
 
-	# Never let the command run further ahead than the prop can follow. See MAX_SPIN_LEAD.
+	# See MAX_SPIN_LEAD.
 	var lead: float = angle_difference(_held.global_rotation, dragger.global_rotation)
 	dragger.global_rotation = _held.global_rotation + clampf(lead, -MAX_SPIN_LEAD, MAX_SPIN_LEAD)
 
