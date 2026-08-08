@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://do8yal883w2ue"]
+
+[ext_resource type="Script" uid="uid://dc18dgl7sxhwd" path="res://foxfabric_demos/effect/effect_demo.gd" id="1_qsktj"]
+
+[node name="EffectDemo" type="Node" unique_id=598011985]
+script = ExtResource("1_qsktj")
+
+[node name="Label" type="Label" parent="." unique_id=141726715]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -11.5
+offset_right = 56.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Check Console"
