@@ -25,14 +25,14 @@ size = Vector2(160, 24)
 
 [sub_resource type="Resource" id="Profile_heavy"]
 script = ExtResource("6_profile")
-stiffness = 900.0
-damping = 30.0
+stiffness = 700.0
+damping = 70.0
 keep_upright = false
 
 [sub_resource type="Resource" id="Profile_light"]
 script = ExtResource("6_profile")
-stiffness = 1400.0
-damping = 40.0
+stiffness = 1100.0
+damping = 45.0
 keep_upright = false
 
 [node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line")]
@@ -111,11 +111,15 @@ default_color = Color(1, 1, 1, 0.235294)
 
 [node name="Dragger" type="Node2D" parent="."]
 script = ExtResource("5_dragger")
+max_pull_force = 60000.0
 
 [node name="Props" type="Node2D" parent="."]
 
 [node name="Crate" type="RigidBody2D" parent="Props"]
 position = Vector2(60, -60)
+mass = 30.0
+linear_damp = 0.8
+angular_damp = 1.2
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_heavy")
 label = "crate"
@@ -137,6 +141,9 @@ shape = SubResource("Shape_crate")
 
 [node name="Plank" type="RigidBody2D" parent="Props"]
 position = Vector2(220, 60)
+mass = 8.0
+linear_damp = 0.3
+angular_damp = 0.5
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_light")
 label = "plank"

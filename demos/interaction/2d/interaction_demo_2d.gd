@@ -25,8 +25,12 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
 
+## Degrees of spin per pixel of mouse movement while the right button is down.
+const SPIN_PER_PIXEL: float = 0.4
+
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
+var _spinning: bool = false
 
 
 func _ready() -> void:
@@ -46,8 +50,10 @@ func _physics_process(_delta: float) -> void:
 	sensor.look_at(get_global_mouse_position())
 
 	# The dragger is a target the held body is pulled towards, not a hand that carries it. Put it
-	# under the cursor and the physics does the rest.
-	dragger.global_position = get_global_mouse_position()
+	# under the cursor and the physics does the rest. While spinning it stays put, so the mouse
+	# is free to mean rotation instead of position.
+	if not _spinning:
+		dragger.global_position = get_global_mouse_position()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -57,6 +63,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			_try_grab()
 		else:
 			_release()
+		return
+
+	if button and button.button_index == MOUSE_BUTTON_RIGHT:
+		_spinning = button.pressed
+		_refresh_readout()
+		return
+
+	# Turning the dragger turns what it is holding, because the torque targets the dragger's
+	# rotation. With keep_upright on that target is level instead, so spinning does nothing.
+	var motion := event as InputEventMouseMotion
+	if motion and _spinning and is_instance_valid(_held):
+		dragger.rotate(deg_to_rad(motion.relative.x * SPIN_PER_PIXEL))
 		return
 
 	var key := event as InputEventKey
@@ -117,10 +135,17 @@ func _refresh_readout() -> void:
 		var prop := target.get_parent()
 		pointing = str(prop.label) if prop and "label" in prop else prop.name
 
+	var upright := "on" if _keep_upright else "off"
+	if _keep_upright:
+		# Worth saying, or right dragging looks broken rather than overruled.
+		upright += "  (held level, so spinning has no effect)"
+
 	readout.text = "\n".join([
-		"Arrows move, mouse aims, click to grab, Space toggles upright",
+		"Arrows move, mouse aims, left click grabs",
+		"Right drag spins what you are holding, Space toggles upright",
 		"",
 		"pointing at:  %s" % pointing,
 		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
-		"keep upright: %s" % ("on" if _keep_upright else "off"),
+		"spinning:     %s" % ("yes" if _spinning else "no"),
+		"keep upright: %s" % upright,
 	])

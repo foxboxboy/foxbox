@@ -28,6 +28,7 @@ func run() -> void:
 	_focus_and_unfocus()
 	_interaction_range()
 	_no_target_is_harmless()
+	_unfocus_reports_settled_state()
 
 
 func _interact_routes_the_context() -> void:
@@ -97,3 +98,26 @@ func _no_target_is_harmless() -> void:
 	# while looking at nothing lands here.
 	ray.interact_with_target({"any": "payload"})
 	check(ray.get_current_target() == null, "interacting with nothing changes nothing")
+
+
+## Regression: unfocused used to be emitted before the target was cleared, so a handler that
+## asked the sensor what it was pointing at was told the node it had just lost. A readout built
+## that way claimed to be aimed at a prop while the ray pointed at nothing.
+func _unfocus_reports_settled_state() -> void:
+	case("unfocus ordering")
+	var ray: FoxInteractionRayCast3D = track(FoxInteractionRayCast3D.new()) as FoxInteractionRayCast3D
+	var area: FoxInteractableArea3D = track(FoxInteractableArea3D.new()) as FoxInteractableArea3D
+	ray._current_target = area
+
+	# an Array, because a lambda captures a plain local by value and the write would be lost
+	var during: Array = []
+	var passed: Array = []
+	ray.unfocused.connect(func(a: FoxInteractableArea3D) -> void:
+		during.append(ray.get_current_target())
+		passed.append(a))
+
+	ray._clear_target()
+
+	eq(during.size(), 1, "unfocused fired once")
+	eq(during[0], null, "the sensor already reports no target while the signal is handled")
+	eq(passed[0], area, "and the signal still says which one was lost")

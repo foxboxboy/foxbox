@@ -94,11 +94,15 @@ func _physics_process(_delta: float) -> void:
 
 
 func _clear_target() -> void:
-	if is_instance_valid(_current_target):
-		_current_target.unfocus(self)
-		unfocused.emit(_current_target)
-		
+	# Cleared before anything is told about it. A handler that asks the sensor what it is
+	# pointing at during [signal unfocused] would otherwise be handed the node it just lost,
+	# and conclude the target is still there.
+	var previous: FoxInteractableArea3D = _current_target
 	_current_target = null
+
+	if is_instance_valid(previous):
+		previous.unfocus(self)
+		unfocused.emit(previous)
 
 #endregion
 
