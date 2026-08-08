@@ -11,7 +11,7 @@ var suite: String = "unnamed"
 var root: Node = null
 
 ## Seeded so a failing random case can always be reproduced.
-var rng := RandomNumberGenerator.new()
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 var _passed: int = 0
 var _failures: Array[String] = []
@@ -78,7 +78,7 @@ func failures() -> Array[String]:
 
 
 func _fail(label: String, detail: String) -> void:
-	var where := _current + " / " if _current != "" else ""
+	var where: String = _current + " / " if _current != "" else ""
 	_failures.append("%s%s  ->  %s" % [where, label, detail])
 
 

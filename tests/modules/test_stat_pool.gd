@@ -14,14 +14,14 @@ func run() -> void:
 
 func _defaults() -> void:
 	case("defaults")
-	var p := FoxStatPool.new()
+	var p: FoxStatPool = FoxStatPool.new()
 	almost(p.max_value, 100.0, "max comes from base_max")
 	almost(p.current, 100.0, "the pool starts full")
 
 
 func _spending_and_refilling() -> void:
 	case("spending")
-	var p := FoxStatPool.new()
+	var p: FoxStatPool = FoxStatPool.new()
 	p.subtract(30.0)
 	almost(p.current, 70.0, "subtract lowers current")
 	p.add(10.0)
@@ -36,7 +36,7 @@ func _spending_and_refilling() -> void:
 
 func _percentage() -> void:
 	case("percentage")
-	var p := FoxStatPool.new()
+	var p: FoxStatPool = FoxStatPool.new()
 	almost(p.get_percent(), 1.0, "a full pool is 1.0")
 
 	p.subtract(75.0)
@@ -46,14 +46,14 @@ func _percentage() -> void:
 	almost(p.get_percent(), 0.0, "an empty pool is 0.0")
 
 	case("percentage with no capacity")
-	var zero := FoxStatPool.new()
+	var zero: FoxStatPool = FoxStatPool.new()
 	zero.base_max = 0.0
 	almost(zero.get_percent(), 0.0, "a zero maximum returns 0.0 rather than dividing by zero")
 
 
 func _max_modifiers() -> void:
 	case("max modifiers")
-	var p := FoxStatPool.new()
+	var p: FoxStatPool = FoxStatPool.new()
 	p.add_flat_max_modifier(&"vitality", 50.0)
 	almost(p.max_value, 150.0, "a flat modifier raises the max")
 
@@ -69,7 +69,7 @@ func _max_modifiers() -> void:
 	almost(p.max_value, 100.0, "clearing returns the max to base_max")
 
 	case("clearing one id")
-	var q := FoxStatPool.new()
+	var q: FoxStatPool = FoxStatPool.new()
 	q.add_flat_max_modifier(&"a", 10.0)
 	q.add_flat_max_modifier(&"b", 20.0)
 	q.clear_flat_max_modifier(&"a")
@@ -78,7 +78,7 @@ func _max_modifiers() -> void:
 
 func _lowering_the_max_clamps_current() -> void:
 	case("lowering the max")
-	var p := FoxStatPool.new()
+	var p: FoxStatPool = FoxStatPool.new()
 	almost(p.current, 100.0, "pool starts full")
 
 	p.base_max = 40.0
@@ -93,9 +93,9 @@ func _lowering_the_max_clamps_current() -> void:
 
 func _signals() -> void:
 	case("signals")
-	var p := FoxStatPool.new()
-	var updates := [0]
-	var depleted := [0]
+	var p: FoxStatPool = FoxStatPool.new()
+	var updates: Array = [0]
+	var depleted: Array = [0]
 	p.updated.connect(func(_c: float, _m: float) -> void: updates[0] += 1)
 	p.depleted.connect(func(_u: float) -> void: depleted[0] += 1)
 
@@ -108,10 +108,10 @@ func _signals() -> void:
 
 func _random_spending_stays_in_range() -> void:
 	case("invariant under random spending")
-	var breaches := 0
+	var breaches: int = 0
 
 	for i in 200:
-		var p := FoxStatPool.new()
+		var p: FoxStatPool = FoxStatPool.new()
 		p.base_max = rng.randf_range(1.0, 500.0)
 
 		for j in 25:

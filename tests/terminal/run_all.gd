@@ -10,18 +10,18 @@ extends SceneTree
 ##
 ## Exits 0 when everything passes and 1 when anything fails, so CI can gate on it.
 
-const Runner := preload("res://tests/fox_test_runner.gd")
+const Runner: GDScript = preload("res://tests/fox_test_runner.gd")
 
 
 ## Nodes added to root during _initialize() never fire _enter_tree, because the tree is not
 ## live yet. Anything relying on tree callbacks would silently do nothing, so the run waits
 ## for the first real frame instead.
 func _process(_delta: float) -> bool:
-	var runner := Runner.new()
-	var results := runner.run(
+	var runner: RefCounted = Runner.new()
+	var results: Dictionary = runner.run(
 		root,
 		_arg_value("--suite", ""),
-		int(_arg_value("--seed", str(Runner.DEFAULT_SEED)))
+		int(_arg_value("--seed", str(Runner.RANDOM_SEED)))
 	)
 
 	print("")

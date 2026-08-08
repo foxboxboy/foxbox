@@ -37,10 +37,10 @@ func run() -> void:
 ## Builds a machine with named states. Children must exist before the machine enters the tree,
 ## because FoxStateMachine collects them in _ready.
 func _build(state_names: Array, initial_index: int = 0) -> Array:
-	var sm := FoxStateMachine.new()
+	var sm: FoxStateMachine = FoxStateMachine.new()
 	var states: Array = []
 	for n in state_names:
-		var s := ProbeState.new()
+		var s: ProbeState = ProbeState.new()
 		s.name = n
 		sm.add_child(s)
 		states.append(s)
@@ -52,7 +52,7 @@ func _build(state_names: Array, initial_index: int = 0) -> Array:
 
 func _initial_state() -> void:
 	case("initial state")
-	var built := _build(["Idle", "Running"])
+	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 
@@ -62,8 +62,8 @@ func _initial_state() -> void:
 	eq(sm.states.size(), 2, "both children were registered")
 
 	case("no initial state")
-	var sm2 := FoxStateMachine.new()
-	var lone := ProbeState.new()
+	var sm2: FoxStateMachine = FoxStateMachine.new()
+	var lone: ProbeState = ProbeState.new()
 	lone.name = "Lone"
 	sm2.add_child(lone)
 	track(sm2)
@@ -73,7 +73,7 @@ func _initial_state() -> void:
 
 func _transitions() -> void:
 	case("transitions")
-	var built := _build(["Idle", "Running"])
+	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 
@@ -90,7 +90,7 @@ func _transitions() -> void:
 
 func _unknown_states_are_refused() -> void:
 	case("unknown state names")
-	var built := _build(["Idle"])
+	var built: Array = _build(["Idle"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 
@@ -105,8 +105,8 @@ func _unknown_states_are_refused() -> void:
 
 func _state_id_overrides_node_name() -> void:
 	case("state_id")
-	var sm := FoxStateMachine.new()
-	var s := ProbeState.new()
+	var sm: FoxStateMachine = FoxStateMachine.new()
+	var s: ProbeState = ProbeState.new()
 	s.name = "NodeName"
 	s.state_id = &"custom_id"
 	sm.add_child(s)
@@ -118,7 +118,7 @@ func _state_id_overrides_node_name() -> void:
 
 func _states_request_their_own_transitions() -> void:
 	case("transition_requested")
-	var built := _build(["Idle", "Running"])
+	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 
@@ -130,7 +130,7 @@ func _states_request_their_own_transitions() -> void:
 ## Guards against a stale state that is no longer active yanking the machine around.
 func _inactive_states_cannot_force_a_transition() -> void:
 	case("requests from inactive states")
-	var built := _build(["Idle", "Running", "Jumping"])
+	var built: Array = _build(["Idle", "Running", "Jumping"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 
@@ -145,7 +145,7 @@ func _inactive_states_cannot_force_a_transition() -> void:
 
 func _frame_callbacks_reach_the_active_state_only() -> void:
 	case("frame callbacks")
-	var built := _build(["Idle", "Running"])
+	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
 	var states: Array = built[1]
 

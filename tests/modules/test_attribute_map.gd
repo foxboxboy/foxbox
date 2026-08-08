@@ -34,10 +34,10 @@ func _new_map() -> FoxAttributeMap:
 
 func _data_storage() -> void:
 	case("data")
-	var m := _new_map()
-	var added := [0]
-	var replaced := [0]
-	var removed := [0]
+	var m: FoxAttributeMap = _new_map()
+	var added: Array = [0]
+	var replaced: Array = [0]
+	var removed: Array = [0]
 	m.data_added.connect(func(_k: StringName, _v: Variant) -> void: added[0] += 1)
 	m.data_replaced.connect(func(_k: StringName, _v: Variant) -> void: replaced[0] += 1)
 	m.data_removed.connect(func(_k: StringName, _v: Variant) -> void: removed[0] += 1)
@@ -65,7 +65,7 @@ func _data_storage() -> void:
 
 func _groups() -> void:
 	case("groups")
-	var m := _new_map()
+	var m: FoxAttributeMap = _new_map()
 	m.set_data(&"speed", 5.0)
 	m.set_data(&"accel", 2.0)
 
@@ -93,9 +93,9 @@ func _groups() -> void:
 
 func _flags_stack() -> void:
 	case("flags are stacked, not boolean")
-	var m := _new_map()
-	var added := [0]
-	var removed := [0]
+	var m: FoxAttributeMap = _new_map()
+	var added: Array = [0]
+	var removed: Array = [0]
 	m.flag_added.connect(func(_f: StringName) -> void: added[0] += 1)
 	m.flag_removed.connect(func(_f: StringName) -> void: removed[0] += 1)
 
@@ -134,10 +134,10 @@ func _flags_stack() -> void:
 
 func _rules_apply_and_reverse() -> void:
 	case("rules")
-	var m := _new_map()
+	var m: FoxAttributeMap = _new_map()
 	m.set_data(&"speed", 10.0)
 
-	var rule := FlatRule.new(&"haste", &"speed", 5.0)
+	var rule: FlatRule = FlatRule.new(&"haste", &"speed", 5.0)
 	m.add_rule(rule)
 	almost(float(m.get_data(&"speed")), 15.0, "adding a rule applies it")
 	eq(m.get_active_rules().size(), 1, "rule is tracked")
@@ -158,7 +158,7 @@ func _rules_apply_and_reverse() -> void:
 ## caller, so a direct local call silently did nothing. The flag is only about inheritance.
 func _local_add_rule_ignores_can_receive_rules() -> void:
 	case("can_receive_rules does not block local calls")
-	var m := _new_map()
+	var m: FoxAttributeMap = _new_map()
 	m.can_receive_rules = false
 	m.set_data(&"speed", 10.0)
 
@@ -171,12 +171,12 @@ func _inheritance_respects_can_receive_rules() -> void:
 	case("can_receive_rules blocks inherited rules")
 
 	# entity -> [parent map, sub -> [child map]]
-	var entity := track(Node.new())
-	var parent_map := FoxAttributeMap.new()
+	var entity: Node = track(Node.new())
+	var parent_map: FoxAttributeMap = FoxAttributeMap.new()
 	entity.add_child(parent_map)
-	var sub := Node.new()
+	var sub: Node = Node.new()
 	entity.add_child(sub)
-	var child_map := FoxAttributeMap.new()
+	var child_map: FoxAttributeMap = FoxAttributeMap.new()
 	child_map.can_receive_rules = false
 	sub.add_child(child_map)
 
@@ -190,12 +190,12 @@ func _inheritance_respects_can_receive_rules() -> void:
 	eq(child_map.get_active_rules().size(), 0, "and does not track it")
 
 	case("an opted-in child does inherit")
-	var entity2 := track(Node.new())
-	var pm := FoxAttributeMap.new()
+	var entity2: Node = track(Node.new())
+	var pm: FoxAttributeMap = FoxAttributeMap.new()
 	entity2.add_child(pm)
-	var sub2 := Node.new()
+	var sub2: Node = Node.new()
 	entity2.add_child(sub2)
-	var cm := FoxAttributeMap.new()
+	var cm: FoxAttributeMap = FoxAttributeMap.new()
 	sub2.add_child(cm)
 
 	pm.set_data(&"speed", 10.0)
@@ -211,13 +211,13 @@ func _inheritance_respects_can_receive_rules() -> void:
 
 func _can_send_rules_stops_propagation() -> void:
 	case("can_send_rules")
-	var entity := track(Node.new())
-	var pm := FoxAttributeMap.new()
+	var entity: Node = track(Node.new())
+	var pm: FoxAttributeMap = FoxAttributeMap.new()
 	pm.can_send_rules = false
 	entity.add_child(pm)
-	var sub := Node.new()
+	var sub: Node = Node.new()
 	entity.add_child(sub)
-	var cm := FoxAttributeMap.new()
+	var cm: FoxAttributeMap = FoxAttributeMap.new()
 	sub.add_child(cm)
 
 	pm.set_data(&"speed", 10.0)
@@ -230,8 +230,8 @@ func _can_send_rules_stops_propagation() -> void:
 
 func _late_joining_children_catch_up() -> void:
 	case("late joining children")
-	var entity := track(Node.new())
-	var pm := FoxAttributeMap.new()
+	var entity: Node = track(Node.new())
+	var pm: FoxAttributeMap = FoxAttributeMap.new()
 	entity.add_child(pm)
 
 	pm.set_data(&"speed", 10.0)
@@ -240,9 +240,9 @@ func _late_joining_children_catch_up() -> void:
 	pm.increment_flag(&"blessed")
 
 	# child arrives after the rule and flags already exist
-	var sub := Node.new()
+	var sub: Node = Node.new()
 	entity.add_child(sub)
-	var cm := FoxAttributeMap.new()
+	var cm: FoxAttributeMap = FoxAttributeMap.new()
 	cm.set_data(&"speed", 100.0)
 	sub.add_child(cm)
 

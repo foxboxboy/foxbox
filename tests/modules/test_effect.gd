@@ -42,7 +42,7 @@ func run() -> void:
 
 
 func _mk(id: StringName, duration: float = -1.0) -> ProbeEffect:
-	var e := ProbeEffect.new()
+	var e: ProbeEffect = ProbeEffect.new()
 	e.id = id
 	e.duration = duration
 	return e
@@ -54,11 +54,11 @@ func _mgr() -> FoxEffectManager:
 
 func _applying() -> void:
 	case("applying")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"poison")
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"poison")
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	check(inst != null, "add_effect returns an instance")
 	eq(e.executes, 1, "_on_execute ran once")
 	check(m.has_effect(&"poison"), "the effect is active")
@@ -73,8 +73,8 @@ func _applying() -> void:
 ## nothing to tick.
 func _processing_is_idle_when_empty() -> void:
 	case("idle when empty")
-	var m := _mgr()
-	var target := track(Node.new())
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
 	check(not m.is_processing(), "a manager with no effects does not process")
 
 	m.add_effect(_mk(&"a"), target)
@@ -90,14 +90,14 @@ func _processing_is_idle_when_empty() -> void:
 
 func _unique_mode_reuses_the_instance() -> void:
 	case("StackMode.UNIQUE")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"poison", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"poison", 10.0)
 	e.stack_mode = FoxEffect.StackMode.UNIQUE
 	e.duration_mode = FoxEffect.DurationMode.REFRESH
 
-	var first := m.add_effect(e, target)
-	var second := m.add_effect(e, target)
+	var first: FoxEffectInstance = m.add_effect(e, target)
+	var second: FoxEffectInstance = m.add_effect(e, target)
 	eq(second, first, "the same instance comes back")
 	eq(m.effects.size(), 1, "no second instance was created")
 	eq(e.executes, 1, "_on_execute did not run again")
@@ -106,12 +106,12 @@ func _unique_mode_reuses_the_instance() -> void:
 
 func _intensity_mode_stacks() -> void:
 	case("StackMode.INTENSITY")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"bleed", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"bleed", 10.0)
 	e.stack_mode = FoxEffect.StackMode.INTENSITY
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	m.add_effect(e, target)
 	eq(inst.stack, 2, "a second application raises the stack")
 	eq(e.reapplies, 1, "_on_reapply ran")
@@ -123,13 +123,13 @@ func _intensity_mode_stacks() -> void:
 ## that 0 means unlimited.
 func _max_stacks_zero_means_unlimited() -> void:
 	case("max_stacks of zero")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"infinite", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"infinite", 10.0)
 	e.stack_mode = FoxEffect.StackMode.INTENSITY
 	e.max_stacks = 0
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	for i in 30:
 		m.add_effect(e, target)
 	eq(inst.stack, 31, "zero means unlimited, not zero")
@@ -137,27 +137,27 @@ func _max_stacks_zero_means_unlimited() -> void:
 
 func _max_stacks_caps() -> void:
 	case("max_stacks cap")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"capped", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"capped", 10.0)
 	e.stack_mode = FoxEffect.StackMode.INTENSITY
 	e.max_stacks = 3
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	for i in 10:
 		m.add_effect(e, target)
 	eq(inst.stack, 3, "the stack stops at max_stacks")
 
-	var before := e.reapplies
+	var before: int = e.reapplies
 	m.add_effect(e, target)
 	eq(e.reapplies, before, "_on_reapply is not called when the stack did not move")
 
 
 func _multiple_instances_mode() -> void:
 	case("StackMode.MULTIPLE_INSTANCES")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"dot", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"dot", 10.0)
 	e.stack_mode = FoxEffect.StackMode.MULTIPLE_INSTANCES
 
 	m.add_effect(e, target)
@@ -169,36 +169,36 @@ func _multiple_instances_mode() -> void:
 
 func _duration_modes() -> void:
 	case("DurationMode.ADD")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"add", 5.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"add", 5.0)
 	e.duration_mode = FoxEffect.DurationMode.ADD
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	m.add_effect(e, target)
 	almost(inst.time_left, 10.0, "durations sum")
 
 	case("DurationMode.REFRESH")
-	var m2 := _mgr()
-	var e2 := _mk(&"refresh", 5.0)
+	var m2: FoxEffectManager = _mgr()
+	var e2: ProbeEffect = _mk(&"refresh", 5.0)
 	e2.duration_mode = FoxEffect.DurationMode.REFRESH
-	var inst2 := m2.add_effect(e2, target)
+	var inst2: FoxEffectInstance = m2.add_effect(e2, target)
 	inst2.process_time(3.0)
 	almost(inst2.time_left, 2.0, "time ticked down")
 	m2.add_effect(e2, target)
 	almost(inst2.time_left, 5.0, "reapplying resets to the full duration")
 
 	case("DurationMode.KEEP_LONGEST")
-	var m3 := _mgr()
-	var e3 := _mk(&"keep", 5.0)
+	var m3: FoxEffectManager = _mgr()
+	var e3: ProbeEffect = _mk(&"keep", 5.0)
 	e3.duration_mode = FoxEffect.DurationMode.KEEP_LONGEST
-	var inst3 := m3.add_effect(e3, target)
+	var inst3: FoxEffectInstance = m3.add_effect(e3, target)
 	inst3.process_time(1.0)
 	almost(inst3.time_left, 4.0, "time ticked down")
 	m3.add_effect(e3, target)
 	almost(inst3.time_left, 5.0, "the longer of the two wins")
 
 	inst3.process_time(0.5)
-	var e_short := _mk(&"keep", 1.0)
+	var e_short: ProbeEffect = _mk(&"keep", 1.0)
 	e_short.duration_mode = FoxEffect.DurationMode.KEEP_LONGEST
 	m3.add_effect(e_short, target)
 	almost(inst3.time_left, 4.5, "a shorter incoming duration is ignored")
@@ -206,9 +206,9 @@ func _duration_modes() -> void:
 
 func _expiry() -> void:
 	case("expiry")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"short", 1.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"short", 1.0)
 
 	m.add_effect(e, target)
 	m._process(0.4)
@@ -225,11 +225,11 @@ func _expiry() -> void:
 
 func _permanent_effects_never_expire() -> void:
 	case("permanent effects")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"forever", -1.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"forever", -1.0)
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	check(not inst.is_expired, "a permanent effect is not expired")
 
 	for i in 100:
@@ -240,9 +240,9 @@ func _permanent_effects_never_expire() -> void:
 
 func _ticking() -> void:
 	case("interval ticking")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"tickly", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"tickly", 10.0)
 	e.tick_interval = 1.0
 
 	m.add_effect(e, target)
@@ -256,8 +256,8 @@ func _ticking() -> void:
 	eq(e.ticks, 2, "ticks keep coming on schedule")
 
 	case("ticking disabled")
-	var m2 := _mgr()
-	var e2 := _mk(&"silent", 10.0)
+	var m2: FoxEffectManager = _mgr()
+	var e2: ProbeEffect = _mk(&"silent", 10.0)
 	e2.tick_interval = 0.0
 	m2.add_effect(e2, target)
 	for i in 20:
@@ -267,10 +267,10 @@ func _ticking() -> void:
 
 func _removal_runs_cleanup() -> void:
 	case("removal")
-	var m := _mgr()
-	var target := track(Node.new())
-	var a := _mk(&"a")
-	var b := _mk(&"b")
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var a: ProbeEffect = _mk(&"a")
+	var b: ProbeEffect = _mk(&"b")
 
 	m.add_effect(a, target)
 	m.add_effect(b, target)
@@ -285,8 +285,8 @@ func _removal_runs_cleanup() -> void:
 	eq(m.effects.size(), 0, "nothing left")
 
 	case("multiple instances removal")
-	var m2 := _mgr()
-	var c := _mk(&"c")
+	var m2: FoxEffectManager = _mgr()
+	var c: ProbeEffect = _mk(&"c")
 	c.stack_mode = FoxEffect.StackMode.MULTIPLE_INSTANCES
 	m2.add_effect(c, target)
 	m2.add_effect(c, target)
@@ -301,22 +301,22 @@ func _removal_runs_cleanup() -> void:
 
 func _serialisation_round_trip() -> void:
 	case("serialisation")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"saved", 10.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"saved", 10.0)
 	e.stack_mode = FoxEffect.StackMode.INTENSITY
 	e.tick_interval = 2.0
 
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	m.add_effect(e, target)
 	inst.process_time(3.0)
 
-	var data := m.serialize()
+	var data: Array[Dictionary] = m.serialize()
 	eq(data.size(), 1, "one entry saved")
 	eq(data[0]["id"], &"saved", "id was saved")
 	eq(data[0]["stack"], 2, "stack was saved")
 
-	var m2 := _mgr()
+	var m2: FoxEffectManager = _mgr()
 	m2.load_state(data, target, func(id: StringName) -> FoxEffect:
 		return e if id == &"saved" else null)
 
@@ -326,7 +326,7 @@ func _serialisation_round_trip() -> void:
 	eq(e.executes, 1, "loading did not re-trigger _on_execute")
 
 	case("unknown blueprint on load")
-	var m3 := _mgr()
+	var m3: FoxEffectManager = _mgr()
 	m3.load_state(data, target, func(_id: StringName) -> FoxEffect: return null)
 	eq(m3.effects.size(), 0, "an unresolvable id is skipped rather than crashing")
 
@@ -335,19 +335,19 @@ func _serialisation_round_trip() -> void:
 ## on exactly -1.0 therefore reads as permanent and never expires.
 func _expiry_sentinel_edge_case() -> void:
 	case("sentinel collision")
-	var m := _mgr()
-	var target := track(Node.new())
-	var e := _mk(&"unlucky", 1.0)
+	var m: FoxEffectManager = _mgr()
+	var target: Node = track(Node.new())
+	var e: ProbeEffect = _mk(&"unlucky", 1.0)
 
 	# 1.0 - 2.0 is exactly -1.0, which is the permanent sentinel
-	var inst := m.add_effect(e, target)
+	var inst: FoxEffectInstance = m.add_effect(e, target)
 	inst.process_time(2.0)
 	almost(inst.time_left, 0.0, "the countdown floors at zero instead of running onto the sentinel")
 	check(inst.is_expired, "an elapsed timed effect counts as expired")
 
 	case("permanence is still distinguishable")
-	var p := _mk(&"perm", -1.0)
-	var pinst := m.add_effect(p, target)
+	var p: ProbeEffect = _mk(&"perm", -1.0)
+	var pinst: FoxEffectInstance = m.add_effect(p, target)
 	pinst.process_time(5.0)
 	almost(pinst.time_left, -1.0, "a permanent effect keeps its sentinel")
 	check(not pinst.is_expired, "and never expires")

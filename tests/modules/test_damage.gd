@@ -20,11 +20,11 @@ func _hit() -> FoxHitArea3D:
 
 func _hurtbox_accepts_when_active() -> void:
 	case("active hurtbox")
-	var h := _hurt()
-	var received := []
+	var h: FoxHurtArea3D = _hurt()
+	var received: Array = []
 	h.hit_received.connect(func(p: Variant) -> void: received.append(p))
 
-	var accepted := h.receive_hit(42)
+	var accepted: bool = h.receive_hit(42)
 	check(accepted, "an active hurtbox reports acceptance")
 	eq(received.size(), 1, "hit_received fired once")
 	eq(received[0], 42, "the payload arrived intact")
@@ -34,12 +34,12 @@ func _hurtbox_accepts_when_active() -> void:
 ## hurtbox had ignored the payload.
 func _hurtbox_refuses_when_inactive() -> void:
 	case("inactive hurtbox")
-	var h := _hurt()
+	var h: FoxHurtArea3D = _hurt()
 	h.is_active = false
-	var received := []
+	var received: Array = []
 	h.hit_received.connect(func(p: Variant) -> void: received.append(p))
 
-	var accepted := h.receive_hit(42)
+	var accepted: bool = h.receive_hit(42)
 	check(not accepted, "an inactive hurtbox reports refusal")
 	eq(received.size(), 0, "hit_received never fired")
 
@@ -52,14 +52,14 @@ func _hurtbox_refuses_when_inactive() -> void:
 ## to a hurtbox that had silently dropped the payload.
 func _delivery_is_not_reported_when_ignored() -> void:
 	case("hit_delivered honesty")
-	var hit := _hit()
+	var hit: FoxHitArea3D = _hit()
 	hit.payload = {"amount": 5}
 
-	var live := _hurt()
-	var dead := _hurt()
+	var live: FoxHurtArea3D = _hurt()
+	var dead: FoxHurtArea3D = _hurt()
 	dead.is_active = false
 
-	var delivered := []
+	var delivered: Array = []
 	hit.hit_delivered.connect(func(_p: Variant, t: FoxHurtArea3D) -> void: delivered.append(t))
 
 	hit._try_deliver_payload(live)
@@ -72,10 +72,10 @@ func _delivery_is_not_reported_when_ignored() -> void:
 
 func _payload_passes_through_untouched() -> void:
 	case("arbitrary payloads")
-	var hit := _hit()
-	var h := _hurt()
+	var hit: FoxHitArea3D = _hit()
+	var h: FoxHurtArea3D = _hurt()
 
-	var got := []
+	var got: Array = []
 	h.hit_received.connect(func(p: Variant) -> void: got.append(p))
 
 	# the module must not care what a payload is
@@ -102,11 +102,11 @@ func _payload_passes_through_untouched() -> void:
 
 func _non_hurtbox_areas_are_skipped() -> void:
 	case("unrelated areas")
-	var hit := _hit()
+	var hit: FoxHitArea3D = _hit()
 	hit.payload = 1
-	var delivered := []
+	var delivered: Array = []
 	hit.hit_delivered.connect(func(_p: Variant, _t: FoxHurtArea3D) -> void: delivered.append(1))
 
-	var plain := track(Area3D.new()) as Area3D
+	var plain: Area3D = track(Area3D.new()) as Area3D
 	hit._try_deliver_payload(plain)
 	eq(delivered.size(), 0, "a plain Area3D is ignored without erroring")

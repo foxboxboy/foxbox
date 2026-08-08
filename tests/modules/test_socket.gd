@@ -15,15 +15,15 @@ func run() -> void:
 
 
 func _socket(parent: Node) -> FoxSocket3D:
-	var s := FoxSocket3D.new()
+	var s: FoxSocket3D = FoxSocket3D.new()
 	parent.add_child(s)
 	return s
 
 
 func _empty_socket() -> void:
 	case("empty socket")
-	var holder := track(Node3D.new())
-	var s := _socket(holder)
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var s: FoxSocket3D = _socket(holder)
 
 	check(s.is_empty(), "a new socket is empty")
 	eq(s.get_attachment(), null, "and has no attachment")
@@ -32,12 +32,12 @@ func _empty_socket() -> void:
 
 func _attaching_reparents() -> void:
 	case("attaching")
-	var holder := track(Node3D.new())
-	var s := _socket(holder)
-	var item := Node3D.new()
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var s: FoxSocket3D = _socket(holder)
+	var item: Node3D = Node3D.new()
 	holder.add_child(item)
 
-	var got := []
+	var got: Array = []
 	s.attached.connect(func(a: Node3D, _sock: FoxSocket3D) -> void: got.append(a))
 
 	s.attach(item)
@@ -51,16 +51,16 @@ func _attaching_reparents() -> void:
 ## The docs promise detach() unplugs without moving the node anywhere.
 func _detach_does_not_reparent() -> void:
 	case("detaching")
-	var holder := track(Node3D.new())
-	var s := _socket(holder)
-	var item := Node3D.new()
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var s: FoxSocket3D = _socket(holder)
+	var item: Node3D = Node3D.new()
 	holder.add_child(item)
 	s.attach(item)
 
-	var got := []
+	var got: Array = []
 	s.detached.connect(func(a: Node3D, _sock: FoxSocket3D) -> void: got.append(a))
 
-	var out := s.detach()
+	var out: Node3D = s.detach()
 	eq(out, item, "detach returns the node it released")
 	check(s.is_empty(), "the socket is empty again")
 	eq(item.get_parent(), s, "the node is deliberately left parented to the socket")
@@ -72,10 +72,10 @@ func _detach_does_not_reparent() -> void:
 
 func _occupied_sockets_refuse() -> void:
 	case("occupied socket")
-	var holder := track(Node3D.new())
-	var s := _socket(holder)
-	var first := Node3D.new()
-	var second := Node3D.new()
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var s: FoxSocket3D = _socket(holder)
+	var first: Node3D = Node3D.new()
+	var second: Node3D = Node3D.new()
 	holder.add_child(first)
 	holder.add_child(second)
 
@@ -88,11 +88,11 @@ func _occupied_sockets_refuse() -> void:
 
 func _snapping() -> void:
 	case("snap settings")
-	var holder := track(Node3D.new())
-	var s := _socket(holder)
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var s: FoxSocket3D = _socket(holder)
 	s.global_position = Vector3(10, 5, 0)
 
-	var item := Node3D.new()
+	var item: Node3D = Node3D.new()
 	holder.add_child(item)
 	item.global_position = Vector3(-3, -3, -3)
 
@@ -100,10 +100,10 @@ func _snapping() -> void:
 	check(item.global_position.is_equal_approx(Vector3(10, 5, 0)), "position snapped to the socket")
 
 	case("snapping disabled")
-	var s2 := _socket(holder)
+	var s2: FoxSocket3D = _socket(holder)
 	s2.global_position = Vector3(20, 0, 0)
 	s2.snap_position = false
-	var item2 := Node3D.new()
+	var item2: Node3D = Node3D.new()
 	holder.add_child(item2)
 	item2.global_position = Vector3(1, 1, 1)
 	s2.attach(item2)
@@ -111,10 +111,10 @@ func _snapping() -> void:
 
 
 func _build_map(socket_names: Array) -> Array:
-	var map := FoxSocketMap3D.new()
+	var map: FoxSocketMap3D = FoxSocketMap3D.new()
 	var sockets: Array = []
 	for n in socket_names:
-		var s := FoxSocket3D.new()
+		var s: FoxSocket3D = FoxSocket3D.new()
 		s.name = n
 		map.add_child(s)
 		sockets.append(s)
@@ -124,7 +124,7 @@ func _build_map(socket_names: Array) -> Array:
 
 func _map_attaches_by_name() -> void:
 	case("map attach by name")
-	var built := _build_map(["DriverSeat", "PassengerSeat"])
+	var built: Array = _build_map(["DriverSeat", "PassengerSeat"])
 	var map: FoxSocketMap3D = built[0]
 	var sockets: Array = built[1]
 
@@ -132,14 +132,14 @@ func _map_attaches_by_name() -> void:
 	eq(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
 	eq(map.get_socket(&"Nope"), null, "unknown name returns null")
 
-	var rider := Node3D.new()
+	var rider: Node3D = Node3D.new()
 	map.add_child(rider)
 
 	check(map.attach(rider, &"DriverSeat"), "attaching to a named socket succeeds")
 	eq(sockets[0].get_attachment(), rider, "the named socket holds the rider")
 	check(sockets[1].is_empty(), "the other socket is untouched")
 
-	var second := Node3D.new()
+	var second: Node3D = Node3D.new()
 	map.add_child(second)
 	check(not map.attach(second, &"DriverSeat"), "attaching to an occupied named socket fails")
 	check(not map.attach(second, &"Nope"), "attaching to an unknown socket fails")
@@ -147,13 +147,13 @@ func _map_attaches_by_name() -> void:
 
 func _map_auto_attaches() -> void:
 	case("map auto attach")
-	var built := _build_map(["A", "B"])
+	var built: Array = _build_map(["A", "B"])
 	var map: FoxSocketMap3D = built[0]
 	var sockets: Array = built[1]
 
-	var one := Node3D.new()
-	var two := Node3D.new()
-	var three := Node3D.new()
+	var one: Node3D = Node3D.new()
+	var two: Node3D = Node3D.new()
+	var three: Node3D = Node3D.new()
 	map.add_child(one)
 	map.add_child(two)
 	map.add_child(three)
@@ -169,12 +169,12 @@ func _map_auto_attaches() -> void:
 
 func _map_reports_availability() -> void:
 	case("availability")
-	var built := _build_map(["A", "B", "C"])
+	var built: Array = _build_map(["A", "B", "C"])
 	var map: FoxSocketMap3D = built[0]
 
 	eq(map.get_available_socket_count(), 3, "all sockets start free")
 
-	var item := Node3D.new()
+	var item: Node3D = Node3D.new()
 	map.add_child(item)
 	map.attach(item)
 	eq(map.get_available_socket_count(), 2, "attaching consumes one")
@@ -185,15 +185,15 @@ func _map_reports_availability() -> void:
 
 func _map_forwards_signals() -> void:
 	case("signal forwarding")
-	var built := _build_map(["A"])
+	var built: Array = _build_map(["A"])
 	var map: FoxSocketMap3D = built[0]
 
-	var attached := []
-	var detached := []
+	var attached: Array = []
+	var detached: Array = []
 	map.node_attached.connect(func(a: Node3D, _s: FoxSocket3D) -> void: attached.append(a))
 	map.node_detached.connect(func(a: Node3D, _s: FoxSocket3D) -> void: detached.append(a))
 
-	var item := Node3D.new()
+	var item: Node3D = Node3D.new()
 	map.add_child(item)
 	map.attach(item)
 	eq(attached.size(), 1, "the map re-emitted the socket's attached signal")

@@ -8,8 +8,12 @@ extends RefCounted
 ## Suites are found by scanning res://tests/ recursively for test_*.gd, so they can be
 ## organised into any folder layout.
 
-const TESTS_DIR := "res://tests/"
-const DEFAULT_SEED := 20260808
+const TESTS_DIR: String = "res://tests/"
+
+## Passing this as the seed picks a fresh one each run, so repeated runs cover different random
+## cases instead of the same ones forever. The chosen seed is printed in the report, and passing
+## it back with --seed reproduces that run exactly.
+const RANDOM_SEED: int = 0
 
 
 ## Finds every test_*.gd, runs it, and returns the collected results.
@@ -17,14 +21,17 @@ const DEFAULT_SEED := 20260808
 ## [param root] is where node based tests get parented, so it must be a live tree.
 ## Returns a dictionary with [code]suites[/code], [code]total_passed[/code],
 ## [code]total_failed[/code] and [code]broken[/code].
-func run(root: Node, filter: String = "", seed_value: int = DEFAULT_SEED) -> Dictionary:
-	var files := _discover(filter)
+func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> Dictionary:
+	if seed_value == RANDOM_SEED:
+		seed_value = randi()
+
+	var files: Array[String] = _discover(filter)
 	files.sort()
 
 	var suites: Array[Dictionary] = []
 	var broken: Array[String] = []
-	var total_passed := 0
-	var total_failed := 0
+	var total_passed: int = 0
+	var total_failed: int = 0
 
 	for path in files:
 		var script: Resource = load(path)
@@ -44,7 +51,7 @@ func run(root: Node, filter: String = "", seed_value: int = DEFAULT_SEED) -> Dic
 
 		suite.run()
 
-		var entry := {
+		var entry: Dictionary = {
 			"name": str(suite.suite),
 			"passed": int(suite.passed_count()),
 			"failures": suite.failures().duplicate(),
@@ -116,14 +123,14 @@ func _discover(filter: String) -> Array[String]:
 
 
 func _scan(path: String, filter: String, found: Array[String]) -> void:
-	var dir := DirAccess.open(path)
+	var dir: DirAccess = DirAccess.open(path)
 	if dir == null:
 		return
 
 	dir.list_dir_begin()
-	var entry := dir.get_next()
+	var entry: String = dir.get_next()
 	while entry != "":
-		var full := path.path_join(entry)
+		var full: String = path.path_join(entry)
 		if dir.current_is_dir():
 			_scan(full, filter, found)
 		elif entry.begins_with("test_") and entry.ends_with(".gd"):

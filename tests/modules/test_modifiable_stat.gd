@@ -17,7 +17,7 @@ func run() -> void:
 
 func _base_value() -> void:
 	case("base value")
-	var s := FoxModifiableStat.new(10.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	almost(s.value, 10.0, "value starts at base")
 	s.base_value = 25.0
 	almost(s.value, 25.0, "changing base recalculates")
@@ -25,7 +25,7 @@ func _base_value() -> void:
 
 func _flat_modifiers() -> void:
 	case("flat modifiers")
-	var s := FoxModifiableStat.new(10.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	s.add_flat_modifier(&"boots", 5.0)
 	almost(s.value, 15.0, "one flat modifier adds")
 	s.add_flat_modifier(&"ring", 2.0)
@@ -38,7 +38,7 @@ func _flat_modifiers() -> void:
 ## It is multiplied by 1.0 plus that sum, so 0.5 means +50%, not half.
 func _multiplier_is_one_plus_sum() -> void:
 	case("multiplier semantics")
-	var s := FoxModifiableStat.new(100.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(100.0)
 	s.add_multiplier_modifier(&"rage", 0.5)
 	almost(s.value, 150.0, "a 0.5 multiplier means +50 percent")
 
@@ -54,7 +54,7 @@ func _multiplier_is_one_plus_sum() -> void:
 
 func _combined_order_of_operations() -> void:
 	case("flat applies before multiplier")
-	var s := FoxModifiableStat.new(100.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(100.0)
 	s.add_flat_modifier(&"gear", 50.0)
 	s.add_multiplier_modifier(&"buff", 1.0)
 	almost(s.value, 300.0, "(100 + 50) * 2.0 rather than 100 + (50 * 2.0)")
@@ -62,28 +62,28 @@ func _combined_order_of_operations() -> void:
 
 func _popping() -> void:
 	case("popping")
-	var s := FoxModifiableStat.new(0.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	s.add_flat_modifier(&"stack", 1.0)
 	s.add_flat_modifier(&"stack", 10.0)
 	almost(s.value, 11.0, "two entries under one id")
 
-	var popped := s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
+	var popped: bool = s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
 	check(popped, "pop reports success")
 	almost(s.value, 1.0, "pop removes the most recent entry, not the first")
 
 	s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
 	almost(s.value, 0.0, "popping the last entry empties the stack")
 
-	var missing := s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
+	var missing: bool = s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
 	check(not missing, "popping an empty stack reports failure")
 
-	var never := s.pop_modifier(&"nonexistent", FoxModifiableStat.ModifierType.FLAT)
+	var never: bool = s.pop_modifier(&"nonexistent", FoxModifiableStat.ModifierType.FLAT)
 	check(not never, "popping an unknown id reports failure")
 
 
 func _clearing() -> void:
 	case("clearing")
-	var s := FoxModifiableStat.new(10.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	s.add_flat_modifier(&"poison", 1.0)
 	s.add_flat_modifier(&"poison", 1.0)
 	s.add_flat_modifier(&"keep", 5.0)
@@ -97,7 +97,7 @@ func _clearing() -> void:
 
 func _has_modifier() -> void:
 	case("has_modifier")
-	var s := FoxModifiableStat.new(0.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	check(not s.has_modifier(&"x", FoxModifiableStat.ModifierType.FLAT), "unknown id is absent")
 
 	s.add_flat_modifier(&"x", 1.0)
@@ -111,24 +111,24 @@ func _has_modifier() -> void:
 
 func _remove_specific() -> void:
 	case("remove_specific_modifier")
-	var s := FoxModifiableStat.new(0.0)
+	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	s.add_flat_modifier(&"mix", 1.0)
 	s.add_flat_modifier(&"mix", 7.0)
 	s.add_flat_modifier(&"mix", 3.0)
 
-	var hit := s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 7.0)
+	var hit: bool = s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 7.0)
 	check(hit, "removing an existing amount reports success")
 	almost(s.value, 4.0, "only the matching amount was removed")
 
-	var miss := s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 99.0)
+	var miss: bool = s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 99.0)
 	check(not miss, "removing an absent amount reports failure")
 	almost(s.value, 4.0, "a failed removal changes nothing")
 
 
 func _change_signal_only_fires_on_change() -> void:
 	case("value_changed")
-	var s := FoxModifiableStat.new(10.0)
-	var count := [0]
+	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
+	var count: Array = [0]
 	s.value_changed.connect(func(_v: float) -> void: count[0] += 1)
 
 	s.add_flat_modifier(&"a", 5.0)
@@ -140,16 +140,16 @@ func _change_signal_only_fires_on_change() -> void:
 
 func _random_stacks_match_the_formula() -> void:
 	case("invariant against the documented formula")
-	var mismatches := 0
+	var mismatches: int = 0
 
 	for i in 200:
-		var base := rng.randf_range(-100.0, 100.0)
-		var s := FoxModifiableStat.new(base)
-		var flats := 0.0
-		var mults := 0.0
+		var base: float = rng.randf_range(-100.0, 100.0)
+		var s: FoxModifiableStat = FoxModifiableStat.new(base)
+		var flats: float = 0.0
+		var mults: float = 0.0
 
 		for j in 12:
-			var amount := rng.randf_range(-5.0, 5.0)
+			var amount: float = rng.randf_range(-5.0, 5.0)
 			if rng.randf() < 0.5:
 				s.add_flat_modifier(&"f", amount)
 				flats += amount
@@ -157,7 +157,7 @@ func _random_stacks_match_the_formula() -> void:
 				s.add_multiplier_modifier(&"m", amount)
 				mults += amount
 
-		var expected := (base + flats) * (1.0 + mults)
+		var expected: float = (base + flats) * (1.0 + mults)
 		if absf(s.value - expected) > 0.001:
 			mismatches += 1
 

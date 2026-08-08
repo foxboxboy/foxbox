@@ -14,21 +14,21 @@ func run() -> void:
 
 func _construction() -> void:
 	case("construction")
-	var v := FoxBoundedValue.new(5.0, 10.0, 0.0)
+	var v: FoxBoundedValue = FoxBoundedValue.new(5.0, 10.0, 0.0)
 	almost(v.value, 5.0, "starting value kept")
 	almost(v.min_value, 0.0, "min kept")
 	almost(v.max_value, 10.0, "max kept")
 
-	var clamped := FoxBoundedValue.new(50.0, 10.0, 0.0)
+	var clamped: FoxBoundedValue = FoxBoundedValue.new(50.0, 10.0, 0.0)
 	almost(clamped.value, 10.0, "starting value above max is clamped down")
 
-	var floored := FoxBoundedValue.new(-50.0, 10.0, 0.0)
+	var floored: FoxBoundedValue = FoxBoundedValue.new(-50.0, 10.0, 0.0)
 	almost(floored.value, 0.0, "starting value below min is clamped up")
 
 
 func _arithmetic() -> void:
 	case("add and subtract")
-	var v := FoxBoundedValue.new(5.0, 10.0, 0.0)
+	var v: FoxBoundedValue = FoxBoundedValue.new(5.0, 10.0, 0.0)
 	v.subtract(2.0)
 	almost(v.value, 3.0, "subtract lowers the value")
 	v.add(4.0)
@@ -39,8 +39,8 @@ func _arithmetic() -> void:
 
 func _saturation() -> void:
 	case("saturation")
-	var v := FoxBoundedValue.new(8.0, 10.0, 0.0)
-	var overflow := [-1.0]
+	var v: FoxBoundedValue = FoxBoundedValue.new(8.0, 10.0, 0.0)
+	var overflow: Array = [-1.0]
 	v.saturated.connect(func(o: float) -> void: overflow[0] = o)
 
 	v.add(5.0)
@@ -50,8 +50,8 @@ func _saturation() -> void:
 
 func _depletion() -> void:
 	case("depletion")
-	var v := FoxBoundedValue.new(2.0, 10.0, 0.0)
-	var underflow := [-1.0]
+	var v: FoxBoundedValue = FoxBoundedValue.new(2.0, 10.0, 0.0)
+	var underflow: Array = [-1.0]
 	v.depleted.connect(func(u: float) -> void: underflow[0] = u)
 
 	v.subtract(6.0)
@@ -63,8 +63,8 @@ func _depletion() -> void:
 ## as (current, min, max), so every listener read the bounds backwards.
 func _signal_argument_order() -> void:
 	case("value_changed argument order")
-	var v := FoxBoundedValue.new(5.0, 100.0, 10.0)
-	var got := [0.0, 0.0, 0.0]
+	var v: FoxBoundedValue = FoxBoundedValue.new(5.0, 100.0, 10.0)
+	var got: Array = [0.0, 0.0, 0.0]
 	v.value_changed.connect(func(c: float, mn: float, mx: float) -> void:
 		got[0] = c
 		got[1] = mn
@@ -78,22 +78,22 @@ func _signal_argument_order() -> void:
 
 func _moving_the_bounds() -> void:
 	case("moving the bounds re-clamps")
-	var v := FoxBoundedValue.new(9.0, 10.0, 0.0)
+	var v: FoxBoundedValue = FoxBoundedValue.new(9.0, 10.0, 0.0)
 	v.max_value = 5.0
 	almost(v.value, 5.0, "lowering max pulls the value down with it")
 
-	var w := FoxBoundedValue.new(1.0, 10.0, 0.0)
+	var w: FoxBoundedValue = FoxBoundedValue.new(1.0, 10.0, 0.0)
 	w.min_value = 4.0
 	almost(w.value, 4.0, "raising min pushes the value up with it")
 
 
 func _random_sequences_stay_in_range() -> void:
 	case("invariant under random operations")
-	var breaches := 0
+	var breaches: int = 0
 	for i in 300:
-		var lo := rng.randf_range(-50.0, 0.0)
-		var hi := lo + rng.randf_range(0.1, 100.0)
-		var v := FoxBoundedValue.new(rng.randf_range(lo, hi), hi, lo)
+		var lo: float = rng.randf_range(-50.0, 0.0)
+		var hi: float = lo + rng.randf_range(0.1, 100.0)
+		var v: FoxBoundedValue = FoxBoundedValue.new(rng.randf_range(lo, hi), hi, lo)
 
 		for j in 20:
 			if rng.randf() < 0.5:

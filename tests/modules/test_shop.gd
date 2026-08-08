@@ -11,7 +11,7 @@ class ScrapPrice extends FoxPrice:
 	var required: Array[StringName] = []
 
 	func can_be_paid_by(wallet: FoxWallet) -> bool:
-		var w := wallet as ScrapWallet
+		var w: ScrapWallet = wallet as ScrapWallet
 		if not w:
 			return false
 		for id in required:
@@ -22,7 +22,7 @@ class ScrapPrice extends FoxPrice:
 	func pay(wallet: FoxWallet) -> bool:
 		if not can_be_paid_by(wallet):
 			return false
-		var w := wallet as ScrapWallet
+		var w: ScrapWallet = wallet as ScrapWallet
 		for id in required:
 			w.scrap.erase(id)
 		return true
@@ -44,10 +44,10 @@ func run() -> void:
 
 func _affordability() -> void:
 	case("can_be_paid_by")
-	var w := FoxSimpleWallet.new()
+	var w: FoxSimpleWallet = FoxSimpleWallet.new()
 	w.funds = 100
 
-	var p := FoxSimplePrice.new()
+	var p: FoxSimplePrice = FoxSimplePrice.new()
 	p.cost = 50
 	check(p.can_be_paid_by(w), "enough funds is affordable")
 
@@ -60,12 +60,12 @@ func _affordability() -> void:
 
 func _paying_deducts() -> void:
 	case("paying")
-	var w := FoxSimpleWallet.new()
+	var w: FoxSimpleWallet = FoxSimpleWallet.new()
 	w.funds = 100
-	var p := FoxSimplePrice.new()
+	var p: FoxSimplePrice = FoxSimplePrice.new()
 	p.cost = 30
 
-	var ok := p.pay(w)
+	var ok: bool = p.pay(w)
 	check(ok, "a valid payment reports success")
 	eq(w.funds, 70, "funds are reduced by the cost")
 
@@ -78,19 +78,19 @@ func _paying_deducts() -> void:
 ## affordability first would silently drive the wallet past zero.
 func _refusal_leaves_the_wallet_untouched() -> void:
 	case("refusal is atomic")
-	var w := FoxSimpleWallet.new()
+	var w: FoxSimpleWallet = FoxSimpleWallet.new()
 	w.funds = 10
-	var p := FoxSimplePrice.new()
+	var p: FoxSimplePrice = FoxSimplePrice.new()
 	p.cost = 999
 
-	var ok := p.pay(w)
+	var ok: bool = p.pay(w)
 	check(not ok, "an unaffordable payment reports failure")
 	eq(w.funds, 10, "a refused payment does not touch the wallet at all")
 
 
 func _display_string() -> void:
 	case("display string")
-	var p := FoxSimplePrice.new()
+	var p: FoxSimplePrice = FoxSimplePrice.new()
 	p.cost = 42
 	p.currency_symbol = "G"
 	eq(p.get_display_string(), "G42", "symbol and cost are concatenated")
@@ -98,11 +98,11 @@ func _display_string() -> void:
 
 func _catalog_bounds() -> void:
 	case("catalog bounds")
-	var c := FoxShopCatalog.new()
+	var c: FoxShopCatalog = FoxShopCatalog.new()
 	eq(c.size(), 0, "a fresh catalog is empty")
 	eq(c.get_option(0), null, "reading an empty catalog returns null rather than erroring")
 
-	var item := FoxShopItem.new()
+	var item: FoxShopItem = FoxShopItem.new()
 	item.display_name = &"Apple"
 	c.options.append(item)
 
@@ -115,10 +115,10 @@ func _catalog_bounds() -> void:
 ## The whole point of the abstraction: currency that is not a number at all.
 func _non_numeric_currency() -> void:
 	case("currency as a list of parts")
-	var w := ScrapWallet.new()
+	var w: ScrapWallet = ScrapWallet.new()
 	w.scrap = [&"bolt", &"spring", &"gear"]
 
-	var p := ScrapPrice.new()
+	var p: ScrapPrice = ScrapPrice.new()
 	p.required = [&"bolt", &"gear"]
 
 	check(p.can_be_paid_by(w), "having every required part is affordable")
@@ -131,19 +131,19 @@ func _non_numeric_currency() -> void:
 	eq(w.scrap.size(), 1, "the refused payment consumed nothing")
 
 	case("wrong wallet type")
-	var wrong := FoxSimpleWallet.new()
+	var wrong: FoxSimpleWallet = FoxSimpleWallet.new()
 	wrong.funds = 9999
 	check(not p.can_be_paid_by(wrong), "an incompatible wallet is never affordable")
 
 
 func _random_purchase_sequences_never_overdraw() -> void:
 	case("invariant: funds never go negative")
-	var breaches := 0
+	var breaches: int = 0
 
 	for i in 200:
-		var w := FoxSimpleWallet.new()
+		var w: FoxSimpleWallet = FoxSimpleWallet.new()
 		w.funds = rng.randi_range(0, 200)
-		var p := FoxSimplePrice.new()
+		var p: FoxSimplePrice = FoxSimplePrice.new()
 
 		for j in 25:
 			p.cost = rng.randi_range(0, 60)

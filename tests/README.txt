@@ -7,7 +7,7 @@ Open tests/test_runner/test_runner.tscn and press F6. Results appear on screen a
 
 Select the TestRunner node to filter in the inspector:
     Suite Filter    leave blank for everything, or type "effect" for one module
-    Random Seed     change it to shuffle the randomised cases
+    Random Seed     leave at 0 for a fresh seed each run, or paste one from an earlier report
 
 
 FROM THE COMMAND LINE
@@ -56,7 +56,7 @@ Helpers on the base class:
     eq(actual, expected, label) passes when the two are equal
     almost(a, b, label, eps)    float comparison
     track(node)                 adds a node to the tree and frees it afterwards
-    rng                         seeded RandomNumberGenerator, same seed every run
+    rng                         seeded RandomNumberGenerator, new seed each run unless pinned
 
 Nodes must be created through track() so their _ready and _enter_tree actually fire. The
 runner does its work on the first frame rather than in _initialize, because nodes added
