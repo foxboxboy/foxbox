@@ -109,7 +109,18 @@ def step_xml(godot):
     count = len(list(XML_DIR.glob("*.xml")))
     if count == 0:
         fail("Godot produced no XML. Has the project been imported at least once?")
-    print("      %d classes" % count)
+
+    # Scripts with no class_name get named after their file path, so they produce pages titled
+    # "addons/foxfabric/..." that sort above every real class. Godot's own editor help does not
+    # list them either, so drop them and stay consistent with it.
+    dropped = 0
+    for stray in XML_DIR.glob("addons--*.xml"):
+        stray.unlink()
+        dropped += 1
+
+    print("      %d classes" % (count - dropped))
+    if dropped:
+        print("      skipped %d script(s) with no class_name" % dropped)
 
 
 def step_rst():
