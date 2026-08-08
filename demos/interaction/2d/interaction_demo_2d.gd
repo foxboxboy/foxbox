@@ -69,6 +69,14 @@ func _process(_delta: float) -> void:
 	# under the cursor and the physics does the rest.
 	dragger.global_position = cursor
 
+	# Keep the dragger's angle on whatever the prop has drifted to, so the orientation spring has
+	# nothing to pull against and a swing is allowed to stand. Without this the dragger's angle
+	# is whatever it was last set to, usually level, and every swing gets straightened out again
+	# the moment you stop moving: flick a plank and it turns, then turns back. Right dragging is
+	# the one thing that should decide a prop's angle, and that path skips all of this.
+	if is_instance_valid(_held):
+		dragger.global_rotation = _held.global_rotation
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	var button := event as InputEventMouseButton
