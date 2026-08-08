@@ -62,6 +62,8 @@ Properties
    +---------------------------------------+----------------------------------------------------------------------------------------+------------+
    | :ref:`bool<class_bool>`               | :ref:`_current_keep_upright<class_FoxPhysicsDragger2D_property__current_keep_upright>` |            |
    +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`_current_torque_scale<class_FoxPhysicsDragger2D_property__current_torque_scale>` | ``1.0``    |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -74,6 +76,8 @@ Methods
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                    | :ref:`grab<class_FoxPhysicsDragger2D_method_grab>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`, hit_point\: :ref:`Vector2<class_Vector2>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>` | :ref:`torque_scale_for<class_FoxPhysicsDragger2D_method_torque_scale_for>`\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`\ ) |static|                                                                                       |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`float<class_float>` | :ref:`target_rotation_for<class_FoxPhysicsDragger2D_method_target_rotation_for>`\ (\ rotation\: :ref:`float<class_float>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static|                                                 |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                    | :ref:`release<class_FoxPhysicsDragger2D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
@@ -84,6 +88,37 @@ Methods
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                    | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Constants
+---------
+
+.. _class_FoxPhysicsDragger2D_constant_TORQUE_SPRING_GAIN:
+
+.. rst-class:: classref-constant
+
+**TORQUE_SPRING_GAIN** = ``0.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_SPRING_GAIN>`
+
+Gains applied to the profile when it drives rotation rather than position. 
+
+Turning needs proportionally more damping than pulling does, because the spring works against the body's inertia rather than its mass. Sharing the pull's ratio leaves rotation barely damped, so a spun crate overshoots and wobbles instead of settling where you put it.
+
+.. _class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN:
+
+.. rst-class:: classref-constant
+
+**TORQUE_DAMPING_GAIN** = ``1.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN>`
+
+.. container:: contribute
+
+	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+
 
 .. rst-class:: classref-section-separator
 
@@ -222,6 +257,20 @@ The absolute maximum force this dragger can apply to a body in a single frame.
 
 	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_property__current_torque_scale:
+
+.. rst-class:: classref-property
+
+:ref:`float<class_float>` **_current_torque_scale** = ``1.0`` :ref:`🔗<class_FoxPhysicsDragger2D_property__current_torque_scale>`
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -238,6 +287,22 @@ Method Descriptions
 |void| **grab**\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`, hit_point\: :ref:`Vector2<class_Vector2>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_grab>`
 
 Grabs a :ref:`RigidBody2D<class_RigidBody2D>` at a specific global hit point. Optionally pass a :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` to override the default stiffness and damping.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_method_torque_scale_for:
+
+.. rst-class:: classref-method
+
+:ref:`float<class_float>` **torque_scale_for**\ (\ body\: :ref:`RigidBody2D<class_RigidBody2D>`\ ) |static| :ref:`🔗<class_FoxPhysicsDragger2D_method_torque_scale_for>`
+
+How much to multiply a raw torque by so :ref:`FoxPhysicsDragProfile.stiffness<class_FoxPhysicsDragProfile_property_stiffness>` means the same thing for turning as it does for pulling. 
+
+A body's inertia is measured in pixels squared, so it is numerically enormous next to its mass: a crate of mass 30 has an inertia around 15000. Feeding the spring straight to :ref:`RigidBody2D.apply_torque()<class_RigidBody2D_method_apply_torque>` therefore produces an angular acceleration near 0.03 rad/s, which is correct arithmetic and a motionless object. Scaling by inertia over mass, which has units of length squared, cancels that out and leaves angular acceleration in the same terms as the linear side: spring over mass. 
+
+Returns 1.0 when the body has no rotational inertia to speak of, so a locked or degenerate body is left alone rather than multiplied by nonsense.
 
 .. rst-class:: classref-item-separator
 
