@@ -15,6 +15,7 @@ func run() -> void:
 	_on_holds_it_level()
 	_profile_is_shared_with_3d()
 	_torque_scale_guards_bad_input()
+	_swing_cannot_outrun_the_spring()
 
 
 func _defaults_leave_rotation_free() -> void:
@@ -105,3 +106,17 @@ func _torque_scale_guards_bad_input() -> void:
 	# the same two numbers describe a different response for turning than for pulling.
 	almost(Dragger.TORQUE_DAMPING_GAIN, Dragger.TORQUE_SPRING_GAIN,
 		"turning uses the same gain as pulling, so one profile describes both")
+
+
+## Regression: the pull used to be applied straight at the grab point, which is the same as a
+## central pull plus the torque that lever produces. On a long prop that torque was larger than
+## the orientation spring could remove, so a flicked plank span one way, was dragged back the
+## other, and never settled. Measured six seconds after a flick it was still turning.
+func _swing_cannot_outrun_the_spring() -> void:
+	case("swing response")
+	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
+
+	check(dragger.swing_response > 0.0,
+		"some of the lever survives, or a plank held by one end would not trail behind")
+	check(dragger.swing_response < 1.0,
+		"but not all of it, or the pull out torques the spring and the prop never settles")

@@ -51,6 +51,17 @@ const TORQUE_DAMPING_GAIN: float = 0.5
 ## The absolute maximum force this dragger can apply to a body in a single frame.
 @export var max_pull_force: float = 4000.0
 
+## How much of the pull's leverage becomes swing.
+## [br][br]
+## Pulling at the point you grabbed is the same as pulling at the centre and adding the torque
+## that offset produces. At 1.0 that torque is applied in full, which is physically honest and,
+## on a long prop with a strong pull, larger than the orientation spring can answer: flick the
+## cursor and the prop spins one way, is dragged back the other, and never settles.
+## [br][br]
+## Lowering it keeps the swing, so a plank grabbed by one end still trails behind, while leaving
+## the orientation spring able to win. Set it to 0.0 to carry things rigidly.
+@export_range(0.0, 1.0) var swing_response: float = 0.25
+
 var _current_body: RigidBody2D
 var _grab_offset_local: Vector2
 var _skip_first_frame: bool = false
@@ -177,7 +188,11 @@ func _apply_positional_force() -> void:
 	if force.length() > max_pull_force:
 		force = force.normalized() * max_pull_force
 
-	_current_body.apply_force(force, global_offset)
+	# apply_force at an offset is a central force plus the torque that offset produces. Splitting
+	# it out is the only way to keep the pull at full strength while turning the swing down to
+	# something the orientation spring can still answer.
+	_current_body.apply_central_force(force)
+	_current_body.apply_torque(global_offset.cross(force) * swing_response)
 
 
 ## Applies a rotational torque to the grabbed RigidBody2D based on its current orientation.
