@@ -65,7 +65,7 @@ func get_zoom_percentage() -> float:
 #endregion
 
 
-#region Private Logic
+#region Private
 
 func _ready() -> void:
 	target_length = spring_length

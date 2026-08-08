@@ -10,8 +10,6 @@ class_name FoxCharacterHands
 @export var right_hand_ik : TwoBoneIK3D
 
 
-
-
 #region Holding Nodes
 
 func empty_hands() -> void:
@@ -81,11 +79,6 @@ func has_node_in_either_hand() -> bool:
 #endregion
 
 
-
-
-
-
-
 #region Items
 
 func hold_item(item : FoxHoldableItem, left_handed := false):
@@ -126,13 +119,8 @@ func hold_item(item : FoxHoldableItem, left_handed := false):
 		enable_right_hand_ik(item.off_hand_target, item.off_elbow_pole)
 	elif right_handed:
 		enable_left_hand_ik(item.off_hand_target, item.off_elbow_pole)
-	
+
 #endregion
-
-
-
-
-
 
 
 #region IK

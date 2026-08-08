@@ -39,8 +39,6 @@ enum ModifierType {
 }
 
 
-
-
 #region Signals
 
 ## Emitted when the calculated [member value] changes.
@@ -56,9 +54,6 @@ signal modifier_removed(id: StringName, type: ModifierType, amount: float)
 signal all_modifiers_cleared()
 
 #endregion
-
-
-
 
 
 #region Variables
@@ -81,9 +76,6 @@ var value: float:
 	set(_v): push_error("ERROR: FoxModifiableStat 'value' is read-only. Modify the base_value or add/remove modifiers instead.")
 
 #endregion
-
-
-
 
 
 #region Public API
@@ -195,10 +187,7 @@ func pop_multiplier_modifier(id: StringName) -> void:
 #endregion
 
 
-
-
-
-#region Private Logic
+#region Private
 
 func _init(p_base: float = 0.0) -> void:
 	base_value = p_base

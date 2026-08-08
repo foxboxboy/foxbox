@@ -39,6 +39,7 @@ extends FoxControl
 ## The data resource currently driving this slot's display.
 var data: FoxShopItem
 
+
 #region Signals
 
 ## Emitted when the user presses the buy button.
@@ -51,6 +52,7 @@ signal buy_button_focused(item: FoxShopItem)
 signal buy_button_unfocused(item: FoxShopItem)
 
 #endregion
+
 
 #region Public API
 
@@ -78,7 +80,8 @@ func set_affordability(can_afford: bool) -> void:
 
 #endregion
 
-#region Private Logic
+
+#region Private
 
 func _ready() -> void:
 	if buy_button:

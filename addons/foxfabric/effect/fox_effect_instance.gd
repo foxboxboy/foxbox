@@ -7,6 +7,7 @@ extends FoxRefCounted
 ## [member time_left] and current [member stack] count. It is instantiated and 
 ## managed exclusively by a [FoxEffectManager].
 
+
 #region Signals
 
 ## Emitted when the [member stack] count changes, carrying the [param previous_stack] and the
@@ -156,7 +157,6 @@ func merge_duration(incoming_effect: FoxEffect) -> void:
 #endregion
 
 
-
 #region Serialization
 
 ## Returns a dictionary containing the instance's current state for saving.
@@ -179,8 +179,7 @@ func load_state(data: Dictionary) -> void:
 #endregion
 
 
-
-#region Built-In Overrides
+#region Built-In Virtuals
 
 ## Overrides the default print() behavior to show readable, human-friendly data 
 ## instead of a raw memory ID (e.g., [lb]poison x2 (4.5s)]).

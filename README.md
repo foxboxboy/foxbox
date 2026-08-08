@@ -92,7 +92,7 @@ It exits 0 on success and 1 on any failure. Some tests deliberately drive failur
 warnings appear during a passing run. Read the report at the bottom, not the warnings above it.
 See [tests/README.txt](tests/README.txt) for how to add a suite.
 
-The roadmap is in [TODO.txt](TODO.txt).
+The roadmap is in [TODO.txt](TODO.txt), and the style guide is in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

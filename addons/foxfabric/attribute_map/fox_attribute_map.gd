@@ -20,6 +20,7 @@ extends FoxNode
 ## stats.has_flag(&"slowed")         # still true, the debuff holds the last stack
 ## [/codeblock]
 
+
 #region Signals
 
 ## Emitted when a new [param key] is added to the data with the given [param value].
@@ -49,7 +50,6 @@ signal flag_changed(flag: StringName, stacks: int)
 #endregion
 
 
-
 #region Variables
 
 ## If [code]true[/code], this map will accept and apply rules propagated from a parent map.
@@ -65,7 +65,6 @@ var _parent_map: FoxAttributeMap
 var _child_maps: Array[FoxAttributeMap] = []
 
 #endregion
-
 
 
 #region Data
@@ -108,7 +107,6 @@ func erase_data(key: StringName) -> void:
 	data_removed.emit(key, removed_value)
 
 #endregion
-
 
 
 #region Groups
@@ -190,7 +188,6 @@ func has_group(group: StringName) -> bool:
 #endregion
 
 
-
 #region Flags
 
 ## Adds one stack to a string-based [param flag]. If this is the first stack applied, 
@@ -254,7 +251,6 @@ func clear_all_flags() -> void:
 #endregion
 
 
-
 #region Rules
 
 ## Applies a data-modifying [FoxAttributeRule] to the internal data and propagates it to 
@@ -314,7 +310,6 @@ func get_active_rules() -> Array[FoxAttributeRule]:
 	return _active_rules
 
 #endregion
-
 
 
 #region Hierarchy

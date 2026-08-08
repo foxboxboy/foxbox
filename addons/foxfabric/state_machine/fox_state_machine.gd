@@ -33,6 +33,7 @@ var current_state: FoxState
 ## A dictionary mapping [StringName] identifiers to their respective [FoxState] nodes.
 var states: Dictionary[StringName, FoxState] = {}
 
+
 #region Public API
 
 ## Transitions to a [FoxState] matching the provided [param new_state_name].
@@ -63,7 +64,8 @@ func get_state(state_name: StringName) -> FoxState:
 
 #endregion
 
-#region Private Logic
+
+#region Private
 
 func _ready() -> void:
 	for child in get_children():

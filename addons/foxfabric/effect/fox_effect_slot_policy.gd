@@ -13,7 +13,6 @@ signal slots_updated(current_slots: Array[FoxEffectInstance])
 #endregion
 
 
-
 #region Variables
 
 ## The maximum number of distinct effect instances this policy will allow.
@@ -41,7 +40,6 @@ var available_slots: int:
 #endregion
 
 
-
 #region Built-In Virtuals
 
 func _ready() -> void:
@@ -49,7 +47,6 @@ func _ready() -> void:
 		manager.effect_removed.connect(_on_manager_effect_removed)
 
 #endregion
-
 
 
 #region Public API
@@ -104,8 +101,7 @@ func clear_slots() -> void:
 #endregion
 
 
-
-#region Private Logic
+#region Private
 
 func _on_manager_effect_removed(instance: FoxEffectInstance) -> void:
 	var index = slots.find(instance)

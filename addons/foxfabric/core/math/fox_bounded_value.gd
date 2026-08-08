@@ -22,9 +22,6 @@ signal saturated(overflow: float)
 #endregion
 
 
-
-
-
 #region Variables
 
 # Suppresses the inverted-bounds warning while _init assigns both bounds.
@@ -71,10 +68,7 @@ var value : float = 1.0:
 #endregion
 
 
-
-
-
-#region Public
+#region Public API
 
 ## Decreases [member value] by [param amount].
 func subtract(amount : float) -> void:
@@ -86,9 +80,6 @@ func add(amount : float) -> void:
 	self.value += amount
 
 #endregion
-
-
-
 
 
 #region Private

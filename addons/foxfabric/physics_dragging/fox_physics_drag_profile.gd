@@ -5,7 +5,6 @@ extends FoxResource
 
 
 
-#region Variables
 
 ## The "strength" of the pull. High values make it snappy, low values make it feel heavy.
 @export var stiffness: float = 200.0:
@@ -24,4 +23,3 @@ extends FoxResource
 ## If [code]true[/code], forces the object to try and maintain an upright orientation.
 @export var keep_upright: bool = true
 
-#endregion

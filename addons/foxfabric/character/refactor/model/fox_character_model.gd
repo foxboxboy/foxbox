@@ -33,11 +33,7 @@ var pitch : float = 0.0
 var yaw : float = 0.0
 
 
-
-
-
-
-#region Ready & Process
+#region Built-In Virtuals
 
 func _ready() -> void:
 	assert(hands != null, "ERROR: no hands were assigned to FoxCharacterModel: "+str(get_path()))
@@ -63,13 +59,7 @@ func _process(_delta):
 #endregion
 
 
-
-
-
-
-
 #region Public API
-
 
 func update_strafe(input_direction: Vector2) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
@@ -125,12 +115,7 @@ func set_vertical_speed(vertical_speed: float) -> void:
 #endregion
 
 
-
-
-
-
 #region Private
-
 
 func _get_all_meshes(_under_node : Node = self, _array : Array[MeshInstance3D] = []) -> Array[MeshInstance3D]:
 	for child : Node in _under_node.get_children():
@@ -174,6 +159,5 @@ func _update_spine_bone():
 	# apply
 	var target_transform = Transform3D(final_basis, animated_global_transform.origin)
 	skeleton.set_bone_global_pose_override(_spine_bone_index, target_transform, 1.0, true)
-
 
 #endregion

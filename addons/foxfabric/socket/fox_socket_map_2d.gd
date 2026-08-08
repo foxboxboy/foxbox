@@ -4,7 +4,6 @@ extends FoxNode2D
 ## Manages a collection of [FoxSocket2D] nodes, mapped by their node names.
 
 
-
 #region Signals
 
 ## Emitted when a node successfully attaches to any managed socket.
@@ -16,14 +15,12 @@ signal node_detached(attachment: Node2D, socket: FoxSocket2D)
 #endregion
 
 
-
 #region Variables
 
 ## A dictionary mapping socket names (StringName) to their [FoxSocket2D] nodes.
 var sockets: Dictionary[StringName, FoxSocket2D] = {}
 
 #endregion
-
 
 
 #region Public API
@@ -65,8 +62,7 @@ func get_socket(socket_name: StringName) -> FoxSocket2D:
 #endregion
 
 
-
-#region Private Logic
+#region Private
 
 func _ready() -> void:
 	# Recursively find all sockets in the tree beneath this manager

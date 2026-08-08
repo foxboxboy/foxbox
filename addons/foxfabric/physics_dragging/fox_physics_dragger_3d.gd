@@ -4,6 +4,7 @@ extends FoxNode3D
 ## Manipulates a [RigidBody3D] by applying localized forces and torques 
 ## to match this node's global position and rotation. 
 
+
 #region Variables
 
 @export_group("Default Drag Settings")
@@ -25,9 +26,6 @@ var _current_stiffness: float
 var _current_damping: float
 
 #endregion
-
-
-
 
 
 #region Public API
@@ -74,10 +72,7 @@ func release(dampen_spin: bool = true) -> void:
 #endregion
 
 
-
-
-
-#region Private Logic
+#region Private
 
 func _physics_process(_delta: float) -> void:
 	if not is_instance_valid(_current_body):

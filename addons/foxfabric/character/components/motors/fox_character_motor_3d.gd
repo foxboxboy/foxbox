@@ -21,8 +21,7 @@ var active := true:
 		active = new_value
 
 
-
-#region Virtual Methods
+#region Built-In Virtuals
 
 func _ready() -> void:
 	if not body:
@@ -46,7 +45,6 @@ func _physics_process(delta) -> void:
 #endregion
 
 
-
 #region Public API
 
 ## Enables the motor to work.
@@ -62,8 +60,7 @@ func disable():
 #endregion
 
 
-
-#region Private Helpers 
+#region Private
 
 func _update_movement(_delta) -> void:
 	var direction = (-body.global_basis.z * input_direction.y) + (body.global_basis.x * input_direction.x)

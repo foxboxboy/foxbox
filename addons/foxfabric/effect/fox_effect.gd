@@ -53,7 +53,6 @@ enum DurationMode {
 }
 
 
-
 #region Variables
 
 ## The unique identifier. If left blank, it falls back to the file name or memory ID.
@@ -87,7 +86,6 @@ enum DurationMode {
 @export_range(0.0, 10.0, 0.05, "suffix:s") var tick_interval: float = 0.0
 
 #endregion
-
 
 
 #region Public API
@@ -130,7 +128,6 @@ func tick(target: Object, current_stack: int) -> void:
 		_on_tick(target, current_stack)
 
 #endregion
-
 
 
 #region Abstract Methods

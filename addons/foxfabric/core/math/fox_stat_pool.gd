@@ -7,9 +7,6 @@ extends FoxResource
 ## [br][b]Note:[/b] Ensure [member Resource.resource_local_to_scene] is enabled when assigning to multiple instances to prevent shared state.
 
 
-
-
-
 #region Signals
 
 ## Emitted when [member current] or the maximum capacity changes.
@@ -24,9 +21,6 @@ signal depleted(underflow: float)
 signal saturated(overflow: float)
 
 #endregion
-
-
-
 
 
 #region Variables
@@ -44,9 +38,6 @@ var _max_stat: FoxModifiableStat
 var _pool: FoxBoundedValue
 
 #endregion
-
-
-
 
 
 #region Public API
@@ -128,10 +119,7 @@ func clear_multiplier_max_modifier(id: StringName) -> void:
 #endregion
 
 
-
-
-
-#region Private Logic
+#region Private
 
 func _init() -> void:
 	_max_stat = FoxModifiableStat.new(base_max)

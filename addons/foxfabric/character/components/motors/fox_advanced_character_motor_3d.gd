@@ -15,8 +15,7 @@ class_name FoxAdvancedCharacterMotor3D
 @export var friction := 1500.0
 
 
-
-#region Virtual Methods
+#region Built-In Virtuals
 
 func _physics_process(delta):
 	if not active:
@@ -33,12 +32,7 @@ func _physics_process(delta):
 #endregion
 
 
-
-
-
-
-#region Private Helpers
-
+#region Private
 
 ## More advanced _update_movement() from FoxCharacterMotor3D. 
 func _update_movement(delta):
@@ -88,3 +82,5 @@ func _push_away_rigid_bodies():
 			# 5.0 is a magic number, adjust to your needs
 			var push_force = mass_ratio * 5.0
 			c.get_collider().apply_impulse(push_dir * velocity_diff_in_push_dir * push_force, c.get_position() - c.get_collider().global_position)
+
+#endregion

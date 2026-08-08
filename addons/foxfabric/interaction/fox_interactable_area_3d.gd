@@ -7,6 +7,7 @@ extends Area3D
 ## [Variant] context during interaction, allowing the initiator to pass a [Node], 
 ## a Dictionary of parameters, or a custom context object.
 
+
 #region Signals
 
 ## Emitted when [method interact] is called. The [param context] contains data passed by the initiator.
@@ -19,7 +20,6 @@ signal focused(sensor: Node)
 signal unfocused(sensor: Node)
 
 #endregion
-
 
 
 #region Public API
@@ -43,7 +43,6 @@ func unfocus(sensor: Node) -> void:
 	_unfocus(sensor)
 
 #endregion
-
 
 
 #region Virtual Methods
