@@ -1,0 +1,47 @@
+name: Tests
+
+# Runs the suite on every push and pull request.
+#
+# Without this the tests only exist on whichever machine last remembered to run them, which is
+# the same as not having them.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: "4.7.1"
+
+jobs:
+  suite:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot
+        run: |
+          base="Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/${base}.zip"
+          unzip -q godot.zip
+          sudo mv "$base" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+
+      - name: Import the project
+        # Running --script skips the import pass, so without a class cache every class_name is
+        # unknown and every suite fails to parse. The second pass picks up names that resolve
+        # against scripts registered by the first.
+        run: |
+          godot --headless --path . --editor --quit || true
+          godot --headless --path . --editor --quit || true
+
+      - name: Run the suite
+        # run_all.gd exits non-zero on a failure, and on a run that found no suites at all.
+        run: godot --headless --path . --script res://tests/terminal/run_all.gd

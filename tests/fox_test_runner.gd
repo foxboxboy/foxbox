@@ -35,8 +35,10 @@ class RunResult extends RefCounted:
 	var total_failed: int = 0
 	var seed_used: int = 0
 
+	## A run with no suites in it is a failure, not a pass. A mistyped filter or a moved tests
+	## folder finds nothing, and reporting that as green is how a broken CI job looks healthy.
 	func is_green() -> bool:
-		return total_failed == 0 and broken.is_empty()
+		return not suites.is_empty() and total_failed == 0 and broken.is_empty()
 
 
 ## Finds every test_*.gd, runs it, and returns the collected results.
@@ -107,7 +109,10 @@ func format(results: RunResult) -> String:
 	for b: String in results.broken:
 		lines.append("[color=red]  BROKEN[/color]  %s" % b)
 
-	if results.is_green():
+	if results.suites.is_empty():
+		lines.append("[color=red]  No suites ran. Check the --suite filter and %s.[/color]"
+			% TESTS_DIR)
+	elif results.is_green():
 		lines.append("[color=green]  All %d checks passed across %d modules.[/color]"
 			% [results.total_passed, results.suites.size()])
 	else:

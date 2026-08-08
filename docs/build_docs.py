@@ -129,56 +129,36 @@ def step_engine_xml(godot, force=False):
     print("      %d classes" % engine_count())
 
 
-BLOCK_OPEN = ("[codeblock", "[gdscript", "[csharp")
-BLOCK_CLOSE = ("[/codeblock", "[/gdscript", "[/csharp")
+def check_line_endings():
+    """Stop the build if any source file has CRLF endings.
 
+    Godot's doc comment parser leaves the carriage return on the end of a CRLF line and then
+    cannot join the next line onto it. A paragraph wrapped across several ## lines arrives split,
+    and reStructuredText renders each continuation as an indented blockquote. It was wrong on 21
+    pages before anyone noticed, because the output is merely ugly rather than broken.
 
-def rejoin_wrapped(text):
-    """Join description lines that Godot split at the source's ## line breaks.
-
-    This is a safety net. Godot only splits them when the .gd file has CRLF endings: the parser
-    strips the newline, the carriage return survives on the end of the line, and the next line
-    can no longer be joined onto it. A paragraph then arrives as one XML line per source line,
-    every continuation carrying a leading space, which reStructuredText reads as a blockquote.
-
-    .gitattributes pins the repo to LF, so this should find nothing. If it reports pages, some
-    source file has CRLF endings and the fix belongs there rather than here.
-
-    Code blocks are left alone, since their line breaks and indentation are the content.
+    .gitattributes pins the repo to LF, so this should never fire. It refuses to build rather
+    than repairing the generated XML, because the damage starts in the source file and that is
+    where it has to be fixed.
     """
-    out = []
-    in_block = False
-    fresh = True  # the next continuation opens a paragraph instead of joining the line above
+    offenders = [
+        str(path.relative_to(PROJECT))
+        for path in sorted(ADDON.rglob("*.gd"))
+        if b"\r\n" in path.read_bytes()
+    ]
 
-    for line in text.split("\n"):
-        stripped = line.strip()
-
-        if stripped.startswith(BLOCK_OPEN):
-            in_block = True
-        elif stripped.startswith(BLOCK_CLOSE):
-            # Text after a code block has to start back at column zero, or reStructuredText
-            # keeps reading it as part of the literal block.
-            in_block = False
-            out.append(line)
-            fresh = True
-            continue
-        elif (not in_block and stripped
-                and line.startswith(" ") and not line.startswith("  ")):
-            if fresh or not out or not out[-1].strip():
-                out.append(stripped)
-            else:
-                out[-1] = out[-1].rstrip() + " " + stripped
-            fresh = False
-            continue
-
-        out.append(line)
-        fresh = False
-
-    return "\n".join(out)
+    if offenders:
+        fail(
+            "CRLF line endings in %d file(s), which mangles wrapped doc paragraphs:\n"
+            "  %s\n"
+            "Fix with:  git add --renormalize .  then re-checkout the tree."
+            % (len(offenders), "\n  ".join(offenders))
+        )
 
 
 def step_xml(godot):
     print("\n[2/6] Generating FoxFabric XML from source comments")
+    check_line_endings()
     reset(XML_DIR)
     run([
         godot, "--headless", "--path", PROJECT,
@@ -205,18 +185,7 @@ def step_xml(godot):
             target.unlink()
             retired += 1
 
-    reflowed = 0
-    for page in XML_DIR.glob("*.xml"):
-        original = page.read_text(encoding="utf-8")
-        joined = rejoin_wrapped(original)
-        if joined != original:
-            page.write_text(joined, encoding="utf-8")
-            reflowed += 1
-
     print("      %d classes" % (count - dropped - retired))
-    if reflowed:
-        print("      WARNING: rejoined wrapped paragraphs in %d page(s)." % reflowed)
-        print("               Some source file has CRLF endings. See rejoin_wrapped().")
     if dropped:
         print("      skipped %d script(s) with no class_name" % dropped)
     if retired:
