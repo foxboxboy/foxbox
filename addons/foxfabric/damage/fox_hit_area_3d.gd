@@ -4,6 +4,20 @@ extends Area3D
 ## Delivers a [Variant] payload to overlapping [FoxHurtArea3D] nodes.
 ##
 ## Can act passively via physics overlaps, or instantly via the [method fire] method.
+## [br][br]
+## The payload is whatever your project needs it to be. Nothing in this module reads it, so the
+## same hitbox can carry a number, a dictionary, or a custom resource.
+## [codeblock]
+## # Attacker: describe the hit however the game wants.
+## func _ready() -> void:
+##     $HitArea.payload = {"amount": 12, "source": self, "type": &"slash"}
+##
+## # Defender: a FoxHurtArea3D re-emits it, and you decide what it means.
+## func _on_hit_received(payload: Variant) -> void:
+##     health -= payload["amount"]
+##     if payload["type"] == &"slash":
+##         play_bleed_effect()
+## [/codeblock]
 
 
 ## Emitted when this hitbox successfully delivers its [param payload] to a [param target].

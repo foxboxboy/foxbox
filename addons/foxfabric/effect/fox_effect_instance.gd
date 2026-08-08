@@ -9,14 +9,15 @@ extends FoxRefCounted
 
 #region Signals
 
-## Emitted when the [member stack] count changes.
+## Emitted when the [member stack] count changes, carrying the [param previous_stack] and the
+## [param new_stack].
 ## [br][br]
-## [b]Note:[/b] This is ideal for connecting directly to UI elements to update visual 
+## [b]Note:[/b] This is ideal for connecting directly to UI elements to update visual
 ## counters (e.g., changing a poison icon from "x1" to "x2") without polling.
 signal stack_changed(previous_stack: int, new_stack: int)
 
-## Emitted when external logic forces this instance to expire prematurely.
-## Triggers automatically when [method decrease_stack] causes the stack to reach [code]0[/code].
+## Emitted when this [param instance] should be destroyed, either because external logic forced
+## it to expire early or because [method decrease_stack] dropped the stack to [code]0[/code].
 signal request_destruction(instance: FoxEffectInstance)
 
 #endregion

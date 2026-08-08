@@ -21,12 +21,17 @@ func can_be_paid_by(wallet: FoxWallet) -> bool:
 	return false
 
 ## Deducts the [member cost] from the provided [param wallet].
-func pay(wallet: FoxWallet) -> void:
+## [br][br]
+## Returns [code]false[/code] without touching the wallet when the funds are insufficient or an
+## incompatible [FoxWallet] type is provided.
+func pay(wallet: FoxWallet) -> bool:
+	# can_be_paid_by already reports an incompatible wallet type
+	if not can_be_paid_by(wallet):
+		return false
+
 	var simple_wallet := wallet as FoxSimpleWallet
-	if simple_wallet:
-		simple_wallet.funds -= cost
-	else:
-		push_error("FoxSimplePrice: Expected a FoxSimpleWallet, but received an incompatible type.")
+	simple_wallet.funds -= cost
+	return true
 
 ## Returns the cost as a formatted [String] with the [member currency_symbol].
 func get_display_string() -> String:

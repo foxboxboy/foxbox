@@ -20,7 +20,7 @@ signal node_detached(attachment: Node2D, socket: FoxSocket2D)
 #region Variables
 
 ## A dictionary mapping socket names (StringName) to their [FoxSocket2D] nodes.
-var sockets: Dictionary = {}
+var sockets: Dictionary[StringName, FoxSocket2D] = {}
 
 #endregion
 
@@ -41,7 +41,7 @@ func get_available_socket_count() -> int:
 ## exact socket. If left empty, it will auto-attach to the first available empty socket.
 ## Returns [code]true[/code] on success.
 func attach(node: Node2D, target_socket: StringName = &"") -> bool:
-	# No specific target_socket
+	# A specific socket was named
 	if target_socket != &"":
 		var socket: FoxSocket2D = sockets.get(target_socket)
 		if socket and socket.is_empty():
@@ -49,7 +49,7 @@ func attach(node: Node2D, target_socket: StringName = &"") -> bool:
 			return true
 		return false
 	
-	# Specific target_socket 
+	# No socket named, take the first empty one
 	for socket: FoxSocket2D in sockets.values():
 		if socket.is_empty():
 			socket.attach(node)

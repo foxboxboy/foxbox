@@ -93,8 +93,7 @@ func _on_slot_pressed(item: FoxShopItem) -> void:
 		push_warning("FoxShopMenu: Attempted purchase without a wallet.")
 		return
 		
-	if item.price.can_be_paid_by(_current_wallet):
-		item.price.pay(_current_wallet)
+	if item.price.pay(_current_wallet):
 		item_purchased.emit(item)
 		update_affordability()
 	else:

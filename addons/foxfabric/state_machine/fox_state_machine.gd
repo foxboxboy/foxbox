@@ -10,7 +10,7 @@ extends FoxNode
 var current_state: FoxState
 
 ## A dictionary mapping [StringName] identifiers to their respective [FoxState] nodes.
-var states: Dictionary = {}
+var states: Dictionary[StringName, FoxState] = {}
 
 #region Public API
 

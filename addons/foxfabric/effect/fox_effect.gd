@@ -11,6 +11,26 @@ extends FoxResource
 ## To create a custom effect, extend this class and override [method _on_execute],
 ## [method _on_remove], [method _on_reapply], and [method _on_tick]. All four are abstract,
 ## so every subclass must implement them even if the body is left empty.
+## [codeblock]
+## # A poison that ticks damage and scales with its stack count.
+## extends FoxEffect
+##
+## @export var damage_per_tick: float = 2.0
+##
+## func _on_execute(target: Object) -> void:
+##     target.play_poison_vfx()
+##
+## func _on_tick(target: Object, current_stack: int) -> void:
+##     target.health -= damage_per_tick * current_stack
+##
+## func _on_reapply(target: Object, current_stack: int = 1) -> void:
+##     pass  # ticking already reads the stack, so nothing to rescale
+##
+## func _on_remove(target: Object) -> void:
+##     target.stop_poison_vfx()
+## [/codeblock]
+## Set [member stack_mode] to [code]StackMode.INTENSITY[/code] and [member tick_interval] to
+## [code]1.0[/code] on the resource to make the example above tick once per second.
 
 enum StackMode { 
 	## Prevents duplicate logic. Handles the timer based on [member duration_mode].
