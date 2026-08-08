@@ -4,6 +4,8 @@ extends Marker3D
 ## A physical 3D location that reparents and holds a single attachment.
 
 
+
+
 #region Signals
 
 ## Emitted when this socket gains a new attachment.
@@ -16,6 +18,8 @@ signal detached(attachment: Node3D, socket: FoxSocket3D)
 signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 
 #endregion
+
+
 
 
 #region Variables
@@ -39,6 +43,8 @@ signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 var attachment: Node3D = null
 
 #endregion
+
+
 
 
 #region Public API
@@ -89,6 +95,8 @@ func detach() -> Node3D:
 	return detached_node
 
 #endregion
+
+
 
 
 #region Private

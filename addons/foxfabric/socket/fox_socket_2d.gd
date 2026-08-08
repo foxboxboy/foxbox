@@ -4,6 +4,8 @@ extends Marker2D
 ## A physical 2D location that reparents and holds a single attachment.
 
 
+
+
 #region Signals
 
 ## Emitted when this socket gains a new attachment.
@@ -16,6 +18,8 @@ signal detached(attachment: Node2D, socket: FoxSocket2D)
 signal attachment_changed(attachment: Node2D, socket: FoxSocket2D)
 
 #endregion
+
+
 
 
 #region Variables
@@ -40,6 +44,8 @@ signal attachment_changed(attachment: Node2D, socket: FoxSocket2D)
 var attachment: Node2D = null
 
 #endregion
+
+
 
 
 #region Public API
@@ -88,6 +94,8 @@ func detach() -> Node2D:
 	return detached_node
 
 #endregion
+
+
 
 
 #region Private

@@ -40,6 +40,8 @@ extends FoxControl
 var data: FoxShopItem
 
 
+
+
 #region Signals
 
 ## Emitted when the user presses the buy button.
@@ -52,6 +54,8 @@ signal buy_button_focused(item: FoxShopItem)
 signal buy_button_unfocused(item: FoxShopItem)
 
 #endregion
+
+
 
 
 #region Public API
@@ -79,6 +83,8 @@ func set_affordability(can_afford: bool) -> void:
 		cost_label.modulate = cost_positive_color if can_afford else cost_negative_color
 
 #endregion
+
+
 
 
 #region Private

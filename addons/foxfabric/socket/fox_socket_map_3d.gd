@@ -19,6 +19,8 @@ extends FoxNode3D
 ## [/codeblock]
 
 
+
+
 #region Signals
 
 ## Emitted when a node successfully attaches to any managed socket.
@@ -30,12 +32,16 @@ signal node_detached(attachment: Node3D, socket: FoxSocket3D)
 #endregion
 
 
+
+
 #region Variables
 
 ## A dictionary mapping socket names (StringName) to their [FoxSocket3D] nodes.
 var sockets: Dictionary[StringName, FoxSocket3D] = {}
 
 #endregion
+
+
 
 
 #region Public API
@@ -75,6 +81,8 @@ func get_socket(socket_name: StringName) -> FoxSocket3D:
 	return sockets.get(socket_name)
 
 #endregion
+
+
 
 
 #region Private

@@ -6,6 +6,8 @@ extends RayCast3D
 ## [b]Note:[/b] Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
 
 
+
+
 #region Signals
 
 ## Emitted when a [FoxInteractableArea3D] enters focus.
@@ -18,6 +20,8 @@ signal unfocused(interactable: FoxInteractableArea3D)
 signal interaction_range_changed(new_range: float)
 
 #endregion
+
+
 
 
 #region Variables
@@ -41,6 +45,8 @@ var _current_target: FoxInteractableArea3D = null
 #endregion
 
 
+
+
 #region Public API
 
 ## Returns the [FoxInteractableArea3D] currently being hovered over, or [code]null[/code] if none.
@@ -54,6 +60,8 @@ func interact_with_target(context: Variant = null) -> void:
 		_current_target.interact(context)
 
 #endregion
+
+
 
 
 #region Private

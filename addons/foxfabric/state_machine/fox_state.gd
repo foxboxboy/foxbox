@@ -8,6 +8,8 @@ extends FoxNode
 ## [method update], and [method physics_update] as needed.
 
 
+
+
 #region Signals
 
 ## Emitted when the state requests a transition to another state.
@@ -18,6 +20,8 @@ signal transition_requested(old_state: FoxState, new_state_name: StringName)
 #endregion
 
 
+
+
 #region Variables
 
 ## An optional custom identifier for this state. 
@@ -25,6 +29,8 @@ signal transition_requested(old_state: FoxState, new_state_name: StringName)
 @export var state_id: StringName = &""
 
 #endregion
+
+
 
 
 #region Abstract Methods

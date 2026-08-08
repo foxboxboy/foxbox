@@ -15,6 +15,8 @@ class_name FoxAdvancedCharacterMotor3D
 @export var friction := 1500.0
 
 
+
+
 #region Built-In Virtuals
 
 func _physics_process(delta):
@@ -30,6 +32,8 @@ func _physics_process(delta):
 	body.move_and_slide()
 
 #endregion
+
+
 
 
 #region Private

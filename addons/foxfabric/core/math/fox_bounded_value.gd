@@ -6,6 +6,8 @@ class_name FoxBoundedValue
 ## Emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
 
 
+
+
 #region Signals
 
 ## Emitted when [member value], [member min_value], or [member max_value] changes.
@@ -20,6 +22,8 @@ signal depleted(underflow: float)
 signal saturated(overflow: float)
 
 #endregion
+
+
 
 
 #region Variables
@@ -68,6 +72,8 @@ var value : float = 1.0:
 #endregion
 
 
+
+
 #region Public API
 
 ## Decreases [member value] by [param amount].
@@ -80,6 +86,8 @@ func add(amount : float) -> void:
 	self.value += amount
 
 #endregion
+
+
 
 
 #region Private

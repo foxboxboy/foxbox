@@ -21,6 +21,8 @@ var active := true:
 		active = new_value
 
 
+
+
 #region Built-In Virtuals
 
 func _ready() -> void:
@@ -45,6 +47,8 @@ func _physics_process(delta) -> void:
 #endregion
 
 
+
+
 #region Public API
 
 ## Enables the motor to work.
@@ -58,6 +62,8 @@ func disable():
 	active = false
 
 #endregion
+
+
 
 
 #region Private

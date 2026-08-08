@@ -15,6 +15,8 @@ extends FoxControl
 var _current_wallet: FoxWallet = null
 
 
+
+
 #region Signals
 
 ## Emitted when an item is successfully purchased.
@@ -38,6 +40,8 @@ signal item_unfocused(item: FoxShopItem)
 signal catalog_populated
 
 #endregion
+
+
 
 
 #region Public API
@@ -83,6 +87,8 @@ func update_affordability(wallet: FoxWallet = _current_wallet) -> void:
 			slot.set_affordability(can_buy)
 
 #endregion
+
+
 
 
 #region Private

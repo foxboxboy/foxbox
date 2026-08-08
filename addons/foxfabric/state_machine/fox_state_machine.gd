@@ -34,6 +34,8 @@ var current_state: FoxState
 var states: Dictionary[StringName, FoxState] = {}
 
 
+
+
 #region Public API
 
 ## Transitions to a [FoxState] matching the provided [param new_state_name].
@@ -63,6 +65,8 @@ func get_state(state_name: StringName) -> FoxState:
 	return state
 
 #endregion
+
+
 
 
 #region Private

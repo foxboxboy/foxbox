@@ -33,6 +33,8 @@ var pitch : float = 0.0
 var yaw : float = 0.0
 
 
+
+
 #region Built-In Virtuals
 
 func _ready() -> void:
@@ -57,6 +59,8 @@ func _process(_delta):
 	_update_spine_bone()
 
 #endregion
+
+
 
 
 #region Public API
@@ -113,6 +117,8 @@ func set_vertical_speed(vertical_speed: float) -> void:
 	animation_tree.update_air_physics(vertical_speed)
 
 #endregion
+
+
 
 
 #region Private

@@ -38,6 +38,8 @@ func _ready() -> void:
 	assert(skeleton != null, "ERROR: FoxCharacterAccessories needs a Skeleton3D assigned!")
 
 
+
+
 #region Rigid Accessories
 
 ## Attaches a rigid item to any bone by its string name.
@@ -114,6 +116,8 @@ func clear_all_rigid_accessories() -> void:
 #endregion
 
 
+
+
 #region Skinned Accessories
 
 ## Equips a raw .gltf scene wrapper and automatically re-routes its internal meshes
@@ -175,6 +179,8 @@ func clear_all_skinned_accessories() -> void:
 		empty_skinned_accessory_slot(slot_name)
 
 #endregion
+
+
 
 
 #region Both

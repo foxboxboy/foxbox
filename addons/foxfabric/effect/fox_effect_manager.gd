@@ -4,6 +4,8 @@ extends FoxNode
 ## Handles the creation, lifecycle, and cleanup of [FoxEffectInstance] objects.
 
 
+
+
 #region Signals
 
 ## Emitted immediately after a new [FoxEffectInstance] is instantiated and added.
@@ -15,12 +17,16 @@ signal effect_removed(instance: FoxEffectInstance)
 #endregion
 
 
+
+
 #region Variables
 
 ## The internal list of currently active effect instances.
 var effects: Array[FoxEffectInstance] = []
 
 #endregion
+
+
 
 
 #region Built-In Virtuals
@@ -40,6 +46,8 @@ func _process(delta: float) -> void:
 			_remove_instance_at(i)
 
 #endregion
+
+
 
 
 #region Public API
@@ -107,6 +115,8 @@ func has_effect(target_id: StringName) -> bool:
 #endregion
 
 
+
+
 #region Serialization
 
 ## Returns an array of dictionaries representing the active state of all managed effects.
@@ -144,6 +154,8 @@ func load_state(save_data: Array, target: Object, blueprint_lookup: Callable) ->
 	set_process(not effects.is_empty())
 
 #endregion
+
+
 
 
 #region Private

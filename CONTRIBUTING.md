@@ -50,7 +50,7 @@ would be less useful. `FoxAttributeMap` splits into `Data`, `Groups`, `Flags`, `
 wrapping an entire file never earns its place. Regions are for finding your way around a long
 file, not for decoration.
 
-**Spacing.** Two blank lines before `#region`, one after it, and one before `#endregion`.
+**Spacing.** Four blank lines before `#region`, one after it, and one before `#endregion`.
 
 ```gdscript
 signal changed(value: float)

@@ -36,6 +36,8 @@ signal zoom_finished
 var target_length: float
 
 
+
+
 #region Public API
 
 ## Decreases the target length by the [member zoom_step], bringing the camera closer.
@@ -63,6 +65,8 @@ func get_zoom_percentage() -> float:
 	return spring_length / max_length
 
 #endregion
+
+
 
 
 #region Private

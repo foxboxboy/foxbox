@@ -5,6 +5,8 @@ extends FoxNode3D
 ## to match this node's global position and rotation. 
 
 
+
+
 #region Variables
 
 @export_group("Default Drag Settings")
@@ -26,6 +28,8 @@ var _current_stiffness: float
 var _current_damping: float
 
 #endregion
+
+
 
 
 #region Public API
@@ -70,6 +74,8 @@ func release(dampen_spin: bool = true) -> void:
 	_current_body = null
 
 #endregion
+
+
 
 
 #region Private

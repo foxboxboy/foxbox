@@ -5,12 +5,16 @@ extends FoxNode
 ## on how many distinct [FoxEffectInstance] objects can exist simultaneously.
 
 
+
+
 #region Signals
 
 ## Emitted whenever the tracked slots change (added, removed, or refreshed).
 signal slots_updated(current_slots: Array[FoxEffectInstance])
 
 #endregion
+
+
 
 
 #region Variables
@@ -40,6 +44,8 @@ var available_slots: int:
 #endregion
 
 
+
+
 #region Built-In Virtuals
 
 func _ready() -> void:
@@ -47,6 +53,8 @@ func _ready() -> void:
 		manager.effect_removed.connect(_on_manager_effect_removed)
 
 #endregion
+
+
 
 
 #region Public API
@@ -99,6 +107,8 @@ func clear_slots() -> void:
 	slots_updated.emit(slots)
 
 #endregion
+
+
 
 
 #region Private

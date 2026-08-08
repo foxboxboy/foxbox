@@ -8,6 +8,8 @@ extends FoxRefCounted
 ## managed exclusively by a [FoxEffectManager].
 
 
+
+
 #region Signals
 
 ## Emitted when the [member stack] count changes, carrying the [param previous_stack] and the
@@ -22,6 +24,8 @@ signal stack_changed(previous_stack: int, new_stack: int)
 signal request_destruction(instance: FoxEffectInstance)
 
 #endregion
+
+
 
 
 #region Variables
@@ -63,6 +67,8 @@ var _stack: int = 1
 var _tick_timer: float = 0.0
 
 #endregion
+
+
 
 
 #region Public API
@@ -157,6 +163,8 @@ func merge_duration(incoming_effect: FoxEffect) -> void:
 #endregion
 
 
+
+
 #region Serialization
 
 ## Returns a dictionary containing the instance's current state for saving.
@@ -177,6 +185,8 @@ func load_state(data: Dictionary) -> void:
 	_tick_timer = data.get("tick_timer", effect.tick_interval)
 
 #endregion
+
+
 
 
 #region Built-In Virtuals
