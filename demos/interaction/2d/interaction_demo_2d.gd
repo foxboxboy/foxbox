@@ -11,6 +11,14 @@ extends Node2D
 ## How far the sensor reaches, in pixels.
 const REACH: float = 190.0
 
+## Where the dragger is allowed to go, matching the inside of the walls.
+## [br][br]
+## A fast flick throws the cursor clean out of the window, and Godot goes on reporting where it
+## went: pull hard and it reads back a position above the ceiling or past the far wall. The
+## dragger followed it there and hauled whatever was held into the wall, which at speed is
+## enough to squeeze it through. Clamping keeps the target somewhere a prop can actually be.
+const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
+
 ## The reach line, drawn so it is obvious how far the sensor actually sees. Without it the range
 ## is invisible and pointing at a prop that is simply too far away looks like a broken demo.
 const IDLE_COLOUR: Color = Color(1.0, 1.0, 1.0, 0.24)
@@ -74,12 +82,13 @@ func _process(_delta: float) -> void:
 	var cursor := get_global_mouse_position()
 
 	# The sensor is the player's reach, so it turns to face the cursor. FoxInteractionRayCast2D
-	# casts along +X, which is what look_at points at, so aiming it is a single call.
+	# casts along +X, which is what look_at points at, so aiming it is a single call. Aiming at
+	# something off screen is fine, so this one is not clamped.
 	sensor.look_at(cursor)
 
 	# The dragger is a target the held body is pulled towards, not a hand that carries it. Put it
-	# under the cursor and the physics does the rest.
-	dragger.global_position = cursor
+	# under the cursor and the physics does the rest, but never outside the room.
+	dragger.global_position = cursor.clamp(ARENA.position, ARENA.end)
 
 	# Keep the dragger's angle on whatever the prop has drifted to, so the orientation spring has
 	# nothing to pull against and a swing is allowed to stand. Without this the dragger's angle
@@ -251,5 +260,8 @@ func _refresh_readout() -> void:
 		"cursor:       %s%s" % [
 			str(get_viewport().get_mouse_position().round()),
 			"   (holding, waiting for the warp)" if _awaiting_cursor else ""],
-		"dragger:      %s" % str(dragger.global_position.round()),
+		"dragger:      %s%s" % [
+			str(dragger.global_position.round()),
+			"   (clamped, cursor is off the room)"
+				if not ARENA.has_point(get_global_mouse_position()) else ""],
 	])
