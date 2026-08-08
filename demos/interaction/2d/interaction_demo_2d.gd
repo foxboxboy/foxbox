@@ -25,8 +25,12 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
 
+## Degrees of spin per pixel of mouse movement while the right button is down.
+const SPIN_PER_PIXEL: float = 0.4
+
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
+var _spinning: bool = false
 
 
 func _ready() -> void:
@@ -59,7 +63,10 @@ func _process(_delta: float) -> void:
 	# Keep the dragger's angle on whatever the prop has drifted to, so the orientation spring has
 	# nothing to pull against and a swing is allowed to stand. Without this the dragger's angle
 	# stays level and every swing is straightened out again the moment the cursor stops.
-	if is_instance_valid(_held):
+	# [br]
+	# Skipped while right dragging, where the angle is being chosen deliberately and copying the
+	# prop back over it would undo the turn as fast as it was made.
+	if is_instance_valid(_held) and not _spinning:
 		dragger.global_rotation = _held.global_rotation
 
 
@@ -70,6 +77,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			_try_grab()
 		else:
 			_release()
+		return
+
+	if button and button.button_index == MOUSE_BUTTON_RIGHT:
+		# Nothing is captured or frozen. The dragger keeps following the cursor the whole time,
+		# so letting go cannot teleport it anywhere and the prop has nothing to fly towards.
+		_spinning = button.pressed
+		_refresh_readout()
+		return
+
+	# Turning the dragger turns what it is holding, because the torque targets the dragger's
+	# rotation. With keep_upright on that target is level instead, so spinning does nothing.
+	var motion := event as InputEventMouseMotion
+	if motion and _spinning and is_instance_valid(_held):
+		dragger.rotate(deg_to_rad(motion.relative.x * SPIN_PER_PIXEL))
 		return
 
 	var key := event as InputEventKey
@@ -130,10 +151,17 @@ func _refresh_readout() -> void:
 		var prop := target.get_parent()
 		pointing = str(prop.label) if prop and "label" in prop else prop.name
 
+	var upright := "on" if _keep_upright else "off"
+	if _keep_upright:
+		# Worth saying, or right dragging looks broken rather than overruled.
+		upright += "  (held level, so spinning has no effect)"
+
 	readout.text = "\n".join([
-		"Arrows move, mouse aims, left click grabs, Space toggles upright",
+		"Arrows move, mouse aims, left click grabs",
+		"Right drag spins what you are holding, Space toggles upright",
 		"",
 		"pointing at:  %s" % pointing,
 		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
-		"keep upright: %s" % ("on" if _keep_upright else "off"),
+		"spinning:     %s" % ("yes" if _spinning else "no"),
+		"keep upright: %s" % upright,
 	])
