@@ -1,3 +1,4 @@
+@tool
 @icon("uid://cb025en3etr6r")
 class_name FoxEffectSlotPolicy
 extends FoxNode
@@ -49,6 +50,10 @@ var available_slots: int:
 #region Built-In Virtuals
 
 func _ready() -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	if manager:
 		manager.effect_removed.connect(_on_manager_effect_removed)
 
@@ -124,5 +129,24 @@ func _push_out_oldest() -> void:
 	var oldest = slots.pop_back()
 	if oldest:
 		manager.remove_instance(oldest)
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if not (get_parent() is FoxEffectManager):
+		warnings.append("Parent is not a FoxEffectManager. The manager property defaults to the "
+			+ "parent, so this policy will gate nothing.")
+
+	if max_slots <= 0:
+		warnings.append("Max Slots is %d, so no effect can ever be admitted." % max_slots)
+
+	return warnings
 
 #endregion

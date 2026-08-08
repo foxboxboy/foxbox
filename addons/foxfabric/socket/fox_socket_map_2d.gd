@@ -1,3 +1,4 @@
+@tool
 @icon("uid://gn5af2lswkru")
 class_name FoxSocketMap2D
 extends FoxNode2D
@@ -73,6 +74,10 @@ func get_socket(socket_name: StringName) -> FoxSocket2D:
 #region Private
 
 func _ready() -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	# Recursively find all sockets in the tree beneath this manager
 	for child in find_children("*", "FoxSocket2D", true, false):
 		var socket = child as FoxSocket2D
@@ -91,5 +96,31 @@ func _on_socket_attached(attachment: Node2D, socket: FoxSocket2D) -> void:
 
 func _on_socket_detached(attachment: Node2D, socket: FoxSocket2D) -> void:
 	node_detached.emit(attachment, socket)
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	var found: Array[Node] = find_children("*", "FoxSocket2D", true, false)
+
+	if found.is_empty():
+		warnings.append("No FoxSocket2D beneath this node, so this map manages nothing.")
+		return warnings
+
+	var names: Array[StringName] = []
+	for socket: Node in found:
+		var key: StringName = StringName(socket.name)
+		if names.has(key):
+			warnings.append("Two sockets are named '%s'. One will overwrite the other." % key)
+		else:
+			names.append(key)
+
+	return warnings
 
 #endregion

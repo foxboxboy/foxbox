@@ -1,3 +1,4 @@
+@tool
 @icon("uid://cubhr3bg1ga6k")
 class_name FoxStateMachine
 extends FoxNode
@@ -72,6 +73,11 @@ func get_state(state_name: StringName) -> FoxState:
 #region Private
 
 func _ready() -> void:
+	# @tool runs this in the editor too. Entering a state there would run game logic every time
+	# the scene is opened.
+	if Engine.is_editor_hint():
+		return
+
 	for child in get_children():
 		if child is FoxState:
 			# Use the explicit state_id if provided, otherwise fallback to the node's name
@@ -86,11 +92,17 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
 	if current_state:
 		current_state.update(delta)
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
 	if current_state:
 		current_state.physics_update(delta)
 
@@ -100,5 +112,41 @@ func _on_child_transition_requested(old_state: FoxState, new_state_name: StringN
 		return
 		
 	transition_to(new_state_name)
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	var found: Array[FoxState] = []
+	for child: Node in get_children():
+		if child is FoxState:
+			found.append(child)
+
+	if found.is_empty():
+		warnings.append("No FoxState children, so this machine has nothing to run.")
+		return warnings
+
+	if initial_state == null:
+		warnings.append("No Initial State assigned, so no state becomes active on ready.")
+	elif not found.has(initial_state):
+		warnings.append("Initial State is not a child of this machine, so it can never be "
+			+ "transitioned back to.")
+
+	var keys: Array[StringName] = []
+	for state: FoxState in found:
+		var key: StringName = state.state_id if state.state_id != &"" else StringName(state.name)
+		if keys.has(key):
+			warnings.append("Two states resolve to the key '%s'. One will overwrite the other."
+				% key)
+		else:
+			keys.append(key)
+
+	return warnings
 
 #endregion

@@ -1,3 +1,4 @@
+@tool
 @icon("uid://dus7rdnmnq7y3")
 class_name FoxInteractionRayCast3D
 extends RayCast3D
@@ -67,10 +68,18 @@ func interact_with_target(context: Variant = null) -> void:
 #region Private
 
 func _ready() -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	enabled = true
 
 
 func _physics_process(_delta: float) -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	var interactable = get_collider() as FoxInteractableArea3D if is_colliding() else null
 	
 	if interactable == _current_target:
@@ -90,5 +99,21 @@ func _clear_target() -> void:
 		unfocused.emit(_current_target)
 		
 	_current_target = null
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if not collide_with_areas:
+		warnings.append("Collide With Areas is disabled, so this will never detect a "
+			+ "FoxInteractableArea3D. Interactables are areas, not bodies.")
+
+	return warnings
 
 #endregion

@@ -1,3 +1,4 @@
+@tool
 @icon("uid://cyjgtwr8kquwp")
 class_name FoxShopMenu
 extends FoxControl
@@ -113,5 +114,23 @@ func _on_slot_pressed(item: FoxShopItem) -> void:
 		update_affordability()
 	else:
 		purchase_denied.emit(item, &"payment_refused")
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if slot_scene == null:
+		warnings.append("No Slot Scene assigned, so the menu cannot instance rows for items.")
+
+	if container == null:
+		warnings.append("No Container assigned, so there is nowhere to put the slots.")
+
+	return warnings
 
 #endregion

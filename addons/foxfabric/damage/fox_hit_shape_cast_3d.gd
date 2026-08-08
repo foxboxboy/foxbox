@@ -1,3 +1,4 @@
+@tool
 @icon("uid://dsm5oq811w0qe")
 class_name FoxHitShapeCast3D
 extends ShapeCast3D
@@ -27,3 +28,22 @@ func fire() -> void:
 		# only report a delivery the hurtbox actually accepted
 		if hurtbox and hurtbox.receive_hit(payload):
 			hit_delivered.emit(payload, hurtbox)
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if not collide_with_areas:
+		warnings.append("Collide With Areas is disabled, so this will never detect a "
+			+ "FoxHurtArea3D. Hurtboxes are areas, not bodies.")
+
+	if shape == null:
+		warnings.append("No Shape assigned, so this shapecast cannot sweep anything.")
+
+	return warnings
+
+#endregion

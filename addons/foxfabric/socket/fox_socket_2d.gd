@@ -1,3 +1,4 @@
+@tool
 @icon("uid://dn15lpwie55n8")
 class_name FoxSocket2D
 extends Marker2D
@@ -101,6 +102,10 @@ func detach() -> Node2D:
 #region Private
 
 func _ready() -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	child_order_changed.connect(_attachment_changed)
 	
 	if marker == null:
@@ -114,5 +119,21 @@ func _attachment_changed() -> void:
 		if is_instance_valid(attachment):
 			detached.emit(attachment, self)
 		attachment = null
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if marker != null and marker != self and not is_ancestor_of(marker):
+		warnings.append("Marker is not this socket or one of its descendants, so attachments "
+			+ "will snap to a transform outside this socket.")
+
+	return warnings
 
 #endregion

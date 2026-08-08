@@ -1,3 +1,4 @@
+@tool
 @icon("uid://oit74etj11kg")
 class_name FoxHitRayCast3D
 extends RayCast3D
@@ -31,3 +32,23 @@ func fire() -> void:
 	# only report a delivery the hurtbox actually accepted
 	if hurtbox.receive_hit(payload):
 		hit_delivered.emit(payload, hurtbox)
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if not collide_with_areas:
+		warnings.append("Collide With Areas is disabled, so this will never detect a "
+			+ "FoxHurtArea3D. Hurtboxes are areas, not bodies.")
+
+	if not enabled:
+		warnings.append("Enabled is off, so force_raycast_update() in fire() will not report a "
+			+ "collision.")
+
+	return warnings
+
+#endregion

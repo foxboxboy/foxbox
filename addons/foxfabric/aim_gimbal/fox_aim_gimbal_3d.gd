@@ -1,3 +1,4 @@
+@tool
 @icon("uid://ojs7ufmt2oci")
 class_name FoxAimGimbal3D
 extends Node3D
@@ -77,3 +78,23 @@ func aim_at_position(target_global_pos: Vector3) -> void:
 	
 	pitch = target_pitch
 	yaw = target_yaw
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if clamp_pitch and min_pitch_deg > max_pitch_deg:
+		warnings.append("Min Pitch Deg is above Max Pitch Deg, so pitch is clamped to an "
+			+ "inverted range.")
+
+	if clamp_yaw and min_yaw_deg > max_yaw_deg:
+		warnings.append("Min Yaw Deg is above Max Yaw Deg, so yaw is clamped to an inverted "
+			+ "range.")
+
+	return warnings
+
+#endregion

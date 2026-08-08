@@ -1,3 +1,4 @@
+@tool
 @icon("uid://7wrva3q87qud")
 class_name FoxZoomSpringArm3D
 extends SpringArm3D
@@ -72,10 +73,18 @@ func get_zoom_percentage() -> float:
 #region Private
 
 func _ready() -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	target_length = spring_length
 
 
 func _process(delta: float) -> void:
+	# @tool runs this in the editor too, where it would touch live state.
+	if Engine.is_editor_hint():
+		return
+
 	if not is_multiplayer_authority():
 		return
 		
@@ -115,5 +124,24 @@ func _emit_zoom_signals(old_length: float) -> void:
 			zoom_min_reached.emit()
 		elif is_equal_approx(spring_length, max_length):
 			zoom_max_reached.emit()
+
+#endregion
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	if max_length <= 0.0:
+		warnings.append("Max Length is %s, so the arm can never extend." % max_length)
+
+	if zoom_speed <= 0.0:
+		warnings.append("Zoom Speed is %s, so the arm will never reach its target length."
+			% zoom_speed)
+
+	return warnings
 
 #endregion

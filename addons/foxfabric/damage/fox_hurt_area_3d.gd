@@ -1,3 +1,4 @@
+@tool
 @icon("uid://bihwfrg2mota4")
 class_name FoxHurtArea3D
 extends Area3D
@@ -25,3 +26,25 @@ func receive_hit(payload: Variant) -> bool:
 
 	hit_received.emit(payload)
 	return true
+
+
+
+
+#region Editor
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	var has_shape: bool = false
+	for child: Node in get_children():
+		if child is CollisionShape3D or child is CollisionPolygon3D:
+			has_shape = true
+			break
+
+	if not has_shape:
+		warnings.append("No CollisionShape3D child, so this area has no volume and will never "
+			+ "overlap anything.")
+
+	return warnings
+
+#endregion
