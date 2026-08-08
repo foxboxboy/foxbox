@@ -86,7 +86,9 @@ Property Descriptions
 
 - |void| **@clamp_pitch_setter**\ (\ value\: :ref:`bool<class_bool>`\ )
 
-If ``true``, restricts the X-axis rotation between :ref:`min_pitch_deg<class_FoxAimGimbal3D_property_min_pitch_deg>` and :ref:`max_pitch_deg<class_FoxAimGimbal3D_property_max_pitch_deg>`. If ``false``, wraps the rotation infinitely.
+If ``true``, restricts the X-axis rotation between :ref:`min_pitch_deg<class_FoxAimGimbal3D_property_min_pitch_deg>` and :ref:`max_pitch_deg<class_FoxAimGimbal3D_property_max_pitch_deg>`. If ``false``, wraps the rotation infinitely. 
+
+The defaults stop one degree short of straight up and down, which is where the gimbal lock in this class's description comes from. At exactly ninety the forward direction is parallel to the up axis, and anything rebuilding a basis out of it has nothing left to work with. Yaw never runs into that, so its defaults are a round ninety.
 
 .. rst-class:: classref-item-separator
 
@@ -134,7 +136,9 @@ The maximum allowed pitch in degrees. Evaluated only if :ref:`clamp_pitch<class_
 
 - |void| **@clamp_yaw_setter**\ (\ value\: :ref:`bool<class_bool>`\ )
 
-If ``true``, restricts the Y-axis rotation between :ref:`min_yaw_deg<class_FoxAimGimbal3D_property_min_yaw_deg>` and :ref:`max_yaw_deg<class_FoxAimGimbal3D_property_max_yaw_deg>`. If ``false``, wraps the rotation infinitely.
+If ``true``, restricts the Y-axis rotation between :ref:`min_yaw_deg<class_FoxAimGimbal3D_property_min_yaw_deg>` and :ref:`max_yaw_deg<class_FoxAimGimbal3D_property_max_yaw_deg>`. If ``false``, wraps the rotation infinitely. 
+
+Off by default, so :ref:`min_yaw_deg<class_FoxAimGimbal3D_property_min_yaw_deg>` and :ref:`max_yaw_deg<class_FoxAimGimbal3D_property_max_yaw_deg>` are only a starting point until you turn it on. A turret wants this; a first person camera usually does not.
 
 .. rst-class:: classref-item-separator
 
