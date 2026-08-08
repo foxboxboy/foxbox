@@ -133,12 +133,13 @@ func _init() -> void:
 	_max_stat = FoxModifiableStat.new(base_max)
 	_pool = FoxBoundedValue.new(base_max, base_max, 0.0)
 	
+	# These must stay method references. A lambda here would capture self, and since the pool
+	# already holds _pool, that cycle keeps every FoxStatPool alive forever.
 	_max_stat.value_changed.connect(_on_max_stat_changed)
 	_pool.value_changed.connect(_on_pool_changed)
-	
-	_pool.depleted.connect(func(u): depleted.emit(u))
-	_pool.saturated.connect(func(o): saturated.emit(o))
-	
+	_pool.depleted.connect(_on_pool_depleted)
+	_pool.saturated.connect(_on_pool_saturated)
+
 	updated.emit(_pool.value, _max_stat.value)
 
 
@@ -148,5 +149,13 @@ func _on_max_stat_changed(new_max: float) -> void:
 
 func _on_pool_changed(curr: float, _min: float, _max: float) -> void:
 	updated.emit(curr, _max_stat.value)
+
+
+func _on_pool_depleted(underflow: float) -> void:
+	depleted.emit(underflow)
+
+
+func _on_pool_saturated(overflow: float) -> void:
+	saturated.emit(overflow)
 
 #endregion

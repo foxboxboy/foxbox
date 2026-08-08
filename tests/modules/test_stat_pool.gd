@@ -9,6 +9,7 @@ func run() -> void:
 	_max_modifiers()
 	_lowering_the_max_clamps_current()
 	_signals()
+	_frees_itself()
 	_random_spending_stays_in_range()
 
 
@@ -104,6 +105,17 @@ func _signals() -> void:
 
 	p.subtract(9999.0)
 	eq(depleted[0], 1, "emptying the pool emits depleted once")
+
+
+func _frees_itself() -> void:
+	case("no reference cycle")
+	# The pool connects to signals on resources it owns. Connecting with a lambda instead of a
+	# method would capture self, and the cycle would keep every pool alive for the whole session.
+	var pool: FoxStatPool = FoxStatPool.new()
+	var watch: WeakRef = weakref(pool)
+	pool = null
+
+	check(watch.get_ref() == null, "the pool frees itself once the last reference drops")
 
 
 func _random_spending_stays_in_range() -> void:

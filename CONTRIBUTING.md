@@ -91,6 +91,19 @@ no errors before a change lands. See `docs/README.txt`.
 * Every `class_name` starts with `Fox`
 * Spatial classes end in `2D` or `3D`, matching the engine
 
+## Signals in resources
+
+Connect with a method reference, not a lambda:
+
+```
+_pool.depleted.connect(_on_pool_depleted)     # holds an object id
+_pool.depleted.connect(func(u): depleted.emit(u))     # holds self
+```
+
+A lambda that touches `self` captures it. When a `RefCounted` connects to something it owns, that
+closes a cycle, and nothing in the pair is ever freed. Nodes are exempt because they are freed by
+hand, but the method form reads better anyway.
+
 ## Module independence
 
 A module may depend on `core` and on nothing else. If two modules need to share something, it
