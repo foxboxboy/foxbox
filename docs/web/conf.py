@@ -47,9 +47,25 @@ html_static_path = ['_static']
 
 html_theme_options = {
     'logo_only': True,
+    # The RTD theme collapses everything under a caption until you are already on that page,
+    # which is why the sidebar looked empty. Godot's docs keep the whole tree open.
+    'collapse_navigation': False,
+    # 2 keeps every module and class in view. Going deeper adds each class's own sections
+    # (Description, Properties, Methods) to the sidebar, which is hundreds of extra entries.
+    'navigation_depth': 2,
+    'sticky_navigation': True,
+    'style_external_links': True,
+    'prev_next_buttons_location': 'both',
 }
 
 html_logo = "_static/fox_docs_logo.svg"
+html_favicon = "_static/favicon.svg"
+
+# Every class page is generated, so "View page source" would show a reStructuredText file that
+# nobody should edit. The real source is the ## comment in the .gd file.
+html_show_sourcelink = False
+
+html_title = "FoxFabric documentation"
 
 
 html_css_files = [

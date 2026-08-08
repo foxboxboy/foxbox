@@ -11,7 +11,7 @@ Each module stands on its own. Copy the whole ``addons/foxfabric`` folder or pul
 directory you need.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Modules
 
    module_core
