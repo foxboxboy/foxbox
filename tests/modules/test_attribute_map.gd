@@ -28,6 +28,9 @@ func run() -> void:
 	_inheritance_respects_can_receive_rules()
 	_can_send_rules_stops_propagation()
 	_late_joining_children_catch_up()
+	_flags_propagate_while_attached()
+	_duplicate_rule_ids_are_refused()
+	_read_accessors_do_not_expose_internals()
 
 
 ## Reads a float out of the map through a typed local, so callers never pass a Variant into
@@ -257,3 +260,106 @@ func _late_joining_children_catch_up() -> void:
 
 	almost(_speed(cm), 105.0, "the existing rule was applied on join")
 	eq(cm.get_flag_stacks(&"blessed"), 2, "existing flag stacks were copied across")
+
+
+## A flag raised on the parent after a child has joined used to stop at the parent, but detaching
+## still decremented the child, so the child lost a stack it had applied to itself.
+func _flags_propagate_while_attached() -> void:
+	case("flags reach children that are already attached")
+	var entity: Node = track(Node.new())
+	var pm: FoxAttributeMap = FoxAttributeMap.new()
+	entity.add_child(pm)
+	var sub: Node = Node.new()
+	entity.add_child(sub)
+	var cm: FoxAttributeMap = FoxAttributeMap.new()
+	sub.add_child(cm)
+
+	pm.increment_flag(&"burning")
+	eq(cm.get_flag_stacks(&"burning"), 1, "the stack travelled down")
+
+	pm.decrement_flag(&"burning")
+	eq(cm.get_flag_stacks(&"burning"), 0, "and came back off")
+
+	case("detaching only takes back what the parent gave")
+	cm.increment_flag(&"burning")
+	pm.increment_flag(&"burning")
+	eq(cm.get_flag_stacks(&"burning"), 2, "the child holds its own stack plus the parent's")
+
+	entity.remove_child(sub)
+	eq(cm.get_flag_stacks(&"burning"), 1, "the child keeps the stack it applied to itself")
+	sub.free()
+
+	case("erase_flag takes every stack off the children too")
+	var entity2: Node = track(Node.new())
+	var pm2: FoxAttributeMap = FoxAttributeMap.new()
+	entity2.add_child(pm2)
+	var sub2: Node = Node.new()
+	entity2.add_child(sub2)
+	var cm2: FoxAttributeMap = FoxAttributeMap.new()
+	sub2.add_child(cm2)
+
+	pm2.increment_flag(&"cursed")
+	pm2.increment_flag(&"cursed")
+	eq(cm2.get_flag_stacks(&"cursed"), 2, "both stacks travelled down")
+
+	pm2.erase_flag(&"cursed")
+	eq(cm2.get_flag_stacks(&"cursed"), 0, "erasing on the parent clears the child")
+
+	case("can_send_rules also holds flags back")
+	var entity3: Node = track(Node.new())
+	var pm3: FoxAttributeMap = FoxAttributeMap.new()
+	pm3.can_send_rules = false
+	entity3.add_child(pm3)
+	var sub3: Node = Node.new()
+	entity3.add_child(sub3)
+	var cm3: FoxAttributeMap = FoxAttributeMap.new()
+	sub3.add_child(cm3)
+
+	pm3.increment_flag(&"quiet")
+	eq(cm3.get_flag_stacks(&"quiet"), 0, "nothing propagated down")
+
+
+## remove_rule matches on id, so a second rule under a used id could never be taken off by itself.
+func _duplicate_rule_ids_are_refused() -> void:
+	case("a second rule under a used id is refused")
+	var m: FoxAttributeMap = _new_map()
+	m.set_data(&"speed", 10.0)
+
+	m.add_rule(FlatRule.new(&"haste", &"speed", 5.0))
+	m.add_rule(FlatRule.new(&"haste", &"speed", 5.0))
+
+	eq(m.get_active_rules().size(), 1, "only the first rule is tracked")
+	almost(_speed(m), 15.0, "and only the first was applied")
+
+	m.remove_rule(&"haste")
+	almost(_speed(m), 10.0, "one removal puts the data all the way back")
+	eq(m.get_active_rules().size(), 0, "and clears the list")
+
+	case("a different id is still allowed")
+	m.add_rule(FlatRule.new(&"haste", &"speed", 5.0))
+	m.add_rule(FlatRule.new(&"blessing", &"speed", 5.0))
+	eq(m.get_active_rules().size(), 2, "distinct ids both apply")
+	almost(_speed(m), 20.0, "and both reach the data")
+
+
+func _read_accessors_do_not_expose_internals() -> void:
+	case("read accessors hand back copies")
+	var m: FoxAttributeMap = _new_map()
+	m.set_data(&"speed", 10.0)
+	m.set_data(&"health", 5.0)
+	m.add_data_to_group(&"speed", &"movement")
+	m.increment_flag(&"slowed")
+	m.add_rule(FlatRule.new(&"aura", &"speed", 1.0))
+
+	eq(m.get_data_keys().size(), 2, "both keys are listed")
+	check(m.get_data_keys().has(&"speed"), "and named")
+
+	eq(m.get_group_names(), [&"movement"] as Array[StringName], "the group is listed")
+	eq(m.get_keys_in_group(&"movement"), [&"speed"] as Array[StringName], "with its members")
+	eq(m.get_keys_in_group(&"nope").size(), 0, "an unknown group is empty, not an error")
+
+	m.get_flags().clear()
+	eq(m.get_flag_stacks(&"slowed"), 1, "clearing the returned flags leaves the map alone")
+
+	m.get_active_rules().clear()
+	eq(m.get_active_rules().size(), 1, "clearing the returned rules leaves the map alone")
