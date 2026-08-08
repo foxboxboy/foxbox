@@ -42,7 +42,14 @@ MODULE_ORDER = [
     "view_model",
     "world_environments",
     "character",
+]
+
+# Folders whose classes are not documented at all. Retired code is honest to keep in the repo
+# and unhelpful in a table of contents, where it competes with what people should actually use.
+# Paths are relative to the addon root.
+UNDOCUMENTED = [
     "deprecated",
+    "character/components/trash",
 ]
 XML_DIR = DOCS / "xml_output"
 # make_rst.py resolves every type against the classes it is given, so it needs the built-in
@@ -143,9 +150,18 @@ def step_xml(godot):
         stray.unlink()
         dropped += 1
 
-    print("      %d classes" % (count - dropped))
+    retired = 0
+    for name in undocumented_classes():
+        target = XML_DIR / ("%s.xml" % name)
+        if target.exists():
+            target.unlink()
+            retired += 1
+
+    print("      %d classes" % (count - dropped - retired))
     if dropped:
         print("      skipped %d script(s) with no class_name" % dropped)
+    if retired:
+        print("      skipped %d retired class(es) in %s" % (retired, ", ".join(UNDOCUMENTED)))
 
 
 def step_rst():
@@ -174,6 +190,26 @@ def step_collect():
     print("      %d pages copied" % count)
 
 
+def is_undocumented(script):
+    rel = script.relative_to(ADDON).as_posix()
+    return any(rel == u or rel.startswith(u + "/") for u in UNDOCUMENTED)
+
+
+def undocumented_classes():
+    """Class names declared inside UNDOCUMENTED folders. Their XML is discarded before the
+    reStructuredText step so they never become pages, rather than becoming pages that no
+    toctree references."""
+    names = set()
+    for script in ADDON.rglob("*.gd"):
+        if not is_undocumented(script):
+            continue
+        text = script.read_text(encoding="utf-8", errors="replace")
+        match = re.search(r"^class_name\s+(\w+)", text, re.MULTILINE)
+        if match:
+            names.add(match.group(1))
+    return names
+
+
 def scan_modules():
     """Maps every folder under the addon to the classes it declares directly.
 
@@ -182,6 +218,8 @@ def scan_modules():
     class_name out of the source is the only link between a class and its folder."""
     found = {}
     for script in sorted(ADDON.rglob("*.gd")):
+        if is_undocumented(script):
+            continue
         text = script.read_text(encoding="utf-8", errors="replace")
         match = re.search(r"^class_name\s+(\w+)", text, re.MULTILINE)
         if not match:

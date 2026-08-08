@@ -19,6 +19,12 @@ These pages are generated from the ``##`` comments in the source and match the i
 
 .. toctree::
    :maxdepth: 1
+   :caption: Guides
+
+   guide_status_effects
+
+.. toctree::
+   :maxdepth: 1
    :caption: Modules
 
    module_core
@@ -34,4 +40,3 @@ These pages are generated from the ``##`` comments in the source and match the i
    module_physics_dragging
    module_view_model
    module_character
-   module_deprecated
