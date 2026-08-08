@@ -6,6 +6,7 @@ extends FoxRefCounted
 ## This class manages the active lifecycle of an effect, tracking its remaining 
 ## [member time_left] and current [member stack] count. It is instantiated and 
 ## managed exclusively by a [FoxEffectManager].
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 
 

@@ -23,6 +23,13 @@ Combines a :ref:`FoxModifiableStat<class_FoxModifiableStat>` for the maximum bou
 
 \ **Note:** Ensure :ref:`Resource.resource_local_to_scene<class_Resource_property_resource_local_to_scene>` is enabled when assigning to multiple instances to prevent shared state.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

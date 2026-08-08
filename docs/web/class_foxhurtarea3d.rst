@@ -21,6 +21,13 @@ Description
 
 Acts as the receiving end of the FoxFabric interaction pipeline. It listens for overlapping :ref:`FoxHitArea3D<class_FoxHitArea3D>` nodes and broadcasts their payload.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

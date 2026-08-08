@@ -31,6 +31,7 @@ extends FoxResource
 ## [/codeblock]
 ## Set [member stack_mode] to [code]StackMode.INTENSITY[/code] and [member tick_interval] to
 ## [code]1.0[/code] on the resource to make the example above tick once per second.
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 ## Determines what happens when this effect is applied to a target that already has it.
 enum StackMode {

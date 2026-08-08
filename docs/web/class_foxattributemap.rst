@@ -36,6 +36,13 @@ Acts as a centralized data hub for an entity. It can store any arbitrary :ref:`V
     stats.decrement_flag(&"slowed")   # leaving the swamp
     stats.has_flag(&"slowed")         # still true, the debuff holds the last stack
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

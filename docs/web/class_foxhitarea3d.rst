@@ -35,6 +35,13 @@ The payload is whatever your project needs it to be. Nothing in this module read
         if payload["type"] == &"slash":
             play_bleed_effect()
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

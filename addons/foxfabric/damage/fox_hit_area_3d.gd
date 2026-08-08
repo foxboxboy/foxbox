@@ -18,6 +18,7 @@ extends Area3D
 ##     if payload["type"] == &"slash":
 ##         play_bleed_effect()
 ## [/codeblock]
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 
 ## Emitted when this hitbox successfully delivers its [param payload] to a [param target].

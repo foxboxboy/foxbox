@@ -21,6 +21,7 @@ extends FoxNode
 ## Processing is switched off whenever nothing is active, so an idle manager costs nothing.
 ## [method load_state] deliberately skips [method FoxEffect.execute], so restoring a save does
 ## not re-fire the initial burst of an effect that was already applied.
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 
 

@@ -21,6 +21,13 @@ Description
 
 This class manages the active lifecycle of an effect, tracking its remaining :ref:`time_left<class_FoxEffectInstance_property_time_left>` and current :ref:`stack<class_FoxEffectInstance_property_stack>` count. It is instantiated and managed exclusively by a :ref:`FoxEffectManager<class_FoxEffectManager>`.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

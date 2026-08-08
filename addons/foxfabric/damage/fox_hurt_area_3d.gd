@@ -5,6 +5,7 @@ extends Area3D
 ##
 ## Acts as the receiving end of the FoxFabric interaction pipeline. It listens
 ## for overlapping [FoxHitArea3D] nodes and broadcasts their payload.
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 
 ## Emitted immediately when a [param payload] is successfully delivered to this area.

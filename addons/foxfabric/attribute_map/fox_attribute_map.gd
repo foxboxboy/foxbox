@@ -19,6 +19,7 @@ extends FoxNode
 ## stats.decrement_flag(&"slowed")   # leaving the swamp
 ## stats.has_flag(&"slowed")         # still true, the debuff holds the last stack
 ## [/codeblock]
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
 
 

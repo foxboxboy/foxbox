@@ -82,6 +82,16 @@ Reference an inherited member by its owner, or it will not resolve:
 Add a `[codeblock]` example to anything whose signature does not explain itself. Every module
 that takes a `Variant` payload needs one, because the type says nothing about what to pass.
 
+A class a guide walks through links back to it, as the last line of the class comment:
+
+```gdscript
+## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
+```
+
+That becomes the **Tutorials** section at the top of the class page, the same one the engine's
+own reference has. A new guide is not finished until the classes it uses carry the tag, or
+nobody reading the reference will ever find it.
+
 Documentation is generated from these comments, so `python docs/build_docs.py` must finish with
 no errors before a change lands. See `docs/README.txt`.
 

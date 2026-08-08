@@ -46,6 +46,13 @@ To create a custom effect, extend this class and override :ref:`_on_execute()<cl
 
 Set :ref:`stack_mode<class_FoxEffect_property_stack_mode>` to ``StackMode.INTENSITY`` and :ref:`tick_interval<class_FoxEffect_property_tick_interval>` to ``1.0`` on the resource to make the example above tick once per second.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties

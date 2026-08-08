@@ -35,6 +35,13 @@ Applying an effect that is already running does not always create a second insta
 
 Processing is switched off whenever nothing is active, so an idle manager costs nothing. :ref:`load_state()<class_FoxEffectManager_method_load_state>` deliberately skips :ref:`FoxEffect.execute()<class_FoxEffect_method_execute>`, so restoring a save does not re-fire the initial burst of an effect that was already applied.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Building a status effect system <https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties
