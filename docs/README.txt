@@ -20,6 +20,19 @@ Set FOXFABRIC_GODOT if godot is not on PATH. The project must have been imported
 once, otherwise Godot has no class list to document.
 
 
+HOSTING
+
+.github/workflows/docs.yml builds the site on GitHub Actions and publishes it to GitHub Pages
+on every push to main that touches addons/ or docs/. It downloads Godot and runs the same six
+steps, so nothing generated is committed and the site cannot drift from the source comments.
+
+It needs Pages turned on once, under Settings > Pages > Source > GitHub Actions. Until then the
+build step passes and the deploy step fails.
+
+.readthedocs.yaml is the older path and is now redundant. Read the Docs cannot run Godot, so it
+only builds reStructuredText that has been committed by hand.
+
+
 THE STEPS BY HAND
 
 If the script gets in the way, this is all it does:

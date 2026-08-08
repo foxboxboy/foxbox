@@ -1,0 +1,81 @@
+name: Docs
+
+# Builds the class reference and publishes it to GitHub Pages.
+#
+# The whole pipeline runs here, Godot included, so nothing generated is ever committed and the
+# site cannot drift from the source comments.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "addons/**"
+      - "docs/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. A queued run waits rather than cancelling a deploy midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: "4.7.1"
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Sphinx
+        run: pip install -r docs/requirements.txt
+
+      - name: Install Godot
+        run: |
+          base="Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/${base}.zip"
+          unzip -q godot.zip
+          sudo mv "$base" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+
+      - name: Import the project
+        # doctool documents whatever is in the class cache, and the cache only exists after an
+        # import pass. The second pass is not superstition: the first one registers the scripts
+        # and the second picks up class names that resolve against them.
+        run: |
+          godot --headless --path . --editor --quit || true
+          godot --headless --path . --editor --quit || true
+
+      - name: Build the docs
+        run: python docs/build_docs.py
+
+      - name: Mark the output as not Jekyll
+        # Sphinx puts the stylesheets in _static. Anything Jekyll touches drops underscore
+        # folders, and the site comes up with no CSS at all.
+        run: touch docs/web/_build/html/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/web/_build/html
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
