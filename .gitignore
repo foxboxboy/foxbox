@@ -18,6 +18,7 @@ docs/xml_output/
 docs/xml_engine/
 docs/rst_output/
 docs/web/class_*.rst
+docs/web/module_*.rst
 docs/web/_build/
 
 # Vendored Godot engine files the doc tooling does not use

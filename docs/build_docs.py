@@ -14,6 +14,7 @@ Point FOXFABRIC_GODOT at the Godot binary if it is not on PATH.
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -22,6 +23,27 @@ from pathlib import Path
 
 DOCS = Path(__file__).resolve().parent
 PROJECT = DOCS.parent
+ADDON = PROJECT / "addons" / "foxfabric"
+
+# Sidebar order, foundational first. A module missing from here still gets a page, and the build
+# prints a warning so it does not silently vanish from the sidebar.
+MODULE_ORDER = [
+    "core",
+    "attribute_map",
+    "effect",
+    "state_machine",
+    "shop",
+    "socket",
+    "damage",
+    "interaction",
+    "aim_gimbal",
+    "zoom_spring_arm",
+    "physics_dragging",
+    "view_model",
+    "world_environments",
+    "character",
+    "deprecated",
+]
 XML_DIR = DOCS / "xml_output"
 # make_rst.py resolves every type against the classes it is given, so it needs the built-in
 # engine documentation too, or float, Node3D and friends all come back unresolved. Kept in a
@@ -84,7 +106,7 @@ def engine_paths():
 
 
 def step_engine_xml(godot, force=False):
-    print("\n[1/4] Engine class reference")
+    print("\n[1/6] Engine class reference")
     if engine_count() > 0 and not force:
         print("      cached, %d classes (--refresh-engine to redo)" % engine_count())
         return
@@ -98,7 +120,7 @@ def step_engine_xml(godot, force=False):
 
 
 def step_xml(godot):
-    print("\n[2/4] Generating FoxFabric XML from source comments")
+    print("\n[2/6] Generating FoxFabric XML from source comments")
     reset(XML_DIR)
     run([
         godot, "--headless", "--path", PROJECT,
@@ -124,7 +146,7 @@ def step_xml(godot):
 
 
 def step_rst():
-    print("\n[3/4] Converting XML to reStructuredText")
+    print("\n[3/6] Converting XML to reStructuredText")
     reset(RST_DIR)
     # Both folders go in so types resolve, but --filter keeps the output to ours.
     # make_rst.py puts the repo root on sys.path so it can "import version".
@@ -138,7 +160,7 @@ def step_rst():
 
 
 def step_collect():
-    print("\n[4/4] Collecting pages into web/")
+    print("\n[4/6] Collecting pages into web/")
     for stale in WEB_DIR.glob("class_*.rst"):
         stale.unlink()
     count = 0
@@ -149,8 +171,76 @@ def step_collect():
     print("      %d pages copied" % count)
 
 
+def scan_modules():
+    """Maps each module folder to the classes it declares, by reading class_name out of the
+    source. The XML does not record which folder a class came from, so this is the only link
+    between a class and the module it belongs to."""
+    found = {}
+    for script in sorted(ADDON.rglob("*.gd")):
+        rel = script.relative_to(ADDON)
+        module = rel.parts[0] if len(rel.parts) > 1 else "core"
+        text = script.read_text(encoding="utf-8", errors="replace")
+        match = re.search(r"^class_name\s+(\w+)", text, re.MULTILINE)
+        if match:
+            found.setdefault(module, []).append(match.group(1))
+    return found
+
+
+def module_title(name):
+    return name.replace("_", " ").title()
+
+
+def module_blurb(name):
+    """Reuses the module's own README.txt so the site and the repo cannot disagree."""
+    readme = ADDON / name / "README.txt"
+    if not readme.exists():
+        return ""
+    first = readme.read_text(encoding="utf-8", errors="replace").strip().split("\n\n")[0]
+    first = " ".join(first.split())
+    # strip the "Name: " prefix the module READMEs all start with
+    return re.sub(r"^[A-Za-z ]+:\s*", "", first)
+
+
+def step_modules():
+    print("\n[5/6] Grouping pages by module")
+    for stale in WEB_DIR.glob("module_*.rst"):
+        stale.unlink()
+
+    have_page = {p.stem for p in WEB_DIR.glob("class_*.rst")}
+    modules = scan_modules()
+    written = []
+
+    for name in sorted(modules, key=lambda m: (MODULE_ORDER.index(m) if m in MODULE_ORDER else 999, m)):
+        pages = sorted("class_" + c.lower() for c in modules[name])
+        pages = [p for p in pages if p in have_page]
+        if not pages:
+            continue
+
+        title = module_title(name)
+        body = [title, "=" * len(title), ""]
+        blurb = module_blurb(name)
+        if blurb:
+            body += [blurb, ""]
+        body += [".. toctree::", "   :maxdepth: 1", ""]
+        body += ["   " + p for p in pages]
+        body.append("")
+
+        (WEB_DIR / ("module_%s.rst" % name)).write_text("\n".join(body), encoding="utf-8")
+        written.append(name)
+
+    unlisted = [m for m in written if m not in MODULE_ORDER]
+    if unlisted:
+        print("      WARNING: not in MODULE_ORDER, will sort last: %s" % ", ".join(unlisted))
+
+    orphans = sorted(have_page - {("class_" + c.lower()) for cs in modules.values() for c in cs})
+    if orphans:
+        print("      WARNING: %d page(s) in no module: %s" % (len(orphans), ", ".join(orphans)))
+
+    print("      %d modules" % len(written))
+
+
 def step_html():
-    print("\n[5/5] Building HTML")
+    print("\n[6/6] Building HTML")
     # Invoked as a module rather than the sphinx-build binary, which only works when the
     # interpreter's Scripts directory happens to be on PATH.
     probe = subprocess.run(
@@ -180,6 +270,7 @@ def main():
     step_xml(godot)
     step_rst()
     step_collect()
+    step_modules()
 
     if args.skip_html:
         print("\nStopped before Sphinx. reStructuredText is in %s\n" % RST_DIR)
