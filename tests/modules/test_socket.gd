@@ -21,10 +21,8 @@ func run() -> void:
 
 func _gizmo_reads_occupancy() -> void:
 	case("gizmo")
-	if not ClassDB.class_exists("EditorNode3DGizmoPlugin"):
-		check(true, "no editor classes in this build, gizmo cases skipped")
-		return
-
+	# Only the static side is reachable. The engine refuses to instantiate an
+	# EditorNode3DGizmoPlugin outside the editor, so nothing here touches an instance.
 	var gizmo: GDScript = load(GIZMO_PATH) as GDScript
 	check(gizmo != null, "the gizmo script loads")
 	if gizmo == null:
@@ -60,6 +58,54 @@ func _gizmo_reads_occupancy() -> void:
 	bare.marker = outsider
 	check(gizmo.marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
 		"a marker outside the socket is ignored, since the warning already covers it")
+
+	_gizmo_registers(gizmo, holder)
+	_gizmo_draws(gizmo, holder)
+
+
+## The plugin finds this by path, so a typo there means the gizmo silently never appears.
+## [br][br]
+## The plugin cannot be instantiated here. The engine only allows that inside the editor, so
+## whether the editor actually renders the result is not something this run can prove.
+func _gizmo_registers(gizmo: GDScript, holder: Node3D) -> void:
+	case("gizmo registration")
+	check(gizmo.handles(_socket(holder)), "it claims FoxSocket3D nodes")
+	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
+
+	var listed: String = "res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd"
+	check(FoxFabric.GIZMOS.has(listed), "the plugin lists this gizmo")
+	check(ResourceLoader.exists(listed), "and the path it lists resolves")
+
+
+func _gizmo_draws(gizmo: GDScript, holder: Node3D) -> void:
+	case("gizmo geometry")
+	var socket: FoxSocket3D = _socket(holder)
+	var lines: PackedVector3Array = gizmo.build_lines(socket)
+
+	# Twelve octahedron edges plus a shaft and four barbs, two points each.
+	eq(lines.size(), 34, "every segment is a pair of points")
+	check(lines.size() % 2 == 0, "no dangling half segment")
+
+	var reach: float = 0.0
+	for point: Vector3 in lines:
+		reach = maxf(reach, point.length())
+	check(reach > 0.0, "the gizmo is not drawn at a single point")
+	check(reach < 1.0, "and stays small enough to sit on a socket")
+
+	case("geometry follows the marker")
+	var offset: Node3D = Node3D.new()
+	socket.add_child(offset)
+	offset.position = Vector3(0.0, 2.0, 0.0)
+	socket.marker = offset
+
+	var moved: PackedVector3Array = gizmo.build_lines(socket)
+	eq(moved.size(), lines.size(), "the same shape is drawn")
+
+	var lifted: int = 0
+	for i: int in moved.size():
+		if is_equal_approx(moved[i].y - lines[i].y, 2.0):
+			lifted += 1
+	eq(lifted, moved.size(), "every point moved with the marker")
 
 
 func _socket(parent: Node) -> FoxSocket3D:

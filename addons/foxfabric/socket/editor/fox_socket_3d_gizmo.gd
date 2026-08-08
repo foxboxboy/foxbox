@@ -27,6 +27,14 @@ func _get_gizmo_name() -> String:
 
 
 func _has_gizmo(node: Node3D) -> bool:
+	return handles(node)
+
+
+## Whether this gizmo draws for [param node].
+## [br][br]
+## Split out because the engine refuses to instantiate an [EditorNode3DGizmoPlugin] outside the
+## editor, so the instance methods cannot be reached from a headless test.
+static func handles(node: Node3D) -> bool:
 	return node is FoxSocket3D
 
 
@@ -37,6 +45,15 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 	if socket == null:
 		return
 
+	var key: String = OCCUPIED if is_occupied(socket) else EMPTY
+	gizmo.add_lines(build_lines(socket), get_material(key, gizmo), false)
+
+
+## Every line segment to draw for [param socket], in the socket's own space.
+## [br][br]
+## Split out from [method _redraw] so the geometry can be checked without an editor gizmo to
+## hand it to. Points come in pairs, one segment per pair.
+static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
 	var at: Transform3D = marker_transform(socket)
 	var lines: PackedVector3Array = PackedVector3Array()
 
@@ -45,8 +62,7 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 	for point: Vector3 in _arrow():
 		lines.append(at * point)
 
-	var key: String = OCCUPIED if is_occupied(socket) else EMPTY
-	gizmo.add_lines(lines, get_material(key, gizmo), false)
+	return lines
 
 
 ## Where the attachment will actually be placed, in the socket's own space.
