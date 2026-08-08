@@ -62,6 +62,8 @@ Methods
    +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                            | :ref:`aim_at_position<class_FoxAimGimbal3D_method_aim_at_position>`\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ )                                                                                |
    +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                            | :ref:`_limits_changed<class_FoxAimGimbal3D_private_method__limits_changed>`\ (\ )                                                                                                                           |
+   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxAimGimbal3D_private_method__get_configuration_warnings>`\ (\ )                                                                                                   |
    +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -80,6 +82,10 @@ Property Descriptions
 
 :ref:`bool<class_bool>` **clamp_pitch** = ``true`` :ref:`🔗<class_FoxAimGimbal3D_property_clamp_pitch>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@clamp_pitch_setter**\ (\ value\: :ref:`bool<class_bool>`\ )
+
 If ``true``, restricts the X-axis rotation between :ref:`min_pitch_deg<class_FoxAimGimbal3D_property_min_pitch_deg>` and :ref:`max_pitch_deg<class_FoxAimGimbal3D_property_max_pitch_deg>`. If ``false``, wraps the rotation infinitely.
 
 .. rst-class:: classref-item-separator
@@ -91,6 +97,10 @@ If ``true``, restricts the X-axis rotation between :ref:`min_pitch_deg<class_Fox
 .. rst-class:: classref-property
 
 :ref:`float<class_float>` **min_pitch_deg** = ``-89.0`` :ref:`🔗<class_FoxAimGimbal3D_property_min_pitch_deg>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **@min_pitch_deg_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
 The minimum allowed pitch in degrees. Evaluated only if :ref:`clamp_pitch<class_FoxAimGimbal3D_property_clamp_pitch>` is ``true``.
 
@@ -104,6 +114,10 @@ The minimum allowed pitch in degrees. Evaluated only if :ref:`clamp_pitch<class_
 
 :ref:`float<class_float>` **max_pitch_deg** = ``89.0`` :ref:`🔗<class_FoxAimGimbal3D_property_max_pitch_deg>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@max_pitch_deg_setter**\ (\ value\: :ref:`float<class_float>`\ )
+
 The maximum allowed pitch in degrees. Evaluated only if :ref:`clamp_pitch<class_FoxAimGimbal3D_property_clamp_pitch>` is ``true``.
 
 .. rst-class:: classref-item-separator
@@ -115,6 +129,10 @@ The maximum allowed pitch in degrees. Evaluated only if :ref:`clamp_pitch<class_
 .. rst-class:: classref-property
 
 :ref:`bool<class_bool>` **clamp_yaw** = ``false`` :ref:`🔗<class_FoxAimGimbal3D_property_clamp_yaw>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **@clamp_yaw_setter**\ (\ value\: :ref:`bool<class_bool>`\ )
 
 If ``true``, restricts the Y-axis rotation between :ref:`min_yaw_deg<class_FoxAimGimbal3D_property_min_yaw_deg>` and :ref:`max_yaw_deg<class_FoxAimGimbal3D_property_max_yaw_deg>`. If ``false``, wraps the rotation infinitely.
 
@@ -128,6 +146,10 @@ If ``true``, restricts the Y-axis rotation between :ref:`min_yaw_deg<class_FoxAi
 
 :ref:`float<class_float>` **min_yaw_deg** = ``-90.0`` :ref:`🔗<class_FoxAimGimbal3D_property_min_yaw_deg>`
 
+.. rst-class:: classref-property-setget
+
+- |void| **@min_yaw_deg_setter**\ (\ value\: :ref:`float<class_float>`\ )
+
 The minimum allowed yaw in degrees. Evaluated only if :ref:`clamp_yaw<class_FoxAimGimbal3D_property_clamp_yaw>` is ``true``.
 
 .. rst-class:: classref-item-separator
@@ -139,6 +161,10 @@ The minimum allowed yaw in degrees. Evaluated only if :ref:`clamp_yaw<class_FoxA
 .. rst-class:: classref-property
 
 :ref:`float<class_float>` **max_yaw_deg** = ``90.0`` :ref:`🔗<class_FoxAimGimbal3D_property_max_yaw_deg>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **@max_yaw_deg_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
 The maximum allowed yaw in degrees. Evaluated only if :ref:`clamp_yaw<class_FoxAimGimbal3D_property_clamp_yaw>` is ``true``.
 
@@ -214,6 +240,18 @@ Intercepts native look_at calls to prevent internal pitch/yaw desyncs.
 |void| **aim_at_position**\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ ) :ref:`🔗<class_FoxAimGimbal3D_method_aim_at_position>`
 
 Instantly calculates the pitch and yaw required to face a global 3D position, then safely feeds them through the clamps.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxAimGimbal3D_private_method__limits_changed:
+
+.. rst-class:: classref-method
+
+|void| **_limits_changed**\ (\ ) :ref:`🔗<class_FoxAimGimbal3D_private_method__limits_changed>`
+
+The configuration warning and the clamp gizmo are both read off the limits, and neither refreshes on its own when one changes in the inspector.
 
 .. rst-class:: classref-item-separator
 
