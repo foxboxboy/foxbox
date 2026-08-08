@@ -106,13 +106,13 @@ Constants
 
 Gains applied to the profile when it drives rotation rather than position. 
 
-Turning needs proportionally more damping than pulling does, because the spring works against the body's inertia rather than its mass. Sharing the pull's ratio leaves rotation barely damped, so a spun crate overshoots and wobbles instead of settling where you put it.
+Matched on purpose, so a profile damped sensibly for pulling is damped sensibly for turning too. Once :ref:`torque_scale_for()<class_FoxPhysicsDragger2D_method_torque_scale_for>` has removed the difference in units between the two, the same stiffness and damping describe both, and one number does not have to be a compromise between them.
 
 .. _class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN:
 
 .. rst-class:: classref-constant
 
-**TORQUE_DAMPING_GAIN** = ``1.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN>`
+**TORQUE_DAMPING_GAIN** = ``0.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN>`
 
 .. container:: contribute
 
