@@ -60,7 +60,25 @@ documentation tooling. Only the tooling and the hand written pages are tracked, 
 generated output can never drift from the source. See [docs/README.txt](docs/README.txt)
 to rebuild it.
 
-There are no automated tests yet. The demo scenes act as the smoke tests.
+## Tests
+
+`tests/` holds a self-contained suite covering every module except `character`. It needs no
+addon and no install, so a fresh clone can run it straight away.
+
+```
+./run_tests.sh                 # or .\run_tests.ps1 on Windows
+./run_tests.sh --suite=effect  # one module
+```
+
+Or call Godot directly:
+
+```
+godot --headless --path . --script res://tests/run_all.gd
+```
+
+It exits 0 on success and 1 on any failure, so CI can gate on it. Some tests deliberately drive
+failure paths, so warnings appear during a passing run. Read the report at the bottom, not the
+warnings above it. See [tests/README.txt](tests/README.txt) for how to add one.
 
 The roadmap is in [TODO.txt](TODO.txt).
 

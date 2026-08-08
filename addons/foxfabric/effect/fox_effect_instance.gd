@@ -44,8 +44,11 @@ var stack: int:
 	get: return _stack
 	set(_v): push_error("FoxEffectInstance: 'stack' is read-only. Use increase_stack() or decrease_stack().")
 
-## Returns [code]true[/code] if the timer has reached zero. 
+## Returns [code]true[/code] if the timer has reached zero.
 ## Permanent effects always return [code]false[/code].
+## [br][br]
+## [member time_left] is floored at zero rather than running negative, so it can never collide
+## with the [code]-1.0[/code] sentinel that marks an effect permanent.
 var is_expired: bool:
 	get: return _time_left != -1.0 and _time_left <= 0.0
 
@@ -117,7 +120,9 @@ func decrease_stack(amount: int = 1) -> void:
 ## must check [member is_expired] and handle cleanup.
 func process_time(delta: float) -> void:
 	if _time_left != -1.0:
-		_time_left -= delta
+		# Floored at zero on purpose. A free-running countdown can land on exactly -1.0, which
+		# is the permanent sentinel, and a timed effect that hits it would never expire.
+		_time_left = maxf(_time_left - delta, 0.0)
 	
 	if effect and effect.tick_interval > 0.0:
 		_tick_timer -= delta
