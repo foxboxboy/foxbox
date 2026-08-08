@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="FoxFabric"
-config/description="A library of reusable, self-contained gameplay systems."
+config/description="A lightweight, general purpose library of modular systems."
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://c3ntasv61n17c"
 

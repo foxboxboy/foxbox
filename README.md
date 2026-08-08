@@ -1,11 +1,11 @@
 # FoxFabric
 
-A library of reusable, self-contained gameplay systems for Godot 4.
+A lightweight, general purpose library for Godot 4.
 
-Every module stands on its own. Copy the whole `addons/foxfabric` folder or pull out
-the single directory you need. Most of them route arbitrary `Variant` payloads instead
-of hardcoding what damage, currency, or interaction mean, so a module never has to know
-anything about your project.
+Every module stands on its own. Copy the whole `addons/foxfabric` folder or pull out the
+single directory you need. Most of them route arbitrary `Variant` payloads rather than
+hardcoding what your project means by any given concept, so a module never has to know
+anything about the game or tool it ends up in.
 
 ## Modules
 

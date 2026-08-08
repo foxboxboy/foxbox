@@ -1,7 +1,7 @@
 @tool
 class_name FoxFabric
 extends EditorPlugin
-## A library of reusable, self-contained gameplay systems. By tateorrtot.
+## A lightweight, general purpose library of modular systems. By tateorrtot.
 
 func _enable_plugin() -> void:
 	# Add autoloads here.

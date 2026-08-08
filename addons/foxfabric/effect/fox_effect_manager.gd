@@ -24,6 +24,11 @@ var effects: Array[FoxEffectInstance] = []
 
 #region Built-In Loops
 
+func _ready() -> void:
+	# nothing to tick until an effect is added
+	set_process(false)
+
+
 func _process(delta: float) -> void:
 	for i in range(effects.size() - 1, -1, -1):
 		var instance = effects[i]
@@ -136,6 +141,8 @@ func load_state(save_data: Array, target: Object, blueprint_lookup: Callable) ->
 		# Note: We purposely bypass effect.execute() here so we don't 
 		# trigger initial burst damage or sounds when loading a save file.
 
+	set_process(not effects.is_empty())
+
 #endregion
 
 
@@ -156,7 +163,8 @@ func _remove_instance_at(index: int) -> void:
 	instance.cleanup()
 	
 	effects.remove_at(index)
-	
+	set_process(not effects.is_empty())
+
 	effect_removed.emit(instance)
 
 
@@ -173,6 +181,7 @@ func _create_new_instance(effect: FoxEffect, target: Object) -> FoxEffectInstanc
 	effect.execute(target)
 	
 	effects.append(new_instance)
+	set_process(true)
 	effect_added.emit(new_instance)
 	
 	return new_instance

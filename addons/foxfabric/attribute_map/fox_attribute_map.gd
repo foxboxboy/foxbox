@@ -246,23 +246,28 @@ func clear_all_flags() -> void:
 ## Applies a data-modifying [FoxAttributeRule] to the internal data and propagates it to 
 ## children if [member can_send_rules] is [code]true[/code].
 func add_rule(rule: FoxAttributeRule) -> void:
-	if not can_receive_rules:
+	_apply_rule(rule, false)
+
+
+func _apply_rule(rule: FoxAttributeRule, from_parent: bool) -> void:
+	# can_receive_rules only gates inheritance, never a direct local call
+	if from_parent and not can_receive_rules:
 		return
-		
+
 	# prevent duplicate rules in memory
 	if _active_rules.has(rule):
 		return
-		
+
 	_active_rules.append(rule)
 	rule_added.emit(rule)
-	
+
 	# Apply rule to the map itself!
 	if _data.has(rule.target_key):
 		rule.apply_to(self)
-	
+
 	if can_send_rules:
 		for child in _child_maps:
-			child.add_rule(rule)
+			child._apply_rule(rule, true)
 
 
 ## Removes a [FoxAttributeRule] by matching its [member FoxAttributeRule.id]. 
@@ -298,7 +303,7 @@ func get_active_rules() -> Array[FoxAttributeRule]:
 
 
 
-#region Networking
+#region Hierarchy
 
 func _enter_tree() -> void:
 	_parent_map = _find_parent_map(get_parent())
@@ -344,7 +349,7 @@ func register_child_map(child: FoxAttributeMap) -> void:
 	
 	# late-joiner propagation
 	for rule in _active_rules:
-		child.add_rule(rule)
+		child._apply_rule(rule, true)
 		
 	for flag in _flags:
 		for i in range(_flags[flag]):
