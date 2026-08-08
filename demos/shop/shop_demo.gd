@@ -14,13 +14,13 @@ var player_wallet: FoxSimpleWallet = FoxSimpleWallet.new()
 func _ready() -> void:
 	player_wallet.funds = 100
 	_update_money_ui()
-	
+
 	shop_menu.item_purchased.connect(_on_item_purchased)
 	shop_menu.purchase_denied.connect(_on_purchase_denied)
 	shop_menu.item_focused.connect(_on_item_focused)
 	shop_menu.item_unfocused.connect(_on_item_unfocused)
 	add_money_button.pressed.connect(_on_add_money_button_pressed)
-	
+
 	shop_menu.populate(starting_catalog, player_wallet)
 
 func _update_money_ui() -> void:
@@ -30,7 +30,7 @@ func _update_money_ui() -> void:
 func _on_item_purchased(item: FoxShopItem) -> void:
 	print("Bought: ", item.display_name)
 	_update_money_ui()
-	
+
 	if item.product is PackedScene:
 		var instance = item.product.instantiate()
 		add_child(instance)

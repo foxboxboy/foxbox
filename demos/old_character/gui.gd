@@ -15,7 +15,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pause"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			pause()
-			
+
 		else:
 			unpause()
 
@@ -34,9 +34,8 @@ func unpause():
 
 func _process(_delta: float) -> void:
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
-	
+
 	a.modulate.a = clamp(-input_dir.x + 0.5,0.5,1)
 	d.modulate.a = clamp(input_dir.x + 0.5,0.5,1)
 	s.modulate.a = clamp(-input_dir.y + 0.5,0.5,1)
 	w.modulate.a = clamp(input_dir.y + 0.5,0.5,1)
-		

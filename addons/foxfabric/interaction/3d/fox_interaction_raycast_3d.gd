@@ -27,18 +27,18 @@ signal interaction_range_changed(new_range: float)
 
 #region Variables
 
-## How far the raycast will project along the local -Z axis. 
+## How far the raycast will project along the local -Z axis.
 ## Leave as [code]-1.0[/code] to ignore and use the manual [member RayCast3D.target_position].
 @export var interaction_range: float = -1.0:
 	set(value):
 		if value < 0.0 and value != -1.0:
 			push_warning("FoxInteractionRayCast3D: interaction_range set to a negative value (%s). Use -1.0 to ignore." % value)
-			
+
 		interaction_range = value
-		
+
 		if interaction_range != -1.0:
 			target_position = Vector3(0, 0, -interaction_range)
-			
+
 		interaction_range_changed.emit(value)
 
 var _current_target: FoxInteractableArea3D = null
@@ -81,12 +81,12 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	var interactable = get_collider() as FoxInteractableArea3D if is_colliding() else null
-	
+
 	if interactable == _current_target:
 		return
-		
+
 	_clear_target()
-	
+
 	if interactable:
 		_current_target = interactable
 		focused.emit(_current_target)

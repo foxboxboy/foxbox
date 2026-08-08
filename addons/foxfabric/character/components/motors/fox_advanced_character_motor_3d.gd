@@ -3,7 +3,7 @@ class_name FoxAdvancedCharacterMotor3D
 ## A more advanced and robust FoxCharacterMotor3D used to propell a human like actor.
 
 ## Unlike the FoxCharacterMotor3D, this motor has extra features like,
-## acceleration, friction, and interactions with RigidBody3D. 
+## acceleration, friction, and interactions with RigidBody3D.
 ## [br]
 ## This gives it an overall higher fidelity "feel".
 
@@ -22,11 +22,11 @@ class_name FoxAdvancedCharacterMotor3D
 func _physics_process(delta):
 	if not active:
 		return
-	
+
 	# math
 	_update_y_velocity(delta)
 	_update_movement(delta)
-	
+
 	# appyling the math
 	_push_away_rigid_bodies()
 	body.move_and_slide()
@@ -38,16 +38,16 @@ func _physics_process(delta):
 
 #region Private
 
-## More advanced _update_movement() from FoxCharacterMotor3D. 
+## More advanced _update_movement() from FoxCharacterMotor3D.
 func _update_movement(delta):
 	var forward := -body.global_basis.z
 	var right := body.global_basis.x
 	var direction = (forward * input_direction.y) + (right * input_direction.x)
 	direction = direction * input_strength
-	
+
 	var body_velocity_2d := Vector2(body.velocity.x, body.velocity.z)
-	
-	
+
+
 	if direction:
 		var target_vector := Vector2(direction.x, direction.z) * speed
 
@@ -55,7 +55,7 @@ func _update_movement(delta):
 
 	else:
 		body_velocity_2d = body_velocity_2d.move_toward(Vector2(0,0), delta * friction)
-	
+
 	body.velocity.x = body_velocity_2d.x
 	body.velocity.z = body_velocity_2d.y
 
@@ -77,7 +77,7 @@ func _push_away_rigid_bodies():
 			# Objects with more mass than us should be harder to push. But doesn't really make sense to push faster than we are going
 			const MY_APPROX_MASS_KG = 80.0
 			var mass_ratio = min(1., MY_APPROX_MASS_KG / c.get_collider().mass)
-			
+
 			# Optional add: Don't push object at all if it's 4x heavier or more
 			if mass_ratio < 0.25:
 				continue

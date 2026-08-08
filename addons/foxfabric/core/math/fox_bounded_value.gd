@@ -13,11 +13,11 @@ class_name FoxBoundedValue
 ## Emitted when [member value], [member min_value], or [member max_value] changes.
 signal value_changed(current: float, min: float, max: float)
 
-## Emitted when [member value] falls below [member min_value]. 
+## Emitted when [member value] falls below [member min_value].
 ## [param underflow] contains the absolute difference.
 signal depleted(underflow: float)
 
-## Emitted when [member value] exceeds [member max_value]. 
+## Emitted when [member value] exceeds [member max_value].
 ## [param overflow] contains the absolute difference.
 signal saturated(overflow: float)
 

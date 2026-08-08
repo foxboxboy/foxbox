@@ -5,7 +5,7 @@ class_name FoxVisualOptimizer
 
 
 @export_group("Settings")
-## Distance at which optimizations kick in. 
+## Distance at which optimizations kick in.
 @export var lod_distance: float = 15.0:
 	set(new_value):
 		lod_distance = new_value
@@ -46,9 +46,9 @@ func _process(delta: float) -> void:
 	var dist_sq = get_parent().global_position.distance_squared_to(_camera.global_position)
 
 	if dist_sq > _lod_distance_sq:
-		if not is_far: 
+		if not is_far:
 			_go_to_sleep()
-		
+
 		if not dist_sq > _full_disable_distance_sq:
 			_process_far_mode(delta)
 	else:

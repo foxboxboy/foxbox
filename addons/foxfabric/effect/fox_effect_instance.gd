@@ -3,8 +3,8 @@ class_name FoxEffectInstance
 extends FoxRefCounted
 ## A runtime state container for an active [FoxEffect] applied to a target [Object].
 ##
-## This class manages the active lifecycle of an effect, tracking its remaining 
-## [member time_left] and current [member stack] count. It is instantiated and 
+## This class manages the active lifecycle of an effect, tracking its remaining
+## [member time_left] and current [member stack] count. It is instantiated and
 ## managed exclusively by a [FoxEffectManager].
 ## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 
@@ -37,14 +37,14 @@ var effect: FoxEffect
 ## The specific entity in memory currently being modified.
 var target: Object
 
-## The remaining duration of the effect in seconds. 
+## The remaining duration of the effect in seconds.
 ## [br][br][b]Note:[/b] This property is Read-Only.
 var time_left: float:
 	get: return _time_left
 	set(_v): push_error("FoxEffectInstance: 'time_left' is read-only.")
 
-## The current intensity level of the effect. 
-## [br][br][b]Note:[/b] This property is Read-Only. Use [method increase_stack] 
+## The current intensity level of the effect.
+## [br][br][b]Note:[/b] This property is Read-Only. Use [method increase_stack]
 ## or [method decrease_stack] to modify.
 var stack: int:
 	get: return _stack
@@ -92,28 +92,28 @@ func setup(p_effect: FoxEffect, p_target: Object) -> void:
 ## [method FoxEffect.reapply] logic and emits [signal stack_changed].
 func increase_stack(amount: int = 1) -> void:
 	if not effect: return
-		
+
 	var previous_stack = _stack
-	
+
 	if effect.max_stacks > 0:
 		_stack = mini(_stack + amount, effect.max_stacks)
 	else:
 		_stack += amount
-		
+
 	if _stack != previous_stack:
 		effect.reapply(target, _stack)
 		stack_changed.emit(previous_stack, _stack)
 
 
-## Decreases the [member stack] count. 
+## Decreases the [member stack] count.
 ## [br][br]
-## If the stack reaches [code]0[/code], it immediately emits [signal request_destruction] 
-## so the manager can purge it. Otherwise, it triggers [method FoxEffect.reapply] 
+## If the stack reaches [code]0[/code], it immediately emits [signal request_destruction]
+## so the manager can purge it. Otherwise, it triggers [method FoxEffect.reapply]
 ## to scale down the math.
 func decrease_stack(amount: int = 1) -> void:
 	var previous_stack = _stack
 	_stack -= amount
-	
+
 	if _stack <= 0:
 		request_destruction.emit(self)
 	else:
@@ -122,16 +122,16 @@ func decrease_stack(amount: int = 1) -> void:
 		stack_changed.emit(previous_stack, _stack)
 
 
-## Ticks down the internal timer. 
+## Ticks down the internal timer.
 ## [br][br]
-## [b]Note:[/b] This does not automatically destroy the instance. The manager 
+## [b]Note:[/b] This does not automatically destroy the instance. The manager
 ## must check [member is_expired] and handle cleanup.
 func process_time(delta: float) -> void:
 	if _time_left != -1.0:
 		# Floored at zero on purpose. A free-running countdown can land on exactly -1.0, which
 		# is the permanent sentinel, and a timed effect that hits it would never expire.
 		_time_left = maxf(_time_left - delta, 0.0)
-	
+
 	if effect and effect.tick_interval > 0.0:
 		_tick_timer -= delta
 		if _tick_timer <= 0.0:
@@ -139,20 +139,20 @@ func process_time(delta: float) -> void:
 			_tick_timer += effect.tick_interval
 
 
-## Safely delegates the reversal logic to the [member effect] blueprint before 
+## Safely delegates the reversal logic to the [member effect] blueprint before
 ## this instance is destroyed.
 func cleanup() -> void:
 	if effect and is_instance_valid(target):
 		effect.remove(target)
 
 
-## Safely merges the duration of a new effect into this active instance 
+## Safely merges the duration of a new effect into this active instance
 ## based on the incoming effect's [member FoxEffect.duration_mode].
 func merge_duration(incoming_effect: FoxEffect) -> void:
 	# If either the current instance or the new effect is permanent, ignore math.
-	if _time_left == -1.0 or incoming_effect.duration == -1.0: 
+	if _time_left == -1.0 or incoming_effect.duration == -1.0:
 		return
-		
+
 	match incoming_effect.duration_mode:
 		FoxEffect.DurationMode.ADD:
 			_time_left += incoming_effect.duration
@@ -192,7 +192,7 @@ func load_state(data: Dictionary) -> void:
 
 #region Built-In Virtuals
 
-## Overrides the default print() behavior to show readable, human-friendly data 
+## Overrides the default print() behavior to show readable, human-friendly data
 ## instead of a raw memory ID (e.g., [lb]poison x2 (4.5s)]).
 func _to_string() -> String:
 	if effect:

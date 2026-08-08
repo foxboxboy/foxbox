@@ -13,7 +13,7 @@ const TOMMY_GUN = preload("uid://384do1qwb655")
 const VEST = preload("uid://cu8c6xykn3112")
 const HELMET = preload("uid://qalmtfjmgw2q")
 
-# The controller remembers how the player pressed the buttons, 
+# The controller remembers how the player pressed the buttons,
 # the character just executes the current intent.
 var _crouch_toggled := false
 var _sprint_toggled := false
@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed and not event.echo:
-			
+
 			# CROUCH TOGGLE
 			if event.keycode == KEY_C:
 				_crouch_toggled = !_crouch_toggled
@@ -34,7 +34,7 @@ func _input(event: InputEvent) -> void:
 					character.pose.request_crouch()
 				else:
 					character.pose.cancel_crouch()
-					
+
 			# HOLD GUN
 			if event.keycode == KEY_1:
 				if character.model.hands.has_node_in_either_hand():
@@ -43,21 +43,21 @@ func _input(event: InputEvent) -> void:
 					const TOMMY_GUN_ITEM = preload("uid://ww7unfyqu7q8")
 					var new_gun : FoxHoldableItem = TOMMY_GUN_ITEM.instantiate()
 					character.model.hands.hold_item(new_gun)
-			
+
 			# EQUIP HELMET
 			if event.keycode == KEY_2:
 				if character.model.accessories.has_rigid_accessory_in_slot("head"):
 					character.model.accessories.empty_rigid_accessory_slot("head")
 				else:
 					character.model.accessories.equip_rigid_accessory(HELMET.instantiate(), "head")
-			
+
 			# EQUIP VEST
 			if event.keycode == KEY_3:
 				if character.model.accessories.has_skinned_accessory_slot("torso"):
 					character.model.accessories.empty_skinned_accessory_slot("torso")
 				else:
 					character.model.accessories.equip_skinned_accessory(VEST.instantiate(), "torso")
-			
+
 			if event.keycode == KEY_E:
 				const BULLET = preload("uid://cs86odgdio8ak")
 				var new_bullet : Node3D = BULLET.instantiate()

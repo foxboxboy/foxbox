@@ -4,7 +4,7 @@ class_name FoxPrice
 extends FoxResource
 ## Abstract base class for defining currency costs.
 ##
-## Classes extending [FoxPrice] must implement the logic for checking 
+## Classes extending [FoxPrice] must implement the logic for checking
 ## affordability and performing transactions against a [FoxWallet].
 
 ## Returns [code]true[/code] if the provided [param wallet] can afford this price.

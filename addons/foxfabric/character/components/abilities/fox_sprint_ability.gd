@@ -3,7 +3,7 @@ extends FoxNode
 
 ## Component that manages the intents and threshold math for sprinting.
 ##
-## Tracks the player's sprint requests and provides the speed variables 
+## Tracks the player's sprint requests and provides the speed variables
 ## needed by the state machine, decoupling locomotion tuning from the root character.
 
 ## Emitted when a sprint is requested.
@@ -14,7 +14,7 @@ signal cancelled
 ## The target speed when sprinting, in meters per second.
 @export var speed: float = 9.0
 
-## The percentage of sprint_speed the character's velocity must drop below 
+## The percentage of sprint_speed the character's velocity must drop below
 ## to automatically break out of a sprint. (Default 0.05 = 5%).
 @export var dropoff_threshold: float = 0.05
 

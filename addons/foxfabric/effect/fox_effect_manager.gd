@@ -59,9 +59,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for i in range(effects.size() - 1, -1, -1):
 		var instance = effects[i]
-		
+
 		instance.process_time(delta)
-		
+
 		if instance.is_expired:
 			_remove_instance_at(i)
 
@@ -72,25 +72,25 @@ func _process(delta: float) -> void:
 
 #region Public API
 
-## Applies a [FoxEffect] to the [param target]. 
+## Applies a [FoxEffect] to the [param target].
 ## [br][br]
-## Depending on the effect's [member FoxEffect.stack_mode], this will either 
+## Depending on the effect's [member FoxEffect.stack_mode], this will either
 ## return an updated existing instance or instantiate a brand new one.
 func add_effect(effect: FoxEffect, target: Object) -> FoxEffectInstance:
-	if not effect: 
+	if not effect:
 		return null
 
 	var existing_instance = _get_instance_by_id(effect.id)
 	var use_multiple_instances : bool = effect.stack_mode == FoxEffect.StackMode.MULTIPLE_INSTANCES
-	
+
 	if not existing_instance or use_multiple_instances:
 		return _create_new_instance(effect, target)
 
 	existing_instance.merge_duration(effect)
-	
+
 	if effect.stack_mode == FoxEffect.StackMode.INTENSITY:
 		existing_instance.increase_stack(1)
-		
+
 	return existing_instance
 
 
@@ -151,24 +151,24 @@ func serialize() -> Array[Dictionary]:
 ## Requires the [param target] and a [Callable] that takes a [StringName] ID and returns a [FoxEffect].
 func load_state(save_data: Array, target: Object, blueprint_lookup: Callable) -> void:
 	remove_all_effects()
-	
+
 	for data in save_data:
 		var effect_id: StringName = data.get("id", &"")
 		var blueprint: FoxEffect = blueprint_lookup.call(effect_id)
-		
+
 		if not blueprint:
 			push_warning("FoxEffectManager: Could not load blueprint for ID '%s'" % effect_id)
 			continue
-			
+
 		var instance := FoxEffectInstance.new()
-		
+
 		instance.setup(blueprint, target)
 		instance.load_state(data)
 		instance.request_destruction.connect(_on_instance_request_destruction)
-		
+
 		effects.append(instance)
-		
-		# Note: We purposely bypass effect.execute() here so we don't 
+
+		# Note: We purposely bypass effect.execute() here so we don't
 		# trigger initial burst damage or sounds when loading a save file.
 
 	set_process(not effects.is_empty())
@@ -189,10 +189,10 @@ func _get_instance_by_id(target_id: StringName) -> FoxEffectInstance:
 
 func _remove_instance_at(index: int) -> void:
 	var instance = effects[index]
-	
+
 	instance.request_destruction.disconnect(_on_instance_request_destruction)
 	instance.cleanup()
-	
+
 	effects.remove_at(index)
 	set_process(not effects.is_empty())
 
@@ -205,16 +205,16 @@ func _on_instance_request_destruction(instance: FoxEffectInstance) -> void:
 
 func _create_new_instance(effect: FoxEffect, target: Object) -> FoxEffectInstance:
 	var new_instance := FoxEffectInstance.new()
-	
+
 	new_instance.setup(effect, target)
 	new_instance.request_destruction.connect(_on_instance_request_destruction)
-	
+
 	effect.execute(target)
-	
+
 	effects.append(new_instance)
 	set_process(true)
 	effect_added.emit(new_instance)
-	
+
 	return new_instance
 
 #endregion

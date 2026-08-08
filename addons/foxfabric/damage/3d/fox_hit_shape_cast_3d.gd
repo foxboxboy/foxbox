@@ -17,14 +17,14 @@ signal hit_delivered(payload: Variant, target: FoxHurtArea3D)
 ## Forces the shapecast to update immediately and attempts to deliver the [member payload].
 func fire() -> void:
 	force_shapecast_update()
-	
+
 	if not is_colliding():
 		return
-		
+
 	for i in get_collision_count():
 		var collider := get_collider(i)
 		var hurtbox := collider as FoxHurtArea3D
-		
+
 		# only report a delivery the hurtbox actually accepted
 		if hurtbox and hurtbox.receive_hit(payload):
 			hit_delivered.emit(payload, hurtbox)

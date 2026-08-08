@@ -4,7 +4,7 @@ extends Area3D
 ## A physical volume that can be detected and interacted with.
 ##
 ## Designed to be extended or used in conjunction with signals. It accepts a generic
-## [Variant] context during interaction, allowing the initiator to pass a [Node], 
+## [Variant] context during interaction, allowing the initiator to pass a [Node],
 ## a Dictionary of parameters, or a custom context object.
 
 
@@ -28,7 +28,7 @@ signal unfocused(sensor: Node)
 
 #region Public API
 
-## Triggers the interaction logic. 
+## Triggers the interaction logic.
 ## Pass any required data (like the player node or a context object) as the [param context].
 func interact(context: Variant = null) -> void:
 	interacted.emit(context)

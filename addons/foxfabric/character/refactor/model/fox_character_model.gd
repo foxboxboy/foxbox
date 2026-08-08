@@ -8,7 +8,7 @@ signal meshes_shown
 
 
 @export_group("Components")
-@export var animation_tree : FoxCharacterAnimationTree 
+@export var animation_tree : FoxCharacterAnimationTree
 @export var hands : FoxCharacterHands
 @export var skeleton : Skeleton3D
 @export var accessories : FoxCharacterAccessories
@@ -40,16 +40,16 @@ var yaw : float = 0.0
 func _ready() -> void:
 	assert(hands != null, "ERROR: no hands were assigned to FoxCharacterModel: "+str(get_path()))
 	assert(animation_tree != null, "ERROR: no animation_tree was assigned to FoxCharacterModel: "+str(get_path()))
-	assert(skeleton != null, "ERROR: no skeleton was assigned to FoxCharacterModel: "+str(get_path()))	
-	assert(accessories != null, "ERROR: no accessories were assigned to FoxCharacterModel: "+str(get_path()))	
+	assert(skeleton != null, "ERROR: no skeleton was assigned to FoxCharacterModel: "+str(get_path()))
+	assert(accessories != null, "ERROR: no accessories were assigned to FoxCharacterModel: "+str(get_path()))
 
-	
+
 	_spine_bone_index = skeleton.find_bone(spine_bone_name)
 	assert(_spine_bone_index != -1, "WARNING: no spine bone with name <"+spine_bone_name+"> could not be found under FoxCharacterModel: "+str(get_path()))
 	_pelvis_bone_index = skeleton.get_bone_parent(_spine_bone_index)
 	assert(_pelvis_bone_index != -1, "WARNING: no pelvis bone could not be found under FoxCharacterModel: "+str(get_path()))
 	_meshes = _get_all_meshes()
-	
+
 	var pelvis = skeleton.get_bone_global_pose(_pelvis_bone_index)
 	var spine = skeleton.get_bone_pose(_spine_bone_index)
 	_smoothed_anim_transform = pelvis * spine
@@ -67,7 +67,7 @@ func _process(_delta):
 
 func update_strafe(input_direction: Vector2) -> void:
 	var strafe_amount := -input_direction.x * lean_into_turn_amount
-	
+
 	rotation.y = strafe_amount
 	rotation.z = 0.05 * strafe_amount
 
@@ -83,7 +83,7 @@ func hide_meshes():
 	for mesh in _meshes:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
 	_meshes_shown = false
-	
+
 	meshes_hidden.emit()
 
 
@@ -93,7 +93,7 @@ func show_meshes():
 	for mesh in _meshes:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	_meshes_shown = true
-	
+
 	meshes_shown.emit()
 
 
@@ -106,7 +106,7 @@ func crouch():
 
 
 func enter_air() -> void:
-	animation_tree.transition_to_air()	
+	animation_tree.transition_to_air()
 
 
 func set_move_speed(speed_percent: float) -> void:
@@ -127,10 +127,10 @@ func _get_all_meshes(_under_node : Node = self, _array : Array[MeshInstance3D] =
 	for child : Node in _under_node.get_children():
 		if child.get_child_count() > 0:
 			_get_all_meshes(child, _array)
-		
+
 		if child is MeshInstance3D:
 			_array.append(child)
-	
+
 	return _array
 
 
@@ -138,12 +138,12 @@ func _get_first_skeleton(_under_node : Node = self) -> Skeleton3D:
 	for child : Node in _under_node.get_children():
 		if child is Skeleton3D:
 			return child
-		
+
 		if child.get_child_count() > 0:
 			var result = _get_first_skeleton(child)
 			if result != null:
 				return result
-	
+
 	return null
 
 
@@ -155,13 +155,13 @@ func _update_spine_bone():
 
 	# where the spine bone would be if we didn't touch it
 	var animated_global_transform = pelvis_global * spine_local
-	
+
 	# our offset from where the character is looking
 	var aim_basis = Basis.from_euler(Vector3(pitch, yaw, 0))
-	
+
 	# combine
 	var final_basis = animated_global_transform.basis * aim_basis
-	
+
 	# apply
 	var target_transform = Transform3D(final_basis, animated_global_transform.origin)
 	skeleton.set_bone_global_pose_override(_spine_bone_index, target_transform, 1.0, true)

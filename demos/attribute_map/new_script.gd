@@ -14,12 +14,12 @@ func _init(p_id: StringName = &"", p_target_key: StringName = &"", p_amount: flo
 func apply_to(map: FoxAttributeMap) -> void:
 	# We default to 0.0 just in case the key doesn't exist yet
 	var current_value: float = map.get_data(target_key, 0.0)
-	
+
 	map.set_data(target_key, current_value + amount)
 
 
 ## Gets the current value from the map, subtracts the amount, and updates the map.
 func remove_from(map: FoxAttributeMap) -> void:
 	var current_value: float = map.get_data(target_key, 0.0)
-	
+
 	map.set_data(target_key, current_value - amount)

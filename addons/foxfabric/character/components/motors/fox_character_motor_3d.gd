@@ -1,21 +1,21 @@
 extends FoxNode3D
 class_name FoxCharacterMotor3D
-## Moves a CharacterBody3D based on an input direction and the strength of the input. 
+## Moves a CharacterBody3D based on an input direction and the strength of the input.
 
 
 ## The body that will be acted upon. If unspecified, the node this is attached to will become the body.
 @export var body : CharacterBody3D
 ## How fast the body will move.
 @export var speed := 5.0
-## How much the default gravity will apply. Makes the character 
-## feel more floaty (less than 1) or heavier (greater than 1).  
+## How much the default gravity will apply. Makes the character
+## feel more floaty (less than 1) or heavier (greater than 1).
 @export var gravity_multiplier := 2.5
 
 ## Direction the body will move when given input.
 var input_direction := Vector2.ZERO
 ## How strong the input is, useful for joysticks.
 var input_strength := 1.0
-## Whether or not this motor will process. 
+## Whether or not this motor will process.
 var active := true:
 	set(new_value):
 		active = new_value
@@ -38,10 +38,10 @@ func _ready() -> void:
 func _physics_process(delta) -> void:
 	if not body: return
 	if not active: return
-	
+
 	_update_y_velocity(delta)
 	_update_movement(delta)
-	
+
 	body.move_and_slide()
 
 #endregion
@@ -54,7 +54,7 @@ func _physics_process(delta) -> void:
 ## Enables the motor to work.
 func enable():
 	active = true
-	
+
 
 
 ## Enables the motor to work.
@@ -71,7 +71,7 @@ func disable():
 func _update_movement(_delta) -> void:
 	var direction = (-body.global_basis.z * input_direction.y) + (body.global_basis.x * input_direction.x)
 	direction = direction * input_strength
-	
+
 	if not input_direction.is_zero_approx():
 		body.velocity.x = direction.x * speed
 		body.velocity.z = direction.z * speed

@@ -19,16 +19,16 @@ signal hit_delivered(payload: Variant, target: FoxHurtArea3D)
 ## Forces the raycast to update immediately and attempts to deliver the [member payload].
 func fire() -> void:
 	force_raycast_update()
-	
+
 	if not is_colliding():
 		return
-		
+
 	var collider := get_collider()
 	var hurtbox := collider as FoxHurtArea3D
-	
+
 	if not hurtbox:
 		return
-		
+
 	# only report a delivery the hurtbox actually accepted
 	if hurtbox.receive_hit(payload):
 		hit_delivered.emit(payload, hurtbox)

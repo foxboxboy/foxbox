@@ -17,7 +17,7 @@ enum ShadowQuality{
 	## No shadow will be shown under this character.
 	DISABLED,
 	## A simple mesh instance with a black circle will
-	## be shown. 
+	## be shown.
 	SIMPLE,
 	## A more advanced decal will be used to draw the
 	## shadow.
@@ -33,20 +33,20 @@ func _set_shadow_quality(new_shadow_quality : ShadowQuality) -> void:
 		return
 
 	shadow_type = new_shadow_quality
-	
+
 	if shadow:
 		shadow.queue_free()
-	
+
 	if shadow_type == ShadowQuality.SIMPLE:
 		assert(shadow_simple_scene != null, "ERROR: No shadow_simple_scene assigned")
-		
+
 		shadow = shadow_simple_scene.instantiate()
 		shadow.position.y = shadow_simple_y_offset
 		add_child(shadow)
-	
+
 	if shadow_type == ShadowQuality.DECAL:
 		assert(shadow_advanced_scene != null, "ERROR: No shadow_advanced_scene assigned")
-		
+
 		shadow = shadow_advanced_scene.instantiate()
 		shadow.position.y = shadow_decal_y_offset
 		add_child(shadow)

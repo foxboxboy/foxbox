@@ -63,11 +63,11 @@ signal buy_button_unfocused(item: FoxShopItem)
 ## Populates the internal UI nodes with data from the provided [param item_data].
 func setup(item_data: FoxShopItem) -> void:
 	data = item_data
-	
+
 	if name_label: name_label.text = str(data.display_name)
 	if icon_rect: icon_rect.texture = data.icon
 	if description_label: description_label.text = data.description
-	
+
 	if cost_label:
 		cost_label.text = data.price.get_display_string() if data.price else "Free"
 
@@ -76,9 +76,9 @@ func setup(item_data: FoxShopItem) -> void:
 func set_affordability(can_afford: bool) -> void:
 	if buy_button:
 		buy_button.disabled = not can_afford
-		
+
 	modulate = affordable_color if can_afford else unaffordable_color
-	
+
 	if cost_label:
 		cost_label.modulate = cost_positive_color if can_afford else cost_negative_color
 

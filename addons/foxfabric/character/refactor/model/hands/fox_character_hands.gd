@@ -32,22 +32,22 @@ func empty_right_hand() -> void:
 ## Returns true if a node was replaced.
 func hold_node(node : Node, left_handed := false) -> bool:
 	var cleared := false
-	
+
 	if left_handed:
-		if has_left_hand_node(): 
+		if has_left_hand_node():
 			empty_left_hand()
 			cleared = true
 		left_hand_slot.add_child(node)
 	else:
-		if has_right_hand_node(): 
+		if has_right_hand_node():
 			empty_right_hand()
 			cleared = true
 		right_hand_slot.add_child(node)
-		
+
 	if node is Node3D:
 		node.position = Vector3.ZERO
 		node.rotation = Vector3.ZERO
-	
+
 	return cleared
 
 
@@ -86,39 +86,39 @@ func has_node_in_either_hand() -> bool:
 #region Items
 
 func hold_item(item : FoxHoldableItem, left_handed := false):
-	
+
 	# this exists for readability
 	var right_handed := not left_handed
-	
+
 	if item.is_two_handed():
 		empty_hands()
 	elif right_handed:
 		empty_right_hand()
 	elif left_handed:
 		empty_left_hand()
-	
-	
+
+
 	hold_node(item, left_handed)
 
 	if item.main_hand_target == null:
 		return
 	if item.main_elbow_pole == null:
 		return
-	
-	
+
+
 	## MAIN HAND
 	if right_handed:
 		enable_right_hand_ik(item.main_hand_target, item.main_elbow_pole)
 	elif left_handed:
 		enable_left_hand_ik(item.main_hand_target, item.main_elbow_pole)
-	
-	
+
+
 	## SECONDARY
 	if item.off_hand_target == null:
 		return
 	if item.off_elbow_pole == null:
 		return
-	
+
 	if left_handed:
 		enable_right_hand_ik(item.off_hand_target, item.off_elbow_pole)
 	elif right_handed:

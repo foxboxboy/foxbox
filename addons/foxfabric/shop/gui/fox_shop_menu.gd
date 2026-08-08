@@ -57,10 +57,10 @@ signal catalog_populated
 func populate(catalog: FoxShopCatalog, wallet: FoxWallet = null) -> void:
 	_current_wallet = wallet
 	_clear_all_options()
-	
+
 	for item in catalog.options:
 		add_item(item)
-	
+
 	update_affordability()
 	catalog_populated.emit()
 
@@ -69,13 +69,13 @@ func populate(catalog: FoxShopCatalog, wallet: FoxWallet = null) -> void:
 func add_item(item: FoxShopItem) -> void:
 	var slot = slot_scene.instantiate() as FoxShopSlot
 	container.add_child(slot)
-	
+
 	slot.setup(item)
-	
+
 	slot.buy_button_pressed.connect(_on_slot_pressed)
 	slot.buy_button_focused.connect(item_focused.emit)
 	slot.buy_button_unfocused.connect(item_unfocused.emit)
-	
+
 	if _current_wallet:
 		var can_buy = item.price.can_be_paid_by(_current_wallet) if item.price else true
 		slot.set_affordability(can_buy)
@@ -84,13 +84,13 @@ func add_item(item: FoxShopItem) -> void:
 ## Forces all child slots to recalculate affordability.
 func update_affordability(wallet: FoxWallet = _current_wallet) -> void:
 	_current_wallet = wallet
-	
+
 	for slot in container.get_children():
 		if slot is FoxShopSlot and slot.data:
 			var can_buy = true
 			if slot.data.price and _current_wallet:
 				can_buy = slot.data.price.can_be_paid_by(_current_wallet)
-				
+
 			slot.set_affordability(can_buy)
 
 #endregion
@@ -109,12 +109,12 @@ func _on_slot_pressed(item: FoxShopItem) -> void:
 	if not item.price:
 		item_purchased.emit(item)
 		return
-		
+
 	if not _current_wallet:
 		push_warning("FoxShopMenu: Attempted purchase without a wallet.")
 		purchase_denied.emit(item, &"no_wallet")
 		return
-		
+
 	if item.price.pay(_current_wallet):
 		item_purchased.emit(item)
 		update_affordability()

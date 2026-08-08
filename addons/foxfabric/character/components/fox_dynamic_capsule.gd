@@ -3,7 +3,7 @@ extends CollisionShape3D
 
 ## A specialized [CollisionShape3D] that animates its height while remaining grounded.
 ##
-## Automatically calculates the [member Node3D.position] Y-offset needed to keep the 
+## Automatically calculates the [member Node3D.position] Y-offset needed to keep the
 ## base of a [CapsuleShape3D] flush with the floor when its height changes.
 
 
@@ -12,9 +12,9 @@ func lerp_height_to(target_height: float, duration: float = 0.2) -> void:
 	if not shape is CapsuleShape3D:
 		push_warning("FoxDynamicCapsule requires a CapsuleShape3D.")
 		return
-		
+
 	var target_y: float = target_height / 2.0
 	var tween := create_tween().set_parallel(true)
-	
+
 	tween.tween_property(shape, "height", target_height, duration)
 	tween.tween_property(self, "position:y", target_y, duration)

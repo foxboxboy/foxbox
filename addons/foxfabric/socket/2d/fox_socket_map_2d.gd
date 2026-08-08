@@ -55,7 +55,7 @@ func get_available_socket_count() -> int:
 	return count
 
 
-## Plugs [param node] into a socket. If [param target_socket] is specified, it targets that 
+## Plugs [param node] into a socket. If [param target_socket] is specified, it targets that
 ## exact socket. If left empty, it will auto-attach to the first available empty socket.
 ## Returns [code]true[/code] on success.
 func attach(node: Node2D, target_socket: StringName = &"") -> bool:
@@ -66,13 +66,13 @@ func attach(node: Node2D, target_socket: StringName = &"") -> bool:
 			socket.attach(node)
 			return true
 		return false
-	
+
 	# No socket named, take the first empty one
 	for socket: FoxSocket2D in sockets.values():
 		if socket.is_empty():
 			socket.attach(node)
 			return true
-			
+
 	return false
 
 
@@ -102,7 +102,7 @@ func _ready() -> void:
 		if socket:
 			# Update sockets Dictionary
 			sockets[StringName(socket.name)] = socket
-			
+
 			# Connect signals
 			socket.attached.connect(_on_socket_attached)
 			socket.detached.connect(_on_socket_detached)

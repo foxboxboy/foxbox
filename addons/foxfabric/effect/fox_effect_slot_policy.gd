@@ -94,44 +94,44 @@ func add_effect(effect: FoxEffect, target: Object) -> bool:
 	if not manager:
 		push_error("FoxEffectSlotPolicy: No FoxEffectManager parent found.")
 		return false
-		
+
 	var instance = manager.add_effect(effect, target)
-	if not instance: 
+	if not instance:
 		return false
-		
+
 	if slots.has(instance):
 		slots_updated.emit(slots)
-		return true 
-		
+		return true
+
 	if slots.size() >= max_slots:
 		_push_out_oldest()
-		
+
 	slots.push_front(instance)
 	slots_updated.emit(slots)
-	
+
 	return true
 
 
 ## Manually removes a tracked slot by its effect ID.
 func remove_effect(effect_id: StringName) -> void:
 	if not manager: return
-	
+
 	manager.remove_effect_by_id(effect_id)
 
 
 ## Clears all tracked slots and forces the Manager to purge them.
 func clear_slots() -> void:
-	if not manager: 
+	if not manager:
 		return
-	
+
 	# Temporarily disconnect so we don't emit a UI update for every single effect
 	manager.effect_removed.disconnect(_on_manager_effect_removed)
-	
+
 	for i in range(slots.size() - 1, -1, -1):
 		manager.remove_instance(slots[i])
-		
+
 	slots.clear()
-	
+
 	manager.effect_removed.connect(_on_manager_effect_removed)
 	slots_updated.emit(slots)
 

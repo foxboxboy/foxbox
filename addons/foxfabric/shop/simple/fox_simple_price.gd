@@ -21,15 +21,15 @@ extends FoxPrice
 ## The symbol used for display (e.g., "$", "G", "pts").
 @export var currency_symbol: String = "$"
 
-## Returns [code]true[/code] if the provided [param wallet] (must be a [FoxSimpleWallet]) 
-## has sufficient funds to cover the [member cost]. 
-## Returns [code]false[/code] if the funds are insufficient or if an 
+## Returns [code]true[/code] if the provided [param wallet] (must be a [FoxSimpleWallet])
+## has sufficient funds to cover the [member cost].
+## Returns [code]false[/code] if the funds are insufficient or if an
 ## incompatible [FoxWallet] type is provided.
 func can_be_paid_by(wallet: FoxWallet) -> bool:
 	var simple_wallet := wallet as FoxSimpleWallet
 	if simple_wallet:
 		return simple_wallet.funds >= cost
-		
+
 	push_error("FoxSimplePrice: Expected a FoxSimpleWallet, but received an incompatible type.")
 	return false
 

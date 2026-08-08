@@ -20,7 +20,7 @@ signal skinned_removed(accessory: Node3D, slot_name: String)
 
 
 
-## The skeleton that the rigid accessories will attach to and the 
+## The skeleton that the rigid accessories will attach to and the
 ## skinned accessories will deform to.
 @export var skeleton: Skeleton3D
 
@@ -34,7 +34,7 @@ var _rigid_accessories: Array = []
 func _ready() -> void:
 	if get_node(".") is Skeleton3D:
 		skeleton = get_node(".")
-	
+
 	assert(skeleton != null, "ERROR: FoxCharacterAccessories needs a Skeleton3D assigned!")
 
 
@@ -63,13 +63,13 @@ func equip_rigid_accessory(accessory: Node3D, bone_name: String, reset_transform
 	empty_rigid_accessory_slot(bone_name)
 
 	attachment.add_child(accessory)
-	
+
 	_rigid_accessories.append(accessory)
-	
+
 	if reset_transform:
 		accessory.position = Vector3.ZERO
 		accessory.rotation = Vector3.ZERO
-	
+
 	rigid_equipped.emit(accessory, bone_name)
 
 
@@ -81,17 +81,17 @@ func has_rigid_accessory_in_slot(bone_name: String) -> bool:
 ## Returns all rigid accessories assigned to a bone.
 func get_rigid_accessories_in_slot(bone_name: String) -> Array:
 	var accessory_array = []
-	
+
 	for child in skeleton.get_children():
 		if child is BoneAttachment3D and child.bone_name == bone_name:
 			for item in child.get_children():
 				if _rigid_accessories.has(item):
 					accessory_array.append(item)
-	
+
 	return accessory_array
 
 
-## Removes all rigid accessories assigned to a bone. 
+## Removes all rigid accessories assigned to a bone.
 func empty_rigid_accessory_slot(bone_name: String) -> void:
 	for child in skeleton.get_children():
 		if child is BoneAttachment3D and child.bone_name == bone_name:
@@ -100,17 +100,17 @@ func empty_rigid_accessory_slot(bone_name: String) -> void:
 					item.queue_free()
 
 					_rigid_accessories.erase(item)
-					
+
 					rigid_removed.emit(item, bone_name)
 
 
 ## Clears all rigid accessories from their slots.
-## This effectively wipes the character back to having no rigid accessories. 
+## This effectively wipes the character back to having no rigid accessories.
 func clear_all_rigid_accessories() -> void:
 	for child in skeleton.get_children():
 		if child is BoneAttachment3D:
 			empty_rigid_accessory_slot(child.bone_name)
-	
+
 	_rigid_accessories.clear()
 
 #endregion
@@ -127,22 +127,22 @@ func clear_all_rigid_accessories() -> void:
 ## be found or removed later.
 func equip_skinned_accessory(accessory_root: Node3D, slot_name: String) -> void:
 	empty_skinned_accessory_slot(slot_name)
-	
+
 	add_child(accessory_root)
 	accessory_root.position = Vector3.ZERO
 	accessory_root.rotation = Vector3.ZERO
-	
+
 	_skinned_slots[slot_name] = accessory_root
-	
+
 	var meshes = accessory_root.find_children("*", "MeshInstance3D", true, false)
-	
+
 	if meshes.is_empty():
 		push_warning("WARNING: No MeshInstance3D found inside skinned accessory: " + str(accessory_root.name))
 		return
-		
+
 	for mesh in meshes:
 		mesh.skeleton = mesh.get_path_to(skeleton)
-	
+
 	skinned_equipped.emit(accessory_root, slot_name)
 
 
@@ -161,20 +161,20 @@ func get_skinned_accessory_slots() -> Dictionary:
 func empty_skinned_accessory_slot(slot_name: String) -> void:
 	if _skinned_slots.has(slot_name):
 		var accessory = _skinned_slots[slot_name]
-		
+
 		if is_instance_valid(accessory):
-			accessory.queue_free() 
-			
+			accessory.queue_free()
+
 		_skinned_slots.erase(slot_name)
-		
+
 		skinned_removed.emit(accessory, slot_name)
 
 
 ## Clears all skinned accessories from their slots.
-## This effectively wipes the character back to having no skinned accessories. 
+## This effectively wipes the character back to having no skinned accessories.
 func clear_all_skinned_accessories() -> void:
 	var current_slots = _skinned_slots.keys()
-		
+
 	for slot_name in current_slots:
 		empty_skinned_accessory_slot(slot_name)
 
@@ -186,7 +186,7 @@ func clear_all_skinned_accessories() -> void:
 #region Both
 
 ## Clears all accessories from their slots.
-## This effectively wipes the character back to having no accessories. 
+## This effectively wipes the character back to having no accessories.
 func clear_all_accessories() -> void:
 	clear_all_rigid_accessories()
 	clear_all_skinned_accessories()

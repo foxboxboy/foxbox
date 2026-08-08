@@ -13,7 +13,7 @@ func move() -> void:
 	move_tween.set_trans(Tween.TRANS_CUBIC)
 	move_tween.tween_property(self, "position", b, time)
 	move_tween.tween_property(self, "position", a, time)
-	
+
 	await get_tree().create_timer(2 * time).timeout
-	
+
 	move()

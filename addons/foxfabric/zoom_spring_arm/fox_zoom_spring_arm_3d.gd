@@ -4,7 +4,7 @@ class_name FoxZoomSpringArm3D
 extends SpringArm3D
 ## An extended [SpringArm3D] designed for camera controllers.
 ##
-## It overrides standard length adjustments with smooth, frame-independent 
+## It overrides standard length adjustments with smooth, frame-independent
 ## zoom interpolation and provides a dedicated API for stepping the zoom in and out.
 
 ## Emitted when the arm's zoom distance visually changes.
@@ -68,7 +68,7 @@ func change_zoom(amount: float) -> void:
 func get_zoom_percentage() -> float:
 	if max_length == 0.0:
 		return 0.0
-		
+
 	return spring_length / max_length
 
 #endregion
@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
 
 	if not is_multiplayer_authority():
 		return
-		
+
 	_update_zoom(delta)
 
 
@@ -101,31 +101,31 @@ func _update_zoom(delta: float) -> void:
 	var should_zoom := not is_equal_approx(spring_length, target_length)
 	if not should_zoom:
 		return
-		
+
 	var old_length := spring_length
-	
+
 	spring_length = _calculate_smooth_length(delta)
-	
+
 	_emit_zoom_signals(old_length)
 
 
 func _calculate_smooth_length(delta: float) -> float:
 	var new_length := lerpf(spring_length, target_length, 1.0 - exp(-zoom_speed * delta))
-	
+
 	if absf(new_length - target_length) < 0.01:
 		return target_length
-		
+
 	return new_length
 
 
 func _emit_zoom_signals(old_length: float) -> void:
 	if spring_length != old_length:
 		length_changed.emit(spring_length)
-	
+
 	# Check for limits and completion
 	if is_equal_approx(spring_length, target_length):
 		zoom_finished.emit()
-		
+
 		if is_equal_approx(spring_length, 0.0):
 			zoom_min_reached.emit()
 		elif is_equal_approx(spring_length, max_length):

@@ -41,4 +41,3 @@ extends FoxResource
 ## and can be rolled over in the air. Turn it on and a dragger parented to a camera stops
 ## pitching whatever it is carrying every time you look up or down.
 @export var keep_upright: bool = false
-

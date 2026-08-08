@@ -15,7 +15,7 @@ extends FoxResource
 ## Emitted when [member current] or the maximum capacity changes.
 signal updated(current: float, max_value: float)
 
-## Emitted when [member current] falls below 0.0. 
+## Emitted when [member current] falls below 0.0.
 ## [param underflow] contains the absolute value of the excess.
 signal depleted(underflow: float)
 
@@ -36,7 +36,7 @@ signal saturated(overflow: float)
 		if v < 0.0:
 			push_warning("FoxStatPool: base_max was set to a negative number (%s). Did you mean to do this?" % v)
 		base_max = v
-		if _max_stat: 
+		if _max_stat:
 			_max_stat.base_value = v
 
 var _max_stat: FoxModifiableStat
@@ -61,12 +61,12 @@ var current: float:
 
 
 ## Decreases [member current] by [param amount].
-func subtract(amount: float) -> void: 
+func subtract(amount: float) -> void:
 	_pool.subtract(amount)
 
 
 ## Increases [member current] by [param amount].
-func add(amount: float) -> void:      
+func add(amount: float) -> void:
 	_pool.add(amount)
 
 
@@ -133,7 +133,7 @@ func clear_multiplier_max_modifier(id: StringName) -> void:
 func _init() -> void:
 	_max_stat = FoxModifiableStat.new(base_max)
 	_pool = FoxBoundedValue.new(base_max, base_max, 0.0)
-	
+
 	# These must stay method references. A lambda here would capture self, and since the pool
 	# already holds _pool, that cycle keeps every FoxStatPool alive forever.
 	_max_stat.value_changed.connect(_on_max_stat_changed)

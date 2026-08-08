@@ -49,7 +49,7 @@ func _try_deliver_payload(area: Area3D) -> void:
 	var hurtbox := area as FoxHurtArea3D
 	if not hurtbox:
 		return
-		
+
 	# only report a delivery the hurtbox actually accepted
 	if hurtbox.receive_hit(payload):
 		hit_delivered.emit(payload, hurtbox)

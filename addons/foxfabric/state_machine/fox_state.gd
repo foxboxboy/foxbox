@@ -4,7 +4,7 @@ class_name FoxState
 extends FoxNode
 ## Base class for all states within a [FoxStateMachine].
 ##
-## Custom states should override [method enter], [method exit], 
+## Custom states should override [method enter], [method exit],
 ## [method update], and [method physics_update] as needed.
 
 
@@ -24,7 +24,7 @@ signal transition_requested(old_state: FoxState, new_state_name: StringName)
 
 #region Variables
 
-## An optional custom identifier for this state. 
+## An optional custom identifier for this state.
 ## If left empty, the [FoxStateMachine] will use this node's name instead.
 @export var state_id: StringName = &""
 

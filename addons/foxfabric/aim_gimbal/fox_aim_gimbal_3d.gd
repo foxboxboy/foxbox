@@ -88,20 +88,20 @@ func look_at(target: Vector3, up: Vector3 = Vector3.UP, use_model_front: bool = 
 func aim_at_position(target_global_pos: Vector3) -> void:
 	var parent = get_parent_node_3d()
 	var target_dir: Vector3
-	
+
 	if parent:
 		target_dir = parent.to_local(target_global_pos) - position
 	else:
 		target_dir = target_global_pos - global_position
-		
+
 	if target_dir.length_squared() < 0.001:
 		return
-		
+
 	var target_yaw = atan2(-target_dir.x, -target_dir.z)
-	
+
 	var flat_distance = Vector2(target_dir.x, target_dir.z).length()
 	var target_pitch = atan2(target_dir.y, flat_distance)
-	
+
 	pitch = target_pitch
 	yaw = target_yaw
 

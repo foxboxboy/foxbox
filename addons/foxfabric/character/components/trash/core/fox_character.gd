@@ -1,17 +1,17 @@
 extends FoxNode3D
 class_name FoxCharacter
 
-## A high-level facade abstraction for a humanoid character that handles physics, 
+## A high-level facade abstraction for a humanoid character that handles physics,
 ## animation, and interaction delegation.
 ##
 ## Designed to be controlled by an outside controller. This class acts as the "muscle"
-## rather than the "brain", blindly executing inputs and routing data between 
+## rather than the "brain", blindly executing inputs and routing data between
 ## specialized components (State Machine, Pose Manager, Motors).
 ##
 ## [br] [br]
 ## ([b]WARNING[/b] this feature below is deprcated)
 ## [br]
-## [b]Note:[/b] If a [FoxVisualOptimizer] is assigned and the character is far away, 
+## [b]Note:[/b] If a [FoxVisualOptimizer] is assigned and the character is far away,
 ## visual processing and aim math are suspended to save performance.
 
 #region Signals
@@ -92,18 +92,18 @@ func _ready() -> void:
 	assert(aim != null, "FoxCharacter missing aim on %s" % get_path())
 	assert(_hitbox != null, "FoxCharacter missing _hitbox on %s" % get_path())
 	assert(_ground_cast != null, "FoxCharacter missing _ground_cast on %s" % get_path())
-		
+
 	model.stand()
 	_ground_motor.process_mode = Node.PROCESS_MODE_DISABLED
-	
+
 	if pose:
 		pose.pose_changed.connect(_on_pose_changed)
 
 
-func _process(delta: float) -> void:    
+func _process(delta: float) -> void:
 	#if visual_optimizer and visual_optimizer.is_far:
 	#	return
-	
+
 	_update_character_model()
 
 #endregion
@@ -119,30 +119,30 @@ func _on_pose_changed(new_pose: FoxCharacterPoseManager.Type, _old_pose: FoxChar
 		pose.Type.STANDING:
 			model.stand()
 			_hitbox.stand()
-			
+
 			# Needs refactored this doesn't read well
 			aim.stand()
-			
+
 			stood.emit()
-			
+
 		pose.Type.CROUCHING:
 			model.crouch()
 			_hitbox.crouch()
 			aim.crouch()
 			crouched.emit()
-			
+
 		pose.Type.IN_AIR:
 			model.enter_air()
-			_hitbox.stand() 
+			_hitbox.stand()
 			aim.stand()
 			entered_air.emit()
-			
+
 		pose.Type.PRONE:
 			model.prone()
 			_hitbox.prone()
 			aim.prone()
 			proned.emit()
-			
+
 		pose.Type.SWIMMING:
 			pass
 
@@ -201,7 +201,7 @@ func is_in_air() -> bool:
 		_ground_cast.force_raycast_update()
 		if _ground_cast.is_colliding():
 			return false
-			
+
 	return not _physics_body.is_on_floor()
 
 
@@ -218,21 +218,21 @@ func get_current_velocity() -> float:
 ## Calculates the normalized speed ratio relative to the current state's max speed.
 func get_speed_percent() -> float:
 	var horizontal_speed := get_horizontal_velocity()
-	
+
 	match pose.current_pose:
 		pose.Type.STANDING, pose.Type.IN_AIR:
 			var max_speed: float = sprint.speed
 			return horizontal_speed / max_speed
-			
+
 		pose.Type.CROUCHING:
 			return horizontal_speed / pose.crouch_speed
-			
+
 		pose.Type.PRONE, pose.Type.SWIMMING, pose.Type.GLIDING:
 			return horizontal_speed / pose.prone_speed
-			
+
 		pose.Type.SITTING:
 			return 0.0
-	
+
 	return 0.0
 
 
@@ -252,17 +252,17 @@ func has_move_input() -> bool:
 
 func _update_character_model() -> void:
 	model.update_strafe(input_direction)
-	
+
 	# Ask the camera component for its data!
-	if aim and not aim.is_free_looking: 
+	if aim and not aim.is_free_looking:
 		model.pitch = aim.get_pitch()
-		
+
 	model.yaw = _get_aim_torso_angle_difference()
 
 
 func _get_aim_torso_angle_difference() -> float:
 	var angle := model.global_rotation.y - self.global_rotation.y
-	angle = wrapf(angle, -PI, PI) 
+	angle = wrapf(angle, -PI, PI)
 	return -angle
 
 #endregion

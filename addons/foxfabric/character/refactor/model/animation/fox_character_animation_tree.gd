@@ -25,7 +25,7 @@ const PATH_AIR_BLEND = "parameters/BaseMovement/AirLogic/blend_position"
 func update_movement(blend_amount: float) -> void:
 
 	blend_amount = clampf(blend_amount, -1, 1)
-	
+
 	# Just update BOTH. It's cleaner than checking state.
 	animation_tree.set(PATH_LOCOMOTION_CROUCH_BLEND, blend_amount)
 	animation_tree.set(PATH_LOCOMOTION_STAND_BLEND, blend_amount)
@@ -41,13 +41,13 @@ func transition_to_air() -> void:
 	_base_movement.travel("AirLogic")
 
 
-func update_air_physics(vertical_velocity: float) -> void:	
+func update_air_physics(vertical_velocity: float) -> void:
 	var blend_multiplier := 3.0
 	var raw_blend := clampf(vertical_velocity * blend_multiplier, -1.0, 1.0)
-	
+
 	var blend_steps := 4
 	var stepped_blend : float = round(raw_blend * blend_steps) / blend_steps
-		
+
 	animation_tree.set(PATH_AIR_BLEND, stepped_blend)
 
 
@@ -55,14 +55,14 @@ func swing(use_right_hand : bool = true) -> void:
 	var animation_name = "swing_right" if use_right_hand else "swing_left"
 	var start_signal = swing_right_started if use_right_hand else swing_left_started
 	var end_signal = swing_right_ended if use_right_hand else swing_left_ended
-	
+
 	start_signal.emit()
-	
+
 	_upper_body.start(animation_name)
 	animation_tree.set(PATH_TRIGGER_SWING, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	
+
 	# Wait for animation to finish, then emit signal
 	var clip_duration = _animation_player.get_animation(animation_name).length
 	await get_tree().create_timer(clip_duration).timeout
-	
+
 	end_signal.emit()
