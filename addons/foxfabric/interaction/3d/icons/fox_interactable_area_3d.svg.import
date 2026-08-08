@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dus7rdnmnq7y3"
-path="res://.godot/imported/fox_interaction_raycast_3d.svg-a800c83043e6c5b84b6d98039445b409.ctex"
+uid="uid://d3g7a3l3y4pu3"
+path="res://.godot/imported/fox_interactable_area_3d.svg-47869a36cf3c33d0ea01f4e96e9b14c8.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/foxfabric/interaction/icons/fox_interaction_raycast_3d.svg"
-dest_files=["res://.godot/imported/fox_interaction_raycast_3d.svg-a800c83043e6c5b84b6d98039445b409.ctex"]
+source_file="res://addons/foxfabric/interaction/3d/icons/fox_interactable_area_3d.svg"
+dest_files=["res://.godot/imported/fox_interactable_area_3d.svg-47869a36cf3c33d0ea01f4e96e9b14c8.ctex"]
 
 [params]
 

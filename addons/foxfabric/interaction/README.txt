@@ -1,1 +1,1 @@
-Interaction: A raycast-driven focus and activation pipeline. FoxInteractionRayCast3D focuses and triggers FoxInteractableArea3D volumes, which emit an arbitrary Variant context so the initiator decides what interacting actually means.
+Interaction: A raycast-driven focus and activation pipeline. An interaction raycast focuses and triggers interactable volumes, which emit an arbitrary Variant context so the initiator decides what interacting actually means. The 2d and 3d folders hold the same pipeline for each dimension.

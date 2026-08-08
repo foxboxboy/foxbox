@@ -21,6 +21,7 @@ func run() -> void:
 	_hit_raycast()
 	_hit_shapecast()
 	_hit_casts_2d()
+	_interaction_raycasts()
 	_state_machine()
 	_effect_slot_policy()
 	_socket_marker()
@@ -91,6 +92,32 @@ func _hit_casts_2d() -> void:
 	cast.collide_with_areas = true
 	# ShapeCast2D reports a missing shape itself, so there is nothing left to say.
 	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+
+
+func _interaction_raycasts() -> void:
+	case("FoxInteractionRayCast3D")
+	var ray: FoxInteractionRayCast3D = track(FoxInteractionRayCast3D.new()) as FoxInteractionRayCast3D
+
+	ray.collide_with_areas = false
+	check(_has(ray._get_configuration_warnings(), "Collide With Areas"),
+		"warns when it cannot see areas")
+	check(_has(ray._get_configuration_warnings(), "FoxInteractableArea3D"),
+		"and names what it is looking for")
+
+	ray.collide_with_areas = true
+	eq(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+
+	case("FoxInteractionRayCast2D")
+	var flat: FoxInteractionRayCast2D = track(FoxInteractionRayCast2D.new()) as FoxInteractionRayCast2D
+
+	flat.collide_with_areas = false
+	check(_has(flat._get_configuration_warnings(), "Collide With Areas"),
+		"warns when it cannot see areas")
+	check(_has(flat._get_configuration_warnings(), "FoxInteractableArea2D"),
+		"and names the 2D interactable, not the 3D one")
+
+	flat.collide_with_areas = true
+	eq(flat._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 
 func _state_machine() -> void:
