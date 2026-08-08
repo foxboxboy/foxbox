@@ -15,6 +15,13 @@ signal hit_received(payload: Variant)
 
 
 ## Accepts a [Variant] [param payload] from an external source and emits [signal hit_received].
-func receive_hit(payload: Variant) -> void:
-	if is_active:
-		hit_received.emit(payload)
+## [br][br]
+## Returns [code]true[/code] if the payload was accepted, or [code]false[/code] when
+## [member is_active] is off and the payload was ignored. Deliverers check this so they do not
+## report a hit that never landed.
+func receive_hit(payload: Variant) -> bool:
+	if not is_active:
+		return false
+
+	hit_received.emit(payload)
+	return true

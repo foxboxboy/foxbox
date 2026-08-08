@@ -3,7 +3,9 @@ extends FoxResource
 class_name FoxModifiableStat
 ## A resource that calculates a final [float] value based on flat and multiplier modifiers.
 ##
-## Flat modifiers are added to [member base_value] first. The total is then multiplied by the sum of all multiplier modifiers.
+## Flat modifiers are added to [member base_value] first. That total is then multiplied by
+## [code]1.0[/code] plus the sum of all multiplier modifiers, so a single [code]0.5[/code]
+## multiplier scales the result by [code]1.5[/code] rather than halving it.
 
 
 
@@ -119,7 +121,9 @@ func clear_all_modifiers() -> void:
 	all_modifiers_cleared.emit()
 
 
-## Returns [code]true[/code] if the stack for [param id] exists and is not empty.
+## Returns [code]true[/code] if a stack exists for [param id].
+## [br][br]
+## Empty stacks are erased on removal, so an existing stack always holds at least one modifier.
 func has_modifier(id: StringName, type: ModifierType) -> bool:
 	return _get_dict(type).has(id)
 
@@ -157,7 +161,7 @@ func add_multiplier_modifier(id: StringName, amount: float) -> void:
 	add_modifier(id, ModifierType.MULTIPLIER, amount)
 
 
-## Helper to quickly pop a multiplier modifier without typing the enum.
+## Helper to quickly pop a flat modifier without typing the enum.
 func pop_flat_modifier(id: StringName) -> void:
 	pop_modifier(id, ModifierType.FLAT)
 

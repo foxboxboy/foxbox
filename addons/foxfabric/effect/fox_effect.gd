@@ -8,7 +8,9 @@ extends FoxResource
 ## [br][br]
 ## When an effect is applied to a target, a separate [FoxEffectInstance] is spawned to track its active lifecycle (such as remaining time and current stacks). 
 ## [br][br]
-## To create a custom effect, extend this class and override [method _on_execute], [method _on_remove], and [method _on_reapply].
+## To create a custom effect, extend this class and override [method _on_execute],
+## [method _on_remove], [method _on_reapply], and [method _on_tick]. All four are abstract,
+## so every subclass must implement them even if the body is left empty.
 
 enum StackMode { 
 	## Prevents duplicate logic. Handles the timer based on [member duration_mode].
@@ -109,14 +111,39 @@ func tick(target: Object, current_stack: int) -> void:
 
 
 
+#region Abstract Methods
+
+## Applies this effect's initial impact to [param target]. Called once, when the effect is
+## first applied.
+## [br][br]
+## [param target] is guaranteed to be a valid [Object] by the time this runs.
 @abstract
 func _on_execute(target: Object) -> void
 
+
+## Reverses whatever [method _on_execute] and [method _on_reapply] did to [param target].
+## Called once, when the effect expires or is purged.
+## [br][br]
+## [b]Note:[/b] This is skipped when a save file is loaded, so it must not be relied on to
+## clean up state that was never applied in this session.
 @abstract
 func _on_remove(target: Object) -> void
 
+
+## Rescales this effect on [param target] to match [param current_stack].
+## [br][br]
+## Only called when [member stack_mode] is [code]StackMode.INTENSITY[/code] and the stack count
+## actually changes. Implementations should recalculate from the stack count rather than adding
+## to whatever they applied last time.
 @abstract
 func _on_reapply(target: Object, current_stack: int = 1) -> void
 
+
+## Runs the recurring behaviour on [param target], scaled by [param current_stack].
+## [br][br]
+## Fires every [member tick_interval] seconds while the effect is active. Never called when
+## [member tick_interval] is [code]0.0[/code].
 @abstract
 func _on_tick(target: Object, current_stack: int) -> void
+
+#endregion

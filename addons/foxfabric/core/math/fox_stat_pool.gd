@@ -84,6 +84,8 @@ func add_max_modifier(id: StringName, type: FoxModifiableStat.ModifierType, amou
 
 
 ## Removes the most recent modifier from the maximum capacity stack.
+## Returns [code]true[/code] if a modifier was found and removed, [code]false[/code] if the
+## stack was already empty.
 func pop_max_modifier(id: StringName, type: FoxModifiableStat.ModifierType) -> bool:
 	return _max_stat.pop_modifier(id, type)
 

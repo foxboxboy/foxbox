@@ -9,11 +9,11 @@ extends FoxResource
 
 ## Returns [code]true[/code] if the provided [param wallet] can afford this price.
 @abstract
-func can_be_paid_by(_wallet: FoxWallet) -> bool
+func can_be_paid_by(wallet: FoxWallet) -> bool
 
 ## Performs the transaction against the provided [param wallet].
 @abstract
-func pay(_wallet: FoxWallet) -> void
+func pay(wallet: FoxWallet) -> void
 
 ## Returns a formatted string representing the cost (e.g., "$50").
 @abstract

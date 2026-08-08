@@ -95,6 +95,6 @@ func _check_bounds() -> void:
 		value = max_value
 		saturated.emit(overflow)
 	
-	value_changed.emit(value, max_value, min_value)
+	value_changed.emit(value, min_value, max_value)
 
 #endregion

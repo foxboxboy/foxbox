@@ -24,6 +24,6 @@ func fire() -> void:
 		var collider := get_collider(i)
 		var hurtbox := collider as FoxHurtArea3D
 		
-		if hurtbox:
-			hurtbox.receive_hit(payload)
+		# only report a delivery the hurtbox actually accepted
+		if hurtbox and hurtbox.receive_hit(payload):
 			hit_delivered.emit(payload, hurtbox)

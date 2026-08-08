@@ -35,5 +35,6 @@ func _try_deliver_payload(area: Area3D) -> void:
 	if not hurtbox:
 		return
 		
-	hurtbox.receive_hit(payload)
-	hit_delivered.emit(payload, hurtbox)
+	# only report a delivery the hurtbox actually accepted
+	if hurtbox.receive_hit(payload):
+		hit_delivered.emit(payload, hurtbox)

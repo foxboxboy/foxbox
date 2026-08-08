@@ -71,9 +71,12 @@ func setup(p_effect: FoxEffect, p_target: Object) -> void:
 	_tick_timer = p_effect.tick_interval
 
 
-## Increases the [member stack] count, strictly capped by [member FoxEffect.max_stacks].
+## Increases the [member stack] count, capped by [member FoxEffect.max_stacks].
 ## [br][br]
-## If the stack successfully increases, this automatically triggers the effect's 
+## [b]Note:[/b] A [member FoxEffect.max_stacks] of [code]0[/code] means unlimited, not zero.
+## The cap is only applied when it is greater than [code]0[/code].
+## [br][br]
+## If the stack successfully increases, this automatically triggers the effect's
 ## [method FoxEffect.reapply] logic and emits [signal stack_changed].
 func increase_stack(amount: int = 1) -> void:
 	if not effect: return
