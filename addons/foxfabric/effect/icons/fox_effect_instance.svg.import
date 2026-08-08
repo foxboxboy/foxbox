@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dv080jam3jp5e"
-path="res://.godot/imported/fox_effect_instance.svg-2b4e735f70a44d1267d6f7ef7644f660.ctex"
+path="res://.godot/imported/fox_effect_instance.svg-9da9a69476230cb5e42d048c87b1b922.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -12,7 +12,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/effect/icons/fox_effect_instance.svg"
-dest_files=["res://.godot/imported/fox_effect_instance.svg-2b4e735f70a44d1267d6f7ef7644f660.ctex"]
+dest_files=["res://.godot/imported/fox_effect_instance.svg-9da9a69476230cb5e42d048c87b1b922.ctex"]
 
 [params]
 

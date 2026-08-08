@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlymyict01ldf"
-path="res://.godot/imported/calico_merged_10.png-65197ffb4630886da3013249bd9209f8.ctex"
+path="res://.godot/imported/calico_merged_10.png-13044b0bf98f287abbccd2f09c1e329c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/calico/calico_merged_10.png"
-dest_files=["res://.godot/imported/calico_merged_10.png-65197ffb4630886da3013249bd9209f8.ctex"]
+dest_files=["res://.godot/imported/calico_merged_10.png-13044b0bf98f287abbccd2f09c1e329c.ctex"]
 
 [params]
 

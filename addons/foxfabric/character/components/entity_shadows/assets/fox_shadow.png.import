@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://osuyarr7ppc4"
-path.s3tc="res://.godot/imported/fox_shadow.png-8226da32941259c7b712eb9006521313.s3tc.ctex"
-path.etc2="res://.godot/imported/fox_shadow.png-8226da32941259c7b712eb9006521313.etc2.ctex"
+path.s3tc="res://.godot/imported/fox_shadow.png-b0791396d1159be43de84d370752a01c.s3tc.ctex"
+path.etc2="res://.godot/imported/fox_shadow.png-b0791396d1159be43de84d370752a01c.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -13,7 +13,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/components/entity_shadows/assets/fox_shadow.png"
-dest_files=["res://.godot/imported/fox_shadow.png-8226da32941259c7b712eb9006521313.s3tc.ctex", "res://.godot/imported/fox_shadow.png-8226da32941259c7b712eb9006521313.etc2.ctex"]
+dest_files=["res://.godot/imported/fox_shadow.png-b0791396d1159be43de84d370752a01c.s3tc.ctex", "res://.godot/imported/fox_shadow.png-b0791396d1159be43de84d370752a01c.etc2.ctex"]
 
 [params]
 

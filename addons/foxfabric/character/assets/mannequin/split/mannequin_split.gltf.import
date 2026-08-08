@@ -4,18 +4,20 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://btr0n4kplm6eu"
-path="res://.godot/imported/mannequin_split.gltf-80b0ef31a2a9fa57382437d935eaccd0.scn"
+path="res://.godot/imported/mannequin_split.gltf-3e5c22fef608caf7865fe87cd9a50c5f.scn"
 
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/mannequin/split/mannequin_split.gltf"
-dest_files=["res://.godot/imported/mannequin_split.gltf-80b0ef31a2a9fa57382437d935eaccd0.scn"]
+dest_files=["res://.godot/imported/mannequin_split.gltf-3e5c22fef608caf7865fe87cd9a50c5f.scn"]
 
 [params]
 
 nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -40,3 +42,4 @@ materials/extract_path=""
 _subresources={}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
+gltf/texture_map_mode=0

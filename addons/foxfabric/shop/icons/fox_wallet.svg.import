@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5rpdj7ur3yuj"
-path="res://.godot/imported/fox_wallet.svg-3d980195046563a0509d250b9dd55ef0.ctex"
+path="res://.godot/imported/fox_wallet.svg-b1080cb912d985af562f1cdf1d195d58.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -12,7 +12,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/shop/icons/fox_wallet.svg"
-dest_files=["res://.godot/imported/fox_wallet.svg-3d980195046563a0509d250b9dd55ef0.ctex"]
+dest_files=["res://.godot/imported/fox_wallet.svg-b1080cb912d985af562f1cdf1d195d58.ctex"]
 
 [params]
 

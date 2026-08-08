@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c83iiiapvnhld"
-path="res://.godot/imported/eye.png-f6e09e6df7869e8e58c539ec950190db.ctex"
+path="res://.godot/imported/eye.png-b565c4958a95396bf62dd7da92845d44.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/novi/eye.png"
-dest_files=["res://.godot/imported/eye.png-f6e09e6df7869e8e58c539ec950190db.ctex"]
+dest_files=["res://.godot/imported/eye.png-b565c4958a95396bf62dd7da92845d44.ctex"]
 
 [params]
 

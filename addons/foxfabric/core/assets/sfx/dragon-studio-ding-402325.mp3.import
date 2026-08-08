@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ca8hvyjak00vs"
-path="res://.godot/imported/dragon-studio-ding-402325.mp3-26a4273dc2ee083ef454171259adde1f.mp3str"
+path="res://.godot/imported/dragon-studio-ding-402325.mp3-40935c7acf38eb459a2b606eb2953871.mp3str"
 
 [deps]
 
 source_file="res://addons/foxfabric/core/assets/sfx/dragon-studio-ding-402325.mp3"
-dest_files=["res://.godot/imported/dragon-studio-ding-402325.mp3-26a4273dc2ee083ef454171259adde1f.mp3str"]
+dest_files=["res://.godot/imported/dragon-studio-ding-402325.mp3-40935c7acf38eb459a2b606eb2953871.mp3str"]
 
 [params]
 

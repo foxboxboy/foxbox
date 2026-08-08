@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bihwfrg2mota4"
-path="res://.godot/imported/fox_hurt_area_3d.svg-c3d270db45a4d838fbd51b868b2f8062.ctex"
+path="res://.godot/imported/fox_hurt_area_3d.svg-7e76bed8a6659c36608de51ba0a4eb42.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -12,7 +12,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/damage/icons/fox_hurt_area_3d.svg"
-dest_files=["res://.godot/imported/fox_hurt_area_3d.svg-c3d270db45a4d838fbd51b868b2f8062.ctex"]
+dest_files=["res://.godot/imported/fox_hurt_area_3d.svg-7e76bed8a6659c36608de51ba0a4eb42.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7wrva3q87qud"
-path="res://.godot/imported/zoom_spring_arm_3d.svg-c09819a617ba0c1814dd93a0ad5ee0f5.ctex"
+path="res://.godot/imported/zoom_spring_arm_3d.svg-e6308b635c9dbebbf690b5f3af6c5e8e.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -12,7 +12,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/zoom_spring_arm/zoom_spring_arm_3d.svg"
-dest_files=["res://.godot/imported/zoom_spring_arm_3d.svg-c09819a617ba0c1814dd93a0ad5ee0f5.ctex"]
+dest_files=["res://.godot/imported/zoom_spring_arm_3d.svg-e6308b635c9dbebbf690b5f3af6c5e8e.ctex"]
 
 [params]
 

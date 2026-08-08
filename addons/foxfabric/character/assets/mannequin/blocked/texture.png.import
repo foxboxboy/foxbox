@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2nx6rjl8gjk2"
-path="res://.godot/imported/texture.png-d62198ddb3f8e3d5111ff8c087fa3fa2.ctex"
+path="res://.godot/imported/texture.png-6c1a4a78fe7bd0b59276c6ebb00f413f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/mannequin/blocked/texture.png"
-dest_files=["res://.godot/imported/texture.png-d62198ddb3f8e3d5111ff8c087fa3fa2.ctex"]
+dest_files=["res://.godot/imported/texture.png-6c1a4a78fe7bd0b59276c6ebb00f413f.ctex"]
 
 [params]
 

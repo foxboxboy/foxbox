@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfa7wmbr0xgol"
-path.s3tc="res://.godot/imported/ferl_pixel_plushie_3.png-1c707c525477b9ecf8024a1349e1d392.s3tc.ctex"
-path.etc2="res://.godot/imported/ferl_pixel_plushie_3.png-1c707c525477b9ecf8024a1349e1d392.etc2.ctex"
+path.s3tc="res://.godot/imported/ferl_pixel_plushie_3.png-9c302d88e3b06a069ca280b8dec8898c.s3tc.ctex"
+path.etc2="res://.godot/imported/ferl_pixel_plushie_3.png-9c302d88e3b06a069ca280b8dec8898c.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -16,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/ferl/ferl_pixel_plushie_3.png"
-dest_files=["res://.godot/imported/ferl_pixel_plushie_3.png-1c707c525477b9ecf8024a1349e1d392.s3tc.ctex", "res://.godot/imported/ferl_pixel_plushie_3.png-1c707c525477b9ecf8024a1349e1d392.etc2.ctex"]
+dest_files=["res://.godot/imported/ferl_pixel_plushie_3.png-9c302d88e3b06a069ca280b8dec8898c.s3tc.ctex", "res://.godot/imported/ferl_pixel_plushie_3.png-9c302d88e3b06a069ca280b8dec8898c.etc2.ctex"]
 
 [params]
 

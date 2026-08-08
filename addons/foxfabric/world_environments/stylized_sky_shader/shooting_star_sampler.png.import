@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpkivky4ygxy0"
-path.s3tc="res://.godot/imported/shooting_star_sampler.png-5f74412bcbac201046bad2e49c635840.s3tc.ctex"
-path.etc2="res://.godot/imported/shooting_star_sampler.png-5f74412bcbac201046bad2e49c635840.etc2.ctex"
+path.s3tc="res://.godot/imported/shooting_star_sampler.png-ba21f57a107c07f95334ab914ebbc386.s3tc.ctex"
+path.etc2="res://.godot/imported/shooting_star_sampler.png-ba21f57a107c07f95334ab914ebbc386.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -13,7 +13,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/world_environments/stylized_sky_shader/shooting_star_sampler.png"
-dest_files=["res://.godot/imported/shooting_star_sampler.png-5f74412bcbac201046bad2e49c635840.s3tc.ctex", "res://.godot/imported/shooting_star_sampler.png-5f74412bcbac201046bad2e49c635840.etc2.ctex"]
+dest_files=["res://.godot/imported/shooting_star_sampler.png-ba21f57a107c07f95334ab914ebbc386.s3tc.ctex", "res://.godot/imported/shooting_star_sampler.png-ba21f57a107c07f95334ab914ebbc386.etc2.ctex"]
 
 [params]
 

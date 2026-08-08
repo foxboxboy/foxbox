@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwfiluhxiqorg"
-path.s3tc="res://.godot/imported/tommy_gun_0.png-3505f815e3c9c057905fbbdf50311639.s3tc.ctex"
-path.etc2="res://.godot/imported/tommy_gun_0.png-3505f815e3c9c057905fbbdf50311639.etc2.ctex"
+path.s3tc="res://.godot/imported/tommy_gun_0.png-6594a7f08e64d4f3505b01f3cd48c1b4.s3tc.ctex"
+path.etc2="res://.godot/imported/tommy_gun_0.png-6594a7f08e64d4f3505b01f3cd48c1b4.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -16,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/gun/tommy_gun_0.png"
-dest_files=["res://.godot/imported/tommy_gun_0.png-3505f815e3c9c057905fbbdf50311639.s3tc.ctex", "res://.godot/imported/tommy_gun_0.png-3505f815e3c9c057905fbbdf50311639.etc2.ctex"]
+dest_files=["res://.godot/imported/tommy_gun_0.png-6594a7f08e64d4f3505b01f3cd48c1b4.s3tc.ctex", "res://.godot/imported/tommy_gun_0.png-6594a7f08e64d4f3505b01f3cd48c1b4.etc2.ctex"]
 
 [params]
 

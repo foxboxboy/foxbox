@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://m36437e1qeoo"
-path="res://.godot/imported/fox_head.png-16eaea4b7e8e15034a745fac9efb19e0.ctex"
+path="res://.godot/imported/fox_head.png-10ed8d75d579d453e09fbebe36927f89.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/ferl/fox_head.png"
-dest_files=["res://.godot/imported/fox_head.png-16eaea4b7e8e15034a745fac9efb19e0.ctex"]
+dest_files=["res://.godot/imported/fox_head.png-10ed8d75d579d453e09fbebe36927f89.ctex"]
 
 [params]
 

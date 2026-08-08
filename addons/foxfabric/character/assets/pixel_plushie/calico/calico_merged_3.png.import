@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c7kltgw8phpnv"
-path.s3tc="res://.godot/imported/calico_merged_3.png-74b3ce064354fa8573940da5ffb4478d.s3tc.ctex"
-path.etc2="res://.godot/imported/calico_merged_3.png-74b3ce064354fa8573940da5ffb4478d.etc2.ctex"
+path.s3tc="res://.godot/imported/calico_merged_3.png-0d231e04f3df518b83ba3798195e51bf.s3tc.ctex"
+path.etc2="res://.godot/imported/calico_merged_3.png-0d231e04f3df518b83ba3798195e51bf.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -13,7 +13,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/calico/calico_merged_3.png"
-dest_files=["res://.godot/imported/calico_merged_3.png-74b3ce064354fa8573940da5ffb4478d.s3tc.ctex", "res://.godot/imported/calico_merged_3.png-74b3ce064354fa8573940da5ffb4478d.etc2.ctex"]
+dest_files=["res://.godot/imported/calico_merged_3.png-0d231e04f3df518b83ba3798195e51bf.s3tc.ctex", "res://.godot/imported/calico_merged_3.png-0d231e04f3df518b83ba3798195e51bf.etc2.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2kvenjdypljk"
-path="res://.godot/imported/texture.png-9e1a22db404a06bea8d36fa1c5c4a54f.ctex"
+path="res://.godot/imported/texture.png-18d96adda0fd692dd3bdd50f558e6e61.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/character/assets/pixel_plushie/ferl/texture.png"
-dest_files=["res://.godot/imported/texture.png-9e1a22db404a06bea8d36fa1c5c4a54f.ctex"]
+dest_files=["res://.godot/imported/texture.png-18d96adda0fd692dd3bdd50f558e6e61.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bolsabbpnfwes"
-path="res://.godot/imported/camera.png-fde1465ae042a8036fc73b9a9e63e519.ctex"
+path="res://.godot/imported/camera.png-731874ec22d4bda243888f2d79231608.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/foxfabric/core/assets/camera/camera.png"
-dest_files=["res://.godot/imported/camera.png-fde1465ae042a8036fc73b9a9e63e519.ctex"]
+dest_files=["res://.godot/imported/camera.png-731874ec22d4bda243888f2d79231608.ctex"]
 
 [params]
 
