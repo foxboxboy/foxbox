@@ -50,6 +50,8 @@ Properties
    +---------------------------------------+----------------------------------------------------------------------------------------+------------+
    | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger2D_property_max_pull_force>`               | ``4000.0`` |
    +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`swing_response<class_FoxPhysicsDragger2D_property_swing_response>`               | ``0.25``   |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
    | :ref:`RigidBody2D<class_RigidBody2D>` | :ref:`_current_body<class_FoxPhysicsDragger2D_property__current_body>`                 |            |
    +---------------------------------------+----------------------------------------------------------------------------------------+------------+
    | :ref:`Vector2<class_Vector2>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger2D_property__grab_offset_local>`       |            |
@@ -172,6 +174,22 @@ The default upright behaviour if no profile is provided. See :ref:`FoxPhysicsDra
 :ref:`float<class_float>` **max_pull_force** = ``4000.0`` :ref:`🔗<class_FoxPhysicsDragger2D_property_max_pull_force>`
 
 The absolute maximum force this dragger can apply to a body in a single frame.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_property_swing_response:
+
+.. rst-class:: classref-property
+
+:ref:`float<class_float>` **swing_response** = ``0.25`` :ref:`🔗<class_FoxPhysicsDragger2D_property_swing_response>`
+
+How much of the pull's leverage becomes swing. 
+
+Pulling at the point you grabbed is the same as pulling at the centre and adding the torque that offset produces. At 1.0 that torque is applied in full, which is physically honest and, on a long prop with a strong pull, larger than the orientation spring can answer: flick the cursor and the prop spins one way, is dragged back the other, and never settles. 
+
+Lowering it keeps the swing, so a plank grabbed by one end still trails behind, while leaving the orientation spring able to win. Set it to 0.0 to carry things rigidly.
 
 .. rst-class:: classref-item-separator
 
