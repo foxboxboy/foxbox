@@ -36,6 +36,13 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 ## Degrees of spin per pixel of mouse movement while the right button is down.
 const SPIN_PER_PIXEL: float = 0.4
 
+## How far ahead of the prop the commanded angle may get, in radians.
+## [br][br]
+## A quarter turn. The torque takes the shortest way to its target, so once the target is more
+## than half a turn ahead the shortest way is backwards and the prop unwinds against the
+## direction you are dragging. Half that leaves room to lag without ever crossing over.
+const MAX_SPIN_LEAD: float = PI / 2.0
+
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
 var _spinning: bool = false
@@ -140,6 +147,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	# rotation. With keep_upright on that target is level instead, so spinning does nothing.
 	if motion and _spinning and is_instance_valid(_held):
 		dragger.rotate(deg_to_rad(motion.relative.x * SPIN_PER_PIXEL))
+
+		# Never let the command run more than a quarter turn ahead of the prop.
+		# [br]
+		# The dragger turns as fast as the mouse moves, but the prop has to be dragged round by
+		# a spring and lags behind. Let that gap pass half a turn and the shortest way round
+		# flips: the prop stops chasing and starts unwinding the other way, while the mouse is
+		# still going the same direction. Keeping the lead bounded means the way round never
+		# changes under you.
+		var lead: float = angle_difference(_held.global_rotation, dragger.global_rotation)
+		dragger.global_rotation = _held.global_rotation + clampf(lead, -MAX_SPIN_LEAD, MAX_SPIN_LEAD)
 		return
 
 	var key := event as InputEventKey
