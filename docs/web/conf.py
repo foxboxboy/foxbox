@@ -64,12 +64,12 @@ html_static_path = ['_static']
 
 html_theme_options = {
     'logo_only': True,
-    # The RTD theme collapses everything under a caption until you are already on that page,
-    # which is why the sidebar looked empty. Godot's docs keep the whole tree open.
-    'collapse_navigation': False,
-    # 2 keeps every module and class in view. Going deeper adds each class's own sections
-    # (Description, Properties, Methods) to the sidebar, which is hundreds of extra entries.
-    'navigation_depth': 2,
+    # Godot expands only the branch you are in and leaves siblings behind a + box. Expanding
+    # everything at once is unreadable now that folders are nested.
+    'collapse_navigation': True,
+    # Deep enough to reach a class's own sections, the way Godot shows Description, Properties
+    # and Methods under the class you are reading.
+    'navigation_depth': 5,
     'sticky_navigation': True,
     # The theme's own external-link icon stacks on top of the one custom.css already draws.
     'style_external_links': False,

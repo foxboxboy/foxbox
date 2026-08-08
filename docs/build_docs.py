@@ -175,22 +175,31 @@ def step_collect():
 
 
 def scan_modules():
-    """Maps each module folder to the classes it declares, by reading class_name out of the
-    source. The XML does not record which folder a class came from, so this is the only link
-    between a class and the module it belongs to."""
+    """Maps every folder under the addon to the classes it declares directly.
+
+    Returns {module: {relative_dir: [class names]}}, where relative_dir is "" for classes sitting
+    at the module root. The XML does not record which file a class came from, so reading
+    class_name out of the source is the only link between a class and its folder."""
     found = {}
     for script in sorted(ADDON.rglob("*.gd")):
-        rel = script.relative_to(ADDON)
-        module = rel.parts[0] if len(rel.parts) > 1 else "core"
         text = script.read_text(encoding="utf-8", errors="replace")
         match = re.search(r"^class_name\s+(\w+)", text, re.MULTILINE)
-        if match:
-            found.setdefault(module, []).append(match.group(1))
+        if not match:
+            continue
+        rel = script.relative_to(ADDON)
+        module = rel.parts[0] if len(rel.parts) > 1 else "core"
+        subdir = "/".join(rel.parts[1:-1]) if len(rel.parts) > 2 else ""
+        found.setdefault(module, {}).setdefault(subdir, []).append(match.group(1))
     return found
 
 
+# Folder names that should not be naively title-cased.
+ACRONYMS = {"gui": "GUI", "ui": "UI", "2d": "2D", "3d": "3D", "vfx": "VFX", "sfx": "SFX"}
+
+
 def module_title(name):
-    return name.replace("_", " ").title()
+    words = name.replace("/", " ").replace("_", " ").split()
+    return " ".join(ACRONYMS.get(w.lower(), w.title()) for w in words)
 
 
 def module_blurb(name):
@@ -213,6 +222,67 @@ def intro_for(name):
     return path.read_text(encoding="utf-8").strip()
 
 
+def page_name(module, subdir):
+    """Doc name for a folder page. Hyphen separates path segments, since folder names already
+    contain underscores."""
+    if not subdir:
+        return "module_%s" % module
+    return "module_%s-%s" % (module, subdir.replace("/", "-"))
+
+
+def child_dirs(dirs, parent):
+    """Immediate children of parent among dirs, including intermediate folders that hold no
+    classes themselves but have classes further down."""
+    depth = len(parent.split("/")) if parent else 0
+    seen = []
+    for d in dirs:
+        if not d or d == parent:
+            continue
+        if parent and not d.startswith(parent + "/"):
+            continue
+        segment = "/".join(d.split("/")[: depth + 1])
+        if segment != parent and segment not in seen:
+            seen.append(segment)
+    return seen
+
+
+def write_folder_page(module, subdir, dirs, classes_at, have_page, counter):
+    """Writes one page per folder, mirroring the layout on disk."""
+    own = sorted("class_" + c.lower() for c in classes_at.get(subdir, []))
+    own = [p for p in own if p in have_page]
+    kids = child_dirs(dirs, subdir)
+
+    if not own and not kids:
+        return
+
+    title = module_title(subdir.split("/")[-1] if subdir else module)
+    body = [title, "=" * len(title), ""]
+
+    if not subdir:
+        blurb = module_blurb(module)
+        if blurb:
+            body += [blurb, ""]
+        intro = intro_for(module)
+        if intro:
+            body += [intro, ""]
+
+    # Subfolders first so the structure reads top down, then the classes in this folder.
+    if kids:
+        body += [".. toctree::", "   :maxdepth: 1", ""]
+        body += ["   " + page_name(module, k) for k in kids]
+        body.append("")
+    if own:
+        body += [".. toctree::", "   :maxdepth: 1", ""]
+        body += ["   " + p for p in own]
+        body.append("")
+
+    (WEB_DIR / (page_name(module, subdir) + ".rst")).write_text("\n".join(body), encoding="utf-8")
+    counter.append(page_name(module, subdir))
+
+    for kid in kids:
+        write_folder_page(module, kid, dirs, classes_at, have_page, counter)
+
+
 def step_modules():
     print("\n[5/6] Grouping pages by module")
     for stale in WEB_DIR.glob("module_*.rst"):
@@ -221,32 +291,17 @@ def step_modules():
     have_page = {p.stem for p in WEB_DIR.glob("class_*.rst")}
     modules = scan_modules()
     written = []
+    pages = []
 
     for name in sorted(modules, key=lambda m: (MODULE_ORDER.index(m) if m in MODULE_ORDER else 999, m)):
-        pages = sorted("class_" + c.lower() for c in modules[name])
-        pages = [p for p in pages if p in have_page]
-        if not pages:
+        classes_at = modules[name]
+        dirs = sorted(classes_at)
+        if not any(classes_at.values()):
             continue
-
-        title = module_title(name)
-        body = [title, "=" * len(title), ""]
-
-        blurb = module_blurb(name)
-        if blurb:
-            body += [blurb, ""]
-
-        intro = intro_for(name)
-        if intro:
-            body += [intro, ""]
-
-        # No caption. A toctree caption becomes a sidebar entry of its own, which pushes the
-        # class links a level deeper than navigation_depth shows.
-        body += [".. toctree::", "   :maxdepth: 1", ""]
-        body += ["   " + p for p in pages]
-        body.append("")
-
-        (WEB_DIR / ("module_%s.rst" % name)).write_text("\n".join(body), encoding="utf-8")
-        written.append(name)
+        before = len(pages)
+        write_folder_page(name, "", dirs, classes_at, have_page, pages)
+        if len(pages) > before:
+            written.append(name)
 
     missing_intro = [m for m in written if not intro_for(m)]
     if missing_intro:
@@ -256,11 +311,12 @@ def step_modules():
     if unlisted:
         print("      WARNING: not in MODULE_ORDER, will sort last: %s" % ", ".join(unlisted))
 
-    orphans = sorted(have_page - {("class_" + c.lower()) for cs in modules.values() for c in cs})
+    all_classes = {("class_" + c.lower()) for m in modules.values() for cs in m.values() for c in cs}
+    orphans = sorted(have_page - all_classes)
     if orphans:
         print("      WARNING: %d page(s) in no module: %s" % (len(orphans), ", ".join(orphans)))
 
-    print("      %d modules" % len(written))
+    print("      %d modules, %d folder pages" % (len(written), len(pages)))
 
 
 def step_html():
