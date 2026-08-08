@@ -1,20 +1,18 @@
-Buffs, debuffs, damage over time, and anything else that applies to a target for a while and
-then stops.
+Timed modifiers applied to a target: buffs, debuffs and damage over time.
 
-The split that makes this work is between the **blueprint** and the **instance**. A
-:ref:`class_FoxEffect` is a ``Resource``, so "poison" exists once on disk with its duration,
-tick rate and stacking rules. A :ref:`class_FoxEffectInstance` is created per application and
-holds only the mutable state: how long is left, how many stacks. Ten poisoned enemies means one
-resource and ten small instances, none of which are nodes.
+A :ref:`class_FoxEffect` is a ``Resource`` holding the static definition, such as duration, tick
+rate and stacking rules. A :ref:`class_FoxEffectInstance` is created per application and holds
+the mutable state, such as remaining time and stack count. Instances are not nodes, so ten
+poisoned enemies means one resource and ten lightweight instances.
 
-A :ref:`class_FoxEffectManager` sits on the entity and owns the instances. It only processes
-while something is active, so an entity with no effects costs nothing per frame.
+A :ref:`class_FoxEffectManager` on the entity owns the instances. It only processes while at
+least one effect is active.
 
 Writing an effect
 -----------------
 
-Extend :ref:`class_FoxEffect` and implement all four hooks. They are abstract, so the engine
-requires them even when the body is empty.
+Extend :ref:`class_FoxEffect` and implement all four methods. They are abstract, so an empty
+body is still required.
 
 .. code-block:: gdscript
 
@@ -29,25 +27,29 @@ requires them even when the body is empty.
         target.health -= damage_per_tick * current_stack
 
     func _on_reapply(target: Object, current_stack: int = 1) -> void:
-        pass  # ticking already reads the stack, nothing to rescale
+        pass
 
     func _on_remove(target: Object) -> void:
         target.stop_poison_vfx()
 
-Then set ``stack_mode`` to ``INTENSITY`` and ``tick_interval`` to ``1.0`` on the resource, and
-applying it twice gives you a two stack poison ticking once per second.
+Set ``stack_mode`` to ``INTENSITY`` and ``tick_interval`` to ``1.0`` on the resource to make the
+effect above stack and tick once per second.
 
-Things that will catch you out
-------------------------------
+Notes
+-----
 
-``max_stacks`` of ``0`` means **unlimited**, not zero. If you want an effect that never stacks,
-use ``StackMode.UNIQUE`` instead.
+.. note::
 
-``duration`` of ``-1.0`` means **permanent**. Any other negative value expires immediately.
+    ``max_stacks`` of ``0`` means unlimited. To prevent stacking entirely, use
+    ``StackMode.UNIQUE``.
 
-``_on_reapply`` should recalculate from the stack count it is given rather than adding to
-whatever it applied last time, because it fires on every stack change including decreases.
+.. note::
 
-``_on_remove`` is deliberately skipped when a save file is loaded, so it must not be the only
-thing that cleans up state. The manager can serialise and restore active effects, and it
-restores them without replaying their initial burst.
+    ``duration`` of ``-1.0`` means permanent. Any other negative value expires immediately.
+
+``_on_reapply`` runs on every stack change, including decreases, so it should recalculate from
+the stack count it receives rather than adding to the previous result.
+
+``_on_remove`` is skipped when a save file is loaded, so it should not be the only place that
+cleans up state. The manager can serialise and restore active effects without replaying their
+initial application.

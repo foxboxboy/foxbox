@@ -3,16 +3,16 @@ FoxFabric
 
 A lightweight, general purpose library for Godot 4.
 
-A collection of the systems most projects end up rebuilding: entity stats, status effects, state
-machines, hit detection, interaction, sockets, shops and cameras. Every module stands on its own,
-so you can copy the whole ``addons/foxfabric`` folder or pull out the single directory you need.
+It provides systems most projects end up writing themselves: entity stats, status effects, state
+machines, hit detection, interaction, sockets, shops and cameras. Each module is a self contained
+folder, so you can copy the whole ``addons/foxfabric`` directory or take a single one.
 
-Most of them move an arbitrary ``Variant`` payload around rather than hardcoding what your
-project means by damage, currency or interacting. A module never has to know anything about the
-game or tool it ends up in.
+Most modules pass an arbitrary ``Variant`` payload between nodes rather than defining what your
+project means by damage, currency or interacting. See :doc:`getting_started` for what that means
+in practice.
 
-Every page here is generated from the ``##`` documentation comments in the source, so this site
-and the in-editor help can never disagree.
+These pages are generated from the ``##`` comments in the source, so they match the in-editor
+help exactly.
 
 .. toctree::
    :maxdepth: 1

@@ -1,8 +1,7 @@
 .. warning::
 
-   Retired. Nothing here is maintained and none of it is used by the rest of the library. It is
-   kept only so that older projects pointing at these paths do not break outright.
+    Retired. Nothing here is maintained and nothing else in the library uses it. It exists so
+    older projects pointing at these paths keep loading.
 
-Do not build anything new on these. If one of them is doing something you need, copy the code
-into your own project rather than depending on this folder, because it can disappear in any
-release.
+Do not build on these classes. If one does something you need, copy the code into your own
+project rather than depending on this folder.

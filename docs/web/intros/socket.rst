@@ -1,49 +1,46 @@
-A named slot that holds exactly one node, reparenting it and snapping its transform.
-
-Seats in a vehicle, weapon mounts on a ship, a hand that can hold one item, or a grid cell that
-accepts one placed object. Anywhere you need "this spot is either empty or has exactly one thing
-in it", plus the bookkeeping to answer which.
+A named slot that holds one node, reparenting it and optionally snapping its transform. Use it
+for vehicle seats, weapon mounts, held items or grid cells.
 
 This is the only spatial module with a full 2D counterpart. :ref:`class_FoxSocket2D` and
-:ref:`class_FoxSocketMap2D` mirror the 3D versions exactly.
+:ref:`class_FoxSocketMap2D` mirror the 3D classes.
 
-A single socket
----------------
+Sockets
+-------
 
-:ref:`class_FoxSocket3D` extends ``Marker3D``. Attaching reparents the node under the socket and
-optionally snaps position, rotation and scale to the socket's marker. The three snap toggles are
-independent, so you can align a rider's position without forcing its rotation.
+:ref:`class_FoxSocket3D` extends ``Marker3D``. Attaching reparents the node under the socket.
+``snap_position``, ``snap_rotation`` and ``snap_scale`` are independent, so a node can be
+positioned without forcing its rotation.
 
-It also watches its own children. If something reparents the attachment away without going
-through ``detach``, the socket notices and clears itself rather than holding a stale reference.
+A socket watches its own children. If the attachment is reparented elsewhere without calling
+``detach``, the socket clears itself instead of holding a stale reference.
 
-A map of sockets
-----------------
+Socket maps
+-----------
 
-:ref:`class_FoxSocketMap3D` collects every socket beneath it and gives you occupancy queries and
+:ref:`class_FoxSocketMap3D` collects the sockets beneath it and provides occupancy queries and
 automatic placement.
 
 .. code-block:: gdscript
 
     var seats := $Vehicle/Seats as FoxSocketMap3D
 
-    # take any free seat, or name one explicitly
-    if seats.attach(player):
+    if seats.attach(player):          # first free socket
         player.set_physics_process(false)
-    seats.attach(player, &"DriverSeat")
 
+    seats.attach(player, &"DriverSeat")   # a specific socket
     seats.get_available_socket_count()
 
-Two things to know
-------------------
+Notes
+-----
 
-``detach`` unplugs the node but deliberately **does not reparent it**. It stays where it is
-until you move it, because the socket has no idea where it should go instead.
+.. note::
+
+    ``detach`` unplugs the node but does not reparent it. Move it yourself afterwards.
 
 .. code-block:: gdscript
 
     var rider := seats.get_socket(&"DriverSeat").detach()
     rider.reparent(get_tree().current_scene)
 
-A map collects its sockets when it enters the tree. Sockets created at runtime after that are
-not registered, which matters if you are building slots procedurally.
+A map collects its sockets when it enters the tree. Sockets created after that are not
+registered.

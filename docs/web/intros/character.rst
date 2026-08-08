@@ -1,30 +1,27 @@
 .. warning::
 
-   Under heavy rewrite. This module does not reflect how the rest of the library is written, and
-   its API will change. Read any other module for the intended style.
+    Under rewrite. This module does not follow the conventions used by the rest of the library
+    and its API will change. Read another module for the intended style.
 
-A humanoid controller for ``CharacterBody3D``: motors, abilities, movement states, a dynamic
-collision capsule, and the mannequin and accessory assets the demos use.
+A humanoid controller for ``CharacterBody3D``: motors, abilities, movement states, a resizable
+collision capsule, and the mannequin and accessory assets used by the demos.
 
-What is here
-------------
+Classes
+-------
 
-:ref:`class_FoxCharacterMotor3D` moves a body from an input direction. The advanced version adds
-acceleration, friction and pushing ``RigidBody3D`` out of the way, which is what gives it weight
-rather than the on-off feel of the basic one.
+:ref:`class_FoxCharacterMotor3D` moves a body from an input direction.
+:ref:`class_FoxAdvancedCharacterMotor3D` adds acceleration, friction and pushing
+``RigidBody3D`` out of the way.
 
-Abilities and movement states are separate nodes layered on top, and
+Abilities and movement states are separate nodes layered on top.
 :ref:`class_FoxDynamicCapsule` resizes the collision shape for crouching.
 
-Why it is being rewritten
--------------------------
+Known problems
+--------------
 
-The rest of the library keeps configuration in resources and refuses to assume what your game
-does. This module does neither yet. Pieces of it hardcode behaviour that should be data, such as
-a ``crouch()`` method and a crouch height living on the hitbox instead of in a swappable profile.
+Configuration that should live in resources is hardcoded. ``crouch()`` and a crouch height sit
+on the hitbox instead of in a swappable profile.
 
-It also has no test coverage, while every other module does.
+The module has no test coverage. Every other module does.
 
-Use it as a starting point to copy and modify rather than as a stable dependency. If you want an
-example of how a FoxFabric module is supposed to look, read :doc:`module_effect` or
-:doc:`module_shop` instead.
+Treat it as a starting point to copy and modify rather than a stable dependency.

@@ -1,35 +1,35 @@
-The "press E to open" pipeline, with no opinion about what interacting does.
+Detects what the player is looking at and triggers it. What triggering does is defined by the
+object, not by this module.
 
-A :ref:`class_FoxInteractionRayCast3D` points out of the player or camera and tracks whatever
-interactable it is currently looking at, emitting focus and unfocus as the target changes. That
-is what you connect a prompt or an outline shader to.
+:ref:`class_FoxInteractionRayCast3D` points out of the player or camera and tracks the
+interactable currently in front of it, emitting focus and unfocus as the target changes. Connect
+those to a prompt or an outline shader.
 
-A :ref:`class_FoxInteractableArea3D` is the thing being looked at. When triggered it emits
-``interacted`` with an arbitrary context, usually the initiator, so the object can decide what to
-do with who did it.
+:ref:`class_FoxInteractableArea3D` is the target. Calling ``interact`` emits ``interacted`` with
+an arbitrary context, usually the initiator.
+
+Usage
+-----
 
 .. code-block:: gdscript
 
-    # on the player
+    # player.gd
     func _unhandled_input(event: InputEvent) -> void:
         if event.is_action_pressed(&"interact"):
             var target := $InteractionRay.get_current_target()
             if target:
                 target.interact(self)
 
-    # on the door
+.. code-block:: gdscript
+
+    # door.gd
     func _on_interacted(context: Variant) -> void:
         if context.has_key(required_key):
             open()
 
-The door decides it needs a key. The player does not know doors exist. Neither does this module.
+Comparison with damage
+----------------------
 
-How this differs from damage
-----------------------------
-
-The two modules look similar and are easy to confuse, so: :doc:`module_damage` is a **push**.
-The attacker decides when something happens and sends a payload outward.
-
-Interaction is a **pull**. The sensor continuously reports what is in front of you, and nothing
-happens until something calls ``interact``. That is why interactables carry signals for focus
-and unfocus, and hurtboxes do not.
+:doc:`module_damage` pushes: the attacker decides when a payload is sent. Interaction pulls: the
+sensor reports what is in front of it continuously, and nothing happens until ``interact`` is
+called. That is why interactables have focus and unfocus signals and hurtboxes do not.

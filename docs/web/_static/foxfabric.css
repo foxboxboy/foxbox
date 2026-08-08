@@ -1,0 +1,23 @@
+/**
+ * Overrides on top of custom.css, which is Godot's stylesheet copied verbatim.
+ * Kept separate so custom.css can be replaced wholesale when Godot updates theirs.
+ */
+
+/**
+ * custom.css marks external links with an icon. On Godot's own site every engine type links
+ * internally, so the icon only ever lands on genuinely offsite links. Here those same types are
+ * resolved through intersphinx and count as external, which puts an icon after every int,
+ * String, Node3D and Object in a signature or properties table. Suppress it inside the class
+ * reference and keep it in ordinary prose.
+ */
+.rst-content .classref-property .reference.external,
+.rst-content .classref-method .reference.external,
+.rst-content .classref-signal .reference.external,
+.rst-content .classref-constant .reference.external,
+.rst-content .classref-constructor .reference.external,
+.rst-content .classref-operator .reference.external,
+.rst-content table .reference.external,
+.rst-content p > strong + .reference.external {
+    background-image: none;
+    padding-right: 0;
+}

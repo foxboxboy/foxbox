@@ -1,29 +1,27 @@
-Every other module depends on this one and nothing else. It holds two unrelated things.
+Every other module depends on ``core``, and ``core`` depends on nothing.
 
-**Base classes.** :ref:`class_FoxNode`, :ref:`class_FoxNode2D`, :ref:`class_FoxNode3D`,
-:ref:`class_FoxControl`, :ref:`class_FoxResource` and :ref:`class_FoxRefCounted` are thin
-subclasses of their engine equivalents. They add no behaviour. They exist so that every type in
-the library shares an ancestor you can check against, and so each one carries an editor icon
-that makes a FoxFabric node recognisable in a crowded scene tree.
+Base classes
+------------
 
-**Stat maths.** Three resources that most games rebuild from scratch:
+:ref:`class_FoxNode`, :ref:`class_FoxNode2D`, :ref:`class_FoxNode3D`, :ref:`class_FoxControl`,
+:ref:`class_FoxResource` and :ref:`class_FoxRefCounted` extend their engine equivalents without
+adding behaviour. They give every type in the library a common ancestor and an editor icon.
 
-:ref:`class_FoxBoundedValue`
-    A float clamped between a minimum and a maximum, which reports how far past the edge a
-    change tried to go. That overflow is what lets you build overkill damage or wasted healing
-    without tracking it yourself.
+Stat maths
+----------
 
-:ref:`class_FoxModifiableStat`
-    A base value with named stacks of flat and multiplier modifiers on top. Add ``+5`` from a
-    ring and ``+10%`` from a buff, then remove exactly the ring's contribution later without
-    recalculating anything by hand.
+:ref:`class_FoxBoundedValue` is a float clamped between a minimum and a maximum. It reports how
+far past either bound a change tried to go, which can be used for overkill damage or wasted
+healing.
 
-:ref:`class_FoxStatPool`
-    The two combined: a current value bounded by a maximum that is itself modifiable. This is
-    the shape of health, mana, stamina and every other pool with a raisable ceiling.
+:ref:`class_FoxModifiableStat` is a base value with named stacks of flat and multiplier
+modifiers. Modifiers can be added and removed individually without recalculating the rest.
 
-Worth knowing about the multiplier maths, because it is easy to assume the opposite: multipliers
-are summed on top of ``1.0``. A single ``0.5`` multiplier means **+50%**, not half.
+:ref:`class_FoxStatPool` combines the two: a current value bounded by a maximum that is itself
+modifiable. Use it for health, mana and stamina.
+
+Example
+-------
 
 .. code-block:: gdscript
 
@@ -32,5 +30,12 @@ are summed on top of ``1.0``. A single ``0.5`` multiplier means **+50%**, not ha
     attack.add_multiplier_modifier(&"rage", 0.5)
     print(attack.value)  # (100 + 50) * 1.5 = 225
 
-These are ``Resource`` types, so remember to tick **Local to Scene** when the same resource is
-assigned to more than one instance. Otherwise every enemy shares one health pool.
+.. note::
+
+    Multipliers are summed on top of ``1.0``. A single ``0.5`` multiplier gives ``+50%``, not
+    half.
+
+.. note::
+
+    These are ``Resource`` types. Enable **Local to Scene** when the same resource is assigned
+    to more than one instance, otherwise every instance shares one value.

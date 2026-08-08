@@ -1,7 +1,8 @@
-A hinge that turns accumulated 2D input into safe pitch and yaw.
+Accumulates 2D input into pitch and yaw. Use it for mouse look, turrets, or anything that
+rotates on two axes.
 
-Mouse look is the obvious use, but the same node drives a turret, a security camera or anything
-else that swivels on two axes.
+Usage
+-----
 
 .. code-block:: gdscript
 
@@ -10,13 +11,14 @@ else that swivels on two axes.
             $Gimbal.yaw -= event.relative.x * sensitivity
             $Gimbal.pitch -= event.relative.y * sensitivity
 
-Each axis independently either clamps or wraps. Pitch clamps by default, because letting a
-first person camera roll over the top is almost never what you want. Yaw wraps by default,
-because spinning all the way around usually is.
+Each axis independently clamps or wraps. Pitch clamps by default, so a first person camera
+cannot roll over the top. Yaw wraps by default. Enable ``clamp_yaw`` to give a turret a firing
+arc.
 
-Setting either property applies the limit before touching ``rotation``, so the node can never
-hold a value outside its range even for a frame. Turning on ``clamp_yaw`` gives you a turret
-with a firing arc.
+Setting ``pitch`` or ``yaw`` applies the limit before writing to ``rotation``, so the node never
+holds an out of range value.
 
-Doing the maths on ``pitch`` and ``yaw`` rather than on a ``Vector3`` rotation is what avoids
-gimbal lock. Set those two properties and leave the node's own rotation alone.
+.. note::
+
+    Operating on ``pitch`` and ``yaw`` rather than on the node's ``rotation`` is what avoids
+    gimbal lock. Set those two properties and leave ``rotation`` alone.

@@ -18,7 +18,17 @@ release = '0.1'
 # like Node3D and float. intersphinx resolves those against the official Godot docs so they stay
 # clickable instead of producing a thousand "undefined label" warnings.
 # Needs network on the first build, then Sphinx caches the inventory.
-extensions = ['sphinx.ext.intersphinx']
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath('_extensions'))
+
+# gdscript is Godot's own lexer, copied from godot-docs. Stock Pygments lumps every keyword into
+# one token, so func, if, for and return all come out the same colour. Godot's lexer emits
+# Keyword.ControlFlow separately, which is the class custom.css is written against.
+extensions = ['sphinx.ext.intersphinx', 'gdscript']
+
+highlight_language = 'gdscript'
 
 intersphinx_mapping = {
     'godot': ('https://docs.godotengine.org/en/stable/', None),
@@ -61,7 +71,8 @@ html_theme_options = {
     # (Description, Properties, Methods) to the sidebar, which is hundreds of extra entries.
     'navigation_depth': 2,
     'sticky_navigation': True,
-    'style_external_links': True,
+    # The theme's own external-link icon stacks on top of the one custom.css already draws.
+    'style_external_links': False,
     # Godot puts these at the foot of the page only. 'both' also stacks them above the title,
     # which pushes the actual content down and reads as clutter.
     'prev_next_buttons_location': 'bottom',
@@ -79,6 +90,7 @@ html_title = "FoxFabric documentation"
 
 html_css_files = [
     'custom.css',
+    'foxfabric.css',
 ]
 
 # custom.css styles sidebar captions as clickable and hides their contents until a class is
