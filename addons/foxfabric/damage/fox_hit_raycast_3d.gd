@@ -45,10 +45,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Collide With Areas is disabled, so this will never detect a "
 			+ "FoxHurtArea3D. Hurtboxes are areas, not bodies.")
 
-	if not enabled:
-		warnings.append("Enabled is off, so force_raycast_update() in fire() will not report a "
-			+ "collision.")
-
+	# Deliberately no warning for enabled being off. fire() uses force_raycast_update(), which
+	# the engine documents as working regardless of enabled.
 	return warnings
 
 #endregion

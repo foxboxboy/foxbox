@@ -41,9 +41,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Collide With Areas is disabled, so this will never detect a "
 			+ "FoxHurtArea3D. Hurtboxes are areas, not bodies.")
 
-	if shape == null:
-		warnings.append("No Shape assigned, so this shapecast cannot sweep anything.")
-
+	# Deliberately no warning for a missing shape. ShapeCast3D already reports that itself.
 	return warnings
 
 #endregion

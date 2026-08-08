@@ -4,6 +4,9 @@ extends "res://tests/fox_test.gd"
 ## These call _get_configuration_warnings() directly rather than going through the editor, so
 ## they verify the detection logic, not that Godot draws the triangle. A warning that fires when
 ## it should not is just as bad as one that never fires, so both directions are covered.
+## [br][br]
+## Nothing here covers a shape missing from an area or a body. Godot already warns for those, and
+## repeating an engine warning only makes the node show the same problem twice.
 
 
 class ProbeState extends FoxState:
@@ -17,7 +20,6 @@ func run() -> void:
 	suite = "configuration_warnings"
 	_hit_raycast()
 	_hit_shapecast()
-	_areas_need_a_shape()
 	_state_machine()
 	_effect_slot_policy()
 	_socket_marker()
@@ -48,38 +50,21 @@ func _hit_raycast() -> void:
 	check(not _has(ray._get_configuration_warnings(), "Collide With Areas"),
 		"silent once areas are enabled")
 
+	# fire() calls force_raycast_update(), which the engine documents as ignoring enabled.
 	ray.enabled = false
-	check(_has(ray._get_configuration_warnings(), "Enabled is off"), "warns when disabled")
-
-	ray.enabled = true
-	eq(ray._get_configuration_warnings().size(), 0, "a correct raycast warns about nothing")
+	eq(ray._get_configuration_warnings().size(), 0, "stays quiet about enabled, since fire() works regardless")
 
 
 func _hit_shapecast() -> void:
 	case("FoxHitShapeCast3D")
 	var cast: FoxHitShapeCast3D = track(FoxHitShapeCast3D.new()) as FoxHitShapeCast3D
+
+	cast.collide_with_areas = false
+	check(_has(cast._get_configuration_warnings(), "Collide With Areas"),
+		"warns when it cannot see areas")
+
 	cast.collide_with_areas = true
-
-	check(_has(cast._get_configuration_warnings(), "No Shape"), "warns with no shape assigned")
-
-	cast.shape = SphereShape3D.new()
-	eq(cast._get_configuration_warnings().size(), 0, "silent once a shape is assigned")
-
-
-func _areas_need_a_shape() -> void:
-	case("hit and hurt areas")
-	var hit: FoxHitArea3D = track(FoxHitArea3D.new()) as FoxHitArea3D
-	check(_has(hit._get_configuration_warnings(), "CollisionShape3D"),
-		"hit area warns with no shape child")
-
-	var shape: CollisionShape3D = CollisionShape3D.new()
-	shape.shape = BoxShape3D.new()
-	hit.add_child(shape)
-	eq(hit._get_configuration_warnings().size(), 0, "silent once a shape child exists")
-
-	var hurt: FoxHurtArea3D = track(FoxHurtArea3D.new()) as FoxHurtArea3D
-	check(_has(hurt._get_configuration_warnings(), "CollisionShape3D"),
-		"hurt area warns with no shape child")
+	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 
 func _state_machine() -> void:

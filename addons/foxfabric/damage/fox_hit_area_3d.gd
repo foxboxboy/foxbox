@@ -1,4 +1,3 @@
-@tool
 @icon("uid://n6yl7gwwqebs")
 class_name FoxHitArea3D
 extends Area3D
@@ -38,10 +37,6 @@ func fire() -> void:
 
 
 func _ready() -> void:
-	# @tool runs this in the editor too, where connecting signals would be wrong.
-	if Engine.is_editor_hint():
-		return
-
 	area_entered.connect(_on_area_entered)
 
 
@@ -57,25 +52,3 @@ func _try_deliver_payload(area: Area3D) -> void:
 	# only report a delivery the hurtbox actually accepted
 	if hurtbox.receive_hit(payload):
 		hit_delivered.emit(payload, hurtbox)
-
-
-
-
-#region Editor
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
-	var has_shape: bool = false
-	for child: Node in get_children():
-		if child is CollisionShape3D or child is CollisionPolygon3D:
-			has_shape = true
-			break
-
-	if not has_shape:
-		warnings.append("No CollisionShape3D child, so this area has no volume and will never "
-			+ "overlap anything.")
-
-	return warnings
-
-#endregion
