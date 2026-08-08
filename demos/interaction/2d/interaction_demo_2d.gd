@@ -11,10 +11,16 @@ extends Node2D
 ## How far the sensor reaches, in pixels.
 const REACH: float = 190.0
 
+## The reach line, drawn so it is obvious how far the sensor actually sees. Without it the range
+## is invisible and pointing at a prop that is simply too far away looks like a broken demo.
+const IDLE_COLOUR: Color = Color(1.0, 1.0, 1.0, 0.24)
+const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
+
 @export var player: CharacterBody2D
 @export var sensor: FoxInteractionRayCast2D
 @export var dragger: FoxPhysicsDragger2D
 @export var readout: Label
+@export var reach_line: Line2D
 
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
@@ -27,7 +33,7 @@ func _ready() -> void:
 	sensor.interaction_range = REACH
 	sensor.focused.connect(_on_focus_changed)
 	sensor.unfocused.connect(_on_focus_changed)
-	_refresh_readout()
+	_on_focus_changed(null)
 
 
 func _physics_process(_delta: float) -> void:
@@ -99,6 +105,8 @@ func _release() -> void:
 
 
 func _on_focus_changed(_interactable: FoxInteractableArea2D) -> void:
+	var has_target := sensor.get_current_target() != null
+	reach_line.default_color = FOCUSED_COLOUR if has_target else IDLE_COLOUR
 	_refresh_readout()
 
 

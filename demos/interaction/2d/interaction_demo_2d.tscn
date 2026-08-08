@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://demos/interaction/interaction_demo_2d.gd" id="1_demo"]
-[ext_resource type="Script" path="res://demos/interaction/grabbable_2d.gd" id="2_grab"]
+[ext_resource type="Script" path="res://demos/interaction/2d/interaction_demo_2d.gd" id="1_demo"]
+[ext_resource type="Texture2D" path="res://icon.png" id="7_icon"]
+[ext_resource type="Script" path="res://demos/interaction/2d/grabbable_2d.gd" id="2_grab"]
 [ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interaction_raycast_2d.gd" id="3_sensor"]
 [ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interactable_area_2d.gd" id="4_area"]
 [ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/2d/fox_physics_dragger_2d.gd" id="5_dragger"]
@@ -28,14 +29,25 @@ stiffness = 900.0
 damping = 30.0
 keep_upright = false
 
-[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout")]
+[sub_resource type="Resource" id="Profile_light"]
+script = ExtResource("6_profile")
+stiffness = 1400.0
+damping = 40.0
+keep_upright = false
+
+[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line")]
 script = ExtResource("1_demo")
 player = NodePath("Player")
 sensor = NodePath("Player/Sensor")
 dragger = NodePath("Dragger")
 readout = NodePath("HUD/Readout")
+reach_line = NodePath("Player/Sensor/Reach")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.129412, 0.133333, 0.164706, 1)
+polygon = PackedVector2Array(-424, -264, 424, -264, 424, 264, -424, 264)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -43,17 +55,37 @@ readout = NodePath("HUD/Readout")
 position = Vector2(0, -280)
 shape = SubResource("Shape_wall_h")
 
+[node name="TopFace" type="Polygon2D" parent="Walls"]
+position = Vector2(0, -280)
+color = Color(0.301961, 0.317647, 0.396078, 1)
+polygon = PackedVector2Array(-440, -16, 440, -16, 440, 16, -440, 16)
+
 [node name="Bottom" type="CollisionShape2D" parent="Walls"]
 position = Vector2(0, 280)
 shape = SubResource("Shape_wall_h")
+
+[node name="BottomFace" type="Polygon2D" parent="Walls"]
+position = Vector2(0, 280)
+color = Color(0.301961, 0.317647, 0.396078, 1)
+polygon = PackedVector2Array(-440, -16, 440, -16, 440, 16, -440, 16)
 
 [node name="Left" type="CollisionShape2D" parent="Walls"]
 position = Vector2(-440, 0)
 shape = SubResource("Shape_wall_v")
 
+[node name="LeftFace" type="Polygon2D" parent="Walls"]
+position = Vector2(-440, 0)
+color = Color(0.301961, 0.317647, 0.396078, 1)
+polygon = PackedVector2Array(-16, -280, 16, -280, 16, 280, -16, 280)
+
 [node name="Right" type="CollisionShape2D" parent="Walls"]
 position = Vector2(440, 0)
 shape = SubResource("Shape_wall_v")
+
+[node name="RightFace" type="Polygon2D" parent="Walls"]
+position = Vector2(440, 0)
+color = Color(0.301961, 0.317647, 0.396078, 1)
+polygon = PackedVector2Array(-16, -280, 16, -280, 16, 280, -16, 280)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-220, 120)
@@ -61,9 +93,9 @@ position = Vector2(-220, 120)
 [node name="Shape" type="CollisionShape2D" parent="Player"]
 shape = SubResource("Shape_player")
 
-[node name="Body" type="Polygon2D" parent="Player"]
-color = Color(0.388235, 0.576471, 1, 1)
-polygon = PackedVector2Array(20, 0, -14, -14, -14, 14)
+[node name="Body" type="Sprite2D" parent="Player"]
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("7_icon")
 
 [node name="Sensor" type="RayCast2D" parent="Player"]
 target_position = Vector2(190, 0)
@@ -71,6 +103,11 @@ collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("3_sensor")
+
+[node name="Reach" type="Line2D" parent="Player/Sensor"]
+points = PackedVector2Array(0, 0, 190, 0)
+width = 3.0
+default_color = Color(1, 1, 1, 0.235294)
 
 [node name="Dragger" type="Node2D" parent="."]
 script = ExtResource("5_dragger")
@@ -101,6 +138,7 @@ shape = SubResource("Shape_crate")
 [node name="Plank" type="RigidBody2D" parent="Props"]
 position = Vector2(220, 60)
 script = ExtResource("2_grab")
+drag_profile = SubResource("Profile_light")
 label = "plank"
 
 [node name="Shape" type="CollisionShape2D" parent="Props/Plank"]
