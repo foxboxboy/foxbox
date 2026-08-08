@@ -1,15 +1,106 @@
 [gd_scene format=3 uid="uid://csyyxnvtd7qjc"]
 
-[ext_resource type="Script" uid="uid://cwfhq8xve31ou" path="res://addons/foxfabric/attribute_map/fox_attribute_map.gd" id="1_lnwch"]
-[ext_resource type="Script" uid="uid://bkc3hw38tjn85" path="res://demos/attribute_map/attribute_map_demo.gd" id="1_pyjll"]
+[ext_resource type="Script" uid="uid://cwfhq8xve31ou" path="res://addons/foxfabric/attribute_map/fox_attribute_map.gd" id="1_map"]
+[ext_resource type="Script" path="res://demos/attribute_map/entity.gd" id="2_entity"]
+[ext_resource type="Script" path="res://demos/attribute_map/controls.gd" id="3_controls"]
+[ext_resource type="Script" path="res://demos/attribute_map/hud.gd" id="4_hud"]
 
-[node name="AttributeMapDemo" type="Node" unique_id=627515492]
-script = ExtResource("1_pyjll")
+[sub_resource type="SystemFont" id="SystemFont_mono"]
+font_names = PackedStringArray("monospace")
 
-[node name="FoxAttributeMap" type="Node" parent="." unique_id=491704660]
-script = ExtResource("1_lnwch")
+[node name="AttributeMapDemo" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Cart" type="Node2D" parent="." node_paths=PackedStringArray("attributes")]
+position = Vector2(0, -40)
+script = ExtResource("2_entity")
+label = "cart"
+move_speed = 8.0
+attributes = NodePath("Attributes")
+
+[node name="Body" type="Polygon2D" parent="Cart"]
+color = Color(0.22, 0.24, 0.3, 1)
+polygon = PackedVector2Array(-170, -70, 170, -70, 170, 70, -170, 70)
+
+[node name="Name" type="Label" parent="Cart"]
+offset_left = -170.0
+offset_top = -98.0
+offset_right = -90.0
+offset_bottom = -74.0
+text = "cart"
+
+[node name="Attributes" type="Node" parent="Cart"]
+script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="FoxAttributeMap2" type="Node" parent="FoxAttributeMap" unique_id=1027342552]
-script = ExtResource("1_lnwch")
+[node name="Fox" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes")]
+position = Vector2(-85, 0)
+script = ExtResource("2_entity")
+label = "fox"
+move_speed = 5.0
+attributes = NodePath("Attributes")
+
+[node name="Body" type="Polygon2D" parent="Cart/Fox"]
+color = Color(1, 0.55, 0.1, 1)
+polygon = PackedVector2Array(-38, -38, 38, -38, 38, 38, -38, 38)
+
+[node name="Name" type="Label" parent="Cart/Fox"]
+offset_left = -38.0
+offset_top = 44.0
+offset_right = 38.0
+offset_bottom = 68.0
+text = "fox"
+
+[node name="Attributes" type="Node" parent="Cart/Fox"]
+script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
+
+[node name="Hare" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes")]
+position = Vector2(85, 0)
+script = ExtResource("2_entity")
+label = "hare"
+move_speed = 4.0
+attributes = NodePath("Attributes")
+
+[node name="Body" type="Polygon2D" parent="Cart/Hare"]
+color = Color(0.72, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-38, -38, 38, -38, 38, 38, -38, 38)
+
+[node name="Name" type="Label" parent="Cart/Hare"]
+offset_left = -38.0
+offset_top = 44.0
+offset_right = 38.0
+offset_bottom = 68.0
+text = "hare"
+
+[node name="Attributes" type="Node" parent="Cart/Hare"]
+script = ExtResource("1_map")
+metadata/_custom_type_script = "uid://cwfhq8xve31ou"
+
+[node name="Kerb" type="Node2D" parent="."]
+position = Vector2(0, 170)
+
+[node name="Line" type="Polygon2D" parent="Kerb"]
+color = Color(0.3, 0.32, 0.36, 1)
+polygon = PackedVector2Array(-260, 40, 260, 40, 260, 46, -260, 46)
+
+[node name="Controls" type="Node" parent="." node_paths=PackedStringArray("cart", "fox", "kerb")]
+script = ExtResource("3_controls")
+cart = NodePath("../Cart")
+fox = NodePath("../Cart/Fox")
+kerb = NodePath("../Kerb")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Readout" type="Label" parent="HUD" node_paths=PackedStringArray("cart", "fox", "hare")]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 720.0
+offset_bottom = 220.0
+theme_override_fonts/font = SubResource("SystemFont_mono")
+theme_override_font_sizes/font_size = 15
+script = ExtResource("4_hud")
+cart = NodePath("../../Cart")
+fox = NodePath("../../Cart/Fox")
+hare = NodePath("../../Cart/Hare")
