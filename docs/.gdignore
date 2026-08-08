@@ -1,0 +1,5 @@
+This file tells Godot to skip this whole directory.
+
+docs/ holds python tooling, reStructuredText and a generated Sphinx site. None of it is a
+Godot resource, but without this file the editor tries to import every css, font and svg in
+docs/web/_build and reports errors on the ones it cannot read.

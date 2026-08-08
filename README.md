@@ -44,7 +44,7 @@ Requires Godot 4.7 or newer. The demos assume the Jolt physics engine.
 
 ## Demos
 
-`foxfabric_demos/` has a scene per module. They are the quickest way to see what
+`demos/` has a scene per module. They are the quickest way to see what
 something does before reading it.
 
 ## Status
@@ -69,6 +69,14 @@ addon and no install, so a fresh clone can run it straight away.
 the Output panel. Select the `TestRunner` node to filter to one module or change the seed.
 
 **From the command line**, for CI:
+
+```
+./tests/run_tests.sh
+```
+
+The wrapper locates Godot, and does a one-time import pass if `.godot/` is missing. Calling
+Godot directly works too, but only once the project has been imported at least once, since
+`--script` skips the import pass and without it no `class_name` resolves:
 
 ```
 godot --headless --path . --script res://tests/run_all.gd

@@ -19,12 +19,14 @@ For CI, or when you do not want to open the editor:
     godot --headless --path . --script res://tests/run_all.gd --seed=12345
 
 Exits 0 when everything passes and 1 when anything fails, so CI can gate on it. The wrapper
-scripts in the repo root do the same thing and find Godot for you:
+scripts next to this file do the same thing and locate Godot for you:
 
-    ./run_tests.sh                 or .\run_tests.ps1
-    ./run_tests.sh --suite=effect
+    ./tests/run_tests.sh                 or .\tests\run_tests.ps1
+    ./tests/run_tests.sh --suite=effect
 
-Set FOXFABRIC_GODOT if the godot binary is not on PATH.
+They need FOXFABRIC_GODOT set, or a "godot" on PATH. On Windows, set it once with:
+
+    [Environment]::SetEnvironmentVariable("FOXFABRIC_GODOT", "C:\path\to\Godot_console.exe", "User")
 
 
 LAYOUT

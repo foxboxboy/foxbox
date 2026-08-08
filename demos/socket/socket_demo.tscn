@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://dxjccdkh6pu8e"]
+
+[ext_resource type="Script" uid="uid://bcmrlevdw7c75" path="res://demos/socket/socket_demo.gd" id="1_njwab"]
+[ext_resource type="Script" uid="uid://bxegwhq6hhe4f" path="res://addons/foxfabric/socket/fox_socket_map_2d.gd" id="2_k0o5c"]
+[ext_resource type="Script" uid="uid://bcbx82ldcxte" path="res://addons/foxfabric/socket/fox_socket_2d.gd" id="3_qbdgk"]
+[ext_resource type="Texture2D" uid="uid://bvd634geggfmh" path="res://icons/old_icon.png" id="4_wg6ym"]
+
+[node name="Demo" type="Node" unique_id=1752730093]
+script = ExtResource("1_njwab")
+
+[node name="Label" type="Label" parent="." unique_id=2140426172]
+offset_left = 149.0
+offset_top = 877.0
+offset_right = 406.0
+offset_bottom = 900.0
+text = "good job you found an easter egg
+I DON'T WANT IT I JUST NEED IT"
+
+[node name="OccupancyComponent" type="Node2D" parent="." unique_id=489741831]
+position = Vector2(209, 323)
+script = ExtResource("2_k0o5c")
+
+[node name="Seat" type="Marker2D" parent="OccupancyComponent" unique_id=390304215]
+position = Vector2(-38, 0)
+script = ExtResource("3_qbdgk")
+
+[node name="Label" type="Label" parent="OccupancyComponent/Seat" unique_id=1931409376]
+offset_left = -25.0
+offset_top = -11.0
+offset_right = 26.0
+offset_bottom = 12.0
+text = "SEAT 1"
+
+[node name="Seat2" type="Marker2D" parent="OccupancyComponent" unique_id=753246662]
+position = Vector2(-35, 226)
+script = ExtResource("3_qbdgk")
+
+[node name="Label" type="Label" parent="OccupancyComponent/Seat2" unique_id=88604944]
+offset_left = -25.0
+offset_top = -11.0
+offset_right = 26.0
+offset_bottom = 12.0
+text = "SEAT 2"
+
+[node name="Seat3" type="Marker2D" parent="OccupancyComponent" unique_id=580688926]
+position = Vector2(186, -179)
+script = ExtResource("3_qbdgk")
+
+[node name="Label" type="Label" parent="OccupancyComponent/Seat3" unique_id=1062861223]
+offset_left = -25.0
+offset_top = -11.0
+offset_right = 26.0
+offset_bottom = 12.0
+text = "SEAT 3"
+
+[node name="Guy" type="Sprite2D" parent="." unique_id=114057141]
+position = Vector2(695, 369)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_wg6ym")
+
+[node name="SitButton" type="Button" parent="Guy" unique_id=1614083468]
+offset_left = -76.0
+offset_top = 150.0
+offset_right = 81.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 32
+text = "Sit"
+
+[node name="Label" type="Label" parent="Guy" unique_id=129580213]
+offset_left = -116.0
+offset_top = -162.0
+offset_right = -72.0
+offset_bottom = -139.0
+text = "Guy 1"
+
+[node name="Guy2" type="Sprite2D" parent="." unique_id=1581567387]
+position = Vector2(962, 280)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_wg6ym")
+
+[node name="Label" type="Label" parent="Guy2" unique_id=1708582447]
+offset_left = -110.0
+offset_top = -168.0
+offset_right = -66.0
+offset_bottom = -145.0
+text = "Guy 2"
+
+[node name="SitButton" type="Button" parent="Guy2" unique_id=346161157]
+offset_left = -76.0
+offset_top = 150.0
+offset_right = 81.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 32
+text = "Sit"
+
+[node name="Guy3" type="Sprite2D" parent="." unique_id=1089064304]
+position = Vector2(948, 509)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_wg6ym")
+
+[node name="Label" type="Label" parent="Guy3" unique_id=2053222911]
+offset_left = -110.0
+offset_top = -168.0
+offset_right = -66.0
+offset_bottom = -145.0
+text = "Guy 3"
+
+[node name="SitButton" type="Button" parent="Guy3" unique_id=1535286670]
+offset_left = -76.0
+offset_top = 150.0
+offset_right = 81.0
+offset_bottom = 203.0
+theme_override_font_sizes/font_size = 32
+text = "Sit"
+
+[node name="GuyMarker" type="Marker2D" parent="." unique_id=247480056]
+position = Vector2(693, 365)
+
+[node name="Guy2Marker" type="Marker2D" parent="." unique_id=648856324]
+position = Vector2(968, 284)
+
+[node name="Guy3Marker" type="Marker2D" parent="." unique_id=129793912]
+position = Vector2(950, 512)
+
+[connection signal="pressed" from="Guy/SitButton" to="." method="_on_sit_button_pressed"]
+[connection signal="pressed" from="Guy2/SitButton" to="." method="_on_sit_button_2_pressed"]
+[connection signal="pressed" from="Guy3/SitButton" to="." method="_on_sit_button_3_pressed"]

@@ -28,6 +28,12 @@ To rebuild:
 Requires python 3 on PATH. Note that make_rst.py imports version.py from the repo
 root, so run it from inside docs/.
 
+That is why version.py sits at the top level looking out of place. make_rst.py line 14 puts
+the repo root on sys.path and then does "import version". There is a copy at
+tools/version.py too, so deleting the root one may just fall through to that, but it is
+untested. If you tidy it away and doc generation starts failing on "import version", that
+is why.
+
 Known gap: the last generated pass swept in the third party addons sitting in
 addons/, so GodotDoctor, SignalVisualizer and Todo_Manager classes appeared as if
 they belonged to FoxFabric. Scope the doctool run to addons/foxfabric before

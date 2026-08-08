@@ -23,6 +23,10 @@ docs/web/_build/
 docs/tools/misc/*
 !docs/tools/misc/utility/
 
+# Word and LibreOffice lock files, created while a document in planning/ is open
+~$*
+.~lock.*
+
 # OS cruft
 .DS_Store
 Thumbs.db

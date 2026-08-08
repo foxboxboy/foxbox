@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FoxShopItem" format=3 uid="uid://pmmjkptyseek"]
+
+[ext_resource type="Texture2D" uid="uid://c3ntasv61n17c" path="res://icon.png" id="1_k1v02"]
+[ext_resource type="Texture2D" uid="uid://b5xqsndw03idg" path="res://demos/shop/apple_texture.png" id="2_k1v02"]
+[ext_resource type="Script" uid="uid://62shgvkbm52t" path="res://addons/foxfabric/shop/simple/fox_simple_price.gd" id="3_k1v02"]
+[ext_resource type="Script" uid="uid://8nygo3nfy78y" path="res://addons/foxfabric/shop/core/fox_shop_item.gd" id="3_nys8c"]
+
+[sub_resource type="Resource" id="Resource_2me5p"]
+script = ExtResource("3_k1v02")
+cost = 12
+metadata/_custom_type_script = "uid://62shgvkbm52t"
+
+[resource]
+script = ExtResource("3_nys8c")
+display_name = &"Apple"
+icon = ExtResource("1_k1v02")
+description = "Restores 10HP"
+price = SubResource("Resource_2me5p")
+product = ExtResource("2_k1v02")
+metadata/_custom_type_script = "uid://8nygo3nfy78y"

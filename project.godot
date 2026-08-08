@@ -59,7 +59,7 @@ folder_colors={
 "res://addons/foxfabric/view_model/": "pink",
 "res://addons/foxfabric/world_environments/": "yellow",
 "res://addons/foxfabric/zoom_spring_arm/": "purple",
-"res://foxfabric_demos/": "orange"
+"res://demos/": "orange"
 }
 
 [input]
