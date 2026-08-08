@@ -24,11 +24,12 @@ extends Node2D
 
 ## Gains applied to the profile when it drives rotation rather than position.
 ## [br][br]
-## Turning needs proportionally more damping than pulling does, because the spring works against
-## the body's inertia rather than its mass. Sharing the pull's ratio leaves rotation barely
-## damped, so a spun crate overshoots and wobbles instead of settling where you put it.
+## Matched on purpose, so a profile damped sensibly for pulling is damped sensibly for turning
+## too. Once [method torque_scale_for] has removed the difference in units between the two, the
+## same stiffness and damping describe both, and one number does not have to be a compromise
+## between them.
 const TORQUE_SPRING_GAIN: float = 0.5
-const TORQUE_DAMPING_GAIN: float = 1.5
+const TORQUE_DAMPING_GAIN: float = 0.5
 
 
 

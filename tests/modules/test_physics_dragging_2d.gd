@@ -99,6 +99,9 @@ func _torque_scale_guards_bad_input() -> void:
 	var shapeless: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
 	almost(Dragger.torque_scale_for(shapeless), 1.0, "a body with no shape scales by one")
 
-	case("the gains favour damping for rotation")
-	check(Dragger.TORQUE_DAMPING_GAIN > Dragger.TORQUE_SPRING_GAIN,
-		"turning is damped harder than it is sprung, or a spun body wobbles")
+	case("the rotation gains are matched")
+	# They were briefly not. Rotation was damped harder to make up for demo profiles whose
+	# damping sat far below critical; fixing those removed the reason. A mismatch now would mean
+	# the same two numbers describe a different response for turning than for pulling.
+	almost(Dragger.TORQUE_DAMPING_GAIN, Dragger.TORQUE_SPRING_GAIN,
+		"turning uses the same gain as pulling, so one profile describes both")

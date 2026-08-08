@@ -9,10 +9,10 @@
 [ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="6_profile"]
 
 [sub_resource type="RectangleShape2D" id="Shape_wall_h"]
-size = Vector2(880, 32)
+size = Vector2(880, 64)
 
 [sub_resource type="RectangleShape2D" id="Shape_wall_v"]
-size = Vector2(32, 560)
+size = Vector2(64, 560)
 
 [sub_resource type="CircleShape2D" id="Shape_player"]
 radius = 18.0
@@ -26,13 +26,13 @@ size = Vector2(160, 24)
 [sub_resource type="Resource" id="Profile_heavy"]
 script = ExtResource("6_profile")
 stiffness = 700.0
-damping = 70.0
+damping = 300.0
 keep_upright = false
 
 [sub_resource type="Resource" id="Profile_light"]
 script = ExtResource("6_profile")
-stiffness = 1100.0
-damping = 45.0
+stiffness = 700.0
+damping = 150.0
 keep_upright = false
 
 [node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout", "reach_line")]
@@ -58,7 +58,7 @@ shape = SubResource("Shape_wall_h")
 [node name="TopFace" type="Polygon2D" parent="Walls"]
 position = Vector2(0, -280)
 color = Color(0.301961, 0.317647, 0.396078, 1)
-polygon = PackedVector2Array(-440, -16, 440, -16, 440, 16, -440, 16)
+polygon = PackedVector2Array(-440, -32, 440, -32, 440, 32, -440, 32)
 
 [node name="Bottom" type="CollisionShape2D" parent="Walls"]
 position = Vector2(0, 280)
@@ -67,7 +67,7 @@ shape = SubResource("Shape_wall_h")
 [node name="BottomFace" type="Polygon2D" parent="Walls"]
 position = Vector2(0, 280)
 color = Color(0.301961, 0.317647, 0.396078, 1)
-polygon = PackedVector2Array(-440, -16, 440, -16, 440, 16, -440, 16)
+polygon = PackedVector2Array(-440, -32, 440, -32, 440, 32, -440, 32)
 
 [node name="Left" type="CollisionShape2D" parent="Walls"]
 position = Vector2(-440, 0)
@@ -76,7 +76,7 @@ shape = SubResource("Shape_wall_v")
 [node name="LeftFace" type="Polygon2D" parent="Walls"]
 position = Vector2(-440, 0)
 color = Color(0.301961, 0.317647, 0.396078, 1)
-polygon = PackedVector2Array(-16, -280, 16, -280, 16, 280, -16, 280)
+polygon = PackedVector2Array(-32, -280, 32, -280, 32, 280, -32, 280)
 
 [node name="Right" type="CollisionShape2D" parent="Walls"]
 position = Vector2(440, 0)
@@ -85,7 +85,7 @@ shape = SubResource("Shape_wall_v")
 [node name="RightFace" type="Polygon2D" parent="Walls"]
 position = Vector2(440, 0)
 color = Color(0.301961, 0.317647, 0.396078, 1)
-polygon = PackedVector2Array(-16, -280, 16, -280, 16, 280, -16, 280)
+polygon = PackedVector2Array(-32, -280, 32, -280, 32, 280, -32, 280)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-220, 120)
@@ -111,7 +111,7 @@ default_color = Color(1, 1, 1, 0.235294)
 
 [node name="Dragger" type="Node2D" parent="."]
 script = ExtResource("5_dragger")
-max_pull_force = 170000.0
+max_pull_force = 90000.0
 
 [node name="Props" type="Node2D" parent="."]
 
@@ -120,6 +120,7 @@ position = Vector2(60, -60)
 mass = 60.0
 linear_damp = 0.8
 angular_damp = 1.2
+continuous_cd = 2
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_heavy")
 label = "crate"
@@ -141,9 +142,10 @@ shape = SubResource("Shape_crate")
 
 [node name="Plank" type="RigidBody2D" parent="Props"]
 position = Vector2(220, 60)
-mass = 8.0
+mass = 20.0
 linear_damp = 0.3
 angular_damp = 0.5
+continuous_cd = 2
 script = ExtResource("2_grab")
 drag_profile = SubResource("Profile_light")
 label = "plank"
