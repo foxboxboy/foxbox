@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://demos/interaction/interaction_demo_2d.gd" id="1_demo"]
+[ext_resource type="Script" path="res://demos/interaction/grabbable_2d.gd" id="2_grab"]
+[ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interaction_raycast_2d.gd" id="3_sensor"]
+[ext_resource type="Script" path="res://addons/foxfabric/interaction/2d/fox_interactable_area_2d.gd" id="4_area"]
+[ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/2d/fox_physics_dragger_2d.gd" id="5_dragger"]
+[ext_resource type="Script" path="res://addons/foxfabric/physics_dragging/fox_physics_drag_profile.gd" id="6_profile"]
+
+[sub_resource type="RectangleShape2D" id="Shape_wall_h"]
+size = Vector2(880, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_wall_v"]
+size = Vector2(32, 560)
+
+[sub_resource type="CircleShape2D" id="Shape_player"]
+radius = 18.0
+
+[sub_resource type="RectangleShape2D" id="Shape_crate"]
+size = Vector2(56, 56)
+
+[sub_resource type="RectangleShape2D" id="Shape_plank"]
+size = Vector2(160, 24)
+
+[sub_resource type="Resource" id="Profile_heavy"]
+script = ExtResource("6_profile")
+stiffness = 900.0
+damping = 30.0
+keep_upright = false
+
+[node name="InteractionDemo2D" type="Node2D" node_paths=PackedStringArray("player", "sensor", "dragger", "readout")]
+script = ExtResource("1_demo")
+player = NodePath("Player")
+sensor = NodePath("Player/Sensor")
+dragger = NodePath("Dragger")
+readout = NodePath("HUD/Readout")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2(0, -280)
+shape = SubResource("Shape_wall_h")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(0, 280)
+shape = SubResource("Shape_wall_h")
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-440, 0)
+shape = SubResource("Shape_wall_v")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(440, 0)
+shape = SubResource("Shape_wall_v")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-220, 120)
+
+[node name="Shape" type="CollisionShape2D" parent="Player"]
+shape = SubResource("Shape_player")
+
+[node name="Body" type="Polygon2D" parent="Player"]
+color = Color(0.388235, 0.576471, 1, 1)
+polygon = PackedVector2Array(20, 0, -14, -14, -14, 14)
+
+[node name="Sensor" type="RayCast2D" parent="Player"]
+target_position = Vector2(190, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("3_sensor")
+
+[node name="Dragger" type="Node2D" parent="."]
+script = ExtResource("5_dragger")
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="Crate" type="RigidBody2D" parent="Props"]
+position = Vector2(60, -60)
+script = ExtResource("2_grab")
+drag_profile = SubResource("Profile_heavy")
+label = "crate"
+
+[node name="Shape" type="CollisionShape2D" parent="Props/Crate"]
+shape = SubResource("Shape_crate")
+
+[node name="Body" type="Polygon2D" parent="Props/Crate"]
+color = Color(1, 0.552941, 0.101961, 1)
+polygon = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+
+[node name="Interact" type="Area2D" parent="Props/Crate"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("4_area")
+
+[node name="Shape" type="CollisionShape2D" parent="Props/Crate/Interact"]
+shape = SubResource("Shape_crate")
+
+[node name="Plank" type="RigidBody2D" parent="Props"]
+position = Vector2(220, 60)
+script = ExtResource("2_grab")
+label = "plank"
+
+[node name="Shape" type="CollisionShape2D" parent="Props/Plank"]
+shape = SubResource("Shape_plank")
+
+[node name="Body" type="Polygon2D" parent="Props/Plank"]
+color = Color(0.827451, 0.643137, 0.372549, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+
+[node name="Interact" type="Area2D" parent="Props/Plank"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("4_area")
+
+[node name="Shape" type="CollisionShape2D" parent="Props/Plank/Interact"]
+shape = SubResource("Shape_plank")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Readout" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 620.0
+offset_bottom = 130.0
+
+[connection signal="interacted" from="Props/Crate/Interact" to="Props/Crate" method="_on_interacted"]
+[connection signal="interacted" from="Props/Plank/Interact" to="Props/Plank" method="_on_interacted"]

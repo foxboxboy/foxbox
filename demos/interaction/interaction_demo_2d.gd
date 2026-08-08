@@ -1,0 +1,118 @@
+# 2D counterpart to interaction_demo.tscn.
+#
+# Arrow keys move the player. The sensor turns to face the mouse, so what you can reach depends
+# on where you stand as well as where you point. Click a highlighted prop to pick it up, release
+# to drop it, and press Space while holding to toggle keep_upright.
+#
+# Mouse buttons are read as raw events rather than named actions, so the scene works in a project
+# that has not set up an input map.
+extends Node2D
+
+## How far the sensor reaches, in pixels.
+const REACH: float = 190.0
+
+@export var player: CharacterBody2D
+@export var sensor: FoxInteractionRayCast2D
+@export var dragger: FoxPhysicsDragger2D
+@export var readout: Label
+
+## Pixels per second the player walks.
+@export var move_speed: float = 320.0
+
+var _held: RigidBody2D = null
+var _keep_upright: bool = false
+
+
+func _ready() -> void:
+	sensor.interaction_range = REACH
+	sensor.focused.connect(_on_focus_changed)
+	sensor.unfocused.connect(_on_focus_changed)
+	_refresh_readout()
+
+
+func _physics_process(_delta: float) -> void:
+	var direction := Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down")
+	player.velocity = direction * move_speed
+	player.move_and_slide()
+
+	# The sensor is the player's reach, so it turns to face the cursor. FoxInteractionRayCast2D
+	# casts along +X, which is what look_at points at, so aiming it is a single call.
+	sensor.look_at(get_global_mouse_position())
+
+	# The dragger is a target the held body is pulled towards, not a hand that carries it. Put it
+	# under the cursor and the physics does the rest.
+	dragger.global_position = get_global_mouse_position()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	var button := event as InputEventMouseButton
+	if button and button.button_index == MOUSE_BUTTON_LEFT:
+		if button.pressed:
+			_try_grab()
+		else:
+			_release()
+		return
+
+	var key := event as InputEventKey
+	if key and key.pressed and not key.echo and key.keycode == KEY_SPACE:
+		_keep_upright = not _keep_upright
+		# Re-grab so the change takes effect on whatever is already in hand.
+		if is_instance_valid(_held):
+			var body := _held
+			_release()
+			_grab(body, null)
+		_refresh_readout()
+
+
+## Called back by a prop that was interacted with. The prop decides that being interacted with
+## means being picked up; this is the half that can actually do it.
+func grab_body(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
+	_grab(body, profile)
+
+
+func _try_grab() -> void:
+	var target := sensor.get_current_target()
+	if target:
+		target.interact(self)
+
+
+func _grab(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
+	if not is_instance_valid(body):
+		return
+
+	_held = body
+	dragger.default_keep_upright = _keep_upright
+
+	# Grab at the point on the body nearest the cursor rather than its centre, so a long prop
+	# swings from where you took hold of it.
+	dragger.grab(body, get_global_mouse_position(), profile)
+	_refresh_readout()
+
+
+func _release() -> void:
+	if not is_instance_valid(_held):
+		return
+
+	dragger.release()
+	_held = null
+	_refresh_readout()
+
+
+func _on_focus_changed(_interactable: FoxInteractableArea2D) -> void:
+	_refresh_readout()
+
+
+func _refresh_readout() -> void:
+	var target := sensor.get_current_target()
+	var pointing := "nothing"
+	if target:
+		var prop := target.get_parent()
+		pointing = str(prop.label) if prop and "label" in prop else prop.name
+
+	readout.text = "\n".join([
+		"Arrows move, mouse aims, click to grab, Space toggles upright",
+		"",
+		"pointing at:  %s" % pointing,
+		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
+		"keep upright: %s" % ("on" if _keep_upright else "off"),
+	])
