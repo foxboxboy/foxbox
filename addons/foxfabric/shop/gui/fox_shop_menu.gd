@@ -20,6 +20,11 @@ var _current_wallet: FoxWallet = null
 signal item_purchased(item: FoxShopItem)
 
 ## Emitted when a purchase is attempted but fails.
+## [br][br]
+## [param reason] is [code]&"no_wallet"[/code] when no wallet is assigned, or
+## [code]&"payment_refused"[/code] when the item's [FoxPrice] declined. The price decides why,
+## and it does not have to be affordability, so do not present this to the player as
+## "not enough money" without checking what your own [FoxPrice] meant by it.
 signal purchase_denied(item: FoxShopItem, reason: StringName)
 
 ## Emitted when a specific item's slot gains UI focus.
@@ -91,12 +96,13 @@ func _on_slot_pressed(item: FoxShopItem) -> void:
 		
 	if not _current_wallet:
 		push_warning("FoxShopMenu: Attempted purchase without a wallet.")
+		purchase_denied.emit(item, &"no_wallet")
 		return
 		
 	if item.price.pay(_current_wallet):
 		item_purchased.emit(item)
 		update_affordability()
 	else:
-		purchase_denied.emit(item, &"insufficient_funds")
+		purchase_denied.emit(item, &"payment_refused")
 
 #endregion
