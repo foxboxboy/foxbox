@@ -112,8 +112,8 @@ func _snapping() -> void:
 
 func _build_map(socket_names: Array) -> Array:
 	var map: FoxSocketMap3D = FoxSocketMap3D.new()
-	var sockets: Array = []
-	for n in socket_names:
+	var sockets: Array[FoxSocket3D] = []
+	for n: String in socket_names:
 		var s: FoxSocket3D = FoxSocket3D.new()
 		s.name = n
 		map.add_child(s)
@@ -126,7 +126,7 @@ func _map_attaches_by_name() -> void:
 	case("map attach by name")
 	var built: Array = _build_map(["DriverSeat", "PassengerSeat"])
 	var map: FoxSocketMap3D = built[0]
-	var sockets: Array = built[1]
+	var sockets: Array[FoxSocket3D] = built[1]
 
 	eq(map.sockets.size(), 2, "both sockets were collected")
 	eq(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
@@ -149,7 +149,7 @@ func _map_auto_attaches() -> void:
 	case("map auto attach")
 	var built: Array = _build_map(["A", "B"])
 	var map: FoxSocketMap3D = built[0]
-	var sockets: Array = built[1]
+	var sockets: Array[FoxSocket3D] = built[1]
 
 	var one: Node3D = Node3D.new()
 	var two: Node3D = Node3D.new()

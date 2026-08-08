@@ -14,7 +14,7 @@ class ScrapPrice extends FoxPrice:
 		var w: ScrapWallet = wallet as ScrapWallet
 		if not w:
 			return false
-		for id in required:
+		for id: StringName in required:
 			if not w.scrap.has(id):
 				return false
 		return true
@@ -23,7 +23,7 @@ class ScrapPrice extends FoxPrice:
 		if not can_be_paid_by(wallet):
 			return false
 		var w: ScrapWallet = wallet as ScrapWallet
-		for id in required:
+		for id: StringName in required:
 			w.scrap.erase(id)
 		return true
 
@@ -140,12 +140,12 @@ func _random_purchase_sequences_never_overdraw() -> void:
 	case("invariant: funds never go negative")
 	var breaches: int = 0
 
-	for i in 200:
+	for i: int in 200:
 		var w: FoxSimpleWallet = FoxSimpleWallet.new()
 		w.funds = rng.randi_range(0, 200)
 		var p: FoxSimplePrice = FoxSimplePrice.new()
 
-		for j in 25:
+		for j: int in 25:
 			p.cost = rng.randi_range(0, 60)
 			p.pay(w)
 			if w.funds < 0:

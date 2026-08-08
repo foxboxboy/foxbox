@@ -142,13 +142,13 @@ func _random_stacks_match_the_formula() -> void:
 	case("invariant against the documented formula")
 	var mismatches: int = 0
 
-	for i in 200:
+	for i: int in 200:
 		var base: float = rng.randf_range(-100.0, 100.0)
 		var s: FoxModifiableStat = FoxModifiableStat.new(base)
 		var flats: float = 0.0
 		var mults: float = 0.0
 
-		for j in 12:
+		for j: int in 12:
 			var amount: float = rng.randf_range(-5.0, 5.0)
 			if rng.randf() < 0.5:
 				s.add_flat_modifier(&"f", amount)

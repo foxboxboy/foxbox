@@ -110,11 +110,11 @@ func _random_spending_stays_in_range() -> void:
 	case("invariant under random spending")
 	var breaches: int = 0
 
-	for i in 200:
+	for i: int in 200:
 		var p: FoxStatPool = FoxStatPool.new()
 		p.base_max = rng.randf_range(1.0, 500.0)
 
-		for j in 25:
+		for j: int in 25:
 			if rng.randf() < 0.5:
 				p.subtract(rng.randf_range(0.0, 100.0))
 			else:

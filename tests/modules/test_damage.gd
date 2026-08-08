@@ -90,7 +90,7 @@ func _payload_passes_through_untouched() -> void:
 		Vector3(1, 2, 3),
 	]
 
-	for c in cases:
+	for c: Variant in cases:
 		hit.payload = c
 		hit._try_deliver_payload(h)
 

@@ -8,6 +8,10 @@ extends RefCounted
 ## Suites are found by scanning res://tests/ recursively for test_*.gd, so they can be
 ## organised into any folder layout.
 
+## Suites are typed against their base class rather than duck typed, so calling into them does
+## not produce unsafe access warnings.
+const FoxTest = preload("res://tests/fox_test.gd")
+
 const TESTS_DIR: String = "res://tests/"
 
 ## Passing this as the seed picks a fresh one each run, so repeated runs cover different random
@@ -16,32 +20,47 @@ const TESTS_DIR: String = "res://tests/"
 const RANDOM_SEED: int = 0
 
 
+## One suite's outcome. A class rather than a Dictionary so the fields carry types.
+class SuiteResult extends RefCounted:
+	var name: String = ""
+	var passed: int = 0
+	var failures: Array[String] = []
+
+
+## Everything a run produced.
+class RunResult extends RefCounted:
+	var suites: Array[SuiteResult] = []
+	var broken: Array[String] = []
+	var total_passed: int = 0
+	var total_failed: int = 0
+	var seed_used: int = 0
+
+	func is_green() -> bool:
+		return total_failed == 0 and broken.is_empty()
+
+
 ## Finds every test_*.gd, runs it, and returns the collected results.
 ## [br][br]
 ## [param root] is where node based tests get parented, so it must be a live tree.
-## Returns a dictionary with [code]suites[/code], [code]total_passed[/code],
-## [code]total_failed[/code] and [code]broken[/code].
-func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> Dictionary:
+func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> RunResult:
 	if seed_value == RANDOM_SEED:
 		seed_value = randi()
+
+	var results: RunResult = RunResult.new()
+	results.seed_used = seed_value
 
 	var files: Array[String] = _discover(filter)
 	files.sort()
 
-	var suites: Array[Dictionary] = []
-	var broken: Array[String] = []
-	var total_passed: int = 0
-	var total_failed: int = 0
-
-	for path in files:
-		var script: Resource = load(path)
+	for path: String in files:
+		var script: GDScript = load(path) as GDScript
 		if script == null:
-			broken.append("%s could not be loaded" % path)
+			results.broken.append("%s could not be loaded" % path)
 			continue
 
-		var suite: Object = script.new()
-		if not suite.has_method("run"):
-			broken.append("%s has no run() method" % path)
+		var suite: FoxTest = script.new()
+		if suite == null:
+			results.broken.append("%s does not extend fox_test.gd" % path)
 			continue
 
 		suite.root = root
@@ -51,69 +70,53 @@ func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> Dict
 
 		suite.run()
 
-		var entry: Dictionary = {
-			"name": str(suite.suite),
-			"passed": int(suite.passed_count()),
-			"failures": suite.failures().duplicate(),
-		}
+		var entry: SuiteResult = SuiteResult.new()
+		entry.name = suite.suite
+		entry.passed = suite.passed_count()
+		entry.failures = suite.failures().duplicate()
 		suite.cleanup()
 
-		total_passed += entry["passed"]
-		total_failed += entry["failures"].size()
-		suites.append(entry)
+		results.total_passed += entry.passed
+		results.total_failed += entry.failures.size()
+		results.suites.append(entry)
 
-	return {
-		"suites": suites,
-		"total_passed": total_passed,
-		"total_failed": total_failed,
-		"broken": broken,
-		"seed": seed_value,
-	}
+	return results
 
 
 ## Formats results as BBCode. Suitable for [method print_rich] and for a [RichTextLabel],
 ## which is why both entry points can share one report.
-func format(results: Dictionary) -> String:
+func format(results: RunResult) -> String:
 	var lines: PackedStringArray = []
-	var suites: Array = results["suites"]
 
-	lines.append("[b]FoxFabric test run[/b]   %d suites   seed %d" % [suites.size(), results["seed"]])
+	lines.append("[b]FoxFabric test run[/b]   %d suites   seed %d"
+		% [results.suites.size(), results.seed_used])
 	lines.append("[color=gray]%s[/color]" % "-".repeat(58))
 
-	for s in suites:
-		var fails: Array = s["failures"]
-		if fails.is_empty():
+	for s: SuiteResult in results.suites:
+		if s.failures.is_empty():
 			lines.append("[color=green]  PASS[/color]  %s  [color=gray]%d checks[/color]"
-				% [s["name"].rpad(22), s["passed"]])
+				% [s.name.rpad(22), s.passed])
 		else:
 			lines.append("[color=red]  FAIL[/color]  %s  [color=gray]%d passed, %d failed[/color]"
-				% [s["name"].rpad(22), s["passed"], fails.size()])
-			for f in fails:
+				% [s.name.rpad(22), s.passed, s.failures.size()])
+			for f: String in s.failures:
 				lines.append("        [color=red]%s[/color]" % f)
 
 	lines.append("[color=gray]%s[/color]" % "-".repeat(58))
 
-	for b in results["broken"]:
+	for b: String in results.broken:
 		lines.append("[color=red]  BROKEN[/color]  %s" % b)
 
-	if _is_green(results):
+	if results.is_green():
 		lines.append("[color=green]  All %d checks passed across %d modules.[/color]"
-			% [results["total_passed"], suites.size()])
+			% [results.total_passed, results.suites.size()])
 	else:
 		lines.append("[color=red]  %d checks failed (%d passed).[/color]"
-			% [results["total_failed"], results["total_passed"]])
-		lines.append("[color=gray]  Reproduce this exact run with --seed=%d[/color]" % results["seed"])
+			% [results.total_failed, results.total_passed])
+		lines.append("[color=gray]  Reproduce this exact run with --seed=%d[/color]"
+			% results.seed_used)
 
 	return "\n".join(lines)
-
-
-## Returns [code]true[/code] when nothing failed and nothing was broken.
-func _is_green(results: Dictionary) -> bool:
-	return results["total_failed"] == 0 and (results["broken"] as Array).is_empty()
-
-
-func is_green(results: Dictionary) -> bool:
-	return _is_green(results)
 
 
 func _discover(filter: String) -> Array[String]:

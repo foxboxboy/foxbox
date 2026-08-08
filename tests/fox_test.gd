@@ -63,7 +63,7 @@ func track(node: Node) -> Node:
 
 ## Frees everything created through [method track]. The runner calls this automatically.
 func cleanup() -> void:
-	for n in _nodes:
+	for n: Node in _nodes:
 		if is_instance_valid(n):
 			n.free()
 	_nodes.clear()

@@ -130,7 +130,7 @@ func _max_stacks_zero_means_unlimited() -> void:
 	e.max_stacks = 0
 
 	var inst: FoxEffectInstance = m.add_effect(e, target)
-	for i in 30:
+	for i: int in 30:
 		m.add_effect(e, target)
 	eq(inst.stack, 31, "zero means unlimited, not zero")
 
@@ -144,7 +144,7 @@ func _max_stacks_caps() -> void:
 	e.max_stacks = 3
 
 	var inst: FoxEffectInstance = m.add_effect(e, target)
-	for i in 10:
+	for i: int in 10:
 		m.add_effect(e, target)
 	eq(inst.stack, 3, "the stack stops at max_stacks")
 
@@ -232,7 +232,7 @@ func _permanent_effects_never_expire() -> void:
 	var inst: FoxEffectInstance = m.add_effect(e, target)
 	check(not inst.is_expired, "a permanent effect is not expired")
 
-	for i in 100:
+	for i: int in 100:
 		m._process(1.0)
 	eq(m.effects.size(), 1, "still alive after 100 seconds")
 	almost(inst.time_left, -1.0, "time_left stays at the permanent sentinel")
@@ -260,7 +260,7 @@ func _ticking() -> void:
 	var e2: ProbeEffect = _mk(&"silent", 10.0)
 	e2.tick_interval = 0.0
 	m2.add_effect(e2, target)
-	for i in 20:
+	for i: int in 20:
 		m2._process(1.0)
 	eq(e2.ticks, 0, "a zero interval never ticks")
 

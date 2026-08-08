@@ -10,10 +10,12 @@ class FlatRule extends FoxAttributeRule:
 		amount = p_amount
 
 	func apply_to(map: FoxAttributeMap) -> void:
-		map.set_data(target_key, float(map.get_data(target_key, 0.0)) + amount)
+		var current: float = map.get_data(target_key, 0.0)
+		map.set_data(target_key, current + amount)
 
 	func remove_from(map: FoxAttributeMap) -> void:
-		map.set_data(target_key, float(map.get_data(target_key, 0.0)) - amount)
+		var current: float = map.get_data(target_key, 0.0)
+		map.set_data(target_key, current - amount)
 
 
 func run() -> void:
@@ -26,6 +28,13 @@ func run() -> void:
 	_inheritance_respects_can_receive_rules()
 	_can_send_rules_stops_propagation()
 	_late_joining_children_catch_up()
+
+
+## Reads a float out of the map through a typed local, so callers never pass a Variant into
+## a typed parameter.
+func _speed(m: FoxAttributeMap) -> float:
+	var value: float = m.get_data(&"speed", 0.0)
+	return value
 
 
 func _new_map() -> FoxAttributeMap:
@@ -139,19 +148,19 @@ func _rules_apply_and_reverse() -> void:
 
 	var rule: FlatRule = FlatRule.new(&"haste", &"speed", 5.0)
 	m.add_rule(rule)
-	almost(float(m.get_data(&"speed")), 15.0, "adding a rule applies it")
+	almost(_speed(m), 15.0, "adding a rule applies it")
 	eq(m.get_active_rules().size(), 1, "rule is tracked")
 
 	m.add_rule(rule)
 	eq(m.get_active_rules().size(), 1, "the same rule instance is not added twice")
-	almost(float(m.get_data(&"speed")), 15.0, "and is not applied twice")
+	almost(_speed(m), 15.0, "and is not applied twice")
 
 	m.remove_rule(&"haste")
-	almost(float(m.get_data(&"speed")), 10.0, "removing a rule reverses it")
+	almost(_speed(m), 10.0, "removing a rule reverses it")
 	eq(m.get_active_rules().size(), 0, "rule is untracked")
 
 	m.remove_rule(&"nonexistent")
-	almost(float(m.get_data(&"speed")), 10.0, "removing an unknown rule changes nothing")
+	almost(_speed(m), 10.0, "removing an unknown rule changes nothing")
 
 
 ## Regression: the can_receive_rules guard sat at the top of add_rule and fired for every
@@ -163,7 +172,7 @@ func _local_add_rule_ignores_can_receive_rules() -> void:
 	m.set_data(&"speed", 10.0)
 
 	m.add_rule(FlatRule.new(&"local", &"speed", 5.0))
-	almost(float(m.get_data(&"speed")), 15.0, "a rule added directly still applies")
+	almost(_speed(m), 15.0, "a rule added directly still applies")
 	eq(m.get_active_rules().size(), 1, "and is still tracked")
 
 
@@ -185,8 +194,8 @@ func _inheritance_respects_can_receive_rules() -> void:
 
 	parent_map.add_rule(FlatRule.new(&"aura", &"speed", 5.0))
 
-	almost(float(parent_map.get_data(&"speed")), 15.0, "the parent applies its own rule")
-	almost(float(child_map.get_data(&"speed")), 10.0, "the opted-out child ignores the inherited rule")
+	almost(_speed(parent_map), 15.0, "the parent applies its own rule")
+	almost(_speed(child_map), 10.0, "the opted-out child ignores the inherited rule")
 	eq(child_map.get_active_rules().size(), 0, "and does not track it")
 
 	case("an opted-in child does inherit")
@@ -202,11 +211,11 @@ func _inheritance_respects_can_receive_rules() -> void:
 	cm.set_data(&"speed", 10.0)
 	pm.add_rule(FlatRule.new(&"aura2", &"speed", 5.0))
 
-	almost(float(cm.get_data(&"speed")), 15.0, "the child receives the parent's rule")
+	almost(_speed(cm), 15.0, "the child receives the parent's rule")
 	eq(cm.get_active_rules().size(), 1, "and tracks it")
 
 	pm.remove_rule(&"aura2")
-	almost(float(cm.get_data(&"speed")), 10.0, "removing on the parent reverses it on the child")
+	almost(_speed(cm), 10.0, "removing on the parent reverses it on the child")
 
 
 func _can_send_rules_stops_propagation() -> void:
@@ -224,8 +233,8 @@ func _can_send_rules_stops_propagation() -> void:
 	cm.set_data(&"speed", 10.0)
 	pm.add_rule(FlatRule.new(&"selfish", &"speed", 5.0))
 
-	almost(float(pm.get_data(&"speed")), 15.0, "the parent still applies it locally")
-	almost(float(cm.get_data(&"speed")), 10.0, "nothing propagated down")
+	almost(_speed(pm), 15.0, "the parent still applies it locally")
+	almost(_speed(cm), 10.0, "nothing propagated down")
 
 
 func _late_joining_children_catch_up() -> void:
@@ -246,5 +255,5 @@ func _late_joining_children_catch_up() -> void:
 	cm.set_data(&"speed", 100.0)
 	sub.add_child(cm)
 
-	almost(float(cm.get_data(&"speed")), 105.0, "the existing rule was applied on join")
+	almost(_speed(cm), 105.0, "the existing rule was applied on join")
 	eq(cm.get_flag_stacks(&"blessed"), 2, "existing flag stacks were copied across")

@@ -38,8 +38,8 @@ func run() -> void:
 ## because FoxStateMachine collects them in _ready.
 func _build(state_names: Array, initial_index: int = 0) -> Array:
 	var sm: FoxStateMachine = FoxStateMachine.new()
-	var states: Array = []
-	for n in state_names:
+	var states: Array[ProbeState] = []
+	for n: String in state_names:
 		var s: ProbeState = ProbeState.new()
 		s.name = n
 		sm.add_child(s)
@@ -54,7 +54,7 @@ func _initial_state() -> void:
 	case("initial state")
 	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	eq(sm.current_state, states[0], "the initial state became current")
 	eq(states[0].entered, 1, "enter ran on the initial state")
@@ -75,7 +75,7 @@ func _transitions() -> void:
 	case("transitions")
 	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	sm.transition_to(&"Running")
 	eq(sm.current_state, states[1], "current state moved")
@@ -92,7 +92,7 @@ func _unknown_states_are_refused() -> void:
 	case("unknown state names")
 	var built: Array = _build(["Idle"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	# emits a warning by design
 	sm.transition_to(&"DoesNotExist")
@@ -120,7 +120,7 @@ func _states_request_their_own_transitions() -> void:
 	case("transition_requested")
 	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	states[0].ask_for(&"Running")
 	eq(sm.current_state, states[1], "the machine honoured the active state's request")
@@ -132,7 +132,7 @@ func _inactive_states_cannot_force_a_transition() -> void:
 	case("requests from inactive states")
 	var built: Array = _build(["Idle", "Running", "Jumping"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	sm.transition_to(&"Running")
 	eq(sm.current_state, states[1], "Running is active")
@@ -147,7 +147,7 @@ func _frame_callbacks_reach_the_active_state_only() -> void:
 	case("frame callbacks")
 	var built: Array = _build(["Idle", "Running"])
 	var sm: FoxStateMachine = built[0]
-	var states: Array = built[1]
+	var states: Array[ProbeState] = built[1]
 
 	sm._process(0.016)
 	sm._process(0.016)

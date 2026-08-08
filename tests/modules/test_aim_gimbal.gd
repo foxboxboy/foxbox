@@ -82,12 +82,12 @@ func _random_input_never_escapes_the_clamp() -> void:
 	case("invariant under random input")
 	var breaches: int = 0
 
-	for i in 200:
+	for i: int in 200:
 		var g: FoxAimGimbal3D = _gimbal()
 		g.min_pitch_deg = rng.randf_range(-89.0, -10.0)
 		g.max_pitch_deg = rng.randf_range(10.0, 89.0)
 
-		for j in 25:
+		for j: int in 25:
 			g.pitch += deg_to_rad(rng.randf_range(-200.0, 200.0))
 
 			var deg: float = rad_to_deg(g.pitch)

@@ -90,12 +90,12 @@ func _moving_the_bounds() -> void:
 func _random_sequences_stay_in_range() -> void:
 	case("invariant under random operations")
 	var breaches: int = 0
-	for i in 300:
+	for i: int in 300:
 		var lo: float = rng.randf_range(-50.0, 0.0)
 		var hi: float = lo + rng.randf_range(0.1, 100.0)
 		var v: FoxBoundedValue = FoxBoundedValue.new(rng.randf_range(lo, hi), hi, lo)
 
-		for j in 20:
+		for j: int in 20:
 			if rng.randf() < 0.5:
 				v.add(rng.randf_range(0.0, 30.0))
 			else:
