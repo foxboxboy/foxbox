@@ -2,8 +2,25 @@
 @icon("uid://cb025en3etr6r")
 class_name FoxEffectSlotPolicy
 extends FoxNode
-## Acts as a gatekeeper for a [FoxEffectManager], enforcing a maximum limit 
+## Acts as a gatekeeper for a [FoxEffectManager], enforcing a maximum limit
 ## on how many distinct [FoxEffectInstance] objects can exist simultaneously.
+##
+## Sits as a child of the manager it gates. Route calls through the policy rather than the
+## manager and the limit applies.
+## [codeblock]
+## # Fighter
+## # └─ Effects           (FoxEffectManager)
+## #    └─ SlotPolicy     (max_slots -> 3)
+##
+## @onready var slots: FoxEffectSlotPolicy = $Effects/SlotPolicy
+##
+## slots.add_effect(haste, self)
+## slots.slots_updated.connect(_refresh_buff_bar)
+## [/codeblock]
+## Adding to a full policy pushes the oldest instance out rather than refusing the new one.
+## [br][br]
+## Effects added straight through the manager are not tracked here and do not count against
+## [member max_slots], so pick one route and stay on it.
 
 
 

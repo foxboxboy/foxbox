@@ -3,6 +3,19 @@
 class_name FoxSocket2D
 extends Marker2D
 ## A physical 2D location that reparents and holds a single attachment.
+##
+## Attaching reparents the node under the socket and snaps its transform to [member marker], so
+## the socket owns whatever is plugged into it.
+## [codeblock]
+## var hand := $Model/RightHand as FoxSocket2D
+## hand.attach(sword)
+##
+## # detach() unplugs the socket but leaves the node parented here.
+## var dropped := hand.detach()
+## dropped.reparent(get_tree().current_scene)
+## [/codeblock]
+## The socket watches its own children, so an attachment freed or reparented by something else
+## still clears the slot and emits [signal detached].
 
 
 

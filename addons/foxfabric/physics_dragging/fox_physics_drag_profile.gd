@@ -2,6 +2,13 @@
 class_name FoxPhysicsDragProfile
 extends FoxResource
 ## A configuration profile defining the physics characteristics of a grab action.
+##
+## Swappable settings for [method FoxPhysicsDragger3D.grab]. Passing one overrides the dragger's
+## own defaults for as long as that grab lasts.
+## [br][br]
+## The two sets of defaults differ by a lot. A fresh profile starts at a stiffness of 200 and a
+## damping of 1, while [FoxPhysicsDragger3D] falls back to 800 and 25 when no profile is given,
+## so an untouched profile drags far more loosely than passing nothing at all.
 
 
 

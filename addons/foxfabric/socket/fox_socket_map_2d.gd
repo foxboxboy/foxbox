@@ -3,6 +3,20 @@
 class_name FoxSocketMap2D
 extends FoxNode2D
 ## Manages a collection of [FoxSocket2D] nodes, mapped by their node names.
+##
+## Sockets are collected recursively from everything beneath this node when it enters the tree.
+## [codeblock]
+## var slots := $Belt/Pouches as FoxSocketMap2D
+##
+## # Take any free socket, or name one explicitly.
+## slots.attach(potion)
+## slots.attach(potion, &"QuickSlot")
+##
+## # detach() unplugs but does NOT reparent, so the node is
+## # left where it is until you move it yourself.
+## var taken := slots.get_socket(&"QuickSlot").detach()
+## taken.reparent(get_tree().current_scene)
+## [/codeblock]
 
 
 

@@ -2,6 +2,25 @@
 class_name FoxEffectManager
 extends FoxNode
 ## Handles the creation, lifecycle, and cleanup of [FoxEffectInstance] objects.
+##
+## An effect is a [FoxEffect] resource plus a target. The manager instantiates it, ticks it, and
+## drops it once it expires, so nothing involved has to be a node.
+## [codeblock]
+## @onready var effects: FoxEffectManager = $Effects
+##
+## func _on_poison_hit() -> void:
+##     effects.add_effect(preload("res://effects/poison.tres"), self)
+##
+## func cure() -> void:
+##     effects.remove_effect_by_id(&"poison", true)
+## [/codeblock]
+## Applying an effect that is already running does not always create a second instance.
+## [member FoxEffect.stack_mode] decides whether the duration refreshes, the stack count rises,
+## or a separate instance runs alongside the first.
+## [br][br]
+## Processing is switched off whenever nothing is active, so an idle manager costs nothing.
+## [method load_state] deliberately skips [method FoxEffect.execute], so restoring a save does
+## not re-fire the initial burst of an effect that was already applied.
 
 
 

@@ -1,6 +1,19 @@
 class_name FoxSimplePrice
 extends FoxPrice
 ## Basic price implementation using [int] and [FoxSimpleWallet].
+##
+## The reference implementation of [FoxPrice], for when currency really is just a number.
+## [codeblock]
+## var price := FoxSimplePrice.new()
+## price.cost = 50
+## price.currency_symbol = "G"
+##
+## if price.pay(wallet):
+##     grant_item()
+## [/codeblock]
+## It only accepts a [FoxSimpleWallet] and pushes an error on any other [FoxWallet]. A currency
+## that is not a single number wants its own [FoxPrice] subclass instead, which is the reason
+## the base class talks in [FoxWallet] rather than integers.
 
 ## The cost of the item.
 @export var cost: int = 0

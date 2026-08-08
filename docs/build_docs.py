@@ -129,6 +129,49 @@ def step_engine_xml(godot, force=False):
     print("      %d classes" % engine_count())
 
 
+BLOCK_OPEN = ("[codeblock", "[gdscript", "[csharp")
+BLOCK_CLOSE = ("[/codeblock", "[/gdscript", "[/csharp")
+
+
+def rejoin_wrapped(text):
+    """Join description lines that Godot split at the source's ## line breaks.
+
+    A paragraph wrapped across several ## lines can come back as one XML line per source line,
+    every continuation carrying a single leading space. reStructuredText reads that space as a
+    blockquote, so the paragraph renders indented and detached from the line it belongs to.
+    Code blocks are left alone, since their line breaks and indentation are the content.
+    """
+    out = []
+    in_block = False
+    fresh = True  # the next continuation opens a paragraph instead of joining the line above
+
+    for line in text.split("\n"):
+        stripped = line.strip()
+
+        if stripped.startswith(BLOCK_OPEN):
+            in_block = True
+        elif stripped.startswith(BLOCK_CLOSE):
+            # Text after a code block has to start back at column zero, or reStructuredText
+            # keeps reading it as part of the literal block.
+            in_block = False
+            out.append(line)
+            fresh = True
+            continue
+        elif (not in_block and stripped
+                and line.startswith(" ") and not line.startswith("  ")):
+            if fresh or not out or not out[-1].strip():
+                out.append(stripped)
+            else:
+                out[-1] = out[-1].rstrip() + " " + stripped
+            fresh = False
+            continue
+
+        out.append(line)
+        fresh = False
+
+    return "\n".join(out)
+
+
 def step_xml(godot):
     print("\n[2/6] Generating FoxFabric XML from source comments")
     reset(XML_DIR)
@@ -157,7 +200,17 @@ def step_xml(godot):
             target.unlink()
             retired += 1
 
+    reflowed = 0
+    for page in XML_DIR.glob("*.xml"):
+        original = page.read_text(encoding="utf-8")
+        joined = rejoin_wrapped(original)
+        if joined != original:
+            page.write_text(joined, encoding="utf-8")
+            reflowed += 1
+
     print("      %d classes" % (count - dropped - retired))
+    if reflowed:
+        print("      rejoined wrapped paragraphs in %d page(s)" % reflowed)
     if dropped:
         print("      skipped %d script(s) with no class_name" % dropped)
     if retired:

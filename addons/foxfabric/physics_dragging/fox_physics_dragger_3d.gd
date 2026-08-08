@@ -1,8 +1,23 @@
 @icon("uid://dqng8xj2sfcq2")
 class_name FoxPhysicsDragger3D
 extends FoxNode3D
-## Manipulates a [RigidBody3D] by applying localized forces and torques 
-## to match this node's global position and rotation. 
+## Manipulates a [RigidBody3D] by applying localized forces and torques
+## to match this node's global position and rotation.
+##
+## Move this node and the grabbed body chases it. The pull is a force rather than a teleport, so
+## the body still collides with the world on the way.
+## [codeblock]
+## @onready var dragger: FoxPhysicsDragger3D = $Camera3D/Dragger
+##
+## func _on_grab(hit: Dictionary) -> void:
+##     dragger.grab(hit.collider, hit.position, heavy_profile)
+##
+## func _on_release() -> void:
+##     dragger.release()
+## [/codeblock]
+## The hit point handed to [method grab] is where the body was actually struck, and the body
+## pivots around that point rather than its centre. Grabbing a plank by one end swings it like a
+## plank. [member max_pull_force] caps the whole thing so a stiff profile cannot launch anything.
 
 
 
