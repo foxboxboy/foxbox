@@ -33,13 +33,12 @@ polygon = PackedVector2Array(40, 579, 1112, 579, 1112, 582, 40, 582)
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Fox" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes", "body")]
+[node name="Fox" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes")]
 position = Vector2(70, 379)
 script = ExtResource("2_runner")
 label = "fox"
 starting_speed = 5.0
 attributes = NodePath("Attributes")
-body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Track/Pack/Fox"]
 color = Color(1, 0.55, 0.1, 1)
@@ -57,13 +56,12 @@ text = "fox"
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Hare" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes", "body")]
+[node name="Hare" type="Node2D" parent="Track/Pack" node_paths=PackedStringArray("attributes")]
 position = Vector2(70, 469)
 script = ExtResource("2_runner")
 label = "hare"
 starting_speed = 4.0
 attributes = NodePath("Attributes")
-body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Track/Pack/Hare"]
 color = Color(0.78, 0.8, 0.84, 1)
@@ -81,13 +79,12 @@ text = "hare"
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Badger" type="Node2D" parent="Track" node_paths=PackedStringArray("attributes", "body")]
+[node name="Badger" type="Node2D" parent="Track" node_paths=PackedStringArray("attributes")]
 position = Vector2(70, 559)
 script = ExtResource("2_runner")
 label = "badger"
 starting_speed = 3.0
 attributes = NodePath("Attributes")
-body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Track/Badger"]
 color = Color(0.45, 0.72, 0.55, 1)

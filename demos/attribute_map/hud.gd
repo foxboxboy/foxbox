@@ -27,14 +27,14 @@ func _process(_delta: float) -> void:
 		"4 / 5  the fox slows itself",
 		"Space  the fox is                  %s" % ("in the pack" if fox.is_in_a_pack() else "running alone"),
 		"",
-		_line("", "speed", "flags", "rules"),
-		_line("pack", "-", _stacks(pack), _rules(pack)),
+		_line("", "move_speed", "going at", "flags", "rules"),
+		_line("pack", "-", "-", _stacks(pack), _rules(pack)),
 		_runner(fox),
 		_runner(hare),
 		_runner(badger),
 		"",
-		"A rule changes the numbers, so mud makes the pack visibly slower.",
-		"A flag changes nothing by itself; here it only dims who carries it.",
+		"mud is a rule. It changes move_speed itself, and the pack passes it down.",
+		"slowed is a flag. It changes no data at all, and the runners ease off anyway.",
 	])
 
 #endregion
@@ -49,13 +49,16 @@ func _runner(runner: Runner) -> String:
 	return _line(
 		indent + runner.label,
 		"%.1f" % runner.get_speed(),
+		"%.1f" % runner.get_pace(),
 		_stacks(runner.attributes),
 		_rules(runner.attributes),
 	)
 
 
-func _line(name: String, speed: String, flags: String, rules: String) -> String:
-	return "%-14s%-8s%-30s%s" % [name, speed, flags, rules]
+## move_speed and the pace it produces get their own columns, because the whole difference between
+## a rule and a flag is which of the two they move.
+func _line(name: String, speed: String, pace: String, flags: String, rules: String) -> String:
+	return "%-13s%-12s%-11s%-30s%s" % [name, speed, pace, flags, rules]
 
 
 ## A stack count on its own cannot say where it came from, so anything handed down by a parent map
