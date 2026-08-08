@@ -4,7 +4,6 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 ## Editor
 
-- `FoxAttributeMap` inspector: live data, flag stacks, active rules at runtime
 - `FoxEffectManager` dock: active effects with stacks and time remaining
 - `FoxZoomSpringArm3D` gizmo: draw the min and max length
 

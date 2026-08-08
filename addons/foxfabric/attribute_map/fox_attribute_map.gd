@@ -471,3 +471,72 @@ func unregister_child_map(child: FoxAttributeMap) -> void:
 			child.decrement_flag(flag)
 
 #endregion
+
+
+
+
+#region Inspector
+
+## The names the runtime state is published under. The inspector plugin reads the same names,
+## which is the only thing tying the two together.
+const INSPECTOR_DATA: StringName = &"runtime_data"
+const INSPECTOR_GROUPS: StringName = &"runtime_groups"
+const INSPECTOR_FLAGS: StringName = &"runtime_flags"
+const INSPECTOR_RULES: StringName = &"runtime_rules"
+
+
+## Publishes the runtime state as read-only inspector properties.
+## [br][br]
+## A map holds nothing until the game runs, so these are empty while editing. They exist for the
+## remote inspector: play the scene, pick the node out of the remote tree, and the data, flags and
+## rules update as they change. Nothing here is stored in the scene file.
+func _get_property_list() -> Array[Dictionary]:
+	return [
+		{
+			"name": "Runtime",
+			"type": TYPE_NIL,
+			"usage": PROPERTY_USAGE_GROUP,
+			"hint_string": "runtime_",
+		},
+		_read_only(INSPECTOR_DATA, TYPE_DICTIONARY),
+		_read_only(INSPECTOR_GROUPS, TYPE_DICTIONARY),
+		_read_only(INSPECTOR_FLAGS, TYPE_DICTIONARY),
+		_read_only(INSPECTOR_RULES, TYPE_DICTIONARY),
+	]
+
+
+## No PROPERTY_USAGE_STORAGE, so none of this is written into a .tscn.
+func _read_only(name: StringName, type: int) -> Dictionary:
+	return {
+		"name": name,
+		"type": type,
+		"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY,
+	}
+
+
+func _get(property: StringName) -> Variant:
+	match property:
+		INSPECTOR_DATA:
+			return _data
+		INSPECTOR_GROUPS:
+			return _groups
+		INSPECTOR_FLAGS:
+			return _flags
+		INSPECTOR_RULES:
+			return get_rule_summary()
+
+	# null means this object does not handle the property, so the engine keeps looking.
+	return null
+
+
+## Every active rule as [code]id -> target_key[/code]. Ids are unique per map, so nothing is lost
+## by flattening them, and a [FoxAttributeRule] is a [RefCounted] that would reach the remote
+## inspector as an unreadable object reference.
+func get_rule_summary() -> Dictionary[StringName, StringName]:
+	var summary: Dictionary[StringName, StringName] = {}
+	for rule: FoxAttributeRule in _active_rules:
+		summary[rule.id] = rule.target_key
+
+	return summary
+
+#endregion

@@ -31,6 +31,8 @@ func run() -> void:
 	_flags_propagate_while_attached()
 	_duplicate_rule_ids_are_refused()
 	_read_accessors_do_not_expose_internals()
+	_runtime_state_reaches_the_inspector()
+	_inspector_claims_remote_objects_too()
 
 
 ## Reads a float out of the map through a typed local, so callers never pass a Variant into
@@ -363,3 +365,87 @@ func _read_accessors_do_not_expose_internals() -> void:
 
 	m.get_active_rules().clear()
 	eq(m.get_active_rules().size(), 1, "clearing the returned rules leaves the map alone")
+
+
+## Stands in for the object the debugger hands the inspector for a node in a running game. It is
+## not a FoxAttributeMap and never will be, which is the whole reason the plugin checks properties.
+class RemoteStandIn extends Object:
+	func _get_property_list() -> Array[Dictionary]:
+		return [{
+			"name": &"runtime_flags",
+			"type": TYPE_DICTIONARY,
+			"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY,
+		}]
+
+	func _get(property: StringName) -> Variant:
+		if property == &"runtime_flags":
+			return {&"slowed": 2}
+
+		return null
+
+
+func _runtime_state_reaches_the_inspector() -> void:
+	case("runtime state is published as read-only properties")
+	var m: FoxAttributeMap = _new_map()
+	m.set_data(&"health", 75)
+	m.add_data_to_group(&"health", &"vitals")
+	m.increment_flag(&"slowed")
+	m.increment_flag(&"slowed")
+	m.add_rule(FlatRule.new(&"swamp", &"health", 0.0))
+
+	var published: Dictionary[StringName, Dictionary] = {}
+	for property: Dictionary in m.get_property_list():
+		var name: StringName = property["name"]
+		if String(name).begins_with("runtime_"):
+			published[name] = property
+
+	eq(published.size(), 4, "data, groups, flags and rules are all published")
+
+	for name: StringName in published:
+		var usage: int = published[name]["usage"]
+		check(usage & PROPERTY_USAGE_READ_ONLY != 0, "%s is read-only" % name)
+		check(usage & PROPERTY_USAGE_STORAGE == 0, "%s is never written into a .tscn" % name)
+
+	eq(m.get(&"runtime_flags"), {&"slowed": 2} as Dictionary, "flags come through with their stacks")
+	eq(m.get(&"runtime_rules"), {&"swamp": &"health"} as Dictionary, "rules come through as id to target")
+	eq(m.get(&"runtime_groups"), {&"vitals": [&"health"]} as Dictionary, "groups come through with members")
+
+	case("unknown properties are left to the engine")
+	eq(m.get(&"not_a_real_property"), null, "_get falls through")
+
+
+func _inspector_claims_remote_objects_too() -> void:
+	case("the inspector plugin")
+	var path: String = "res://addons/foxfabric/attribute_map/editor/fox_attribute_map_inspector.gd"
+	var plugin: GDScript = load(path) as GDScript
+	check(plugin != null, "the inspector script loads")
+	if plugin == null:
+		return
+
+	check(FoxFabric.INSPECTORS.has(path), "the plugin lists it")
+
+	var m: FoxAttributeMap = _new_map()
+	check(plugin.publishes_runtime_state(m), "it claims a FoxAttributeMap")
+	check(not plugin.publishes_runtime_state(track(Node.new())), "and not a plain node")
+	check(not plugin.publishes_runtime_state(null), "and survives a null")
+
+	# The case the property check exists for.
+	var remote: Object = RemoteStandIn.new()
+	check(plugin.publishes_runtime_state(remote), "and claims a debugger stand-in that is not a map")
+	remote.free()
+
+	case("the read-out formats what it is given")
+	var panel: GDScript = load("res://addons/foxfabric/attribute_map/editor/fox_attribute_map_panel.gd") as GDScript
+	check(panel != null, "the panel script loads")
+	if panel == null:
+		return
+
+	var data_rows: Array = panel._data_rows({&"speed": 5.0}, {&"movement": [&"speed"]})
+	eq(data_rows[0][0], "speed   (movement)", "a data key carries the groups holding it")
+	eq(data_rows[0][1], "5.0", "and its value")
+
+	var flag_rows: Array = panel._flag_rows({&"slowed": 2})
+	eq(flag_rows[0][1], "x2", "a flag shows its stack count")
+
+	var rule_rows: Array = panel._rule_rows({&"swamp": &"speed"})
+	eq(rule_rows[0][1], "-> speed", "a rule shows what it targets")
