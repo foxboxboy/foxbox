@@ -1,4 +1,22 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Export output — built demo binaries. Regenerate from export_presets.cfg.
+exports/
+
+# Editor & tooling artifacts
 .aider*
+*.tmp
+
+# Python bytecode from the docs tooling
+__pycache__/
+*.py[cod]
+
+# Sphinx build output — regenerate with `make html` in docs/web
+docs/web/_build/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
