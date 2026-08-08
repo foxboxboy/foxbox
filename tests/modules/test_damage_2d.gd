@@ -12,7 +12,6 @@ func run() -> void:
 	_delivery_is_not_reported_when_ignored()
 	_payload_passes_through_untouched()
 	_non_hurtbox_areas_are_skipped()
-	_dimensions_do_not_cross()
 
 
 func _hurt() -> FoxHurtArea2D:
@@ -112,20 +111,6 @@ func _non_hurtbox_areas_are_skipped() -> void:
 	hit._try_deliver_payload(plain)
 	eq(delivered.size(), 0, "a plain Area2D is ignored without erroring")
 
-
-func _dimensions_do_not_cross() -> void:
-	case("2D and 3D stay apart")
-	# Nothing stops both living in one project, and a 2D hitbox handed a 3D hurtbox must fall
-	# through the cast rather than half deliver.
-	var hit: FoxHitArea2D = _hit()
-	hit.payload = 1
-
-	var delivered: Array = []
-	hit.hit_delivered.connect(func(_p: Variant, _t: FoxHurtArea2D) -> void: delivered.append(1))
-
-	var received: Array = []
-	var other: FoxHurtArea3D = track(FoxHurtArea3D.new()) as FoxHurtArea3D
-	other.hit_received.connect(func(p: Variant) -> void: received.append(p))
-
-	eq(delivered.size(), 0, "a 2D hitbox reports nothing for a 3D hurtbox")
-	eq(received.size(), 0, "and the 3D hurtbox hears nothing")
+	# There is deliberately no test that a 2D hitbox refuses a 3D hurtbox. _try_deliver_payload
+	# takes an Area2D, so an Area3D cannot reach it: the type is the guarantee, and a test would
+	# only be able to assert that a call it cannot make did not happen.
