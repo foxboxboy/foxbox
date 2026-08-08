@@ -266,14 +266,12 @@ def write_folder_page(module, subdir, dirs, classes_at, have_page, counter):
         if intro:
             body += [intro, ""]
 
-    # Subfolders first so the structure reads top down, then the classes in this folder.
-    if kids:
+    # One toctree, subfolders first then classes. Two separate toctrees render as two bullet
+    # lists with a gap between them, which reads as a broken list.
+    entries = [page_name(module, k) for k in kids] + own
+    if entries:
         body += [".. toctree::", "   :maxdepth: 1", ""]
-        body += ["   " + page_name(module, k) for k in kids]
-        body.append("")
-    if own:
-        body += [".. toctree::", "   :maxdepth: 1", ""]
-        body += ["   " + p for p in own]
+        body += ["   " + e for e in entries]
         body.append("")
 
     (WEB_DIR / (page_name(module, subdir) + ".rst")).write_text("\n".join(body), encoding="utf-8")
