@@ -477,15 +477,9 @@ func unregister_child_map(child: FoxAttributeMap) -> void:
 
 #region Inspector
 
-## The names the runtime state is published under. The inspector plugin reads the same names,
-## which is the only thing tying the two together.
-const INSPECTOR_DATA: StringName = &"runtime_data"
-const INSPECTOR_GROUPS: StringName = &"runtime_groups"
-const INSPECTOR_FLAGS: StringName = &"runtime_flags"
-const INSPECTOR_RULES: StringName = &"runtime_rules"
-
-
-## Publishes the runtime state as read-only inspector properties.
+## Publishes the runtime state as read-only inspector properties. The names are written out rather
+## than kept in constants, because a constant on this class shows up as a row of its own every time
+## anyone inspects a map, and four rows spelling out their own names are not worth reading.
 ## [br][br]
 ## A map holds nothing until the game runs, so these are empty while editing. They exist for the
 ## remote inspector: play the scene, pick the node out of the remote tree, and the data, flags and
@@ -498,10 +492,10 @@ func _get_property_list() -> Array[Dictionary]:
 			"usage": PROPERTY_USAGE_GROUP,
 			"hint_string": "runtime_",
 		},
-		_read_only(INSPECTOR_DATA, TYPE_DICTIONARY),
-		_read_only(INSPECTOR_GROUPS, TYPE_DICTIONARY),
-		_read_only(INSPECTOR_FLAGS, TYPE_DICTIONARY),
-		_read_only(INSPECTOR_RULES, TYPE_DICTIONARY),
+		_read_only(&"runtime_data", TYPE_DICTIONARY),
+		_read_only(&"runtime_groups", TYPE_DICTIONARY),
+		_read_only(&"runtime_flags", TYPE_DICTIONARY),
+		_read_only(&"runtime_rules", TYPE_DICTIONARY),
 	]
 
 
@@ -516,13 +510,13 @@ func _read_only(name: StringName, type: int) -> Dictionary:
 
 func _get(property: StringName) -> Variant:
 	match property:
-		INSPECTOR_DATA:
+		&"runtime_data":
 			return _data
-		INSPECTOR_GROUPS:
+		&"runtime_groups":
 			return _groups
-		INSPECTOR_FLAGS:
+		&"runtime_flags":
 			return _flags
-		INSPECTOR_RULES:
+		&"runtime_rules":
 			return get_rule_summary()
 
 	# null means this object does not handle the property, so the engine keeps looking.
