@@ -75,11 +75,6 @@ func is_holding() -> bool:
 	return is_instance_valid(_held)
 
 
-## Whether a turn is in progress, and therefore whether the cursor is captured.
-func is_turning() -> bool:
-	return _turning
-
-
 func is_upright() -> bool:
 	return _keep_upright
 

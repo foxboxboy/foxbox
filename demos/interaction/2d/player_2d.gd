@@ -9,9 +9,6 @@ extends CharacterBody2D
 
 #region Variables
 
-## How far the sensor reaches, in pixels.
-const REACH: float = 190.0
-
 ## The reach line lights up when something is in range, so the range is not invisible.
 const IDLE_COLOUR: Color = Color(1.0, 1.0, 1.0, 0.24)
 const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
@@ -24,6 +21,10 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 ## Pixels per second the player walks.
 @export var move_speed: float = 320.0
 
+## Set while the cursor is captured for a turn. A captured cursor reports the middle of the
+## window, so aiming at it would swing the arm to the centre of the screen and shake it there.
+var aiming_frozen: bool = false
+
 #endregion
 
 
@@ -32,7 +33,6 @@ const FOCUSED_COLOUR: Color = Color(1.0, 0.55, 0.1, 0.9)
 #region Built-In Virtuals
 
 func _ready() -> void:
-	sensor.interaction_range = REACH
 	sensor.focused.connect(_on_focus_changed)
 	sensor.unfocused.connect(_on_focus_changed)
 	_on_focus_changed(null)
@@ -60,11 +60,6 @@ func _process(_delta: float) -> void:
 
 
 #region Public API
-
-## Set while the cursor is captured for a turn. A captured cursor reports the middle of the
-## window, so aiming at it would swing the arm to the centre of the screen and shake it there.
-var aiming_frozen: bool = false
-
 
 ## What the sensor is pointing at, or [code]null[/code].
 func get_target() -> FoxInteractableArea2D:

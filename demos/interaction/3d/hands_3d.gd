@@ -42,6 +42,11 @@ var _lift: float = 0.5
 ## Where the cursor was when a turn started, so it can be put back.
 var _cursor_before_turn: Vector2 = Vector2.ZERO
 
+## Set when a turn ends, cleared by the first real mouse movement after it. warp_mouse does not
+## land until the window manager sends the next motion, so until then the cursor still reads as
+## the middle of the window and following it would fling what is held to the centre of the view.
+var _awaiting_cursor: bool = false
+
 #endregion
 
 
@@ -52,8 +57,9 @@ var _cursor_before_turn: Vector2 = Vector2.ZERO
 ## The dragger is a target the object is pulled towards, not a hand that carries it. It is placed
 ## in physics because that is where the pull is applied.
 func _physics_process(_delta: float) -> void:
-	if _turning:
-		# Hold it exactly where it was. The cursor is not trustworthy while captured.
+	if _turning or _awaiting_cursor:
+		# Hold it exactly where it was. A captured cursor reports the middle of the window, and
+		# for a frame or two after releasing it still does.
 		return
 
 	dragger.global_position = player.get_cursor_world_point() + Vector3.UP * _lift
@@ -72,11 +78,6 @@ func _process(_delta: float) -> void:
 ## Whether something is in hand. Read by the readout.
 func is_holding() -> bool:
 	return is_instance_valid(_held)
-
-
-## Whether a turn is in progress, and therefore whether the cursor is captured.
-func is_turning() -> bool:
-	return _turning
 
 
 ## How far above the ground the held object is floating.
@@ -103,7 +104,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	var motion: InputEventMouseMotion = event as InputEventMouseMotion
-	if motion and _turning and is_holding():
+	if motion == null:
+		return
+
+	# The first movement after uncapturing is the one carrying a believable position.
+	_awaiting_cursor = false
+
+	if _turning and is_holding():
 		_turn_held(motion.relative)
 
 
@@ -168,7 +175,7 @@ func _release() -> void:
 	# Dropping mid turn would otherwise leave the cursor hidden with nothing to turn.
 	_stop_turning()
 
-	dragger.release(true)
+	dragger.release()
 	_held = null
 
 #endregion
@@ -198,6 +205,7 @@ func _stop_turning() -> void:
 	_turning = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_viewport().warp_mouse(_cursor_before_turn)
+	_awaiting_cursor = true
 	player.aiming_frozen = false
 
 
