@@ -28,11 +28,23 @@ $testArgs = @("--headless", "--path", $projectRoot, "--script", "res://tests/ter
 if ($Suite -ne "") { $testArgs += "--suite=$Suite" }
 if ($Seed -ne 0)   { $testArgs += "--seed=$Seed" }
 
-# Running --script skips the import pass, so without a class cache every class_name in the
-# project is unknown and every suite fails to parse. A fresh clone always hits this.
+# Running --script skips the import pass, so every class_name the cache does not know about is
+# unknown and the suites referencing it fail to parse. A fresh clone hits this, and so does
+# adding a new class, since the cache is only rebuilt on import. The error it produces says
+# "Parse error" and nothing about the cause, so it is worth spending a stat call to avoid.
 $classCache = Join-Path $projectRoot ".godot\global_script_class_cache.cfg"
-if (-not (Test-Path $classCache)) {
-    Write-Host "No class cache yet, running a one-time import pass..."
+$needsImport = -not (Test-Path $classCache)
+
+if (-not $needsImport) {
+    $cacheWritten = (Get-Item $classCache).LastWriteTime
+    $newer = Get-ChildItem $projectRoot -Recurse -Filter *.gd -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -notlike "*\.godot\*" -and $_.LastWriteTime -gt $cacheWritten } |
+        Select-Object -First 1
+    $needsImport = $null -ne $newer
+}
+
+if ($needsImport) {
+    Write-Host "Scripts changed since the last import, refreshing the class cache..."
     $null = & $godot --headless --path $projectRoot --editor --quit
 }
 

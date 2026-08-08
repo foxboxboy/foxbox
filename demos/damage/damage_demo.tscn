@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ccrmaaw423qt4"]
 
 [ext_resource type="Script" uid="uid://sspuo0nf0uo7" path="res://demos/damage/damage_demo.gd" id="1_yx5km"]
-[ext_resource type="Script" uid="uid://m6td05ia4n38" path="res://addons/foxfabric/damage/fox_hurt_area_3d.gd" id="2_wmrhg"]
-[ext_resource type="Script" uid="uid://de5n7x4e06cyt" path="res://addons/foxfabric/damage/fox_hit_area_3d.gd" id="3_rhy6b"]
-[ext_resource type="Script" uid="uid://d2fmdwvcjgp80" path="res://addons/foxfabric/damage/fox_hit_raycast_3d.gd" id="4_a3eav"]
-[ext_resource type="Script" uid="uid://6eluwmcb7nj8" path="res://addons/foxfabric/damage/fox_hit_shape_cast_3d.gd" id="5_wmrhg"]
+[ext_resource type="Script" uid="uid://m6td05ia4n38" path="res://addons/foxfabric/damage/3d/fox_hurt_area_3d.gd" id="2_wmrhg"]
+[ext_resource type="Script" uid="uid://de5n7x4e06cyt" path="res://addons/foxfabric/damage/3d/fox_hit_area_3d.gd" id="3_rhy6b"]
+[ext_resource type="Script" uid="uid://d2fmdwvcjgp80" path="res://addons/foxfabric/damage/3d/fox_hit_raycast_3d.gd" id="4_a3eav"]
+[ext_resource type="Script" uid="uid://6eluwmcb7nj8" path="res://addons/foxfabric/damage/3d/fox_hit_shape_cast_3d.gd" id="5_wmrhg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q817n"]
 

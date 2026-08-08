@@ -20,6 +20,7 @@ func run() -> void:
 	suite = "configuration_warnings"
 	_hit_raycast()
 	_hit_shapecast()
+	_hit_casts_2d()
 	_state_machine()
 	_effect_slot_policy()
 	_socket_marker()
@@ -64,6 +65,31 @@ func _hit_shapecast() -> void:
 		"warns when it cannot see areas")
 
 	cast.collide_with_areas = true
+	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+
+
+func _hit_casts_2d() -> void:
+	case("FoxHitRayCast2D")
+	var ray: FoxHitRayCast2D = track(FoxHitRayCast2D.new()) as FoxHitRayCast2D
+
+	ray.collide_with_areas = false
+	check(_has(ray._get_configuration_warnings(), "Collide With Areas"),
+		"warns when it cannot see areas")
+	check(_has(ray._get_configuration_warnings(), "FoxHurtArea2D"),
+		"and names the 2D hurtbox, not the 3D one")
+
+	ray.collide_with_areas = true
+	eq(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+
+	case("FoxHitShapeCast2D")
+	var cast: FoxHitShapeCast2D = track(FoxHitShapeCast2D.new()) as FoxHitShapeCast2D
+
+	cast.collide_with_areas = false
+	check(_has(cast._get_configuration_warnings(), "Collide With Areas"),
+		"warns when it cannot see areas")
+
+	cast.collide_with_areas = true
+	# ShapeCast2D reports a missing shape itself, so there is nothing left to say.
 	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 

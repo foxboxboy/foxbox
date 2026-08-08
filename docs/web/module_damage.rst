@@ -1,7 +1,7 @@
 Damage
 ======
 
-A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (FoxHitArea3D, FoxHitRayCast3D, FoxHitShapeCast3D) and receivers (FoxHurtArea3D) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic.
+A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (hit areas, raycasts and shapecasts) and receivers (hurt areas) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic. The 2d and 3d folders hold the same pipeline for each dimension.
 
 Carries a ``Variant`` payload between nodes. Nothing here reads the payload, so the module
 contains no concept of health, teams or damage types.
@@ -29,7 +29,5 @@ returns ``false`` and the deliverer does not emit ``hit_delivered``.
 .. toctree::
    :maxdepth: 1
 
-   class_foxhitarea3d
-   class_foxhitraycast3d
-   class_foxhitshapecast3d
-   class_foxhurtarea3d
+   module_damage-2d
+   module_damage-3d

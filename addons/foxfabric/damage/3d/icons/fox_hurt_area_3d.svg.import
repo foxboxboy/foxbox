@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oit74etj11kg"
-path="res://.godot/imported/fox_hit_raycast_3d.svg-3b5022229268ce24b313fc0cff4abbb7.ctex"
+uid="uid://bihwfrg2mota4"
+path="res://.godot/imported/fox_hurt_area_3d.svg-15947a412eb02323bb3f01fad12f6251.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/foxfabric/damage/icons/fox_hit_raycast_3d.svg"
-dest_files=["res://.godot/imported/fox_hit_raycast_3d.svg-3b5022229268ce24b313fc0cff4abbb7.ctex"]
+source_file="res://addons/foxfabric/damage/3d/icons/fox_hurt_area_3d.svg"
+dest_files=["res://.godot/imported/fox_hurt_area_3d.svg-15947a412eb02323bb3f01fad12f6251.ctex"]
 
 [params]
 
