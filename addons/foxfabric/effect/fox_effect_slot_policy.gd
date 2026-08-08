@@ -40,7 +40,11 @@ var available_slots: int:
 
 ## The manager this policy gates. Defaults to the parent node, so a policy normally just sits
 ## as a child of the [FoxEffectManager] it governs.
-@onready var manager: FoxEffectManager = get_parent()
+## [br][br]
+## Resolves to [code]null[/code] rather than erroring when the parent is something else. The
+## cast matters: assigning an unrelated parent straight into a typed variable throws, and
+## because this is an [code]@onready[/code] it throws before [method Node._ready] can guard it.
+@onready var manager: FoxEffectManager = get_parent() as FoxEffectManager
 
 #endregion
 
