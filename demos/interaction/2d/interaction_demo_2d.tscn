@@ -171,7 +171,7 @@ shape = SubResource("Shape_plank")
 offset_left = 16.0
 offset_top = 12.0
 offset_right = 620.0
-offset_bottom = 260.0
+offset_bottom = 340.0
 
 [connection signal="interacted" from="Props/Crate/Interact" to="Props/Crate" method="_on_interacted"]
 [connection signal="interacted" from="Props/Plank/Interact" to="Props/Plank" method="_on_interacted"]

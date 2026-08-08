@@ -201,9 +201,17 @@ func _grab(body: RigidBody2D, profile: FoxPhysicsDragProfile) -> void:
 	_held = body
 	dragger.default_keep_upright = _keep_upright
 
-	# Grab at the point on the body nearest the cursor rather than its centre, so a long prop
-	# swings from where you took hold of it.
-	dragger.grab(body, get_global_mouse_position(), profile)
+	# Take hold where the ray actually struck, not where the cursor is.
+	# [br]
+	# The sensor sits on the player and only points towards the cursor, so the cursor is usually
+	# well past the prop rather than on it. Grabbing there gave a lever hundreds of pixels long
+	# and the prop pivoted around a point outside itself: flick it and the lever swings past the
+	# centre, the torque reverses, and it turns back the way it came.
+	var hold_point: Vector2 = body.global_position
+	if sensor.is_colliding():
+		hold_point = sensor.get_collision_point()
+
+	dragger.grab(body, hold_point, profile)
 	_refresh_readout()
 
 
@@ -255,6 +263,15 @@ func _refresh_readout() -> void:
 		"holding:      %s" % ("yes" if is_instance_valid(_held) else "no"),
 		"spinning:     %s" % ("yes" if _spinning else "no"),
 		"keep upright: %s" % upright,
+		"",
+		# The prop's own spin and the lever it is held by. If a flick makes it turn one way and
+		# then back, one of these says why: either the spin reverses on its own, or the lever has
+		# swung past the centre and is now pulling the other way.
+		"prop spin:    %s" % (
+			"%.0f deg/s" % rad_to_deg(_held.angular_velocity) if is_instance_valid(_held) else "-"),
+		"grab lever:   %s" % (
+			"%.0f px  %s" % [dragger._grab_offset_local.length(), str(dragger._grab_offset_local.round())]
+				if is_instance_valid(_held) else "-"),
 		"",
 		"mouse mode:   %s" % modes.get(Input.mouse_mode, str(Input.mouse_mode)),
 		"cursor:       %s%s" % [
