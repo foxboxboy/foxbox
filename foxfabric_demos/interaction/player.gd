@@ -8,21 +8,21 @@ extends Camera3D
 # State
 var _dragged_object : RigidBody3D
 var is_rotating_mode: bool = false
-var last_mouse_pos := Vector2.ZERO
+var last_mouse_pos : Vector2 = Vector2.ZERO
 
 # "Lift" Height: How high above the ground/cursor the object floats.
 # Start at 0.5 so it doesn't drag/scrape along the floor immediately.
-var hold_height := 0.5 
+var hold_height : float = 0.5 
 
 
 func _ready() -> void:
 	dragger_raycast.enabled = true
 
 
-func _physics_process(_delta):
+func _physics_process(_delta : float) -> void:
 	# 1. Update Raycasts
-	var mouse_pos = get_viewport().get_mouse_position()
-	var local_ray_dir = get_local_mouse_direction(mouse_pos)
+	var mouse_pos : Vector2 = get_viewport().get_mouse_position()
+	var local_ray_dir : Vector3 = get_local_mouse_direction(mouse_pos)
 	
 	interaction_sensor.target_position = local_ray_dir * interaction_sensor.interaction_range
 	
@@ -50,7 +50,7 @@ func _physics_process(_delta):
 		dragger.global_position = target_point
 
 
-func _process(delta: float) -> void:	
+func _process(_delta: float) -> void:
 	# Rotation Mode (RMB)
 	if Input.is_action_just_pressed("rmb"):
 		is_rotating_mode = true
@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 
 	# Click & Grab
 	if Input.is_action_just_pressed("click"):
-		var interactable_target = interaction_sensor.get_current_target()
+		var interactable_target : FoxInteractableArea3D = interaction_sensor.get_current_target()
 		if interactable_target:
 			interactable_target.interact(self)
 
@@ -86,46 +86,31 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if is_rotating_mode and _dragged_object:
-			_handle_object_rotation(event)
+			_handle_object_rotation(event as InputEventMouseMotion)
 
 
-func _handle_object_rotation(event: InputEventMouseMotion):
+func _handle_object_rotation(event: InputEventMouseMotion) -> void:
 	# Rotate the Dragger. The object will pivot around the grab point to match.
 	
 	# YAW: Rotate around the WORLD UP axis (Standard top-down rotation)
 	dragger.rotate(Vector3.UP, deg_to_rad(-event.relative.x * 0.2))
 	
 	# PITCH: Rotate around CAMERA RIGHT (Tumble forward/back)
-	var cam_right = global_transform.basis.x
+	var cam_right : Vector3 = global_transform.basis.x
 	dragger.rotate(cam_right, deg_to_rad(-event.relative.y * 0.2))
 
 
-func drag_target(body: RigidBody3D, drag_data : FoxPhysicsDragProfile):
+func drag_target(body: RigidBody3D, drag_data : FoxPhysicsDragProfile) -> void:
 	if drag_data:
 		_dragged_object = body
-		var hit_point = interaction_sensor.get_collision_point()
+		var hit_point : Vector3 = interaction_sensor.get_collision_point()
 		
-		# 1. Calculate initial Hold Height
-		# This prevents the object from snapping Up or Down when grabbed.
-		# If I grab a box on a table (height 2), my hold_height becomes (2 - floor_height).
-		# We approximate this by just using the Y difference from the "Ground" cursor hit?
-		# A simpler way: Reset hold_height to 0 relative to where we clicked, or keep it sticky.
-		
-		# Let's just start clean:
-		# We snapped the dragger to the hit point.
-		#dragger.global_position = hit_point
-		
-		# We set the logic to maintain that height relative to future raycasts.
-		# If dragger is at Y=2, and Raycast is at Y=2, hold_height = 0.
 		hold_height = 0.0 
-		
-		# Align Dragger rotation (Repo Feel)
-		#dragger.global_basis = _dragged_object.physics_body.global_basis
 		
 		dragger.grab(_dragged_object, hit_point, drag_data) 
 		return
 
 
 func get_local_mouse_direction(mouse_pos: Vector2) -> Vector3:
-	var world_normal = project_ray_normal(mouse_pos)
+	var world_normal : Vector3 = project_ray_normal(mouse_pos)
 	return global_transform.basis.inverse() * world_normal
