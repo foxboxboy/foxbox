@@ -90,6 +90,11 @@ every type against the classes it is handed. Without it, float, Node3D and every
 comes back "unresolved" and the run dies with over a thousand errors. --filter keeps the output
 to our classes only. Pass --refresh-engine after upgrading Godot.
 
+Source files have to use LF endings, which .gitattributes enforces. Godot's doc parser leaves
+the carriage return on the end of a CRLF line and then cannot join the next line onto it, so a
+paragraph wrapped across several ## lines arrives split and renders as an indented blockquote.
+It went unnoticed across 21 pages. build_docs.py repairs it and warns if it ever has to.
+
 conf.py defines the |abstract| substitution. Godot 4.7 emits an "abstract" method qualifier and
 make_rst.py turns every qualifier into an RST substitution, but the vendored copy predates
 @abstract and does not define that one.

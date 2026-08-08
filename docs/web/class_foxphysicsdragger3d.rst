@@ -41,23 +41,27 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`default_stiffness<class_FoxPhysicsDragger3D_property_default_stiffness>`   | ``800.0``  |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`default_damping<class_FoxPhysicsDragger3D_property_default_damping>`       | ``25.0``   |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger3D_property_max_pull_force>`         | ``4000.0`` |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`RigidBody3D<class_RigidBody3D>` | :ref:`_current_body<class_FoxPhysicsDragger3D_property__current_body>`           |            |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`Vector3<class_Vector3>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger3D_property__grab_offset_local>` |            |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`bool<class_bool>`               | :ref:`_skip_first_frame<class_FoxPhysicsDragger3D_property__skip_first_frame>`   | ``false``  |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`_current_stiffness<class_FoxPhysicsDragger3D_property__current_stiffness>` |            |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`_current_damping<class_FoxPhysicsDragger3D_property__current_damping>`     |            |
-   +---------------------------------------+----------------------------------------------------------------------------------+------------+
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`default_stiffness<class_FoxPhysicsDragger3D_property_default_stiffness>`         | ``800.0``  |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`default_damping<class_FoxPhysicsDragger3D_property_default_damping>`             | ``25.0``   |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`bool<class_bool>`               | :ref:`default_keep_upright<class_FoxPhysicsDragger3D_property_default_keep_upright>`   | ``false``  |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger3D_property_max_pull_force>`               | ``4000.0`` |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`RigidBody3D<class_RigidBody3D>` | :ref:`_current_body<class_FoxPhysicsDragger3D_property__current_body>`                 |            |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`Vector3<class_Vector3>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger3D_property__grab_offset_local>`       |            |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`bool<class_bool>`               | :ref:`_skip_first_frame<class_FoxPhysicsDragger3D_property__skip_first_frame>`         | ``false``  |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`_current_stiffness<class_FoxPhysicsDragger3D_property__current_stiffness>`       |            |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`float<class_float>`             | :ref:`_current_damping<class_FoxPhysicsDragger3D_property__current_damping>`           |            |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   | :ref:`bool<class_bool>`               | :ref:`_current_keep_upright<class_FoxPhysicsDragger3D_property__current_keep_upright>` |            |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -67,17 +71,19 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`grab<class_FoxPhysicsDragger3D_method_grab>`\ (\ body\: :ref:`RigidBody3D<class_RigidBody3D>`, hit_point\: :ref:`Vector3<class_Vector3>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`release<class_FoxPhysicsDragger3D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_physics_process<class_FoxPhysicsDragger3D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_apply_positional_force<class_FoxPhysicsDragger3D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger3D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`grab<class_FoxPhysicsDragger3D_method_grab>`\ (\ body\: :ref:`RigidBody3D<class_RigidBody3D>`, hit_point\: :ref:`Vector3<class_Vector3>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Basis<class_Basis>` | :ref:`target_basis_for<class_FoxPhysicsDragger3D_method_target_basis_for>`\ (\ basis\: :ref:`Basis<class_Basis>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static|                                                          |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`release<class_FoxPhysicsDragger3D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`_physics_process<class_FoxPhysicsDragger3D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`_apply_positional_force<class_FoxPhysicsDragger3D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger3D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
+   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -107,6 +113,18 @@ The default strength of the pull if no profile is provided.
 :ref:`float<class_float>` **default_damping** = ``25.0`` :ref:`🔗<class_FoxPhysicsDragger3D_property_default_damping>`
 
 The default control of the pull if no profile is provided.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger3D_property_default_keep_upright:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **default_keep_upright** = ``false`` :ref:`🔗<class_FoxPhysicsDragger3D_property_default_keep_upright>`
+
+The default upright behaviour if no profile is provided. See :ref:`FoxPhysicsDragProfile.keep_upright<class_FoxPhysicsDragProfile_property_keep_upright>`.
 
 .. rst-class:: classref-item-separator
 
@@ -190,6 +208,20 @@ The absolute maximum force this dragger can apply to a body in a single frame.
 
 	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger3D_property__current_keep_upright:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **_current_keep_upright** :ref:`🔗<class_FoxPhysicsDragger3D_property__current_keep_upright>`
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -206,6 +238,22 @@ Method Descriptions
 |void| **grab**\ (\ body\: :ref:`RigidBody3D<class_RigidBody3D>`, hit_point\: :ref:`Vector3<class_Vector3>`, profile\: :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` = null\ ) :ref:`🔗<class_FoxPhysicsDragger3D_method_grab>`
 
 Grabs a :ref:`RigidBody3D<class_RigidBody3D>` at a specific global hit point. Optionally pass a :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>` to override the default stiffness and damping.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger3D_method_target_basis_for:
+
+.. rst-class:: classref-method
+
+:ref:`Basis<class_Basis>` **target_basis_for**\ (\ basis\: :ref:`Basis<class_Basis>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static| :ref:`🔗<class_FoxPhysicsDragger3D_method_target_basis_for>`
+
+The orientation a held body is pulled towards, given the dragger's ``basis``. 
+
+With ``keep_upright`` off this is the dragger's own basis, so the body copies it exactly. With it on, the facing is flattened onto the horizon: the body still yaws to follow the dragger but never tips, which is what stops a camera mounted dragger from pitching whatever it is carrying every time you look up or down. 
+
+Static so the result can be checked without a body in hand.
 
 .. rst-class:: classref-item-separator
 

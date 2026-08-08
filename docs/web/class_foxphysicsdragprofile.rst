@@ -21,7 +21,7 @@ Description
 
 Swappable settings for :ref:`FoxPhysicsDragger3D.grab()<class_FoxPhysicsDragger3D_method_grab>`. Passing one overrides the dragger's own defaults for as long as that grab lasts. 
 
-The two sets of defaults differ by a lot. A fresh profile starts at a stiffness of 200 and a damping of 1, while :ref:`FoxPhysicsDragger3D<class_FoxPhysicsDragger3D>` falls back to 800 and 25 when no profile is given, so an untouched profile drags far more loosely than passing nothing at all.
+The two sets of defaults differ by a lot. A fresh profile starts at a stiffness of 200, a damping of 1, and :ref:`keep_upright<class_FoxPhysicsDragProfile_property_keep_upright>` on, while :ref:`FoxPhysicsDragger3D<class_FoxPhysicsDragger3D>` falls back to 800, 25, and off when no profile is given. An untouched profile drags far more loosely than passing nothing at all, and holds its load level rather than copying the dragger's tilt.
 
 .. rst-class:: classref-reftable-group
 
@@ -86,7 +86,9 @@ The "control" of the pull. High values slow it down, low values make it bouncy.
 
 :ref:`bool<class_bool>` **keep_upright** = ``true`` :ref:`🔗<class_FoxPhysicsDragProfile_property_keep_upright>`
 
-If ``true``, forces the object to try and maintain an upright orientation.
+If ``true``, the held object yaws to follow the dragger but never tips. 
+
+Leave it off and the object copies the dragger's orientation exactly, so a dragger parented to a camera pitches whatever it is carrying every time you look up or down.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

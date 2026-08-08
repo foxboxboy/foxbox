@@ -136,9 +136,14 @@ BLOCK_CLOSE = ("[/codeblock", "[/gdscript", "[/csharp")
 def rejoin_wrapped(text):
     """Join description lines that Godot split at the source's ## line breaks.
 
-    A paragraph wrapped across several ## lines can come back as one XML line per source line,
-    every continuation carrying a single leading space. reStructuredText reads that space as a
-    blockquote, so the paragraph renders indented and detached from the line it belongs to.
+    This is a safety net. Godot only splits them when the .gd file has CRLF endings: the parser
+    strips the newline, the carriage return survives on the end of the line, and the next line
+    can no longer be joined onto it. A paragraph then arrives as one XML line per source line,
+    every continuation carrying a leading space, which reStructuredText reads as a blockquote.
+
+    .gitattributes pins the repo to LF, so this should find nothing. If it reports pages, some
+    source file has CRLF endings and the fix belongs there rather than here.
+
     Code blocks are left alone, since their line breaks and indentation are the content.
     """
     out = []
@@ -210,7 +215,8 @@ def step_xml(godot):
 
     print("      %d classes" % (count - dropped - retired))
     if reflowed:
-        print("      rejoined wrapped paragraphs in %d page(s)" % reflowed)
+        print("      WARNING: rejoined wrapped paragraphs in %d page(s)." % reflowed)
+        print("               Some source file has CRLF endings. See rejoin_wrapped().")
     if dropped:
         print("      skipped %d script(s) with no class_name" % dropped)
     if retired:
@@ -405,7 +411,28 @@ def step_modules():
     if orphans:
         print("      WARNING: %d page(s) in no module: %s" % (len(orphans), ", ".join(orphans)))
 
+    endings = normalise_endings()
+    if endings:
+        print("      normalised line endings in %d page(s)" % endings)
+
     print("      %d modules, %d folder pages" % (len(written), len(pages)))
+
+
+def normalise_endings():
+    """Force every generated page to LF.
+
+    Python writes text with the platform's line ending, so a Windows build produces CRLF and a
+    Linux one LF. These pages are committed for Read the Docs, so without this the two disagree
+    and every build looks like it changed all 87 files.
+    """
+    fixed = 0
+    for page in list(WEB_DIR.glob("class_*.rst")) + list(WEB_DIR.glob("module_*.rst")):
+        raw = page.read_bytes()
+        lf = raw.replace(b"\r\n", b"\n")
+        if lf != raw:
+            page.write_bytes(lf)
+            fixed += 1
+    return fixed
 
 
 def step_html():
