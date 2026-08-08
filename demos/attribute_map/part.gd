@@ -16,8 +16,8 @@ const STUNNED: StringName = &"crew_stunned"
 
 @export var attributes: FoxAttributeMap
 
-## Written into the map on the first frame. A plain Dictionary so it can be typed straight into
-## the scene, keys as strings.
+## Written into the map on the first frame as the base value of a [FoxModifiableStat]. A plain
+## Dictionary so it can be typed straight into the scene, keys as strings.
 @export var stats: Dictionary = {}
 
 ## The group every one of this part's stats is filed under. A rule can then act on the lot of them
@@ -36,11 +36,15 @@ var _cooldown: float = 0.0
 
 func _ready() -> void:
 	for key: String in stats:
-		var stat: StringName = StringName(key)
-		attributes.set_data(stat, float(stats[key]))
+		var name: StringName = StringName(key)
+
+		# The map stores any Variant, so what goes in is a stat rather than a bare number. Rules
+		# then stack modifiers on it instead of overwriting it, which is what makes them come off
+		# cleanly no matter what order they went on in.
+		attributes.set_data(name, FoxModifiableStat.new(float(stats[key])))
 
 		if group != &"":
-			attributes.add_data_to_group(stat, group)
+			attributes.add_data_to_group(name, group)
 
 
 func _process(delta: float) -> void:
@@ -59,9 +63,13 @@ func _process(delta: float) -> void:
 
 #region Public API
 
+## The stat's value once every modifier on it has been counted.
 func get_stat(key: StringName) -> float:
-	var value: float = attributes.get_data(key, 0.0)
-	return value
+	var stat: FoxModifiableStat = attributes.get_data(key, null)
+	if stat == null:
+		return 0.0
+
+	return stat.value
 
 
 ## The hull and the turret hold no damage, so they never shoot whatever happens to them.

@@ -21,6 +21,13 @@ const STUNNED: StringName = &"crew_stunned"
 
 @export var target: Node
 
+## How far the boost can be wound down. The machine gun only has three damage to give, and a
+## weapon doing less than none of it is not a thing worth showing.
+const WEAKEST: int = -3
+
+## And a ceiling, so holding the button down cannot run away with it.
+const STRONGEST: int = 20
+
 ## How much the boost is currently worth. Rules are not edited in place, so changing it means
 ## taking the old rule off and putting a new one on under the same id.
 var _boost: int = 0
@@ -61,7 +68,7 @@ func _boost_down() -> void:
 ## Targets damage, so it reaches every map under the tank and lands on the two that shoot. The hull
 ## and the turret track it and are not touched, because neither of them holds a damage.
 func _set_boost(amount: int) -> void:
-	_boost = amount
+	_boost = clampi(amount, WEAKEST, STRONGEST)
 	tank.remove_rule(BOOST)
 
 	if _boost != 0:
@@ -95,5 +102,10 @@ func _toggle_stun() -> void:
 
 func _repair() -> void:
 	target.call(&"reset")
+
+
+## Read by the readout, so the buttons going quiet at the limit has something to point at.
+func get_boost() -> int:
+	return _boost
 
 #endregion

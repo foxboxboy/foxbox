@@ -1,8 +1,11 @@
-# Adds a flat amount to a numeric key, and takes exactly the same amount back off.
+# Adds a flat modifier to a stat, filed under the rule's own id.
+#
+# The stat keeps the modifier as its own layer, so removing this rule takes off exactly what it put
+# on however much else has happened in between. Nothing here has to remember a number.
 extends FoxAttributeRule
 
 
-## Added to the target key. Negative to subtract.
+## Added to the stat's base. Negative to subtract.
 var amount: float = 0.0
 
 
@@ -12,12 +15,12 @@ func _init(p_id: StringName = &"", p_target_key: StringName = &"", p_amount: flo
 
 
 func apply_to(map: FoxAttributeMap) -> void:
-	var current: float = map.get_data(target_key, 0.0)
-	map.set_data(target_key, current + amount)
+	var stat: FoxModifiableStat = map.get_data(target_key, null)
+	if stat != null:
+		stat.add_flat_modifier(id, amount)
 
 
-# Whatever apply_to did, this has to undo exactly, because the map calls it when the rule is
-# removed and when a child stops inheriting.
 func remove_from(map: FoxAttributeMap) -> void:
-	var current: float = map.get_data(target_key, 0.0)
-	map.set_data(target_key, current - amount)
+	var stat: FoxModifiableStat = map.get_data(target_key, null)
+	if stat != null:
+		stat.pop_flat_modifier(id)

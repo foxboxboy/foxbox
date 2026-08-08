@@ -17,7 +17,7 @@ position = Vector2(576, 324)
 [node name="Wall" type="Node2D" parent="." node_paths=PackedStringArray("bar")]
 position = Vector2(900, 300)
 script = ExtResource("3_target")
-max_health = 600.0
+starting_health = 600.0
 bar = NodePath("Bar")
 bar_size = Vector2(240, 220)
 
@@ -131,7 +131,7 @@ text = "machine gun"
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Readout" type="Label" parent="UI" node_paths=PackedStringArray("tank", "turret", "cannon", "machine_gun", "target")]
+[node name="Readout" type="Label" parent="UI" node_paths=PackedStringArray("tank", "turret", "cannon", "machine_gun", "target", "controls")]
 offset_left = 20.0
 offset_top = 12.0
 offset_right = 1140.0
@@ -144,6 +144,7 @@ turret = NodePath("../../Tank/Turret")
 cannon = NodePath("../../Tank/Turret/Cannon")
 machine_gun = NodePath("../../Tank/MachineGun")
 target = NodePath("../../Wall")
+controls = NodePath("../Controls")
 
 [node name="Controls" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("tank", "cannon", "target")]
 offset_left = 20.0

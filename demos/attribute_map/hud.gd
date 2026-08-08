@@ -16,6 +16,9 @@ const Part = preload("res://demos/attribute_map/part.gd")
 
 @export var target: Node
 
+## Asked for the boost level, so the buttons going quiet at the limit has something to point at.
+@export var controls: Node
+
 #endregion
 
 
@@ -23,7 +26,7 @@ const Part = preload("res://demos/attribute_map/part.gd")
 
 func _process(_delta: float) -> void:
 	text = "\n".join([
-		"wall  %d" % roundi(target.get(&"health")),
+		"wall %4d      damage boost %+d" % [roundi(target.call(&"get_health")), controls.call(&"get_boost")],
 		"",
 		_line("part", "damage", "its own stats", "group", "rules it tracks", "flags"),
 		_part(tank, ""),

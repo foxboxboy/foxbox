@@ -15,10 +15,22 @@ func _init(p_id: StringName = &"") -> void:
 
 
 func apply_to(map: FoxAttributeMap) -> void:
-	map.set_data(&"calibre", map.get_data(&"calibre", 0.0) + EXTRA_CALIBRE)
-	map.set_data(&"damage", map.get_data(&"damage", 0.0) + EXTRA_DAMAGE)
+	_add(map, &"calibre", EXTRA_CALIBRE)
+	_add(map, &"damage", EXTRA_DAMAGE)
 
 
 func remove_from(map: FoxAttributeMap) -> void:
-	map.set_data(&"calibre", map.get_data(&"calibre", 0.0) - EXTRA_CALIBRE)
-	map.set_data(&"damage", map.get_data(&"damage", 0.0) - EXTRA_DAMAGE)
+	_pop(map, &"calibre")
+	_pop(map, &"damage")
+
+
+func _add(map: FoxAttributeMap, key: StringName, amount: float) -> void:
+	var stat: FoxModifiableStat = map.get_data(key, null)
+	if stat != null:
+		stat.add_flat_modifier(id, amount)
+
+
+func _pop(map: FoxAttributeMap, key: StringName) -> void:
+	var stat: FoxModifiableStat = map.get_data(key, null)
+	if stat != null:
+		stat.pop_flat_modifier(id)
