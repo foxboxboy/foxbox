@@ -5,7 +5,7 @@ extends "res://tests/fox_test.gd"
 ## RigidBody3D, which needs a physics step to mean anything.
 
 
-const Dragger = preload("res://addons/foxfabric/physics_dragging/fox_physics_dragger_3d.gd")
+const Dragger = preload("res://addons/foxfabric/physics_dragging/3d/fox_physics_dragger_3d.gd")
 
 ## How far the result may sit off world up before it counts as tipped.
 const TILT_EPSILON: float = 0.0001

@@ -19,9 +19,11 @@ A configuration profile defining the physics characteristics of a grab action.
 Description
 -----------
 
-Swappable settings for :ref:`FoxPhysicsDragger3D.grab()<class_FoxPhysicsDragger3D_method_grab>`. Passing one overrides the dragger's own defaults for as long as that grab lasts. 
+Swappable settings for :ref:`FoxPhysicsDragger3D.grab()<class_FoxPhysicsDragger3D_method_grab>` and :ref:`FoxPhysicsDragger2D.grab()<class_FoxPhysicsDragger2D_method_grab>`. Passing one overrides the dragger's own defaults for as long as that grab lasts. 
 
-Note the stiffness and damping defaults. A fresh profile starts at 200 and 1, while :ref:`FoxPhysicsDragger3D<class_FoxPhysicsDragger3D>` falls back to 800 and 25 when no profile is given, so an untouched profile drags far more loosely than passing nothing at all.
+Shared by both dimensions rather than duplicated, because stiffness, damping and staying upright mean the same thing in each. It sits at the module root for that reason, next to the ``2d`` and ``3d`` folders rather than inside one of them. 
+
+Note the stiffness and damping defaults. A fresh profile starts at 200 and 1, while both draggers fall back to 800 and 25 when no profile is given, so an untouched profile drags far more loosely than passing nothing at all.
 
 .. rst-class:: classref-reftable-group
 
@@ -86,7 +88,9 @@ The "control" of the pull. High values slow it down, low values make it bouncy.
 
 :ref:`bool<class_bool>` **keep_upright** = ``false`` :ref:`🔗<class_FoxPhysicsDragProfile_property_keep_upright>`
 
-If ``true``, the held object yaws to follow the dragger but never tips. 
+If ``true``, the held object is kept level instead of copying the dragger's tilt. 
+
+In 3D it still yaws to follow the dragger and only the tipping is removed. In 2D there is no facing to keep, so the object is simply held at zero rotation. 
 
 Off by default, which is free rotation: the object copies the dragger's orientation exactly and can be rolled over in the air. Turn it on and a dragger parented to a camera stops pitching whatever it is carrying every time you look up or down.
 

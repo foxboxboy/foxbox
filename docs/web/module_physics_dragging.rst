@@ -1,7 +1,7 @@
 Physics Dragging
 ================
 
-Manipulates a RigidBody3D by applying localized forces and torques to pull it toward a target node. Stiffness, damping, and force limits live in swappable FoxPhysicsDragProfile resources.
+Manipulates a RigidBody by applying localized forces and torques to pull it toward a target node. Stiffness, damping, and force limits live in swappable FoxPhysicsDragProfile resources, which are shared by both dimensions. The 2d and 3d folders hold a dragger each.
 
 Moves a ``RigidBody3D`` by applying forces and torques toward a target transform rather than
 setting its position, so the body keeps colliding and keeps its mass.
@@ -16,8 +16,17 @@ Tuning lives in :ref:`class_FoxPhysicsDragProfile` resources, which can be swapp
 ``stiffness`` controls the pull, ``damping`` the oscillation, and ``max_pull_force`` caps the
 force applied per frame.
 
+:ref:`class_FoxPhysicsDragger2D` does the same for a ``RigidBody2D``. The profile is shared
+rather than duplicated, since stiffness and damping mean the same thing in both dimensions, so
+it sits at the module root next to the ``2d`` and ``3d`` folders.
+
+``keep_upright`` differs between them. In 3D the held body still turns to follow the dragger and
+only the tipping is removed. In 2D there is no facing to preserve, so the body is simply held at
+zero rotation.
+
 .. toctree::
    :maxdepth: 1
 
-   class_foxphysicsdragger3d
+   module_physics_dragging-2d
+   module_physics_dragging-3d
    class_foxphysicsdragprofile
