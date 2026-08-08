@@ -5,13 +5,15 @@ extends Label
 
 #region Variables
 
-const Entity = preload("res://demos/attribute_map/entity.gd")
+const Runner = preload("res://demos/attribute_map/runner.gd")
 
 const MUD: StringName = &"mud"
 
-@export var cart: Entity
-@export var fox: Entity
-@export var hare: Entity
+@export var pack: FoxAttributeMap
+
+@export var fox: Runner
+@export var hare: Runner
+@export var badger: Runner
 
 #endregion
 
@@ -20,18 +22,19 @@ const MUD: StringName = &"mud"
 
 func _process(_delta: float) -> void:
 	text = "\n".join([
-		"1      a mud rule on the cart      %s" % _on_off(cart.attributes.get_rule_summary().has(MUD)),
-		"2 / 3  slow and unslow the cart",
+		"1      mud on the pack             %s" % _on_off(pack.get_rule_summary().has(MUD)),
+		"2 / 3  slow and unslow the pack",
 		"4 / 5  the fox slows itself",
-		"Space  the fox is                  %s" % ("riding" if fox.get_parent() == cart else "on the kerb"),
+		"Space  the fox is                  %s" % ("in the pack" if fox.is_in_a_pack() else "running alone"),
 		"",
-		_row_text("", "move_speed", "flags", "rules"),
-		_row(cart, ""),
-		_row(fox, "  "),
-		_row(hare, "  "),
+		_line("", "speed", "flags", "rules"),
+		_line("pack", "-", _stacks(pack), _rules(pack)),
+		_runner(fox),
+		_runner(hare),
+		_runner(badger),
 		"",
-		"A rule changes the numbers. A flag changes nothing on its own; it is a marker for",
-		"something else to read, and what reads it here just dims whatever is carrying it.",
+		"A rule changes the numbers, so mud makes the pack visibly slower.",
+		"A flag changes nothing by itself; here it only dims who carries it.",
 	])
 
 #endregion
@@ -39,21 +42,24 @@ func _process(_delta: float) -> void:
 
 #region Private
 
-func _row(entity: Entity, indent: String) -> String:
-	return _row_text(
-		indent + entity.label,
-		"%.1f" % entity.get_speed(),
-		_stacks(entity.attributes),
-		_rules(entity.attributes),
+## Runners in the pack are indented under it, so leaving the pack is visible in the table as well
+## as on the track.
+func _runner(runner: Runner) -> String:
+	var indent: String = "  " if runner.is_in_a_pack() else ""
+	return _line(
+		indent + runner.label,
+		"%.1f" % runner.get_speed(),
+		_stacks(runner.attributes),
+		_rules(runner.attributes),
 	)
 
 
-func _row_text(name: String, speed: String, flags: String, rules: String) -> String:
-	return "%-16s%-12s%-30s%s" % [name, speed, flags, rules]
+func _line(name: String, speed: String, flags: String, rules: String) -> String:
+	return "%-14s%-8s%-30s%s" % [name, speed, flags, rules]
 
 
 ## A stack count on its own cannot say where it came from, so anything handed down by a parent map
-## is called out. Take the fox off the cart and the inherited part is what disappears.
+## is called out. Take the fox out of the pack and the inherited part is what disappears.
 func _stacks(map: FoxAttributeMap) -> String:
 	# Declared empty and filled in, because a bare {} in a ternary is an untyped Dictionary and
 	# assigning one to a typed variable fails at runtime.

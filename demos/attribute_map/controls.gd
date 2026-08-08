@@ -1,4 +1,4 @@
-# Number keys act on the cart, Space takes the fox on and off it.
+# Number keys act on the pack, Space takes the fox out of it and puts it back.
 #
 # Keys are read as raw events rather than named actions, so this works in a project that has not
 # set up an input map.
@@ -8,20 +8,24 @@ extends Node
 #region Variables
 
 const FlatRule = preload("res://demos/attribute_map/flat_rule.gd")
-const Entity = preload("res://demos/attribute_map/entity.gd")
+const Runner = preload("res://demos/attribute_map/runner.gd")
 
 const MUD: StringName = &"mud"
 const SLOWED: StringName = &"slowed"
 
-## How much the mud rule takes off move_speed, everywhere it reaches.
+## How much move_speed the mud rule takes off, everywhere it reaches.
 const MUD_AMOUNT: float = -2.0
 
-@export var cart: Entity
-@export var fox: Entity
+## The pack's own map. Rules and flags put here reach every runner in the pack.
+@export var pack: FoxAttributeMap
 
-## Where the fox stands once it is off the cart. Being under this instead of under the cart is the
-## whole difference: the map looks up the tree, so leaving the cart leaves its map behind too.
-@export var kerb: Node2D
+## The node the runners in the pack sit under. Being under it is what puts a runner in the pack.
+@export var pack_node: Node2D
+
+## Where the fox goes when it leaves. Nothing here holds a map, so out here it inherits nothing.
+@export var track: Node2D
+
+@export var fox: Runner
 
 #endregion
 
@@ -37,36 +41,37 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_1:
 			_toggle_mud()
 		KEY_2:
-			cart.attributes.increment_flag(SLOWED)
+			pack.increment_flag(SLOWED)
 		KEY_3:
-			cart.attributes.decrement_flag(SLOWED)
+			pack.decrement_flag(SLOWED)
 		KEY_4:
 			fox.attributes.increment_flag(SLOWED)
 		KEY_5:
 			fox.attributes.decrement_flag(SLOWED)
 		KEY_SPACE:
-			_toggle_riding()
+			_toggle_pack()
 
 #endregion
 
 
 #region Private
 
-## One rule on the cart slows everything riding in it, because add_rule passes it down.
+## One rule on the pack slows every runner in it, because add_rule passes it down. The badger runs
+## outside the pack and keeps its pace.
 func _toggle_mud() -> void:
-	if cart.attributes.get_rule_summary().has(MUD):
-		cart.attributes.remove_rule(MUD)
+	if pack.get_rule_summary().has(MUD):
+		pack.remove_rule(MUD)
 		return
 
-	cart.attributes.add_rule(FlatRule.new(MUD, &"move_speed", MUD_AMOUNT))
+	pack.add_rule(FlatRule.new(MUD, &"move_speed", MUD_AMOUNT))
 
 
-## Moving the fox out from under the cart unregisters its map, which takes back the rules and flag
-## stacks the cart had given it. Stacks the fox raised on itself are its own and stay.
-func _toggle_riding() -> void:
-	if fox.get_parent() == cart:
-		fox.reparent(kerb, false)
+## Moving the fox out from under the pack unregisters its map, which takes back the rules and flag
+## stacks the pack had given it. Stacks the fox raised on itself are its own and stay.
+func _toggle_pack() -> void:
+	if fox.get_parent() == pack_node:
+		fox.reparent(track, true)
 	else:
-		fox.reparent(cart, false)
+		fox.reparent(pack_node, true)
 
 #endregion
