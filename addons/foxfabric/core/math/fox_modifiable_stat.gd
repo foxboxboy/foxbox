@@ -12,7 +12,10 @@ class_name FoxModifiableStat
 
 ## Defines how a modifier affects the base value.
 enum ModifierType {
+	## Added to [member base_value] before any multiplier is applied.
 	FLAT,
+	## Added to a running total that starts at [code]1.0[/code], which then scales the result.
+	## A value of [code]0.5[/code] therefore means "+50%", not "half".
 	MULTIPLIER
 }
 

@@ -2,6 +2,27 @@
 class_name FoxStateMachine
 extends FoxNode
 ## A node-based State Machine that manages [FoxState] children.
+##
+## States are direct children of this node. Each one is keyed by its
+## [member FoxState.state_id], or by its node name when that is left blank.
+## [codeblock]
+## # Player
+## # └─ StateMachine        (initial_state -> Idle)
+## #    ├─ Idle             (idle.gd)
+## #    └─ Running          (running.gd)
+##
+## # idle.gd
+## extends FoxState
+##
+## func enter() -> void:
+##     owner.velocity = Vector3.ZERO
+##
+## func physics_update(_delta: float) -> void:
+##     if Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down"):
+##         transition_requested.emit(self, &"Running")
+## [/codeblock]
+## A state never switches itself. It emits [signal FoxState.transition_requested] and the
+## machine performs the swap, so states stay unaware of each other.
 
 ## The state that becomes active as soon as the machine is ready.
 @export var initial_state: FoxState

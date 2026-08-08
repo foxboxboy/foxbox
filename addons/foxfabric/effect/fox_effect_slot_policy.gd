@@ -34,6 +34,8 @@ var filled_slots: int:
 var available_slots: int:
 	get: return clampi(max_slots - slots.size(), 0, max_slots)
 
+## The manager this policy gates. Defaults to the parent node, so a policy normally just sits
+## as a child of the [FoxEffectManager] it governs.
 @onready var manager: FoxEffectManager = get_parent()
 
 #endregion

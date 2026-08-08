@@ -3,8 +3,22 @@ class_name FoxAttributeMap
 extends FoxNode
 ## A recursive, hierarchical Blackboard node for safely managing dynamic entity data, stacked flags, and rules.
 ##
-## Acts as a centralized data hub for an entity. It can store any arbitrary [Variant] data (such as [int], [String], or [FoxStatPool] resources), 
+## Acts as a centralized data hub for an entity. It can store any arbitrary [Variant] data (such as [int], [String], or [FoxStatPool] resources),
 ## tracks temporary binary states via stacked string flags, and safely propagates [FoxAttributeRule]s up and down a node hierarchy.
+## [codeblock]
+## var stats := $AttributeMap as FoxAttributeMap
+##
+## # Store anything, then group keys for bulk queries.
+## stats.set_data(&"health", FoxStatPool.new())
+## stats.set_data(&"move_speed", 5.0)
+## stats.add_data_to_group(&"move_speed", &"movement")
+##
+## # Flags are stacked, not boolean. Two sources of slow both have to expire.
+## stats.increment_flag(&"slowed")   # a swamp
+## stats.increment_flag(&"slowed")   # and a debuff
+## stats.decrement_flag(&"slowed")   # leaving the swamp
+## stats.has_flag(&"slowed")         # still true, the debuff holds the last stack
+## [/codeblock]
 
 #region Signals
 

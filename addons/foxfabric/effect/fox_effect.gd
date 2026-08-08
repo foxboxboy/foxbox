@@ -32,7 +32,8 @@ extends FoxResource
 ## Set [member stack_mode] to [code]StackMode.INTENSITY[/code] and [member tick_interval] to
 ## [code]1.0[/code] on the resource to make the example above tick once per second.
 
-enum StackMode { 
+## Determines what happens when this effect is applied to a target that already has it.
+enum StackMode {
 	## Prevents duplicate logic. Handles the timer based on [member duration_mode].
 	UNIQUE, 
 	## Increases the stack count up to [member max_stacks] and calls [method _on_reapply].
@@ -41,6 +42,7 @@ enum StackMode {
 	MULTIPLE_INSTANCES 
 }
 
+## Determines how the remaining time is recalculated when an effect stacks.
 enum DurationMode {
 	## Adds the new duration to the existing time left.
 	ADD,

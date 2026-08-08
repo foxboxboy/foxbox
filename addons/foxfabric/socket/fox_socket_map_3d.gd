@@ -2,6 +2,21 @@
 class_name FoxSocketMap3D
 extends FoxNode3D
 ## Manages a collection of [FoxSocket3D] nodes, mapped by their node names.
+##
+## Sockets are collected recursively from everything beneath this node when it enters the tree.
+## [codeblock]
+## var seats := $Vehicle/Seats as FoxSocketMap3D
+##
+## # Take any free seat, or name one explicitly.
+## if seats.attach(player):
+##     player.set_physics_process(false)
+## seats.attach(player, &"DriverSeat")
+##
+## # Getting back out. detach() unplugs but does NOT reparent,
+## # so the node is left where it is until you move it yourself.
+## var rider := seats.get_socket(&"DriverSeat").detach()
+## rider.reparent(get_tree().current_scene)
+## [/codeblock]
 
 
 
