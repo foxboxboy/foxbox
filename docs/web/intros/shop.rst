@@ -1,21 +1,16 @@
-The shop does not define what a currency is. It asks a :ref:`class_FoxPrice` whether a
-:ref:`class_FoxWallet` can afford something, then tells it to perform the transaction. Both
-answers come from your code, so a currency can be an integer, a list of items, a reputation
-value, or a level requirement.
+The module does not define what a currency is. It asks a :ref:`class_FoxPrice` whether a
+:ref:`class_FoxWallet` can afford something, then tells it to perform the transaction.
 
-:ref:`class_FoxWallet` is an empty base type that declares no members. A price casts it to the
-wallet type it expects and returns ``false`` if it receives anything else, so this is a runtime
-check rather than a compile time one. :ref:`class_FoxPrice` decides affordability and performs
-the transaction. :ref:`class_FoxShopItem` holds display fields, a price and a product, where the
-product is a plain ``Resource``. :ref:`class_FoxShopCatalog` is an ordered list of items.
-:ref:`class_FoxSimpleWallet` and :ref:`class_FoxSimplePrice` are an ``int`` implementation.
+:ref:`class_FoxWallet` declares no members. A price casts it to the wallet type it expects and
+returns ``false`` otherwise, so this is a runtime check. :ref:`class_FoxShopItem` holds display
+fields, a price, and a product as a plain ``Resource``. :ref:`class_FoxShopCatalog` is an ordered
+list of items. :ref:`class_FoxSimpleWallet` and :ref:`class_FoxSimplePrice` are an ``int``
+implementation.
 
-To define a currency, extend :ref:`class_FoxWallet` to hold it and :ref:`class_FoxPrice` to
-spend it.
+Extend both to define a currency.
 
 .. code-block:: gdscript
 
-    # scrap_wallet.gd
     class_name ScrapWallet
     extends FoxWallet
 
@@ -23,7 +18,6 @@ spend it.
 
 .. code-block:: gdscript
 
-    # scrap_price.gd
     class_name ScrapPrice
     extends FoxPrice
 
@@ -46,13 +40,10 @@ spend it.
             w.scrap.erase(id)
         return true
 
-    func get_display_string() -> String:
-        return ", ".join(required)
-
 ``pay`` must confirm the payment before applying any part of it, so a refused call leaves the
-wallet unchanged. It returns ``true`` when the transaction happened.
+wallet unchanged.
 
 .. note::
 
-    A refusal does not necessarily mean insufficient funds. :ref:`class_FoxShopMenu` reports
-    ``&"payment_refused"`` because a price can refuse for any reason it defines.
+    A refusal does not imply insufficient funds. :ref:`class_FoxShopMenu` reports
+    ``&"payment_refused"`` because a price can refuse for any reason.

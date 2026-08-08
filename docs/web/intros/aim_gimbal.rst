@@ -1,20 +1,13 @@
-Accumulates 2D input into pitch and yaw. Use it for mouse look, turrets, or anything that rotates
-on two axes.
+Accumulates 2D input into pitch and yaw.
 
 .. code-block:: gdscript
 
-    func _unhandled_input(event: InputEvent) -> void:
-        if event is InputEventMouseMotion:
-            $Gimbal.yaw -= event.relative.x * sensitivity
-            $Gimbal.pitch -= event.relative.y * sensitivity
+    $Gimbal.yaw -= event.relative.x * sensitivity
+    $Gimbal.pitch -= event.relative.y * sensitivity
 
-Each axis independently clamps or wraps. Pitch clamps by default, so a first person camera cannot
-roll over the top. Yaw wraps by default. Enable ``clamp_yaw`` to give a turret a firing arc.
-
-Setting ``pitch`` or ``yaw`` applies the limit before writing to ``rotation``, so the node never
-holds an out of range value.
+Each axis independently clamps or wraps. Pitch clamps by default, yaw wraps. Setting either
+applies the limit before writing to ``rotation``.
 
 .. note::
 
-    Operating on ``pitch`` and ``yaw`` rather than on the node's ``rotation`` is what avoids
-    gimbal lock. Set those two properties and leave ``rotation`` alone.
+    Set ``pitch`` and ``yaw`` rather than ``rotation``. That is what avoids gimbal lock.
