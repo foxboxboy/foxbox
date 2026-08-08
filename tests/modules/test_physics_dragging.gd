@@ -13,6 +13,7 @@ const TILT_EPSILON: float = 0.0001
 
 func run() -> void:
 	suite = "physics_dragging"
+	_defaults_leave_rotation_free()
 	_off_copies_the_dragger()
 	_on_stays_level()
 	_on_still_follows_yaw()
@@ -23,6 +24,17 @@ func run() -> void:
 ## The basis of a dragger pitched, yawed, and rolled by the given degrees.
 func _posed(pitch: float, yaw: float, roll: float) -> Basis:
 	return Basis.from_euler(Vector3(deg_to_rad(pitch), deg_to_rad(yaw), deg_to_rad(roll)))
+
+
+func _defaults_leave_rotation_free() -> void:
+	case("defaults")
+	# A profile saved before keep_upright existed does not store it, so it falls back to this.
+	# Defaulting it on silently turned free rotation into yaw only for every existing profile.
+	var profile: FoxPhysicsDragProfile = FoxPhysicsDragProfile.new()
+	check(not profile.keep_upright, "a fresh profile leaves rotation free")
+
+	var dragger: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D
+	check(not dragger.default_keep_upright, "so does a dragger with no profile")
 
 
 func _off_copies_the_dragger() -> void:

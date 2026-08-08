@@ -6,10 +6,9 @@ extends FoxResource
 ## Swappable settings for [method FoxPhysicsDragger3D.grab]. Passing one overrides the dragger's
 ## own defaults for as long as that grab lasts.
 ## [br][br]
-## The two sets of defaults differ by a lot. A fresh profile starts at a stiffness of 200, a
-## damping of 1, and [member keep_upright] on, while [FoxPhysicsDragger3D] falls back to 800,
-## 25, and off when no profile is given. An untouched profile drags far more loosely than
-## passing nothing at all, and holds its load level rather than copying the dragger's tilt.
+## Note the stiffness and damping defaults. A fresh profile starts at 200 and 1, while
+## [FoxPhysicsDragger3D] falls back to 800 and 25 when no profile is given, so an untouched
+## profile drags far more loosely than passing nothing at all.
 
 
 
@@ -30,7 +29,8 @@ extends FoxResource
 
 ## If [code]true[/code], the held object yaws to follow the dragger but never tips.
 ## [br][br]
-## Leave it off and the object copies the dragger's orientation exactly, so a dragger parented
-## to a camera pitches whatever it is carrying every time you look up or down.
-@export var keep_upright: bool = true
+## Off by default, which is free rotation: the object copies the dragger's orientation exactly
+## and can be rolled over in the air. Turn it on and a dragger parented to a camera stops
+## pitching whatever it is carrying every time you look up or down.
+@export var keep_upright: bool = false
 
