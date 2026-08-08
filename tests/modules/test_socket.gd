@@ -1,8 +1,13 @@
 extends "res://tests/fox_test.gd"
 
+## The editor gizmo, loaded rather than preloaded. It extends an editor only class, so on a
+## build without one this stays null and the gizmo cases are skipped instead of failing.
+const GIZMO_PATH: String = "res://addons/foxfabric/socket/editor/fox_socket_3d_gizmo.gd"
+
 
 func run() -> void:
 	suite = "socket"
+	_gizmo_reads_occupancy()
 	_empty_socket()
 	_attaching_reparents()
 	_detach_does_not_reparent()
@@ -12,6 +17,49 @@ func run() -> void:
 	_map_auto_attaches()
 	_map_reports_availability()
 	_map_forwards_signals()
+
+
+func _gizmo_reads_occupancy() -> void:
+	case("gizmo")
+	if not ClassDB.class_exists("EditorNode3DGizmoPlugin"):
+		check(true, "no editor classes in this build, gizmo cases skipped")
+		return
+
+	var gizmo: GDScript = load(GIZMO_PATH) as GDScript
+	check(gizmo != null, "the gizmo script loads")
+	if gizmo == null:
+		return
+
+	var holder: Node3D = track(Node3D.new()) as Node3D
+	var socket: FoxSocket3D = _socket(holder)
+	check(not gizmo.is_occupied(socket), "an empty socket reads as empty")
+
+	var marker: Node3D = Node3D.new()
+	socket.add_child(marker)
+	socket.marker = marker
+	check(not gizmo.is_occupied(socket), "the marker alone is not an attachment")
+
+	var seated: Node3D = Node3D.new()
+	socket.add_child(seated)
+	check(gizmo.is_occupied(socket), "a second child reads as occupied")
+
+	case("gizmo marker transform")
+	var bare: FoxSocket3D = _socket(holder)
+	check(gizmo.marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
+		"no marker draws at the socket itself")
+
+	var offset: Node3D = Node3D.new()
+	bare.add_child(offset)
+	offset.position = Vector3(0.0, 1.5, 0.0)
+	bare.marker = offset
+	check(gizmo.marker_transform(bare).origin.is_equal_approx(Vector3(0.0, 1.5, 0.0)),
+		"a marker draws at its own offset")
+
+	var outsider: Node3D = Node3D.new()
+	holder.add_child(outsider)
+	bare.marker = outsider
+	check(gizmo.marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
+		"a marker outside the socket is ignored, since the warning already covers it")
 
 
 func _socket(parent: Node) -> FoxSocket3D:
