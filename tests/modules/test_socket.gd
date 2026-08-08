@@ -86,6 +86,18 @@ func _gizmo_draws(gizmo: GDScript, holder: Node3D) -> void:
 	eq(lines.size(), 34, "every segment is a pair of points")
 	check(lines.size() % 2 == 0, "no dangling half segment")
 
+	case("occupancy reads without colour")
+	# Colour alone would exclude anyone who cannot separate the two hues, so an occupied socket
+	# has to differ in shape as well.
+	var seated: Node3D = Node3D.new()
+	socket.add_child(seated)
+	var filled: PackedVector3Array = gizmo.build_lines(socket)
+
+	eq(filled.size(), 34 + 24, "an occupied socket nests a second diamond inside")
+	check(filled.size() != lines.size(), "so the two states differ in shape, not only colour")
+	socket.remove_child(seated)
+	seated.free()
+
 	var reach: float = 0.0
 	for point: Vector3 in lines:
 		reach = maxf(reach, point.length())

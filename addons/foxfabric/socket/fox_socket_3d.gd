@@ -38,9 +38,13 @@ signal attachment_changed(attachment: Node3D, socket: FoxSocket3D)
 
 #region Variables
 
-## (Optional) The node that will be used for position, rotation, and scale. 
+## (Optional) The node that will be used for position, rotation, and scale.
 ## Leave blank to use this [Marker3D]'s transform.
-@export var marker: Node3D
+@export var marker: Node3D:
+	set(value):
+		marker = value
+		update_configuration_warnings()
+		update_gizmos()
 
 @export_group("Snap Settings")
 
@@ -118,6 +122,9 @@ func detach() -> Node3D:
 func _ready() -> void:
 	# @tool runs this in the editor too, where it would touch live state.
 	if Engine.is_editor_hint():
+		# The gizmo draws occupancy, which is a question about the children, so it has to be
+		# redrawn when they change. Without this it stays stale until the socket is reselected.
+		child_order_changed.connect(update_gizmos)
 		return
 
 	child_order_changed.connect(_attachment_changed)

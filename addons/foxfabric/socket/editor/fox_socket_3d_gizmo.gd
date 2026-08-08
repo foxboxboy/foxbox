@@ -16,10 +16,50 @@ const ARROW: float = 0.4
 const EMPTY: String = "fox_socket_empty"
 const OCCUPIED: String = "fox_socket_occupied"
 
+## Where the colours live in Editor Settings, alongside the engine's own gizmo colours.
+const SETTINGS: Dictionary[String, String] = {
+	EMPTY: "editors/3d_gizmos/gizmo_colors/fox_socket_empty",
+	OCCUPIED: "editors/3d_gizmos/gizmo_colors/fox_socket_occupied",
+}
+
+## Blue against orange rather than green against amber. The two most common forms of colour
+## blindness collapse green and amber into the same yellow, and occupancy is the whole point of
+## the colour. The nested diamond carries the same information without relying on it.
+const DEFAULTS: Dictionary[String, Color] = {
+	EMPTY: Color(0.35, 0.70, 1.0),
+	OCCUPIED: Color(1.0, 0.55, 0.1),
+}
+
 
 func _init() -> void:
-	create_material(EMPTY, Color(0.35, 0.85, 0.55))
-	create_material(OCCUPIED, Color(1.0, 0.65, 0.2))
+	var settings: EditorSettings = EditorInterface.get_editor_settings()
+
+	for key: String in SETTINGS:
+		var path: String = SETTINGS[key]
+		var fallback: Color = DEFAULTS[key]
+
+		if settings != null:
+			if not settings.has_setting(path):
+				settings.set_setting(path, fallback)
+			settings.set_initial_value(path, fallback, false)
+			create_material(key, settings.get_setting(path))
+		else:
+			create_material(key, fallback)
+
+	if settings != null and not settings.settings_changed.is_connected(_settings_changed):
+		settings.settings_changed.connect(_settings_changed)
+
+
+## Picks up a recoloured gizmo without an editor restart.
+func _settings_changed() -> void:
+	var settings: EditorSettings = EditorInterface.get_editor_settings()
+	if settings == null:
+		return
+
+	for key: String in SETTINGS:
+		var material: StandardMaterial3D = get_material(key) as StandardMaterial3D
+		if material != null:
+			material.albedo_color = settings.get_setting(SETTINGS[key])
 
 
 func _get_gizmo_name() -> String:
@@ -51,16 +91,23 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 
 ## Every line segment to draw for [param socket], in the socket's own space.
 ## [br][br]
+## An occupied socket gets a second diamond nested inside the first, so occupancy reads from the
+## shape alone. Colour says the same thing twice for anyone who can see the difference.
+## [br][br]
 ## Split out from [method _redraw] so the geometry can be checked without an editor gizmo to
 ## hand it to. Points come in pairs, one segment per pair.
 static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
 	var at: Transform3D = marker_transform(socket)
 	var lines: PackedVector3Array = PackedVector3Array()
 
-	for point: Vector3 in _diamond():
+	for point: Vector3 in _diamond(SIZE):
 		lines.append(at * point)
 	for point: Vector3 in _arrow():
 		lines.append(at * point)
+
+	if is_occupied(socket):
+		for point: Vector3 in _diamond(SIZE * 0.45):
+			lines.append(at * point)
 
 	return lines
 
@@ -97,11 +144,11 @@ static func is_occupied(socket: FoxSocket3D) -> bool:
 	return false
 
 
-## The twelve edges of an octahedron, as line pairs.
-static func _diamond() -> Array[Vector3]:
-	var x: Vector3 = Vector3(SIZE, 0.0, 0.0)
-	var y: Vector3 = Vector3(0.0, SIZE, 0.0)
-	var z: Vector3 = Vector3(0.0, 0.0, SIZE)
+## The twelve edges of an octahedron of half width [param size], as line pairs.
+static func _diamond(size: float) -> Array[Vector3]:
+	var x: Vector3 = Vector3(size, 0.0, 0.0)
+	var y: Vector3 = Vector3(0.0, size, 0.0)
+	var z: Vector3 = Vector3(0.0, 0.0, size)
 	var points: Array[Vector3] = []
 
 	for a: Vector3 in [x, -x]:
