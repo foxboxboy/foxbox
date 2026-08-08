@@ -1,8 +1,5 @@
-Accumulates 2D input into pitch and yaw. Use it for mouse look, turrets, or anything that
-rotates on two axes.
-
-Usage
------
+Accumulates 2D input into pitch and yaw. Use it for mouse look, turrets, or anything that rotates
+on two axes.
 
 .. code-block:: gdscript
 
@@ -11,9 +8,8 @@ Usage
             $Gimbal.yaw -= event.relative.x * sensitivity
             $Gimbal.pitch -= event.relative.y * sensitivity
 
-Each axis independently clamps or wraps. Pitch clamps by default, so a first person camera
-cannot roll over the top. Yaw wraps by default. Enable ``clamp_yaw`` to give a turret a firing
-arc.
+Each axis independently clamps or wraps. Pitch clamps by default, so a first person camera cannot
+roll over the top. Yaw wraps by default. Enable ``clamp_yaw`` to give a turret a firing arc.
 
 Setting ``pitch`` or ``yaw`` applies the limit before writing to ``rotation``, so the node never
 holds an out of range value.

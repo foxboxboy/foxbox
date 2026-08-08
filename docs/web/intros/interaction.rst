@@ -2,14 +2,9 @@ Detects what the player is looking at and triggers it. What triggering does is d
 object, not by this module.
 
 :ref:`class_FoxInteractionRayCast3D` points out of the player or camera and tracks the
-interactable currently in front of it, emitting focus and unfocus as the target changes. Connect
-those to a prompt or an outline shader.
-
-:ref:`class_FoxInteractableArea3D` is the target. Calling ``interact`` emits ``interacted`` with
-an arbitrary context, usually the initiator.
-
-Usage
------
+interactable in front of it, emitting focus and unfocus as the target changes. Connect those to a
+prompt or an outline shader. :ref:`class_FoxInteractableArea3D` is the target, and calling
+``interact`` emits ``interacted`` with an arbitrary context, usually the initiator.
 
 .. code-block:: gdscript
 
@@ -27,9 +22,7 @@ Usage
         if context.has_key(required_key):
             open()
 
-Comparison with damage
-----------------------
-
-:doc:`module_damage` pushes: the attacker decides when a payload is sent. Interaction pulls: the
-sensor reports what is in front of it continuously, and nothing happens until ``interact`` is
-called. That is why interactables have focus and unfocus signals and hurtboxes do not.
+:doc:`module_damage` pushes, in that the attacker decides when a payload is sent. Interaction
+pulls: the sensor reports what is in front of it continuously and nothing happens until
+``interact`` is called. That is why interactables have focus and unfocus signals and hurtboxes do
+not.

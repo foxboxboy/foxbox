@@ -1,22 +1,11 @@
-Carries a ``Variant`` payload from one point in the world to another. Nothing in this module
-reads the payload, so it contains no concept of health, teams or damage types.
+Carries a ``Variant`` payload from one point in the world to another. Nothing here reads the
+payload, so the module contains no concept of health, teams or damage types.
 
-Classes
--------
-
-:ref:`class_FoxHitArea3D` delivers on overlap, or to everything currently inside it when
-``fire()`` is called. Use it for melee arcs and explosions.
-
-:ref:`class_FoxHitRayCast3D` delivers to the first hurtbox it strikes. Use it for hitscan.
-
-:ref:`class_FoxHitShapeCast3D` sweeps a shape along a path. Use it for thick beams or fast melee
-that would otherwise pass through a thin area.
-
-:ref:`class_FoxHurtArea3D` receives a payload and re-emits it as ``hit_received``. It has an
-``is_active`` property for invulnerability frames.
-
-Usage
------
+:ref:`class_FoxHitArea3D` delivers on overlap, or to everything inside it when ``fire()`` is
+called. :ref:`class_FoxHitRayCast3D` delivers to the first hurtbox it strikes.
+:ref:`class_FoxHitShapeCast3D` sweeps a shape along a path, for thick beams or fast melee that
+would otherwise pass through a thin area. :ref:`class_FoxHurtArea3D` receives a payload and
+re-emits it as ``hit_received``, and has an ``is_active`` property for invulnerability frames.
 
 .. code-block:: gdscript
 
@@ -30,9 +19,6 @@ Usage
         health -= payload["amount"]
 
 Adding knockback, status effects or damage types means changing the payload, not this module.
-
-Notes
------
 
 ``receive_hit`` returns whether the payload was accepted. When ``is_active`` is ``false`` it
 returns ``false`` and the deliverer does not emit ``hit_delivered``, so hit confirmation will not

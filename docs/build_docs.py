@@ -239,7 +239,9 @@ def step_modules():
         if intro:
             body += [intro, ""]
 
-        body += [".. toctree::", "   :maxdepth: 1", "   :caption: Classes", ""]
+        # No caption. A toctree caption becomes a sidebar entry of its own, which pushes the
+        # class links a level deeper than navigation_depth shows.
+        body += [".. toctree::", "   :maxdepth: 1", ""]
         body += ["   " + p for p in pages]
         body.append("")
 
