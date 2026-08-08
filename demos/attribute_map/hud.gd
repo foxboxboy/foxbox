@@ -29,6 +29,9 @@ func _process(_delta: float) -> void:
 		_row(cart, ""),
 		_row(fox, "  "),
 		_row(hare, "  "),
+		"",
+		"A rule changes the numbers. A flag changes nothing on its own; it is a marker for",
+		"something else to read, and what reads it here just dims whatever is carrying it.",
 	])
 
 #endregion

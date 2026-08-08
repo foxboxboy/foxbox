@@ -12,12 +12,13 @@ font_names = PackedStringArray("monospace")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Cart" type="Node2D" parent="." node_paths=PackedStringArray("attributes")]
+[node name="Cart" type="Node2D" parent="." node_paths=PackedStringArray("attributes", "body")]
 position = Vector2(0, -40)
 script = ExtResource("2_entity")
 label = "cart"
 move_speed = 8.0
 attributes = NodePath("Attributes")
+body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Cart"]
 color = Color(0.22, 0.24, 0.3, 1)
@@ -25,21 +26,22 @@ polygon = PackedVector2Array(-170, -70, 170, -70, 170, 70, -170, 70)
 
 [node name="Name" type="Label" parent="Cart"]
 offset_left = -170.0
-offset_top = -98.0
+offset_top = -106.0
 offset_right = -90.0
-offset_bottom = -74.0
+offset_bottom = -82.0
 text = "cart"
 
 [node name="Attributes" type="Node" parent="Cart"]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Fox" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes")]
+[node name="Fox" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes", "body")]
 position = Vector2(-85, 0)
 script = ExtResource("2_entity")
 label = "fox"
 move_speed = 5.0
 attributes = NodePath("Attributes")
+body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Cart/Fox"]
 color = Color(1, 0.55, 0.1, 1)
@@ -56,12 +58,13 @@ text = "fox"
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Hare" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes")]
+[node name="Hare" type="Node2D" parent="Cart" node_paths=PackedStringArray("attributes", "body")]
 position = Vector2(85, 0)
 script = ExtResource("2_entity")
 label = "hare"
 move_speed = 4.0
 attributes = NodePath("Attributes")
+body = NodePath("Body")
 
 [node name="Body" type="Polygon2D" parent="Cart/Hare"]
 color = Color(0.72, 0.74, 0.78, 1)
