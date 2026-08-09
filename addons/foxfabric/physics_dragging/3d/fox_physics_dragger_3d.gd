@@ -24,15 +24,18 @@ extends FoxNode3D
 
 #region Variables
 
-## How far this node's orientation may get ahead of what it is holding, in radians.
+## The lead a dragger starts with, a quarter turn.
+const DEFAULT_ROTATION_LEAD: float = PI / 2.0
+
+@export_group("Default Drag Settings")
+
+## How far this node's orientation may get ahead of what it is holding.
 ## [br][br]
 ## The torque always takes the shortest way round to its target. Turn this node more than half a
 ## turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the
-## drag instead of following it. Held to a quarter turn there is room to lag behind without ever
-## crossing over.
-const MAX_ROTATION_LEAD: float = PI / 2.0
-
-@export_group("Default Drag Settings")
+## drag instead of following it. A quarter turn leaves room to lag behind without ever crossing
+## over, and anything at or above [code]PI[/code] gives that crossing back.
+@export_range(0.0, 180.0, 1.0, "radians_as_degrees") var max_rotation_lead: float = DEFAULT_ROTATION_LEAD
 
 ## The default strength of the pull if no profile is provided.
 @export var default_stiffness: float = 800.0
@@ -173,7 +176,7 @@ func _physics_process(_delta: float) -> void:
 	_apply_rotational_torque()
 
 
-## Pulls this node's orientation back to within [constant MAX_ROTATION_LEAD] of the body, so
+## Pulls this node's orientation back to within [member max_rotation_lead] of the body, so
 ## turning it faster than the body can follow saturates rather than reversing.
 ## [br][br]
 ## With [member default_keep_upright] the target is level rather than this node's orientation, so
@@ -189,11 +192,11 @@ func _rein_in_rotation() -> void:
 	if angle > PI:
 		angle -= TAU
 
-	if absf(angle) <= MAX_ROTATION_LEAD:
+	if absf(angle) <= max_rotation_lead:
 		return
 
 	# Through global_rotation rather than the basis, which would take this node's scale with it.
-	var reined: Basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_ROTATION_LEAD, MAX_ROTATION_LEAD))
+	var reined: Basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -max_rotation_lead, max_rotation_lead))
 	global_rotation = reined.get_euler()
 
 

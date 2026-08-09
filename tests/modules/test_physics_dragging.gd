@@ -152,7 +152,7 @@ func _the_command_cannot_outrun_the_body() -> void:
 	if angle > PI:
 		angle -= TAU
 
-	check(absf(angle) <= FoxPhysicsDragger3D.MAX_ROTATION_LEAD + 0.001,
+	check(absf(angle) <= dragger.max_rotation_lead + 0.001,
 		"twenty 45 degree turns leave the command within the lead, not wrapped around behind")
 
 	case("keep_upright has no command to outrun")

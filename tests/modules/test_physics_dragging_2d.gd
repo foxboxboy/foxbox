@@ -166,7 +166,7 @@ func _the_command_cannot_outrun_the_body() -> void:
 		dragger._rein_in_rotation()
 
 	var lead: float = angle_difference(body.global_rotation, dragger.global_rotation)
-	check(absf(lead) <= FoxPhysicsDragger2D.MAX_ROTATION_LEAD + 0.001,
+	check(absf(lead) <= dragger.max_rotation_lead + 0.001,
 		"twenty 45 degree turns leave the command within the lead, not wrapped around behind")
 	check(lead > 0.0, "and ahead of the body, which is the way it was turned")
 
@@ -176,7 +176,7 @@ func _the_command_cannot_outrun_the_body() -> void:
 		dragger._rein_in_rotation()
 
 	var back: float = angle_difference(body.global_rotation, dragger.global_rotation)
-	check(absf(back) <= FoxPhysicsDragger2D.MAX_ROTATION_LEAD + 0.001, "still within the lead")
+	check(absf(back) <= dragger.max_rotation_lead + 0.001, "still within the lead")
 	check(back < 0.0, "and behind the body now")
 
 	case("keep_upright has no command to outrun")
@@ -188,3 +188,17 @@ func _the_command_cannot_outrun_the_body() -> void:
 	upright.global_rotation = 2.0
 	upright._rein_in_rotation()
 	almost(upright.global_rotation, 2.0, "the node is left exactly where it was put")
+
+	case("the lead is tunable")
+	var tight: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
+	var prop: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
+	tight.max_rotation_lead = deg_to_rad(20.0)
+	tight.grab(prop, Vector2.ZERO)
+
+	for i: int in 20:
+		tight.rotate(deg_to_rad(45.0))
+		tight._rein_in_rotation()
+
+	var held_close: float = angle_difference(prop.global_rotation, tight.global_rotation)
+	almost(held_close, deg_to_rad(20.0), "a shorter lead is honoured", 0.001)
+	almost(FoxPhysicsDragger2D.DEFAULT_ROTATION_LEAD, PI / 2.0, "and the default is still a quarter turn")
