@@ -77,6 +77,11 @@ html_theme_options = {
     # Godot puts these at the foot of the page only. 'both' also stacks them above the title,
     # which pushes the actual content down and reads as clutter.
     'prev_next_buttons_location': 'bottom',
+    # Theme 3.0 turned these on by default, which puts a version dropdown under the logo on top of
+    # the floating flyout Read the Docs already provides. One project, one language, two controls
+    # that do nothing.
+    'version_selector': False,
+    'language_selector': False,
 }
 
 html_logo = "_static/fox_docs_logo.svg"

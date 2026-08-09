@@ -74,3 +74,12 @@
     background-image: none;
     padding-right: 0;
 }
+
+/**
+ * The project, version and language line that _templates/breadcrumbs.html puts above the trail.
+ * Sits quieter than the page title it precedes, since it is the same on every page.
+ */
+.ff-docs-title {
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+}
