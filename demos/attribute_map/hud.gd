@@ -55,7 +55,7 @@ func _fill(cells: Array[Label], part: DemoTankPart, indent: String) -> void:
 	cells[Column.NAME].text = indent + part.label
 	cells[Column.DAMAGE].text = _damage(part)
 	cells[Column.STATS].text = _other_stats(part)
-	cells[Column.GROUP].text = String(part.group)
+	cells[Column.GROUP].text = _groups(part.attributes)
 	cells[Column.RULES].text = _rules(part.attributes)
 	cells[Column.FLAGS].text = _flags(part.attributes)
 
@@ -79,6 +79,17 @@ func _other_stats(part: DemoTankPart) -> String:
 		cells.append("%s %s" % [key, _number(part.get_stat(key))])
 
 	return _joined(cells)
+
+
+## The groups the map is actually holding, rather than the name the part was told to file under.
+## A part with no stats never creates its group, and printing the name regardless would show one
+## that is not there.
+func _groups(map: FoxAttributeMap) -> String:
+	var names: PackedStringArray = []
+	for group: StringName in map.get_group_names():
+		names.append(String(group))
+
+	return _joined(names)
 
 
 func _rules(map: FoxAttributeMap) -> String:

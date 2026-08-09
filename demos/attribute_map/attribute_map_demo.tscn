@@ -52,8 +52,7 @@ script = ExtResource("2_part")
 label = "tank"
 attributes = NodePath("Attributes")
 stats = {
-"armour": 60.0,
-"crew": 4.0
+"armour": 60.0
 }
 group = &"survivability"
 
