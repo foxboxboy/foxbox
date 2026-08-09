@@ -41,27 +41,29 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`default_stiffness<class_FoxPhysicsDragger3D_property_default_stiffness>`         | ``800.0``  |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`default_damping<class_FoxPhysicsDragger3D_property_default_damping>`             | ``25.0``   |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`bool<class_bool>`               | :ref:`default_keep_upright<class_FoxPhysicsDragger3D_property_default_keep_upright>`   | ``false``  |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger3D_property_max_pull_force>`               | ``4000.0`` |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`RigidBody3D<class_RigidBody3D>` | :ref:`_current_body<class_FoxPhysicsDragger3D_property__current_body>`                 |            |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`Vector3<class_Vector3>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger3D_property__grab_offset_local>`       |            |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`bool<class_bool>`               | :ref:`_skip_first_frame<class_FoxPhysicsDragger3D_property__skip_first_frame>`         | ``false``  |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`_current_stiffness<class_FoxPhysicsDragger3D_property__current_stiffness>`       |            |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`float<class_float>`             | :ref:`_current_damping<class_FoxPhysicsDragger3D_property__current_damping>`           |            |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
-   | :ref:`bool<class_bool>`               | :ref:`_current_keep_upright<class_FoxPhysicsDragger3D_property__current_keep_upright>` |            |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------+
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`max_rotation_lead<class_FoxPhysicsDragger3D_property_max_rotation_lead>`         | ``1.5707963267948966`` |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`default_stiffness<class_FoxPhysicsDragger3D_property_default_stiffness>`         | ``800.0``              |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`default_damping<class_FoxPhysicsDragger3D_property_default_damping>`             | ``25.0``               |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`bool<class_bool>`               | :ref:`default_keep_upright<class_FoxPhysicsDragger3D_property_default_keep_upright>`   | ``false``              |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger3D_property_max_pull_force>`               | ``4000.0``             |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`RigidBody3D<class_RigidBody3D>` | :ref:`_current_body<class_FoxPhysicsDragger3D_property__current_body>`                 |                        |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`Vector3<class_Vector3>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger3D_property__grab_offset_local>`       |                        |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`bool<class_bool>`               | :ref:`_skip_first_frame<class_FoxPhysicsDragger3D_property__skip_first_frame>`         | ``false``              |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`_current_stiffness<class_FoxPhysicsDragger3D_property__current_stiffness>`       |                        |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`             | :ref:`_current_damping<class_FoxPhysicsDragger3D_property__current_damping>`           |                        |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   | :ref:`bool<class_bool>`               | :ref:`_current_keep_upright<class_FoxPhysicsDragger3D_property__current_keep_upright>` |                        |
+   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -100,15 +102,13 @@ Methods
 Constants
 ---------
 
-.. _class_FoxPhysicsDragger3D_constant_MAX_ROTATION_LEAD:
+.. _class_FoxPhysicsDragger3D_constant_DEFAULT_ROTATION_LEAD:
 
 .. rst-class:: classref-constant
 
-**MAX_ROTATION_LEAD** = ``1.5707963267948966`` :ref:`🔗<class_FoxPhysicsDragger3D_constant_MAX_ROTATION_LEAD>`
+**DEFAULT_ROTATION_LEAD** = ``1.5707963267948966`` :ref:`🔗<class_FoxPhysicsDragger3D_constant_DEFAULT_ROTATION_LEAD>`
 
-How far this node's orientation may get ahead of what it is holding, in radians. 
-
-The torque always takes the shortest way round to its target. Turn this node more than half a turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the drag instead of following it. Held to a quarter turn there is room to lag behind without ever crossing over.
+The lead a dragger starts with, a quarter turn.
 
 .. rst-class:: classref-section-separator
 
@@ -118,6 +118,20 @@ The torque always takes the shortest way round to its target. Turn this node mor
 
 Property Descriptions
 ---------------------
+
+.. _class_FoxPhysicsDragger3D_property_max_rotation_lead:
+
+.. rst-class:: classref-property
+
+:ref:`float<class_float>` **max_rotation_lead** = ``1.5707963267948966`` :ref:`🔗<class_FoxPhysicsDragger3D_property_max_rotation_lead>`
+
+How far this node's orientation may get ahead of what it is holding. 
+
+The torque always takes the shortest way round to its target. Turn this node more than half a turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the drag instead of following it. A quarter turn leaves room to lag behind without ever crossing over, and anything at or above ``PI`` gives that crossing back.
+
+.. rst-class:: classref-item-separator
+
+----
 
 .. _class_FoxPhysicsDragger3D_property_default_stiffness:
 
@@ -349,7 +363,7 @@ Releases the currently held :ref:`RigidBody3D<class_RigidBody3D>`. If ``dampen_s
 
 |void| **_rein_in_rotation**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger3D_private_method__rein_in_rotation>`
 
-Pulls this node's orientation back to within :ref:`MAX_ROTATION_LEAD<class_FoxPhysicsDragger3D_constant_MAX_ROTATION_LEAD>` of the body, so turning it faster than the body can follow saturates rather than reversing. 
+Pulls this node's orientation back to within :ref:`max_rotation_lead<class_FoxPhysicsDragger3D_property_max_rotation_lead>` of the body, so turning it faster than the body can follow saturates rather than reversing. 
 
 With :ref:`default_keep_upright<class_FoxPhysicsDragger3D_property_default_keep_upright>` the target is level rather than this node's orientation, so there is nothing to run ahead of.
 
