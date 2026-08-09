@@ -1,6 +1,9 @@
-# The readout. Every number on it is read back out of the maps each frame, so there is no second
+# The readout. Every value on it is read back out of the maps each frame, so there is no second
 # copy of the state anywhere to drift.
-extends Label
+#
+# The table is a GridContainer of Labels laid out in the scene, so the columns line themselves up
+# and this script only ever writes text into cells that already exist.
+extends VBoxContainer
 
 
 #region Variables
@@ -9,21 +12,15 @@ const Part = preload("res://demos/attribute_map/part.gd")
 const Wall = preload("res://demos/attribute_map/wall.gd")
 const Controls = preload("res://demos/attribute_map/controls.gd")
 
-## One per column, left to right. Adding a column means adding a heading here and a cell to _row.
-const HEADINGS: PackedStringArray = [
-	"part",
-	"damage",
-	"its own stats",
-	"group",
-	"rules it tracks",
-	"flags",
-]
+@export var status: Label
 
-## Space between columns. Their widths come from what is in them, so this is the only spacing
-## decided here.
-const GAP: String = "   "
+## Each row's six cells, in the order the columns sit in the scene: name, damage, other stats,
+## group, rules, flags.
+@export var tank_cells: Array[Label]
+@export var turret_cells: Array[Label]
+@export var cannon_cells: Array[Label]
+@export var machine_gun_cells: Array[Label]
 
-## The four parts, in the order they are drawn.
 @export var tank: Part
 @export var turret: Part
 @export var cannon: Part
@@ -40,78 +37,28 @@ const GAP: String = "   "
 #region Built-In Virtuals
 
 func _process(_delta: float) -> void:
-	text = "\n".join([
-		"wall %d      damage boost %+d" % [roundi(wall.get_health()), controls.get_boost()],
-		"",
-		_table(),
-		"",
-		"Rules travel to every map below where they were added, and land only on the ones",
-		"holding the key they target. The hull and turret hold no damage, so they track the",
-		"boost without it doing a thing to them.",
-	])
+	status.text = "wall %d      damage boost %+d" % [roundi(wall.get_health()), controls.get_boost()]
+
+	# Indents match the tree: the tank owns the turret, the turret owns the cannon, and the machine
+	# gun hangs off the tank beside the turret.
+	_fill(tank_cells, tank, "")
+	_fill(turret_cells, turret, "    ")
+	_fill(cannon_cells, cannon, "        ")
+	_fill(machine_gun_cells, machine_gun, "    ")
 
 #endregion
 
 
-#region The table
+#region Private
 
-## Indents match the tree: the tank owns the turret, the turret owns the cannon, and the machine
-## gun hangs off the tank beside the turret.
-func _table() -> String:
-	var rows: Array[PackedStringArray] = [
-		HEADINGS,
-		_row(tank, ""),
-		_row(turret, "  "),
-		_row(cannon, "    "),
-		_row(machine_gun, "  "),
-	]
+func _fill(cells: Array[Label], part: Part, indent: String) -> void:
+	cells[0].text = indent + part.label
+	cells[1].text = _damage(part)
+	cells[2].text = _other_stats(part)
+	cells[3].text = String(part.group)
+	cells[4].text = _rules(part.attributes)
+	cells[5].text = _flags(part.attributes)
 
-	return _padded(rows)
-
-
-## One part's cells, in the same order as HEADINGS.
-func _row(part: Part, indent: String) -> PackedStringArray:
-	return PackedStringArray([
-		indent + part.label,
-		_damage(part),
-		_other_stats(part),
-		String(part.group),
-		_rules(part.attributes),
-		_flags(part.attributes),
-	])
-
-
-## Pads each column to its own widest cell, headings included.
-## [br][br]
-## No width is written down, so none can go stale, and a column is never left stranded across a
-## gap sized for content that is not currently there.
-func _padded(rows: Array[PackedStringArray]) -> String:
-	var widths: PackedInt32Array = []
-	for column: int in HEADINGS.size():
-		var widest: int = 0
-		for row: PackedStringArray in rows:
-			widest = maxi(widest, row[column].length())
-
-		widths.append(widest)
-
-	var lines: PackedStringArray = []
-	for row: PackedStringArray in rows:
-		var line: String = ""
-		for column: int in row.size():
-			# The last column has nothing after it to line up with.
-			if column == row.size() - 1:
-				line += row[column]
-			else:
-				line += row[column].rpad(widths[column]) + GAP
-
-		lines.append(line)
-
-	return "\n".join(lines)
-
-#endregion
-
-
-#region Cells
 
 ## A dash rather than a zero for the parts carrying no damage at all, so a part that has none
 ## reads differently from a weapon knocked down to none.
@@ -159,10 +106,6 @@ func _flags(map: FoxAttributeMap) -> String:
 
 	return _joined(cells)
 
-#endregion
-
-
-#region Formatting
 
 ## A fire rate of 0.5 is not 1, and an armour of 60 does not need a decimal point.
 func _number(value: float) -> String:
