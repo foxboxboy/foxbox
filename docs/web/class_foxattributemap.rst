@@ -23,7 +23,7 @@ Acts as a centralized data hub for an entity. It can store any arbitrary :ref:`V
 
 ::
 
-    var stats := $AttributeMap as FoxAttributeMap
+    var stats: FoxAttributeMap = $AttributeMap
 
     # Store anything, then group keys for bulk queries.
     stats.set_data(&"health", FoxStatPool.new())

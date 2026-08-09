@@ -23,7 +23,7 @@ Sockets are collected recursively from everything beneath this node when it ente
 
 ::
 
-    var slots := $Belt/Pouches as FoxSocketMap2D
+    var slots: FoxSocketMap2D = $Belt/Pouches
 
     # Take any free socket, or name one explicitly.
     slots.attach(potion)
@@ -31,7 +31,7 @@ Sockets are collected recursively from everything beneath this node when it ente
 
     # detach() unplugs but does NOT reparent, so the node is
     # left where it is until you move it yourself.
-    var taken := slots.get_socket(&"QuickSlot").detach()
+    var taken: Node2D = slots.get_socket(&"QuickSlot").detach()
     taken.reparent(get_tree().current_scene)
 
 .. rst-class:: classref-reftable-group

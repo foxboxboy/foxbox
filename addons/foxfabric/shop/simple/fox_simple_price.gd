@@ -4,7 +4,7 @@ extends FoxPrice
 ##
 ## The reference implementation of [FoxPrice], for when currency really is just a number.
 ## [codeblock]
-## var price := FoxSimplePrice.new()
+## var price: FoxSimplePrice = FoxSimplePrice.new()
 ## price.cost = 50
 ## price.currency_symbol = "G"
 ##

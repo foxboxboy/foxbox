@@ -29,7 +29,7 @@ Extend both to define a currency.
     @export var required: Array[StringName] = []
 
     func can_be_paid_by(wallet: FoxWallet) -> bool:
-        var w := wallet as ScrapWallet
+        var w: ScrapWallet = wallet
         if not w:
             return false
         for id in required:
@@ -40,7 +40,7 @@ Extend both to define a currency.
     func pay(wallet: FoxWallet) -> bool:
         if not can_be_paid_by(wallet):
             return false
-        var w := wallet as ScrapWallet
+        var w: ScrapWallet = wallet
         for id in required:
             w.scrap.erase(id)
         return true

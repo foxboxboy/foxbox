@@ -23,11 +23,11 @@ Attaching reparents the node under the socket and snaps its transform to :ref:`m
 
 ::
 
-    var hand := $Model/RightHand as FoxSocket2D
+    var hand: FoxSocket2D = $Model/RightHand
     hand.attach(sword)
 
     # detach() unplugs the socket but leaves the node parented here.
-    var dropped := hand.detach()
+    var dropped: Node2D = hand.detach()
     dropped.reparent(get_tree().current_scene)
 
 The socket watches its own children, so an attachment freed or reparented by something else still clears the slot and emits :ref:`detached<class_FoxSocket2D_signal_detached>`.

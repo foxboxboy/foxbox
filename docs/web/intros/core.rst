@@ -11,7 +11,7 @@ value bounded by a modifiable maximum.
 
 .. code-block:: gdscript
 
-    var attack := FoxModifiableStat.new(100.0)
+    var attack: FoxModifiableStat = FoxModifiableStat.new(100.0)
     attack.add_flat_modifier(&"gear", 50.0)
     attack.add_multiplier_modifier(&"rage", 0.5)
     print(attack.value)  # (100 + 50) * 1.5 = 225

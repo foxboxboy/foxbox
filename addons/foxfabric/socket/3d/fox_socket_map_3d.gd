@@ -6,7 +6,7 @@ extends FoxNode3D
 ##
 ## Sockets are collected recursively from everything beneath this node when it enters the tree.
 ## [codeblock]
-## var seats := $Vehicle/Seats as FoxSocketMap3D
+## var seats: FoxSocketMap3D = $Vehicle/Seats
 ##
 ## # Take any free seat, or name one explicitly.
 ## if seats.attach(player):
@@ -15,7 +15,7 @@ extends FoxNode3D
 ##
 ## # Getting back out. detach() unplugs but does NOT reparent,
 ## # so the node is left where it is until you move it yourself.
-## var rider := seats.get_socket(&"DriverSeat").detach()
+## var rider: Node3D = seats.get_socket(&"DriverSeat").detach()
 ## rider.reparent(get_tree().current_scene)
 ## [/codeblock]
 

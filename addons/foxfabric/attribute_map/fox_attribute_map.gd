@@ -6,7 +6,7 @@ extends FoxNode
 ## Acts as a centralized data hub for an entity. It can store any arbitrary [Variant] data (such as [int], [String], or [FoxStatPool] resources),
 ## tracks temporary binary states via stacked string flags, and safely propagates [FoxAttributeRule]s up and down a node hierarchy.
 ## [codeblock]
-## var stats := $AttributeMap as FoxAttributeMap
+## var stats: FoxAttributeMap = $AttributeMap
 ##
 ## # Store anything, then group keys for bulk queries.
 ## stats.set_data(&"health", FoxStatPool.new())

@@ -23,7 +23,7 @@ attachment is reparented elsewhere without calling ``detach``.
 
 .. code-block:: gdscript
 
-    var held := seats.get_socket(&"DriverSeat").detach()
+    var held: Node3D = seats.get_socket(&"DriverSeat").detach()
     held.reparent(get_tree().current_scene)
 
 .. note::

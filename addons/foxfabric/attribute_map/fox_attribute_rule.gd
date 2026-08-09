@@ -32,7 +32,7 @@ extends FoxRefCounted
 ## Adding it to a map applies it there and to every child map beneath it, so one rule on a
 ## vehicle can slow everything riding in it.
 ## [codeblock]
-## var haste := FlatBonus.new(&"haste", &"move_speed", 2.0)
+## var haste: FlatBonus = FlatBonus.new(&"haste", &"move_speed", 2.0)
 ##
 ## vehicle_map.add_rule(haste)      # applies here and to every child map
 ## vehicle_map.remove_rule(&"haste")  # reverses it everywhere

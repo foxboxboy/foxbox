@@ -7,7 +7,7 @@ class_name FoxModifiableStat
 ## [code]1.0[/code] plus the sum of all multiplier modifiers, so a single [code]0.5[/code]
 ## multiplier scales the result by [code]1.5[/code] rather than halving it.
 ## [codeblock]
-## var attack := FoxModifiableStat.new(100.0)
+## var attack: FoxModifiableStat = FoxModifiableStat.new(100.0)
 ##
 ## attack.add_flat_modifier(&"gear", 50.0)
 ## attack.add_multiplier_modifier(&"rage", 0.5)

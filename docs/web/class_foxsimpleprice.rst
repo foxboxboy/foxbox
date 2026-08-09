@@ -23,7 +23,7 @@ The reference implementation of :ref:`FoxPrice<class_FoxPrice>`, for when curren
 
 ::
 
-    var price := FoxSimplePrice.new()
+    var price: FoxSimplePrice = FoxSimplePrice.new()
     price.cost = 50
     price.currency_symbol = "G"
 

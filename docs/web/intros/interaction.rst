@@ -4,11 +4,13 @@ points at, emitting focus and unfocus as that changes. Calling ``interact`` on t
 
 .. code-block:: gdscript
 
-    var target := $InteractionRay.get_current_target()
+    var target: FoxInteractableArea3D = $InteractionRay.get_current_target()
     if target:
         target.interact(self)
 
-The module defines no behaviour for interacting. The receiver does.
+Calling ``interact`` does nothing by itself. It emits ``interacted`` and hands over whatever
+context you passed in, and the code connected to that signal decides what interacting means:
+picking the thing up, opening it, talking to it.
 
 The ``2d`` folder holds the same pair, :ref:`class_FoxInteractionRayCast2D` and
 :ref:`class_FoxInteractableArea2D`. One difference is worth knowing: ``interaction_range``

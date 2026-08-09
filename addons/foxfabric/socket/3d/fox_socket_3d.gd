@@ -7,11 +7,11 @@ extends Marker3D
 ## Attaching reparents the node under the socket and snaps its transform to [member marker], so
 ## the socket owns whatever is plugged into it.
 ## [codeblock]
-## var hand := $Model/RightHand as FoxSocket3D
+## var hand: FoxSocket3D = $Model/RightHand
 ## hand.attach(sword)
 ##
 ## # detach() unplugs the socket but leaves the node parented here.
-## var dropped := hand.detach()
+## var dropped: Node3D = hand.detach()
 ## dropped.reparent(get_tree().current_scene)
 ## [/codeblock]
 ## The socket watches its own children, so an attachment freed or reparented by something else
