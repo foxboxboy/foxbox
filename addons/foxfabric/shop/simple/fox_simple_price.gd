@@ -1,8 +1,8 @@
 class_name FoxSimplePrice
 extends FoxPrice
-## Basic price implementation using [int] and [FoxSimpleWallet].
+## A [FoxPrice] implementation using [int] and [FoxSimpleWallet].
 ##
-## The reference implementation of [FoxPrice], for when currency really is just a number.
+## The reference implementation of [FoxPrice], for when currency really is only a number.
 ## [codeblock]
 ## var price: FoxSimplePrice = FoxSimplePrice.new()
 ## price.cost = 50

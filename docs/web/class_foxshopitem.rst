@@ -12,7 +12,7 @@ FoxShopItem
 
 **Inherits:** :ref:`FoxResource<class_FoxResource>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-A single entry in a :ref:`FoxShopCatalog<class_FoxShopCatalog>`, pairing what is shown to the player with what is actually exchanged.
+A single entry in a :ref:`FoxShopCatalog<class_FoxShopCatalog>`, pairing what is shown to the player with what is exchanged.
 
 .. rst-class:: classref-introduction-group
 

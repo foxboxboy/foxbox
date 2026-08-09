@@ -159,7 +159,7 @@ func _on_remove(target: Object) -> void
 ## Rescales this effect on [param target] to match [param current_stack].
 ## [br][br]
 ## Only called when [member stack_mode] is [code]StackMode.INTENSITY[/code] and the stack count
-## actually changes. Implementations should recalculate from the stack count rather than adding
+## changes. Implementations should recalculate from the stack count rather than adding
 ## to whatever they applied last time.
 @abstract
 func _on_reapply(target: Object, current_stack: int = 1) -> void

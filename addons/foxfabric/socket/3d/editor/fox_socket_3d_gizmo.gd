@@ -94,7 +94,7 @@ static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
 	return lines
 
 
-## Where the attachment will actually be placed, in the socket's own space.
+## Where the attachment is placed, in the socket's own space.
 ## [br][br]
 ## [member FoxSocket3D.marker] only falls back to the socket itself in [method Node._ready],
 ## which returns early in the editor, so at edit time it is usually still null. A marker outside

@@ -182,7 +182,7 @@ Returns the number of empty slots remaining.
 
 :ref:`FoxEffectManager<class_FoxEffectManager>` **manager** = ``<unknown>`` :ref:`🔗<class_FoxEffectSlotPolicy_property_manager>`
 
-The manager this policy gates. Defaults to the parent node, so a policy normally just sits as a child of the :ref:`FoxEffectManager<class_FoxEffectManager>` it governs. 
+The manager this policy gates. Defaults to the parent node, so a policy normally sits as a child of the :ref:`FoxEffectManager<class_FoxEffectManager>` it governs. 
 
 Resolves to ``null`` rather than erroring when the parent is something else. The cast matters: assigning an unrelated parent straight into a typed variable throws, and because this is an ``@onready`` it throws before :ref:`Node._ready()<class_Node_private_method__ready>` can guard it.
 

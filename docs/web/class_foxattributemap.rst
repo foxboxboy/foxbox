@@ -390,7 +390,7 @@ Helper function that purges a key from all groups it currently belongs to.
 
 :ref:`Array<class_Array>` **get_data_in_group**\ (\ group\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxAttributeMap_method_get_data_in_group>`
 
-Returns an array of all actual data :ref:`Variant<class_Variant>`\ s currently associated with the target ``group``.
+Returns an array of every data :ref:`Variant<class_Variant>` currently associated with the target ``group``.
 
 .. rst-class:: classref-item-separator
 

@@ -14,7 +14,7 @@ extends FoxNode3D
 ## func _on_release() -> void:
 ##     dragger.release()
 ## [/codeblock]
-## The hit point handed to [method grab] is where the body was actually struck, and the body
+## The hit point handed to [method grab] is where the body was struck, and the body
 ## pivots around that point rather than its centre. Grabbing a plank by one end swings it like a
 ## plank. [member max_pull_force] caps the whole thing so a stiff profile cannot launch anything.
 

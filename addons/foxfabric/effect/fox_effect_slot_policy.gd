@@ -57,7 +57,7 @@ var filled_slots: int:
 var available_slots: int:
 	get: return clampi(max_slots - slots.size(), 0, max_slots)
 
-## The manager this policy gates. Defaults to the parent node, so a policy normally just sits
+## The manager this policy gates. Defaults to the parent node, so a policy normally sits
 ## as a child of the [FoxEffectManager] it governs.
 ## [br][br]
 ## Resolves to [code]null[/code] rather than erroring when the parent is something else. The

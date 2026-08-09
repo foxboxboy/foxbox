@@ -12,7 +12,7 @@ FoxSimpleWallet
 
 **Inherits:** :ref:`FoxWallet<class_FoxWallet>` **<** :ref:`FoxResource<class_FoxResource>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-A simple :ref:`FoxWallet<class_FoxWallet>` implementation using an :ref:`int<class_int>`-based currency system.
+A :ref:`FoxWallet<class_FoxWallet>` implementation using an :ref:`int<class_int>`-based currency system.
 
 .. rst-class:: classref-reftable-group
 

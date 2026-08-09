@@ -166,7 +166,7 @@ func erase_data_from_all_groups(key: StringName) -> void:
 		erase_data_from_group(key, group)
 
 
-## Returns an array of all actual data [Variant]s currently associated with the target [param group].
+## Returns an array of every data [Variant] currently associated with the target [param group].
 func get_data_in_group(group: StringName) -> Array[Variant]:
 	var results: Array[Variant] = []
 

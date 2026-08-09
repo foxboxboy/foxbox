@@ -8,7 +8,7 @@ extends Area3D
 ## The payload is whatever your project needs it to be. Nothing in this module reads it, so the
 ## same hitbox can carry a number, a dictionary, or a custom resource.
 ## [codeblock]
-## # Attacker: describe the hit however the game wants.
+## # Attacker: describe the hit in whatever shape the game needs.
 ## func _ready() -> void:
 ##     $HitArea.payload = {"amount": 12, "source": self, "type": &"slash"}
 ##

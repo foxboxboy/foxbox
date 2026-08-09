@@ -31,7 +31,7 @@ Description
     func _on_release() -> void:
         dragger.release()
 
-The hit point handed to :ref:`grab()<class_FoxPhysicsDragger2D_method_grab>` is where the body was actually struck, and the body pivots around that point rather than its centre. Grabbing a plank by one end swings it like a plank. :ref:`max_pull_force<class_FoxPhysicsDragger2D_property_max_pull_force>` caps the whole thing so a stiff profile cannot launch anything.
+The hit point handed to :ref:`grab()<class_FoxPhysicsDragger2D_method_grab>` is where the body was struck, and the body pivots around that point rather than its centre. Grabbing a plank by one end swings it like a plank. :ref:`max_pull_force<class_FoxPhysicsDragger2D_property_max_pull_force>` caps the whole thing so a stiff profile cannot launch anything.
 
 .. rst-class:: classref-reftable-group
 
@@ -273,7 +273,7 @@ Returns 1.0 when the body has no rotational inertia to speak of, so a locked or 
 
 The rotation a held body is pulled towards, given the dragger's ``rotation``. 
 
-With ``keep_upright`` off the body copies the dragger's rotation. With it on the target is level, so the body is carried flat however the dragger is turned. 
+With ``keep_upright`` off the body copies the dragger's rotation. With it on the target is level, so the body is carried flat whichever way the dragger is turned. 
 
 Simpler than the 3D counterpart on purpose: a 2D rotation is one angle, so there is no facing to preserve while the tilt is removed. 
 

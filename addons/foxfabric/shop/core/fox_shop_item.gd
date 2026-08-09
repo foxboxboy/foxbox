@@ -2,7 +2,7 @@
 class_name FoxShopItem
 extends FoxResource
 ## A single entry in a [FoxShopCatalog], pairing what is shown to the player with what is
-## actually exchanged.
+## exchanged.
 ##
 ## The display fields exist purely for presentation. The transaction fields are what the shop
 ## acts on, and neither one assumes the product is an item, a number, or anything in particular.

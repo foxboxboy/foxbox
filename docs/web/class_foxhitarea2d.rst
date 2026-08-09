@@ -25,7 +25,7 @@ The payload is whatever your project needs it to be. Nothing in this module read
 
 ::
 
-    # Attacker: describe the hit however the game wants.
+    # Attacker: describe the hit in whatever shape the game needs.
     func _ready() -> void:
         $HitArea.payload = {"amount": 12, "source": self, "type": &"slash"}
 

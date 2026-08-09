@@ -12,14 +12,14 @@ FoxSimplePrice
 
 **Inherits:** :ref:`FoxPrice<class_FoxPrice>` **<** :ref:`FoxResource<class_FoxResource>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-Basic price implementation using :ref:`int<class_int>` and :ref:`FoxSimpleWallet<class_FoxSimpleWallet>`.
+A :ref:`FoxPrice<class_FoxPrice>` implementation using :ref:`int<class_int>` and :ref:`FoxSimpleWallet<class_FoxSimpleWallet>`.
 
 .. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-The reference implementation of :ref:`FoxPrice<class_FoxPrice>`, for when currency really is just a number.
+The reference implementation of :ref:`FoxPrice<class_FoxPrice>`, for when currency really is only a number.
 
 ::
 

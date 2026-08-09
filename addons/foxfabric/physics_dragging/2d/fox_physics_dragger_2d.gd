@@ -14,7 +14,7 @@ extends Node2D
 ## func _on_release() -> void:
 ##     dragger.release()
 ## [/codeblock]
-## The hit point handed to [method grab] is where the body was actually struck, and the body
+## The hit point handed to [method grab] is where the body was struck, and the body
 ## pivots around that point rather than its centre. Grabbing a plank by one end swings it like a
 ## plank. [member max_pull_force] caps the whole thing so a stiff profile cannot launch anything.
 
@@ -160,7 +160,7 @@ static func torque_scale_for(body: RigidBody2D) -> float:
 ## The rotation a held body is pulled towards, given the dragger's [param rotation].
 ## [br][br]
 ## With [param keep_upright] off the body copies the dragger's rotation. With it on the target
-## is level, so the body is carried flat however the dragger is turned.
+## is level, so the body is carried flat whichever way the dragger is turned.
 ## [br][br]
 ## Simpler than the 3D counterpart on purpose: a 2D rotation is one angle, so there is no facing
 ## to preserve while the tilt is removed.
