@@ -62,9 +62,8 @@ something does before reading it.
 ## Documentation
 
 The class reference is published at
-[foxfabric-godot.readthedocs.io](https://foxfabric-godot.readthedocs.io). It is generated from
-the same `##` comments that fill Godot's built-in help, using Godot's own doc tooling, so the
-two cannot disagree.
+[foxfabric-godot.readthedocs.io](https://foxfabric-godot.readthedocs.io). It is the same content
+as Godot's built-in help.
 
 To build it yourself:
 
@@ -73,8 +72,7 @@ pip install sphinx sphinx-rtd-theme
 python docs/build_docs.py --open
 ```
 
-Only the tooling and the hand written pages are tracked. See [docs/README.txt](docs/README.txt)
-for the steps it runs and how to do them by hand.
+See [docs/README.txt](docs/README.txt) for the steps it runs.
 
 ## Status
 
