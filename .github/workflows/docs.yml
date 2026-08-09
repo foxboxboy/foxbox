@@ -16,6 +16,7 @@ on:
     paths:
       - "addons/**"
       - "docs/**"
+      - ".readthedocs.yaml"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
 
@@ -34,6 +35,30 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check the YAML has no tabs
+        # Opening one of these in Godot's script editor is enough to break it. Godot re-saves the
+        # files it has open using its own indentation, which is tabs, and YAML rejects a tab
+        # outright. Read the Docs then fails one second into the build with a single line of output
+        # and serves the previous version, so the site reads as merely stale.
+        #
+        # First step in the job because it costs nothing and the rest of this takes minutes.
+        run: |
+          bad=$(grep -lP '\t' .readthedocs.yaml .github/workflows/*.yml || true)
+          if [ -z "$bad" ]; then
+            echo "No tabs in the YAML."
+            exit 0
+          fi
+
+          echo "::error::A tab character reached YAML, which cannot be parsed with one."
+          echo
+          echo "Godot rewrites files it has open in the script editor. Close these there, then:"
+          echo
+          for f in $bad; do
+            echo "    $f"
+            grep -nP '\t' "$f" | sed 's/^/        /'
+          done
+          exit 1
 
       - uses: actions/setup-python@v5
         with:
