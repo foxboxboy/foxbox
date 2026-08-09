@@ -2,12 +2,11 @@
 #
 # Each one owns a map, and a part's map inherits from the one above it purely because the part sits
 # under that part in the tree. Nothing here wires them together.
+class_name DemoTankPart
 extends Node2D
 
 
 #region Variables
-
-const Wall = preload("res://demos/attribute_map/wall.gd")
 
 const DAMAGE: StringName = &"damage"
 const FIRE_RATE: StringName = &"fire_rate"
@@ -27,7 +26,7 @@ const STUNNED: StringName = &"crew_stunned"
 @export var group: StringName = &""
 
 ## What this part shoots at. Only the parts that shoot need one.
-@export var target: Wall
+@export var target: DemoTankWall
 
 var _cooldown: float = 0.0
 

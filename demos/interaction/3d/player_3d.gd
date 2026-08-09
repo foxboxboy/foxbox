@@ -1,5 +1,6 @@
 # The camera is fixed, so aiming means turning two raycasts to follow the cursor: one for what
 # you are pointing at, one for where the cursor lands in the world.
+class_name DemoPlayer3D
 extends Camera3D
 
 

@@ -1,4 +1,5 @@
 # Left click picks up and puts down, right drag turns what is held, Space toggles keep_upright.
+class_name DemoHands2D
 extends Node2D
 
 
@@ -6,18 +7,15 @@ extends Node2D
 
 #region Variables
 
-const Player2D = preload("res://demos/interaction/2d/player_2d.gd")
-const TurnGesture2D = preload("res://demos/interaction/2d/turn_gesture_2d.gd")
-
 ## Where the dragger may go, matching the inside of the walls. The cursor can leave the window and
 ## Godot keeps reporting where it went, which would drag a prop out through a wall.
 const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
 
-@export var player: Player2D
+@export var player: DemoPlayer2D
 @export var dragger: FoxPhysicsDragger2D
 
 ## Runs the right-drag itself. All this has to do is say what the turning is for.
-@export var turn: TurnGesture2D
+@export var turn: DemoTurnGesture2D
 
 ## Marks the spot the prop is pulled by, which is neither its centre nor the cursor.
 @export var grab_marker: Polygon2D

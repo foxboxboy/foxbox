@@ -3,6 +3,7 @@
 # Targets calibre, which only a cannon carries. Added to the tank it still travels to every map
 # underneath, and the turret and the machine gun track it without a thing happening to them,
 # because a rule is only applied where its target key exists.
+class_name DemoBiggerCannon
 extends FoxAttributeRule
 
 

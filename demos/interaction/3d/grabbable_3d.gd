@@ -1,4 +1,5 @@
 # A prop that can be picked up.
+class_name DemoGrabbable3D
 extends RigidBody3D
 
 ## Passed straight to the dragger. Leave null to use the dragger's own settings.

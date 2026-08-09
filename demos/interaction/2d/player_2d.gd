@@ -1,4 +1,5 @@
 # Walks with the arrow keys and points the interaction sensor at the cursor.
+class_name DemoPlayer2D
 extends CharacterBody2D
 
 

@@ -7,6 +7,7 @@
 # It works on every stat filed under the weapon's firepower group rather than on one named key.
 # That is what a group is for: the rule never has to know which stats a particular weapon carries,
 # only which of them count as firepower.
+class_name DemoKnockedOut
 extends FoxAttributeRule
 
 

@@ -2,6 +2,7 @@
 #
 # Everything below is about the mouse and the window, not about FoxFabric. It lives in its own file
 # so hands_3d.gd can be about picking things up.
+class_name DemoTurnGesture3D
 extends Node
 
 

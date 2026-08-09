@@ -1,4 +1,5 @@
 # Left click picks up and puts down, right drag turns what is held, the wheel raises and lowers it.
+class_name DemoHands3D
 extends Node3D
 
 
@@ -6,18 +7,15 @@ extends Node3D
 
 #region Variables
 
-const Player3D = preload("res://demos/interaction/3d/player_3d.gd")
-const TurnGesture3D = preload("res://demos/interaction/3d/turn_gesture_3d.gd")
-
 ## Metres the wheel raises or lowers what is held, and the range it may sit in.
 const LIFT_STEP: float = 0.5
 const LIFT_RANGE: Vector2 = Vector2(0.0, 5.0)
 
-@export var player: Player3D
+@export var player: DemoPlayer3D
 @export var dragger: FoxPhysicsDragger3D
 
 ## Runs the right-drag itself. All this has to do is say what the turning is for.
-@export var turn: TurnGesture3D
+@export var turn: DemoTurnGesture3D
 
 ## Marks the spot the object is pulled by, which is neither its centre nor the cursor.
 @export var grab_marker: MeshInstance3D

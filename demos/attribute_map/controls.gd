@@ -2,15 +2,11 @@
 #
 # The buttons themselves are in the scene, wired to the methods below through the Node tab, which
 # is where Godot expects to find them.
+class_name DemoTankControls
 extends VBoxContainer
 
 
 #region Variables
-
-const FlatRule = preload("res://demos/attribute_map/rules/flat_rule.gd")
-const BiggerCannon = preload("res://demos/attribute_map/rules/bigger_cannon.gd")
-const KnockedOut = preload("res://demos/attribute_map/rules/knocked_out.gd")
-const Wall = preload("res://demos/attribute_map/wall.gd")
 
 const BOOST: StringName = &"boost"
 const BIGGER: StringName = &"bigger cannon"
@@ -31,7 +27,7 @@ const STRONGEST: int = 20
 ## would take out the machine gun as well.
 @export var cannon: FoxAttributeMap
 
-@export var wall: Wall
+@export var wall: DemoTankWall
 
 ## How much the boost is currently worth. Rules are not edited in place, so changing it means
 ## taking the old rule off and putting a new one on under the same id.
@@ -64,7 +60,7 @@ func _on_bigger_cannon_pressed() -> void:
 		tank.remove_rule(BIGGER)
 		return
 
-	tank.add_rule(BiggerCannon.new(BIGGER))
+	tank.add_rule(DemoBiggerCannon.new(BIGGER))
 
 
 func _on_knocked_out_pressed() -> void:
@@ -72,7 +68,7 @@ func _on_knocked_out_pressed() -> void:
 		cannon.remove_rule(WRECKED)
 		return
 
-	cannon.add_rule(KnockedOut.new(WRECKED))
+	cannon.add_rule(DemoKnockedOut.new(WRECKED))
 
 
 ## A flag on the tank reaches every part under it, and each part decides for itself what it means.
@@ -99,6 +95,6 @@ func _set_boost(amount: int) -> void:
 	tank.remove_rule(BOOST)
 
 	if _boost != 0:
-		tank.add_rule(FlatRule.new(BOOST, &"damage", float(_boost)))
+		tank.add_rule(DemoFlatRule.new(BOOST, &"damage", float(_boost)))
 
 #endregion

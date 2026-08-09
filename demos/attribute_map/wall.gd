@@ -1,5 +1,6 @@
 # The wall being shot at. It holds no attribute map; it only takes what it is handed, which is how
 # the damage numbers turn into something you can watch.
+class_name DemoTankWall
 extends Node2D
 
 

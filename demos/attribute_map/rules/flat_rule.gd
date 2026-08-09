@@ -2,6 +2,7 @@
 #
 # The stat keeps the modifier as its own layer, so removing this rule takes off exactly what it put
 # on however much else has happened in between. Nothing here has to remember a number.
+class_name DemoFlatRule
 extends FoxAttributeRule
 
 

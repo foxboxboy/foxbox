@@ -3,14 +3,11 @@
 #
 # The table is a GridContainer of Labels laid out in the scene, so the columns line themselves up
 # and this script only ever writes text into cells that already exist.
+class_name DemoTankHud
 extends VBoxContainer
 
 
 #region Variables
-
-const Part = preload("res://demos/attribute_map/part.gd")
-const Wall = preload("res://demos/attribute_map/wall.gd")
-const Controls = preload("res://demos/attribute_map/controls.gd")
 
 ## Which cell in a row is which, so filling one does not mean counting columns.
 enum Column { NAME, DAMAGE, STATS, GROUP, RULES, FLAGS }
@@ -24,15 +21,15 @@ enum Column { NAME, DAMAGE, STATS, GROUP, RULES, FLAGS }
 @export var cannon_cells: Array[Label]
 @export var machine_gun_cells: Array[Label]
 
-@export var tank: Part
-@export var turret: Part
-@export var cannon: Part
-@export var machine_gun: Part
+@export var tank: DemoTankPart
+@export var turret: DemoTankPart
+@export var cannon: DemoTankPart
+@export var machine_gun: DemoTankPart
 
-@export var wall: Wall
+@export var wall: DemoTankWall
 
 ## Asked for the boost level, so the buttons going quiet at the limit has something to point at.
-@export var controls: Controls
+@export var controls: DemoTankControls
 
 #endregion
 
@@ -54,7 +51,7 @@ func _process(_delta: float) -> void:
 
 #region Private
 
-func _fill(cells: Array[Label], part: Part, indent: String) -> void:
+func _fill(cells: Array[Label], part: DemoTankPart, indent: String) -> void:
 	cells[Column.NAME].text = indent + part.label
 	cells[Column.DAMAGE].text = _damage(part)
 	cells[Column.STATS].text = _other_stats(part)
@@ -65,7 +62,7 @@ func _fill(cells: Array[Label], part: Part, indent: String) -> void:
 
 ## A dash rather than a zero for the parts carrying no damage at all, so a part that has none
 ## reads differently from a weapon knocked down to none.
-func _damage(part: Part) -> String:
+func _damage(part: DemoTankPart) -> String:
 	if not part.attributes.has_data(&"damage"):
 		return "-"
 
@@ -73,7 +70,7 @@ func _damage(part: Part) -> String:
 
 
 ## Everything except damage, which has a column to itself.
-func _other_stats(part: Part) -> String:
+func _other_stats(part: DemoTankPart) -> String:
 	var cells: PackedStringArray = []
 	for key: StringName in part.get_stats():
 		if key == &"damage":

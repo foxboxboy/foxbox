@@ -1,4 +1,5 @@
 # The readout. Each row is a pair of Labels in a GridContainer, so this only writes the live half.
+class_name DemoHud2D
 extends VBoxContainer
 
 
@@ -6,11 +7,8 @@ extends VBoxContainer
 
 #region Variables
 
-const Player2D = preload("res://demos/interaction/2d/player_2d.gd")
-const Hands2D = preload("res://demos/interaction/2d/hands_2d.gd")
-
-@export var player: Player2D
-@export var hands: Hands2D
+@export var player: DemoPlayer2D
+@export var hands: DemoHands2D
 
 ## The value beside each row's name. The names, and the controls above them, are scene text.
 @export var pointing_at: Label
