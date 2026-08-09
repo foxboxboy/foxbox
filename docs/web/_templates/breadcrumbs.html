@@ -24,15 +24,14 @@
   <div class="ff-docs-title">{{ project }} {{ release }} documentation in English</div>
   <ul class="wy-breadcrumbs">
     {{- super() }}
-  </ul>
-</li>
-{%- endblock %}
-
-{%- block breadcrumbs_aside %}
     <li class="wy-breadcrumbs-aside">
       <a href="https://github.com/tateorrtot/foxfabric-godot" class="fa fa-github"> FoxFabric on GitHub</a>
     </li>
-    <li class="wy-breadcrumbs-aside ff-contribute">
-      <a href="https://github.com/tateorrtot/foxfabric-godot/blob/main/CONTRIBUTING.md">Learn how to contribute!</a>
-    </li>
+  </ul>
+  <a class="ff-contribute" href="https://github.com/tateorrtot/foxfabric-godot/blob/main/CONTRIBUTING.md">Learn how to contribute!</a>
+</li>
 {%- endblock %}
+
+{#- Emptied. Both links are placed above, inside the list, where Godot puts them. Left in the
+    theme's slot they land after the whole nested block and clear past the trail. -#}
+{%- block breadcrumbs_aside %}{%- endblock %}
