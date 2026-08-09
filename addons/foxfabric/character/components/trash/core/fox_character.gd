@@ -1,6 +1,7 @@
 extends FoxNode3D
 class_name FoxCharacter
 
+## @deprecated
 ## A high-level facade abstraction for a humanoid character that handles physics,
 ## animation, and interaction delegation.
 ##

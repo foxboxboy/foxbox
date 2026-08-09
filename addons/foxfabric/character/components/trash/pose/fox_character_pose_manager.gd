@@ -1,6 +1,7 @@
 class_name FoxCharacterPoseManager
 extends FoxNode
 
+## @deprecated
 ## Component that manages the character's macro human configuration.
 ##
 ## Acts as the definitive source of truth for the character's physical shape

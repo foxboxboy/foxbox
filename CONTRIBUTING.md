@@ -2,8 +2,8 @@
 
 FoxFabric follows the
 [official GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html).
-Everything below is an addition to it, not a replacement. If something here contradicts the
-official guide, the official guide wins and this file is wrong.
+Everything below is an addition to it. Where the two disagree, the official guide wins and this
+file is wrong.
 
 ## Static typing
 
@@ -14,21 +14,19 @@ var speed: float = 5.0
 for i: int in 10:
 ```
 
-Not `var speed := 5.0`. `project.godot` turns on `untyped_declaration`, `inferred_declaration`
-and the four `unsafe_*` warnings, so inference and untyped access show up in the debugger. A
-clean run means zero warnings from FoxFabric code.
+`project.godot` enables `untyped_declaration`, `inferred_declaration` and the four `unsafe_*`
+warnings, so `var speed := 5.0` shows up in the debugger. A clean run has zero warnings from
+FoxFabric code.
 
-When a value arrives as `Variant`, put it in a typed local before using it, rather than casting
-at the call site.
+When a value arrives as `Variant`, put it in a typed local before using it.
 
 ```gdscript
 var current: float = map.get_data(&"speed", 0.0)
-almost(current, 15.0, "...")
 ```
 
 ## Regions
 
-Use these six names for structural sections, in this order:
+Six names for structural sections, in this order:
 
 | Region | Holds |
 | --- | --- |
@@ -39,72 +37,51 @@ Use these six names for structural sections, in this order:
 | `Private` | helpers, `_` prefixed |
 | `Abstract Methods` | `@abstract` methods a subclass must implement |
 
-`Virtual Methods` is separate from `Built-In Virtuals` and means hooks a subclass may override
-but does not have to, such as `_interact` on `FoxInteractableArea3D`.
+`Virtual Methods` is a seventh, separate from `Built-In Virtuals`. It means hooks a subclass may
+override but need not, like `_interact` on `FoxInteractableArea3D`.
 
-A class with real feature areas may use those as region names instead, where structural ones
-would be less useful. `FoxAttributeMap` splits into `Data`, `Groups`, `Flags`, `Rules` and
-`Hierarchy`, which says more than `Public API` would.
+A class with real feature areas may use those as region names instead. `FoxAttributeMap` splits
+into `Data`, `Groups`, `Flags`, `Rules` and `Hierarchy`.
 
-**When not to use them.** Files under about forty lines do not need regions, and a single region
-wrapping an entire file never earns its place. Regions are for finding your way around a long
-file, not for decoration.
+Files under about forty lines do not need regions.
 
-**Spacing.** Four blank lines before `#region`, one after it, and one before `#endregion`.
-
-```gdscript
-signal changed(value: float)
-
-#endregion
-
-
-#region Variables
-
-## The current value.
-var value: float = 0.0
-```
+Four blank lines before `#region`, one after it, one before `#endregion`.
 
 ## Documentation
 
-Every public member gets a `##` comment: classes, signals, exported and public variables,
-enums and their constants, and public methods.
+Every public member gets a `##` comment: classes, signals, exported and public variables, enums
+and their constants, public methods. Private `_members` get `#`.
 
-Use the crosslink tags rather than plain text, since they become links in both the in-editor
-help and the docs site: `[param x]`, `[member x]`, `[method x]`, `[signal x]`, `[constant X]`,
-`[ClassName]`. There is no `[class X]` tag.
+Use crosslink tags, not plain text: `[param x]`, `[member x]`, `[method x]`, `[signal x]`,
+`[constant X]`, `[ClassName]`. There is no `[class X]` tag.
 
-Reference an inherited member by its owner, or it will not resolve:
+An inherited member needs its owner or it will not resolve:
 
 ```gdscript
 ## Ensure [member RayCast3D.collide_with_areas] is enabled.
 ```
 
-Add a `[codeblock]` example to anything whose signature does not explain itself. Every module
-that takes a `Variant` payload needs one, because the type says nothing about what to pass.
+A class summary says what the class **is**, as a noun phrase. `A 2D area that delivers a payload
+to overlapping nodes.` The description below it opens by naming the class: `[FoxHitArea2D] can
+act passively via physics overlaps, or…`
 
-A class a guide walks through links back to it, as the last line of the class comment:
+Anything taking a `Variant` payload needs a `[codeblock]` example, since the type says nothing
+about what to pass.
+
+A class that a guide walks through links back to it on the last line of the class comment:
 
 ```gdscript
 ## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 ```
 
-That becomes the **Tutorials** section at the top of the class page, the same one the engine's
-own reference has. A new guide is not finished until the classes it uses carry the tag, or
-nobody reading the reference will ever find it.
-
-Documentation is generated from these comments, so `python docs/build_docs.py` must finish with
-no errors before a change lands. See `docs/README.txt`.
-
-Read the Docs cannot run Godot, so the generated pages under `docs/web/` are committed. Change a
-`##` comment and they have to be regenerated in the same commit:
+Read the Docs cannot run Godot, so the pages under `docs/web/` are committed. Change a `##`
+comment and regenerate them in the same commit:
 
 ```
 python docs/build_docs.py --skip-html
 ```
 
-CI checks this and fails a push that leaves them stale. It does not regenerate them for you: a job
-that pushes to `main` moves the branch under whoever pushed it, and leaves the published docs
-wrong until it finishes.
+CI fails a push that leaves them stale.
 
 ## Naming
 
@@ -112,44 +89,36 @@ wrong until it finishes.
 * Every `class_name` starts with `Fox`
 * Spatial classes end in `2D` or `3D`, matching the engine
 
-The prefix is not decoration. GDScript has one global namespace for `class_name` and no namespace
-support, so `State`, `Effect`, `Price` and `Wallet` would be published into the global scope of
-every project that installs FoxFabric. A collision there is not a warning, it stops the other
-project from loading. `FoxSocketMap3D` is clunky, and that is the cheaper of the two problems.
+GDScript has one global namespace for `class_name`. Without the prefix, `State`, `Effect`,
+`Price` and `Wallet` would be published into every project that installs FoxFabric, and a
+collision there stops the other project from loading.
 
 ## Signals in resources
 
-Connect with a method reference, not a lambda:
+Connect with a method reference:
 
-```
-_pool.depleted.connect(_on_pool_depleted)     # holds an object id
-_pool.depleted.connect(func(u): depleted.emit(u))     # holds self
+```gdscript
+_pool.depleted.connect(_on_pool_depleted)
+_pool.depleted.connect(func(u): depleted.emit(u))     # captures self
 ```
 
-A lambda that touches `self` captures it. When a `RefCounted` connects to something it owns, that
-closes a cycle, and nothing in the pair is ever freed. Nodes are exempt because they are freed by
-hand, but the method form reads better anyway.
+A lambda touching `self` captures it. When a `RefCounted` connects to something it owns, that
+closes a cycle and neither is ever freed. Nodes are exempt, being freed by hand.
 
 ## Configuration warnings
 
-Warn about what the engine does not. Before adding one, drop the node in a scene and read what
-Godot already says about it. `Area3D` reports a missing shape, `ShapeCast3D` reports a missing
-resource, and repeating either makes the node show the same problem twice, worded worse.
+Warn about what the engine does not. Drop the node in a scene and read what Godot already says.
+`Area3D` reports a missing shape, `ShapeCast3D` a missing resource.
 
-Check the claim against the engine before writing it. A warning that says
-`force_raycast_update()` needs `enabled` is wrong, the documentation says the opposite, and a
-warning that sends people to fix a working setting is worse than no warning at all.
+Check the claim against the engine before writing it. A warning that sends someone to fix a
+working setting is worse than no warning.
 
-Warnings are covered in `tests/modules/test_configuration_warnings.gd`, in both directions. One
-that fires when it should not is as much a bug as one that never fires.
+Nothing recomputes a warning on its own. Every property a warning reads needs a setter calling
+`update_configuration_warnings()`, and a warning about children needs `child_order_changed`
+connected under `Engine.is_editor_hint()`.
 
-**Refresh them yourself.** Nothing recomputes a warning when the value behind it changes, so
-every property a warning reads needs a setter that calls `update_configuration_warnings()`, and
-a warning about children needs `child_order_changed` connected under `Engine.is_editor_hint()`.
-A warning that only appears after reselecting the node reads as no warning at all.
-
-An inherited property cannot be given a setter. `_set` sees the assignment first, so intercept
-it there and defer, since the value has not landed yet:
+An inherited property cannot be given a setter. Intercept it in `_set` and defer, since the value
+has not landed yet:
 
 ```gdscript
 func _set(property: StringName, _value: Variant) -> bool:
@@ -158,50 +127,44 @@ func _set(property: StringName, _value: Variant) -> bool:
     return false
 ```
 
+Warnings are covered in `tests/modules/test_configuration_warnings.gd`, in both directions.
+
 ## Editor extras
 
-Gizmos and inspectors live inside the module they belong to, so deleting the module takes them
-with it. `addons/foxfabric/foxfabric.gd` registers them and loads each one **by path**:
+Gizmos and inspectors live in the module they belong to, so deleting a module takes them with it.
+`foxfabric.gd` loads each one by path.
 
-```gdscript
-if not ResourceLoader.exists(path):
-    continue
-var script: GDScript = load(path) as GDScript
-```
+Never `preload` a module's editor script. `preload` resolves when the plugin is parsed, so one
+deleted module stops the whole plugin from loading.
 
-Never `preload` one. `preload` resolves when the plugin script is parsed, so a deleted module
-would stop the entire plugin from loading rather than dropping one gizmo.
+Editor settings go under `foxfabric/`, typed with `add_property_info`. They cannot carry a
+description and only appear with Advanced on.
 
-Editor settings go under `foxfabric/`, typed with `add_property_info`. Two limits are not worth
-fighting: custom settings cannot carry a description, and they only appear with Advanced turned
-on. Both come from `add_property_info` accepting name, type and hint and nothing else.
+Gizmos redraw when the editor asks. Call `update_gizmos()` yourself, the same way you call
+`update_configuration_warnings()`.
 
-Never let colour be the only difference between two states. Green against amber is the pair the
-two most common forms of colour blindness collapse into one. The socket gizmo nests a second
-diamond for an occupied socket so the shape carries the meaning and the colour repeats it.
-
-A gizmo redraws when the editor asks, which is not when your data changes. The node has to call
-`update_gizmos()` itself, the same way it calls `update_configuration_warnings()`.
+Never let colour be the only difference between two states. The socket gizmo adds a second
+diamond when occupied.
 
 ## Line endings
 
-LF, enforced by `.gitattributes`. Godot's doc comment parser leaves the carriage return on the
-end of a CRLF line and then cannot join the next line onto it, so a paragraph wrapped across
-several `##` lines silently renders as an indented blockquote. It was wrong on 21 pages before
-anyone noticed. `docs/build_docs.py` repairs it and warns if it ever has to.
+LF, enforced by `.gitattributes`. A CRLF line breaks Godot's doc comment parser: wrapped
+paragraphs render as indented blockquotes. It was wrong on 21 pages before anyone noticed.
+
+YAML files must not contain tabs. Godot re-saves files open in its script editor using tabs, which
+breaks `.readthedocs.yaml`. CI checks for it.
 
 ## Module independence
 
-A module may depend on `core` and on nothing else. If two modules need to share something, it
-belongs in `core` or it belongs in neither.
+A module may depend on `core` and nothing else. If two modules need to share something, it
+belongs in `core` or in neither.
 
 `tests/modules/test_module_independence.gd` scans the addon and fails on anything else. The one
-allowed exception is listed at the top of that file. Adding to it means the module is no longer
-something you can copy out on its own, so it needs a reason.
+allowed exception is listed at the top of that file. Adding to it means the module can no longer
+be copied out on its own, so it needs a reason.
 
 Modules do not assume what a project means by damage, currency, or interacting. They move a
-`Variant` payload and let the receiver decide. A module that reads inside a payload has taken a
-position it should not have.
+`Variant` payload and let the receiver decide.
 
 ## Tests
 
@@ -212,13 +175,23 @@ press F6, or run:
 godot --headless --path . --script res://tests/terminal/run_all.gd
 ```
 
-The seed is random each run and printed in the report. Pass it back with `--seed=` to reproduce
-a failure. The suite must be green before a change lands.
+The seed is random each run and printed in the report. Pass it back with `--seed=` to reproduce a
+failure. The suite must be green before a change lands.
 
-Some tests deliberately exercise failure paths, so a passing run still prints four warnings. See
+Some tests exercise failure paths, so a passing run still prints four warnings. See
 `tests/README.txt`.
+
+## Commits
+
+`area: Past-tense description`, one line. The area is the module name, or `docs`, `ci`, `tests`,
+`global`.
+
+```
+socket: Fixed the marker transform on reparent
+docs: Reworded the class summaries
+```
 
 ## Retired code
 
-`character/components/trash/` is kept so older projects keep loading. Nothing new goes in it, it
-is excluded from the documentation, and it is exempt from everything above.
+Classes kept only so older scenes keep loading are marked `## @deprecated` and left out of the
+documentation. `character/components/trash/` holds the current ones.
