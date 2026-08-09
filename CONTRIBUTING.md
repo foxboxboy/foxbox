@@ -220,6 +220,5 @@ Some tests deliberately exercise failure paths, so a passing run still prints fo
 
 ## Retired code
 
-`deprecated/` and `character/components/trash/` are kept so older projects keep loading. Nothing
-new goes in them, they are excluded from the documentation, and they are exempt from everything
-above.
+`character/components/trash/` is kept so older projects keep loading. Nothing new goes in it, it
+is excluded from the documentation, and it is exempt from everything above.

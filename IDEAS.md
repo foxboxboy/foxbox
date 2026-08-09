@@ -23,4 +23,3 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 - Tag `v0.1.0`, write a changelog
 - Asset Library listing with a GIF
-- Decide whether `demos/old_character/` stays

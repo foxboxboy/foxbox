@@ -48,7 +48,6 @@ MODULE_ORDER = [
 # and unhelpful in a table of contents, where it competes with what people should actually use.
 # Paths are relative to the addon root.
 UNDOCUMENTED = [
-    "deprecated",
     "character/components/trash",
 ]
 XML_DIR = DOCS / "xml_output"
