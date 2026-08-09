@@ -38,10 +38,6 @@ var _awaiting_cursor: bool = false
 
 #region Public API
 
-func is_turning() -> bool:
-	return _turning
-
-
 ## Whether the cursor's position can be trusted yet. False for a frame or two after a gesture ends.
 func is_cursor_settled() -> bool:
 	return not _turning and not _awaiting_cursor

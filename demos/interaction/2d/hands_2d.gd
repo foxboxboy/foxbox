@@ -23,9 +23,6 @@ const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
 var _held: RigidBody2D = null
 var _keep_upright: bool = false
 
-## Where the dragger was when a turn started, so it can be held there.
-var _dragger_before_turn: Vector2 = Vector2.ZERO
-
 #endregion
 
 
@@ -43,8 +40,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_show_grab_point()
 
+	# Leaving the dragger alone leaves it exactly where it was, which is what a turn wants.
 	if not turn.is_cursor_settled():
-		dragger.global_position = _dragger_before_turn
 		return
 
 	_carry_towards_cursor()
@@ -169,7 +166,6 @@ func _release() -> void:
 #region Turning
 
 func _on_turn_started() -> void:
-	_dragger_before_turn = dragger.global_position
 	player.aiming_frozen = true
 
 
