@@ -1,23 +1,43 @@
 {#-
-  Names the project, version and language above the breadcrumb trail, the way the Godot docs do.
+  Reproduces the header row Godot puts above the breadcrumb trail: the project, version and
+  language on one line, and the edit links stacked at the right.
 
-  The theme's own breadcrumbs.html is included below rather than copied, so the trail keeps
-  whatever the theme changes about it later. The "!" prefix means the theme's copy of this file
-  rather than this one, which would recurse.
+  The theme's own breadcrumbs.html is extended rather than copied, so the trail keeps whatever the
+  theme changes about it later. The "!" prefix means the theme's copy of this file rather than this
+  one, which would recurse.
+
+  Godot nests a second wy-breadcrumbs list inside the first so the title sits above the trail
+  without a margin holding them apart. Copied here because the spacing comes out of that nesting,
+  not out of the stylesheet.
 
   make_rst.py puts ":github_url: hide" at the top of every class page it generates, because those
   pages come from ## comments in .gd files and the reStructuredText is overwritten on the next
-  build. Godot's docs act on that directive. The stock theme has no idea what "hide" means and
-  renders href="hide", which resolves to /en/latest/hide and 404s.
+  build. Godot's docs act on that directive and show no links at all on a generated page. The stock
+  theme has no idea what "hide" means and renders href="hide", which resolves to /en/latest/hide
+  and 404s.
 
-  display_vcs_links is the theme's own switch for the whole Edit on GitHub aside, so setting it
-  from here suppresses the link on generated pages and leaves it alone on hand written ones.
+  sourcename is empty on the pages Sphinx builds itself, genindex and search. hasdoc() is not,
+  which is why the stock theme offers to edit docs/web/genindex, a file that has never existed.
 
-  The assignment sits at the top level with the condition inside the expression, because Jinja
-  does not leak a set out of an if block.
+  The tests sit inside the block rather than in a top level set, because Jinja does not leak an
+  assignment out of a block and a set here would not reach the condition.
 -#}
-{%- set display_vcs_links = not (meta is defined and meta is not none and meta.get('github_url') == 'hide') -%}
+{%- extends "!breadcrumbs.html" -%}
 
-<div class="ff-docs-title">{{ project }} {{ release }} documentation in English</div>
+{%- block breadcrumbs %}
+<li>
+  <div class="ff-docs-title">{{ project }} {{ release }} documentation in English</div>
+  <ul class="wy-breadcrumbs">
+    {{- super() }}
+  </ul>
+</li>
+{%- endblock %}
 
-{%- include "!breadcrumbs.html" -%}
+{%- block breadcrumbs_aside %}
+  {%- if sourcename and not (meta is defined and meta is not none and meta.get('github_url') == 'hide') %}
+    {{- super() }}
+    <li class="wy-breadcrumbs-aside ff-contribute">
+      <a href="https://github.com/tateorrtot/foxfabric-godot/blob/main/CONTRIBUTING.md">Learn how to contribute!</a>
+    </li>
+  {%- endif %}
+{%- endblock %}

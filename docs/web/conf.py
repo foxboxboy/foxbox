@@ -93,6 +93,21 @@ html_show_sourcelink = False
 
 html_title = "FoxFabric documentation"
 
+# What the theme builds the "Edit on GitHub" link from. Read the Docs used to supply these and no
+# longer does, so without them the link is absent on every page, including the hand written ones
+# where editing is the right thing to offer. Godot sets them the same way.
+#
+# conf_py_path is the folder holding the reStructuredText, relative to the repo root, and the
+# theme joins it to the page name. _templates/breadcrumbs.html drops the link again on generated
+# pages.
+html_context = {
+    'display_github': True,
+    'github_user': 'tateorrtot',
+    'github_repo': 'foxfabric-godot',
+    'github_version': 'main',
+    'conf_py_path': '/docs/web/',
+}
+
 
 html_css_files = [
     'custom.css',

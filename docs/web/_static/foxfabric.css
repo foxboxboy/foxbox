@@ -68,9 +68,27 @@
 
 /**
  * The project, version and language line that _templates/breadcrumbs.html puts above the trail.
- * Sits quieter than the page title it precedes, since it is the same on every page.
+ * Godot's values. No bottom margin: the gap comes from the nested list the template wraps the
+ * trail in, and adding one here pushes the trail a further half rem down.
  */
 .ff-docs-title {
-	font-weight: 700;
-	margin-bottom: 0.5rem;
+    font-size: 105%;
+    font-weight: 600;
+}
+
+/**
+ * Second line of the aside, under Edit on GitHub. Floated like the first, cleared so it drops
+ * below instead of sitting beside it, and dropped entirely on phones where the trail already
+ * wraps. Godot styles their equivalent link the same way.
+ */
+.ff-contribute {
+    font-size: 14px;
+    clear: both;
+    padding-top: 4px;
+}
+
+@media screen and (max-width: 480px) {
+    .ff-contribute {
+        display: none;
+    }
 }
