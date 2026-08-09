@@ -12,7 +12,7 @@ extends "res://tests/fox_test.gd"
 const ADDON: String = "res://addons/foxfabric/"
 
 ## Exempt from every rule. See CONTRIBUTING.md.
-const SKIPPED: Array[String] = ["deprecated", "trash"]
+const SKIPPED: Array[String] = ["trash"]
 
 ## Cross-module dependencies that are deliberate. Anything not listed here is a failure.
 const ALLOWED: Dictionary = {
