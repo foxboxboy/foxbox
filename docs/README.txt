@@ -109,6 +109,25 @@ official docs instead of producing an undefined-label warning per reference. The
 needs network to fetch the inventory, after which Sphinx caches it.
 
 
+LOCAL CHANGES TO THE VENDORED SCRIPT
+
+tools/make_rst.py is Godot's own script, copied in so the pages generate the way the engine's do.
+It has been edited here, and the edits do not survive replacing the file.
+
+Where a member has no description, the stock script prints an invitation to go and write one for
+the Godot engine. That is the wrong project to send a FoxFabric reader to, so all twenty of those
+strings now point at this repository's issues instead.
+
+Refreshing the file from upstream silently reverts that. Nothing breaks and no warning appears;
+the links just start pointing at godotengine.org again. After replacing it, check with:
+
+    grep -c contributing.godotengine.org docs/tools/make_rst.py
+
+Zero means the edit is still in place. Anything else means reapply it: replace the whole
+"Please help us by `contributing one <...>`__!" phrase with
+"Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__."
+
+
 VERSION NOTES
 
 version.py sits at the repo root looking out of place because make_rst.py line 14 puts the

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 # This script makes RST files from the XML class reference for use with the online docs.
+#
+# VENDORED FROM GODOT, WITH ONE LOCAL CHANGE. The "no description" messages below point at
+# this repository's issues rather than Godot's contributing guide, in twenty places. Replacing
+# this file with a fresh copy from upstream reverts that silently. See docs/README.txt, under
+# LOCAL CHANGES TO THE VENDORED SCRIPT.
 from __future__ import annotations
 
 import argparse
