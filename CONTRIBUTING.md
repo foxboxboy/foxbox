@@ -95,6 +95,17 @@ nobody reading the reference will ever find it.
 Documentation is generated from these comments, so `python docs/build_docs.py` must finish with
 no errors before a change lands. See `docs/README.txt`.
 
+Read the Docs cannot run Godot, so the generated pages under `docs/web/` are committed. Change a
+`##` comment and they have to be regenerated in the same commit:
+
+```
+python docs/build_docs.py --skip-html
+```
+
+CI checks this and fails a push that leaves them stale. It does not regenerate them for you: a job
+that pushes to `main` moves the branch under whoever pushed it, and leaves the published docs
+wrong until it finishes.
+
 ## Naming
 
 * Files are `snake_case.gd` and match their class: `fox_attribute_map.gd` holds `FoxAttributeMap`

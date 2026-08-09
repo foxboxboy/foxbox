@@ -1,10 +1,14 @@
 name: Docs
 
-# Regenerates the class reference and commits it back, so Read the Docs has something to build.
+# Checks that the committed class reference still matches the source.
 #
 # Read the Docs cannot run Godot, so it only renders reStructuredText that is already in the
-# repo. This job does the Godot half and pushes the result. It is the same arrangement the
-# engine's own documentation uses, with the sync automated rather than done by hand.
+# repo, which means the generated pages have to be committed. This job used to regenerate them
+# and push the result back to main. That worked, but it meant every push moved the branch under
+# whoever pushed it, and the pages on Read the Docs were wrong for as long as the job took to
+# run. It verifies now, and regenerating is a step you do before committing:
+#
+#     python docs/build_docs.py --skip-html
 
 on:
   push:
@@ -16,7 +20,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: docs
@@ -61,16 +65,18 @@ jobs:
         # fails here rather than turning up on Read the Docs later.
         run: python docs/build_docs.py
 
-      - name: Commit the class reference
+      - name: Check the class reference is current
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/web/class_*.rst docs/web/module_*.rst
-          if git diff --cached --quiet; then
-            echo "Class reference unchanged."
+          if git diff --quiet -- docs/web; then
+            echo "Class reference matches the source."
             exit 0
           fi
-          # [skip ci] matters. This push touches docs/, which is what triggers the workflow,
-          # so without it the job would retrigger itself forever.
-          git commit -m "Regenerate the class reference [skip ci]"
-          git push
+
+          echo "::error::The committed class reference does not match the ## comments in the source."
+          echo
+          echo "Regenerate it and commit the result:"
+          echo
+          echo "    python docs/build_docs.py --skip-html"
+          echo
+          git diff --stat -- docs/web
+          exit 1
