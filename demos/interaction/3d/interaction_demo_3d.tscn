@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxfabric/physics_dragging/3d/fox_physics_dragger_3d.gd" id="7_hju5i"]
 [ext_resource type="Script" path="res://demos/interaction/3d/hands_3d.gd" id="8_hands"]
 [ext_resource type="Script" path="res://demos/interaction/3d/hud_3d.gd" id="9_hud"]
+[ext_resource type="Script" path="res://demos/interaction/3d/turn_gesture_3d.gd" id="10_turn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcams"]
 albedo_color = Color(0, 0, 0, 1)
@@ -91,10 +92,11 @@ interaction_range = 30.0
 
 [node name="blockbench_export" parent="Player" unique_id=248557822 instance=ExtResource("3_a1jta")]
 
-[node name="Hands" type="Node3D" parent="." node_paths=PackedStringArray("player", "dragger", "grab_marker")]
+[node name="Hands" type="Node3D" parent="." node_paths=PackedStringArray("player", "dragger", "turn", "grab_marker")]
 script = ExtResource("8_hands")
 player = NodePath("../Player")
 dragger = NodePath("Dragger")
+turn = NodePath("Turn")
 grab_marker = NodePath("GrabMarker")
 
 [node name="Dragger" type="Node3D" parent="Hands"]
@@ -102,6 +104,9 @@ script = ExtResource("7_hju5i")
 
 [node name="DragPoint" type="MeshInstance3D" parent="Hands/Dragger" unique_id=852333493]
 mesh = SubResource("SphereMesh_dcams")
+
+[node name="Turn" type="Node" parent="Hands"]
+script = ExtResource("10_turn")
 
 [node name="GrabMarker" type="MeshInstance3D" parent="Hands"]
 visible = false

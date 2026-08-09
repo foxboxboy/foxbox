@@ -7,9 +7,7 @@ extends Node3D
 #region Variables
 
 const Player3D = preload("res://demos/interaction/3d/player_3d.gd")
-
-## Degrees of turn per pixel of mouse movement.
-const SPIN_PER_PIXEL: float = 0.2
+const TurnGesture3D = preload("res://demos/interaction/3d/turn_gesture_3d.gd")
 
 ## Metres the wheel raises or lowers what is held, and the range it may sit in.
 const LIFT_STEP: float = 0.5
@@ -18,22 +16,17 @@ const LIFT_RANGE: Vector2 = Vector2(0.0, 5.0)
 @export var player: Player3D
 @export var dragger: FoxPhysicsDragger3D
 
+## Runs the right-drag itself. All this has to do is say what the turning is for.
+@export var turn: TurnGesture3D
+
 ## Marks the spot the object is pulled by, which is neither its centre nor the cursor.
 @export var grab_marker: MeshInstance3D
 
 var _held: RigidBody3D = null
-var _turning: bool = false
 
 ## How far above the point under the cursor the object floats. At zero a carried object scrapes
 ## along whatever is beneath it.
 var _lift: float = 0.5
-
-## Where the cursor was when a turn started, so it can be put back.
-var _cursor_before_turn: Vector2 = Vector2.ZERO
-
-## warp_mouse does not land until the window manager sends the next motion event. Until then the
-## cursor still reads as the middle of the window, and following it would fling the object there.
-var _awaiting_cursor: bool = false
 
 #endregion
 
@@ -42,9 +35,15 @@ var _awaiting_cursor: bool = false
 
 #region Built-In Virtuals
 
+func _ready() -> void:
+	turn.started.connect(_on_turn_started)
+	turn.stopped.connect(_on_turn_stopped)
+	turn.turned.connect(_on_turned)
+
+
 # In physics because that is where the pull is applied.
 func _physics_process(_delta: float) -> void:
-	if _turning or _awaiting_cursor:
+	if not turn.is_cursor_settled():
 		return
 
 	dragger.global_position = player.get_cursor_world_point() + Vector3.UP * _lift
@@ -83,17 +82,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	var button: InputEventMouseButton = event as InputEventMouseButton
 	if button:
 		_on_mouse_button(button)
-		return
-
-	var motion: InputEventMouseMotion = event as InputEventMouseMotion
-	if motion == null:
-		return
-
-	# The first movement after uncapturing is the one carrying a believable position.
-	_awaiting_cursor = false
-
-	if _turning and is_holding():
-		_turn_held(motion.relative)
 
 
 # Picking up toggles instead of holding, because ending the cursor capture at the end of a turn
@@ -102,7 +90,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_mouse_button(button: InputEventMouseButton) -> void:
 	if not button.pressed:
 		if button.button_index == MOUSE_BUTTON_RIGHT:
-			_stop_turning()
+			turn.stop()
 		return
 
 	match button.button_index:
@@ -112,7 +100,7 @@ func _on_mouse_button(button: InputEventMouseButton) -> void:
 			else:
 				_try_grab()
 		MOUSE_BUTTON_RIGHT:
-			_start_turning()
+			turn.start(is_holding())
 		MOUSE_BUTTON_WHEEL_UP:
 			_lift = clampf(_lift + LIFT_STEP, LIFT_RANGE.x, LIFT_RANGE.y)
 		MOUSE_BUTTON_WHEEL_DOWN:
@@ -154,7 +142,7 @@ func _release() -> void:
 		return
 
 	# Dropping mid turn would leave the cursor hidden with nothing to turn.
-	_stop_turning()
+	turn.stop()
 
 	dragger.release()
 	_held = null
@@ -166,34 +154,23 @@ func _release() -> void:
 
 #region Turning
 
-## Hides and locks the cursor.
-func _start_turning() -> void:
-	if _turning or not is_holding():
-		return
-
-	_turning = true
-	_cursor_before_turn = get_viewport().get_mouse_position()
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+func _on_turn_started() -> void:
 	player.aiming_frozen = true
 
 
-## Gives the cursor back exactly where it was taken from.
-func _stop_turning() -> void:
-	if not _turning:
-		return
-
-	_turning = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	get_viewport().warp_mouse(_cursor_before_turn)
-	_awaiting_cursor = true
+func _on_turn_stopped() -> void:
 	player.aiming_frozen = false
 
 
 ## Turning the dragger turns what it holds, because the torque targets the dragger's orientation.
 ## Yaw comes from horizontal movement and tumble from vertical, both about the camera's axes, so
-## the object turns the way the mouse moves.
-func _turn_held(mouse_delta: Vector2) -> void:
-	dragger.rotate(Vector3.UP, deg_to_rad(-mouse_delta.x * SPIN_PER_PIXEL))
-	dragger.rotate(player.global_transform.basis.x, deg_to_rad(-mouse_delta.y * SPIN_PER_PIXEL))
+## the object turns the way the mouse moves. The dragger refuses to be turned further ahead than
+## the object can follow, so nothing here has to watch for that.
+func _on_turned(radians: Vector2) -> void:
+	if not is_holding():
+		return
+
+	dragger.rotate(Vector3.UP, -radians.x)
+	dragger.rotate(player.global_transform.basis.x, -radians.y)
 
 #endregion

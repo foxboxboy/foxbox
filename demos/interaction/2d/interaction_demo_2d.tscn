@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c3ntasv61n17c" path="res://icon.png" id="7_icon"]
 [ext_resource type="Script" uid="uid://b12n5pqopktej" path="res://demos/interaction/2d/hands_2d.gd" id="8_hands"]
 [ext_resource type="Script" uid="uid://dcpu3ayhxb8dc" path="res://demos/interaction/2d/hud_2d.gd" id="9_hud"]
+[ext_resource type="Script" path="res://demos/interaction/2d/turn_gesture_2d.gd" id="10_turn"]
 
 [sub_resource type="RectangleShape2D" id="Shape_wall_h"]
 size = Vector2(880, 64)
@@ -107,15 +108,19 @@ points = PackedVector2Array(0, 0, 190, 0)
 width = 3.0
 default_color = Color(1, 1, 1, 0.235294)
 
-[node name="Hands" type="Node2D" parent="." unique_id=275950552 node_paths=PackedStringArray("player", "dragger", "grab_marker")]
+[node name="Hands" type="Node2D" parent="." unique_id=275950552 node_paths=PackedStringArray("player", "dragger", "turn", "grab_marker")]
 script = ExtResource("8_hands")
 player = NodePath("../Player")
 dragger = NodePath("Dragger")
+turn = NodePath("Turn")
 grab_marker = NodePath("GrabMarker")
 
 [node name="Dragger" type="Node2D" parent="Hands" unique_id=417732735]
 script = ExtResource("5_dragger")
 max_pull_force = 90000.0
+
+[node name="Turn" type="Node" parent="Hands"]
+script = ExtResource("10_turn")
 
 [node name="GrabMarker" type="Polygon2D" parent="Hands" unique_id=1601027691]
 visible = false
