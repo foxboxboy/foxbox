@@ -192,9 +192,9 @@ func _rein_in_rotation() -> void:
 	if absf(angle) <= MAX_ROTATION_LEAD:
 		return
 
-	var reined: Transform3D = global_transform
-	reined.basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_ROTATION_LEAD, MAX_ROTATION_LEAD))
-	global_transform = reined
+	# Through global_rotation rather than the basis, which would take this node's scale with it.
+	var reined: Basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_ROTATION_LEAD, MAX_ROTATION_LEAD))
+	global_rotation = reined.get_euler()
 
 
 ## Applies a positional force to the grabbed RigidBody3D based on its current position and velocity.

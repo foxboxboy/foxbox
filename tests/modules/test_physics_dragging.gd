@@ -164,3 +164,16 @@ func _the_command_cannot_outrun_the_body() -> void:
 	var before: Basis = upright.global_transform.basis
 	upright._rein_in_rotation()
 	check(upright.global_transform.basis.is_equal_approx(before), "the node is left exactly where it was put")
+
+	case("reining the command in does not touch the node's scale")
+	var scaled: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D
+	var lifted: RigidBody3D = track(RigidBody3D.new()) as RigidBody3D
+	scaled.scale = Vector3(2.0, 3.0, 4.0)
+	scaled.grab(lifted, Vector3.ZERO)
+
+	for i: int in 20:
+		scaled.rotate(Vector3.UP, deg_to_rad(45.0))
+		scaled._rein_in_rotation()
+
+	check(scaled.scale.is_equal_approx(Vector3(2.0, 3.0, 4.0)),
+		"a scaled dragger keeps its scale, which writing the basis back would have flattened")
