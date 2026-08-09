@@ -363,7 +363,12 @@ def write_folder_page(module, subdir, dirs, classes_at, have_page, counter):
         return
 
     title = module_title(subdir.split("/")[-1] if subdir else module)
-    body = [title, "=" * len(title), ""]
+
+    # step_modules deletes and rewrites every one of these, and the blurb and intro come from this
+    # script rather than the page, so an Edit on GitHub link here sends someone to a file their
+    # change cannot survive. ":github_url: hide" is what make_rst.py stamps on the class pages for
+    # the same reason, and docs/web/_templates/breadcrumbs.html drops the link when it sees it.
+    body = [":github_url: hide", "", title, "=" * len(title), ""]
 
     if not subdir:
         blurb = module_blurb(module)

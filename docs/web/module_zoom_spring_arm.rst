@@ -1,3 +1,5 @@
+:github_url: hide
+
 Zoom Spring Arm
 ===============
 
