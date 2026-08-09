@@ -28,6 +28,9 @@ extends Node2D
 ## too. Once [method torque_scale_for] has removed the difference in units between the two, the
 ## same stiffness and damping describe both, and one number does not have to be a compromise
 ## between them.
+const TORQUE_SPRING_GAIN: float = 0.5
+const TORQUE_DAMPING_GAIN: float = 0.5
+
 ## How far this node's orientation may get ahead of what it is holding, in radians.
 ## [br][br]
 ## The torque always takes the shortest way round to its target. Turn this node more than half a
@@ -35,9 +38,6 @@ extends Node2D
 ## drag instead of following it. Held to a quarter turn there is room to lag behind without ever
 ## crossing over.
 const MAX_ROTATION_LEAD: float = PI / 2.0
-
-const TORQUE_SPRING_GAIN: float = 0.5
-const TORQUE_DAMPING_GAIN: float = 0.5
 
 
 
