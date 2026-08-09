@@ -1,5 +1,6 @@
 extends FoxNode3D
 class_name FoxEntityShadow
+## A shadow placed beneath an entity, at a selectable quality.
 
 
 @export var shadow_type := ShadowQuality.DISABLED:

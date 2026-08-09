@@ -12,7 +12,7 @@ FoxHitRayCast3D
 
 **Inherits:** :ref:`RayCast3D<class_RayCast3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Delivers a :ref:`Variant<class_Variant>` payload to the first :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` it strikes.
+A 3D ray that delivers a :ref:`Variant<class_Variant>` payload to the first :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` it strikes.
 
 .. rst-class:: classref-introduction-group
 

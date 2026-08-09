@@ -12,9 +12,7 @@ FoxCharacterAnimationTree
 
 **Inherits:** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-.. container:: contribute
-
-	There is currently no description for this class. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
+A node that drives a character's :ref:`AnimationTree<class_AnimationTree>` for movement and swing animations.
 
 .. rst-class:: classref-reftable-group
 

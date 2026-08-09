@@ -14,7 +14,7 @@ FoxNode3D
 
 **Inherited By:** :ref:`FoxCharacterAccessories<class_FoxCharacterAccessories>`, :ref:`FoxCharacterCameraPivot<class_FoxCharacterCameraPivot>`, :ref:`FoxCharacterHands<class_FoxCharacterHands>`, :ref:`FoxCharacterModel<class_FoxCharacterModel>`, :ref:`FoxCharacterMotor3D<class_FoxCharacterMotor3D>`, :ref:`FoxEntityShadow<class_FoxEntityShadow>`, :ref:`FoxHoldableItem<class_FoxHoldableItem>`, :ref:`FoxPhysicsDragger3D<class_FoxPhysicsDragger3D>`, :ref:`FoxSocketMap3D<class_FoxSocketMap3D>`
 
-Dummy node for organization purposes provided by FoxFabric.
+Base 3D node, inherited by FoxFabric's 3D nodes.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

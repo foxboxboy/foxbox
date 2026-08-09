@@ -12,7 +12,7 @@ FoxHitArea3D
 
 **Inherits:** :ref:`Area3D<class_Area3D>` **<** :ref:`CollisionObject3D<class_CollisionObject3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Delivers a :ref:`Variant<class_Variant>` payload to overlapping :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` nodes.
+A 3D area that delivers a :ref:`Variant<class_Variant>` payload to overlapping :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` nodes.
 
 .. rst-class:: classref-introduction-group
 

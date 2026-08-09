@@ -1,8 +1,8 @@
 extends FoxNode3D
 class_name FoxHoldableItem
-## An item that can be held by a FoxCharacter.
-## Utilizes IK targets and poles to hold the item.
-## When setting up, keep at 0,0,0.
+## An item held by a character, positioned with IK targets and poles.
+##
+## Keep the item's transform at the origin when setting it up.
 
 ## The main hand that will be used for IK.
 @export var main_hand_target: Marker3D

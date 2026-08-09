@@ -12,7 +12,7 @@ FoxEffectSlotPolicy
 
 **Inherits:** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Acts as a gatekeeper for a :ref:`FoxEffectManager<class_FoxEffectManager>`, enforcing a maximum limit on how many distinct :ref:`FoxEffectInstance<class_FoxEffectInstance>` objects can exist simultaneously.
+A cap on how many distinct :ref:`FoxEffectInstance<class_FoxEffectInstance>` objects a :ref:`FoxEffectManager<class_FoxEffectManager>` holds at once.
 
 .. rst-class:: classref-introduction-group
 

@@ -14,7 +14,7 @@ FoxNode
 
 **Inherited By:** :ref:`FoxAttributeMap<class_FoxAttributeMap>`, :ref:`FoxCharacterAnimationTree<class_FoxCharacterAnimationTree>`, :ref:`FoxDashAbility<class_FoxDashAbility>`, :ref:`FoxEffectManager<class_FoxEffectManager>`, :ref:`FoxEffectSlotPolicy<class_FoxEffectSlotPolicy>`, :ref:`FoxJumpAbility<class_FoxJumpAbility>`, :ref:`FoxSprintAbility<class_FoxSprintAbility>`, :ref:`FoxState<class_FoxState>`, :ref:`FoxStateMachine<class_FoxStateMachine>`
 
-Dummy node for organization purposes provided by FoxFabric.
+Base node, inherited by FoxFabric's nodes.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

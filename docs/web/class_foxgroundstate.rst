@@ -12,7 +12,7 @@ FoxGroundState
 
 **Inherits:** :ref:`FoxState<class_FoxState>` **<** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Applies floor-based speed and direction to a FoxCharacterMotor3D.
+A state that applies floor-based speed and direction to a :ref:`FoxCharacterMotor3D<class_FoxCharacterMotor3D>`.
 
 .. rst-class:: classref-reftable-group
 

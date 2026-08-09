@@ -1,7 +1,7 @@
 @icon("uid://dsv5at5ud3kja")
 class_name FoxEffectManager
 extends FoxNode
-## Handles the creation, lifecycle, and cleanup of [FoxEffectInstance] objects.
+## A node that owns the lifecycle of [FoxEffectInstance] objects on a target.
 ##
 ## An effect is a [FoxEffect] resource plus a target. The manager instantiates it, ticks it, and
 ## drops it once it expires, so nothing involved has to be a node.

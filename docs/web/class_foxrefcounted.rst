@@ -14,7 +14,7 @@ FoxRefCounted
 
 **Inherited By:** :ref:`FoxAttributeRule<class_FoxAttributeRule>`, :ref:`FoxEffectInstance<class_FoxEffectInstance>`
 
-Dummy node for organization purposes provided by FoxFabric.
+Base class, inherited by FoxFabric's reference-counted types.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

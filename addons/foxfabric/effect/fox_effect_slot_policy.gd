@@ -2,8 +2,7 @@
 @icon("uid://cb025en3etr6r")
 class_name FoxEffectSlotPolicy
 extends FoxNode
-## Acts as a gatekeeper for a [FoxEffectManager], enforcing a maximum limit
-## on how many distinct [FoxEffectInstance] objects can exist simultaneously.
+## A cap on how many distinct [FoxEffectInstance] objects a [FoxEffectManager] holds at once.
 ##
 ## Sits as a child of the manager it gates. Route calls through the policy rather than the
 ## manager and the limit applies.

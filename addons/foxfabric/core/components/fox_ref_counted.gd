@@ -1,4 +1,4 @@
 @icon("uid://c86f7wdmmulxl")
 extends RefCounted
 class_name FoxRefCounted
-## Dummy node for organization purposes provided by FoxFabric.
+## Base class, inherited by FoxFabric's reference-counted types.

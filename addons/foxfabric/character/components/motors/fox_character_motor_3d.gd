@@ -1,6 +1,6 @@
 extends FoxNode3D
 class_name FoxCharacterMotor3D
-## Moves a CharacterBody3D based on an input direction and the strength of the input.
+## A motor that moves a [CharacterBody3D] from an input direction and strength.
 
 
 ## The body that will be acted upon. If unspecified, the node this is attached to will become the body.

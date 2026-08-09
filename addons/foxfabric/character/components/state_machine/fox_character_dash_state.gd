@@ -1,6 +1,6 @@
 class_name FoxDashState
 extends FoxState
-## Locks the body into a forced trajectory, ignoring standard friction/gravity.
+## A state that locks the body into a forced trajectory, ignoring friction and gravity.
 
 @export var motor: FoxAdvancedCharacterMotor3D
 

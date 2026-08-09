@@ -2,7 +2,7 @@
 @icon("uid://oit74etj11kg")
 class_name FoxHitRayCast3D
 extends RayCast3D
-## Delivers a [Variant] payload to the first [FoxHurtArea3D] it strikes.
+## A 3D ray that delivers a [Variant] payload to the first [FoxHurtArea3D] it strikes.
 ##
 ## Acts as the hitscan trigger for the FoxFabric interaction pipeline.
 ## [br][b]Note:[/b] Ensure [member RayCast3D.collide_with_areas] is enabled in the inspector.

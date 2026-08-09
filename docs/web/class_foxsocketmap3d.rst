@@ -12,7 +12,7 @@ FoxSocketMap3D
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Manages a collection of :ref:`FoxSocket3D<class_FoxSocket3D>` nodes, mapped by their node names.
+A collection of :ref:`FoxSocket3D<class_FoxSocket3D>` nodes, keyed by node name.
 
 .. rst-class:: classref-introduction-group
 

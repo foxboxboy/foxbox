@@ -1,6 +1,6 @@
 class_name FoxGroundState
 extends FoxState
-## Applies floor-based speed and direction to a FoxCharacterMotor3D.
+## A state that applies floor-based speed and direction to a [FoxCharacterMotor3D].
 
 @export var motor: FoxCharacterMotor3D
 

@@ -12,7 +12,7 @@ FoxHurtArea3D
 
 **Inherits:** :ref:`Area3D<class_Area3D>` **<** :ref:`CollisionObject3D<class_CollisionObject3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Receives :ref:`Variant<class_Variant>` payloads from physical interactions and routes them.
+A 3D area that receives :ref:`Variant<class_Variant>` payloads from hit sources and routes them.
 
 .. rst-class:: classref-introduction-group
 

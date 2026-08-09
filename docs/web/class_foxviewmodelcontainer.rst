@@ -14,7 +14,7 @@ FoxViewModelContainer
 
 **Inherits:** :ref:`SubViewportContainer<class_SubViewportContainer>` **<** :ref:`Container<class_Container>` **<** :ref:`Control<class_Control>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Keeps a :ref:`SubViewport<class_SubViewport>` matched to the size of the main viewport.
+A :ref:`SubViewport<class_SubViewport>` container kept matched to the size of the main viewport.
 
 .. rst-class:: classref-introduction-group
 

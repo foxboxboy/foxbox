@@ -1,8 +1,7 @@
 @icon("uid://8ov6aqrt3g77")
 class_name FoxPhysicsDragger2D
 extends Node2D
-## Manipulates a [RigidBody2D] by applying localized forces and torques
-## to match this node's global position and rotation.
+## A 2D node that drags a [RigidBody2D] to its own position and rotation using forces.
 ##
 ## Move this node and the grabbed body chases it. The pull is a force rather than a teleport, so
 ## the body still collides with the world on the way.

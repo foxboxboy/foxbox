@@ -14,7 +14,7 @@ FoxCharacterMotor3D
 
 **Inherited By:** :ref:`FoxAdvancedCharacterMotor3D<class_FoxAdvancedCharacterMotor3D>`
 
-Moves a CharacterBody3D based on an input direction and the strength of the input.
+A motor that moves a :ref:`CharacterBody3D<class_CharacterBody3D>` from an input direction and strength.
 
 .. rst-class:: classref-reftable-group
 

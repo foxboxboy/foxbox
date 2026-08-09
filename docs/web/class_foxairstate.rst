@@ -12,7 +12,7 @@ FoxAirState
 
 **Inherits:** :ref:`FoxState<class_FoxState>` **<** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Applies gravity and aerial steering to the motor.
+A state that applies gravity and aerial steering while the body is off the floor.
 
 .. rst-class:: classref-reftable-group
 

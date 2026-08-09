@@ -14,7 +14,7 @@ FoxResource
 
 **Inherited By:** :ref:`FoxBoundedValue<class_FoxBoundedValue>`, :ref:`FoxEffect<class_FoxEffect>`, :ref:`FoxModifiableStat<class_FoxModifiableStat>`, :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>`, :ref:`FoxPrice<class_FoxPrice>`, :ref:`FoxShopCatalog<class_FoxShopCatalog>`, :ref:`FoxShopItem<class_FoxShopItem>`, :ref:`FoxStatPool<class_FoxStatPool>`, :ref:`FoxWallet<class_FoxWallet>`
 
-Dummy resource for organization purposes provided by FoxFabric.
+Base resource, inherited by FoxFabric's resources.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

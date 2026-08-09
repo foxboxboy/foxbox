@@ -2,7 +2,7 @@
 @icon("uid://gn5af2lswkru")
 class_name FoxSocketMap3D
 extends FoxNode3D
-## Manages a collection of [FoxSocket3D] nodes, mapped by their node names.
+## A collection of [FoxSocket3D] nodes, keyed by node name.
 ##
 ## Sockets are collected recursively from everything beneath this node when it enters the tree.
 ## [codeblock]

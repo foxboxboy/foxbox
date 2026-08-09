@@ -12,7 +12,7 @@ FoxPhysicsDragger3D
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Manipulates a :ref:`RigidBody3D<class_RigidBody3D>` by applying localized forces and torques to match this node's global position and rotation.
+A 3D node that drags a :ref:`RigidBody3D<class_RigidBody3D>` to its own position and rotation using forces.
 
 .. rst-class:: classref-introduction-group
 

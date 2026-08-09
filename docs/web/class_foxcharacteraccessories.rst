@@ -12,7 +12,7 @@ FoxCharacterAccessories
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Manages dynamically equipping rigid and skinned cosmetic items.
+A node that equips rigid and skinned cosmetic items on a character.
 
 .. rst-class:: classref-reftable-group
 

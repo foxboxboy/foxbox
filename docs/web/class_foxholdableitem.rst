@@ -12,7 +12,14 @@ FoxHoldableItem
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-An item that can be held by a FoxCharacter. Utilizes IK targets and poles to hold the item. When setting up, keep at 0,0,0.
+An item held by a character, positioned with IK targets and poles.
+
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+Keep the item's transform at the origin when setting it up.
 
 .. rst-class:: classref-reftable-group
 

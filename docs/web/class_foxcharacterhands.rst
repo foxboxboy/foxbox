@@ -12,7 +12,7 @@ FoxCharacterHands
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Handles IK and hand slots for things like items.
+A node providing IK targets and hand slots for held items.
 
 .. rst-class:: classref-reftable-group
 

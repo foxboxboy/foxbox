@@ -12,7 +12,7 @@ FoxInteractableArea2D
 
 **Inherits:** :ref:`Area2D<class_Area2D>` **<** :ref:`CollisionObject2D<class_CollisionObject2D>` **<** :ref:`Node2D<class_Node2D>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-A physical volume that can be detected and interacted with.
+A 2D volume that can be detected and interacted with.
 
 .. rst-class:: classref-introduction-group
 

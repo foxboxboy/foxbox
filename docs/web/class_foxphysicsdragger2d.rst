@@ -12,7 +12,7 @@ FoxPhysicsDragger2D
 
 **Inherits:** :ref:`Node2D<class_Node2D>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Manipulates a :ref:`RigidBody2D<class_RigidBody2D>` by applying localized forces and torques to match this node's global position and rotation.
+A 2D node that drags a :ref:`RigidBody2D<class_RigidBody2D>` to its own position and rotation using forces.
 
 .. rst-class:: classref-introduction-group
 

@@ -1,7 +1,7 @@
 @icon("uid://d3g7a3l3y4pu3")
 class_name FoxInteractableArea3D
 extends Area3D
-## A physical volume that can be detected and interacted with.
+## A 3D volume that can be detected and interacted with.
 ##
 ## Designed to be extended or used in conjunction with signals. It accepts a generic
 ## [Variant] context during interaction, allowing the initiator to pass a [Node],

@@ -14,7 +14,7 @@ FoxControl
 
 **Inherited By:** :ref:`FoxShopMenu<class_FoxShopMenu>`, :ref:`FoxShopSlot<class_FoxShopSlot>`
 
-Dummy node for organization purposes provided by FoxFabric.
+Base control, inherited by FoxFabric's controls.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

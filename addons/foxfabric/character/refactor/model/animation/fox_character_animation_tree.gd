@@ -1,5 +1,6 @@
 extends FoxNode
 class_name FoxCharacterAnimationTree
+## A node that drives a character's [AnimationTree] for movement and swing animations.
 
 signal swing_right_started
 signal swing_right_ended

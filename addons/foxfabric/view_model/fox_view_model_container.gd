@@ -1,6 +1,6 @@
 class_name FoxViewModelContainer
 extends SubViewportContainer
-## Keeps a [SubViewport] matched to the size of the main viewport.
+## A [SubViewport] container kept matched to the size of the main viewport.
 ##
 ## Used to render first person view models in a layer separate from the world, so held items
 ## never clip into nearby geometry. Put a camera and the view model inside the [SubViewport]

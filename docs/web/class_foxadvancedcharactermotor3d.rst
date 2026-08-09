@@ -12,7 +12,7 @@ FoxAdvancedCharacterMotor3D
 
 **Inherits:** :ref:`FoxCharacterMotor3D<class_FoxCharacterMotor3D>` **<** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-A more advanced and robust FoxCharacterMotor3D used to propell a human like actor.
+An extended :ref:`FoxCharacterMotor3D<class_FoxCharacterMotor3D>` for human-like actors.
 
 .. rst-class:: classref-reftable-group
 

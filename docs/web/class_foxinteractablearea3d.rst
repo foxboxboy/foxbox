@@ -12,7 +12,7 @@ FoxInteractableArea3D
 
 **Inherits:** :ref:`Area3D<class_Area3D>` **<** :ref:`CollisionObject3D<class_CollisionObject3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-A physical volume that can be detected and interacted with.
+A 3D volume that can be detected and interacted with.
 
 .. rst-class:: classref-introduction-group
 

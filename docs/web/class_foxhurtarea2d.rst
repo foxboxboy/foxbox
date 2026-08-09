@@ -12,7 +12,7 @@ FoxHurtArea2D
 
 **Inherits:** :ref:`Area2D<class_Area2D>` **<** :ref:`CollisionObject2D<class_CollisionObject2D>` **<** :ref:`Node2D<class_Node2D>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Receives :ref:`Variant<class_Variant>` payloads from physical interactions and routes them.
+A 2D area that receives :ref:`Variant<class_Variant>` payloads from hit sources and routes them.
 
 .. rst-class:: classref-introduction-group
 

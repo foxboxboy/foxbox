@@ -12,7 +12,7 @@ FoxFabric
 
 **Inherits:** :ref:`EditorPlugin<class_EditorPlugin>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-A lightweight, general purpose library of modular systems. By tateorrtot.
+A lightweight, general purpose library of modular systems.
 
 .. rst-class:: classref-introduction-group
 

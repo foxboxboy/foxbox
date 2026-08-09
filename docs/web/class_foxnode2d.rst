@@ -14,7 +14,7 @@ FoxNode2D
 
 **Inherited By:** :ref:`FoxSocketMap2D<class_FoxSocketMap2D>`
 
-Dummy node for organization purposes provided by FoxFabric.
+Base 2D node, inherited by FoxFabric's 2D nodes.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

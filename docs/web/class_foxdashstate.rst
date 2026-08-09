@@ -12,7 +12,7 @@ FoxDashState
 
 **Inherits:** :ref:`FoxState<class_FoxState>` **<** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Locks the body into a forced trajectory, ignoring standard friction/gravity.
+A state that locks the body into a forced trajectory, ignoring friction and gravity.
 
 .. rst-class:: classref-reftable-group
 

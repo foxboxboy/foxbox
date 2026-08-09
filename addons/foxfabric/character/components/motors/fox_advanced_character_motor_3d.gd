@@ -1,6 +1,6 @@
 extends FoxCharacterMotor3D
 class_name FoxAdvancedCharacterMotor3D
-## A more advanced and robust FoxCharacterMotor3D used to propell a human like actor.
+## An extended [FoxCharacterMotor3D] for human-like actors.
 
 ## Unlike the FoxCharacterMotor3D, this motor has extra features like,
 ## acceleration, friction, and interactions with RigidBody3D.

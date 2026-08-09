@@ -12,7 +12,7 @@ FoxCharacterModel
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Rotates the spine bone and provides simple API to work with an imported character model.
+A node for driving an imported character model, including spine rotation.
 
 .. rst-class:: classref-reftable-group
 

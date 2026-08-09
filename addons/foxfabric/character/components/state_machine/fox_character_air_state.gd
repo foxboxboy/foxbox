@@ -1,6 +1,6 @@
 class_name FoxAirState
 extends FoxState
-## Applies gravity and aerial steering to the motor.
+## A state that applies gravity and aerial steering while the body is off the floor.
 
 @export var motor: FoxAdvancedCharacterMotor3D
 

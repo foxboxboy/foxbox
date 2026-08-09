@@ -1,7 +1,7 @@
 extends FoxNode3D
 class_name FoxCharacterHands
 
-## Handles IK and hand slots for things like items.
+## A node providing IK targets and hand slots for held items.
 
 @export var left_hand_slot : Marker3D
 @export var right_hand_slot : Marker3D

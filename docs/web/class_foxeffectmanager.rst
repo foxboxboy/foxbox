@@ -12,7 +12,7 @@ FoxEffectManager
 
 **Inherits:** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Handles the creation, lifecycle, and cleanup of :ref:`FoxEffectInstance<class_FoxEffectInstance>` objects.
+A node that owns the lifecycle of :ref:`FoxEffectInstance<class_FoxEffectInstance>` objects on a target.
 
 .. rst-class:: classref-introduction-group
 

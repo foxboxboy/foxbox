@@ -1,6 +1,6 @@
 extends FoxNode3D
 class_name FoxCharacterAccessories
-## Manages dynamically equipping rigid and skinned cosmetic items.
+## A node that equips rigid and skinned cosmetic items on a character.
 
 ## Rigid accessories are directly "popped" onto the bones via BoneAttachment3D.
 ## Skinned accessories deform and shape themselves according to the skeleton assigned.

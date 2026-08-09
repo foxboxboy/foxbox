@@ -2,7 +2,7 @@
 @icon("uid://rslo1cra60dd")
 class_name FoxSocketMap2D
 extends FoxNode2D
-## Manages a collection of [FoxSocket2D] nodes, mapped by their node names.
+## A collection of [FoxSocket2D] nodes, keyed by node name.
 ##
 ## Sockets are collected recursively from everything beneath this node when it enters the tree.
 ## [codeblock]

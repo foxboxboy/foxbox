@@ -12,9 +12,7 @@ FoxEntityShadow
 
 **Inherits:** :ref:`FoxNode3D<class_FoxNode3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-.. container:: contribute
-
-	There is currently no description for this class. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
+A shadow placed beneath an entity, at a selectable quality.
 
 .. rst-class:: classref-reftable-group
 

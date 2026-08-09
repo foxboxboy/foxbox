@@ -1,7 +1,7 @@
 @icon("uid://d1kwkeuoiwmv")
 class_name FoxInteractableArea2D
 extends Area2D
-## A physical volume that can be detected and interacted with.
+## A 2D volume that can be detected and interacted with.
 ##
 ## Designed to be extended or used in conjunction with signals. It accepts a generic
 ## [Variant] context during interaction, allowing the initiator to pass a [Node],

@@ -12,7 +12,7 @@ FoxSocketMap2D
 
 **Inherits:** :ref:`FoxNode2D<class_FoxNode2D>` **<** :ref:`Node2D<class_Node2D>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Manages a collection of :ref:`FoxSocket2D<class_FoxSocket2D>` nodes, mapped by their node names.
+A collection of :ref:`FoxSocket2D<class_FoxSocket2D>` nodes, keyed by node name.
 
 .. rst-class:: classref-introduction-group
 

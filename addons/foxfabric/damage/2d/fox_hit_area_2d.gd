@@ -1,7 +1,7 @@
 @icon("uid://d1oovharegnuq")
 class_name FoxHitArea2D
 extends Area2D
-## Delivers a [Variant] payload to overlapping [FoxHurtArea2D] nodes.
+## A 2D area that delivers a [Variant] payload to overlapping [FoxHurtArea2D] nodes.
 ##
 ## Can act passively via physics overlaps, or instantly via the [method fire] method.
 ## [br][br]

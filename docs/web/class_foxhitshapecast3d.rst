@@ -12,7 +12,7 @@ FoxHitShapeCast3D
 
 **Inherits:** :ref:`ShapeCast3D<class_ShapeCast3D>` **<** :ref:`Node3D<class_Node3D>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Delivers a :ref:`Variant<class_Variant>` payload to all :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` nodes it strikes.
+A 3D shape cast that delivers a :ref:`Variant<class_Variant>` payload to every :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` it strikes.
 
 .. rst-class:: classref-introduction-group
 

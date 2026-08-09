@@ -1,7 +1,7 @@
 @icon("uid://bihwfrg2mota4")
 class_name FoxHurtArea3D
 extends Area3D
-## Receives [Variant] payloads from physical interactions and routes them.
+## A 3D area that receives [Variant] payloads from hit sources and routes them.
 ##
 ## Acts as the receiving end of the FoxFabric interaction pipeline. It listens
 ## for overlapping [FoxHitArea3D] nodes and broadcasts their payload.
