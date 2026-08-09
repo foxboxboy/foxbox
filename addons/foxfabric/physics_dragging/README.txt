@@ -1,1 +1,1 @@
-Physics Dragging: Manipulates a RigidBody by applying localized forces and torques to pull it toward a target node. Stiffness, damping, and force limits live in swappable FoxPhysicsDragProfile resources, which are shared by both dimensions. The 2d and 3d folders hold a dragger each.
+Physics Dragging: Pulls a RigidBody towards a target node with forces and torque, so it still collides with the world on the way. Stiffness and damping live in a resource you can swap.

@@ -1,7 +1,7 @@
 State Machine
 =============
 
-A node-based Finite State Machine (FSM) architecture for separating complex entity logic (like player movement or enemy AI) into discrete, manageable, and isolated state nodes.
+States as child nodes. The machine forwards process, physics, and input to whichever one is current, and states ask it to change.
 
 States are direct children of the :ref:`class_FoxStateMachine`, keyed by ``state_id`` or by node
 name if ``state_id`` is empty.

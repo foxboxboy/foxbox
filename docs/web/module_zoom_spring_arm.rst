@@ -1,7 +1,7 @@
 Zoom Spring Arm
 ===============
 
-An extended SpringArm3D component for camera controllers. It replaces standard length adjustments with smooth, frame-independent zoom interpolation, clamp limits, precise signal emissions for UI/visibility toggling, and built-in multiplayer authority checks.
+A SpringArm3D that eases to a new length instead of snapping, between a minimum and maximum. Emits when it reaches either end, so UI can show or hide with the camera.
 
 A ``SpringArm3D`` that interpolates its length instead of setting it directly. The interpolation
 is frame independent.

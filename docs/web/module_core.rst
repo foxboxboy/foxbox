@@ -1,7 +1,7 @@
 Core
 ====
 
-Rudimentary and abstract classes, utilities, and generic helpers used universally across the FoxFabric framework.
+The base classes the other modules extend, and the maths helpers they share. Every module needs this one.
 
 Every other module depends on ``core``. ``core`` depends on nothing.
 

@@ -1,1 +1,1 @@
-Effects: A memory-safe Flyweight architecture for managing the lifecycle, stacking, and interval ticking of temporary gameplay modifiers (buffs and debuffs) without SceneTree bloat.
+Effects: Buffs and debuffs that stack, expire, and tick on a timer. One resource describes the effect and the manager runs however many are active, so nothing is added to the scene tree per effect.

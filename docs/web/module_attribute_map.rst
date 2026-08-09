@@ -1,7 +1,7 @@
 Attribute Map
 =============
 
-A recursive, hierarchical data structure for safely managing, clamping, and querying dynamic entity statistics and state variables.
+Holds an entity's data in a tree. Rules and flags put on a parent reach every map beneath it, so one debuff on a vehicle can slow everything riding in it.
 
 Stores arbitrary data, counted flags, and rules that propagate through a node hierarchy.
 

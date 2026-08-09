@@ -1,3 +1,5 @@
+World Environments: Ready-made WorldEnvironment scenes, including a stylized sky and a cheaper one for mobile. Drop one in rather than dialling in tonemapping and fog by hand.
+
 !==============!
 !!!! NOTICE !!!!
 !==============!

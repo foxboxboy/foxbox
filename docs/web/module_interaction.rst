@@ -1,7 +1,7 @@
 Interaction
 ===========
 
-A raycast-driven focus and activation pipeline. An interaction raycast focuses and triggers interactable volumes, which emit an arbitrary Variant context so the initiator decides what interacting actually means. The 2d and 3d folders hold the same pipeline for each dimension.
+A raycast that tracks what it is pointing at, and areas that answer when you interact with them. Interacting emits a signal carrying whatever context you passed, so what it means is up to the receiver.
 
 :ref:`class_FoxInteractionRayCast3D` tracks the :ref:`class_FoxInteractableArea3D` it currently
 points at, emitting focus and unfocus as that changes. Calling ``interact`` on the area emits

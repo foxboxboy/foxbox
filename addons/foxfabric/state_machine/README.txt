@@ -1,1 +1,1 @@
-State Machine: A node-based Finite State Machine (FSM) architecture for separating complex entity logic (like player movement or enemy AI) into discrete, manageable, and isolated state nodes.
+State Machine: States as child nodes. The machine forwards process, physics, and input to whichever one is current, and states ask it to change.

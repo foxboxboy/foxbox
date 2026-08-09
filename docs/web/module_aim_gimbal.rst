@@ -1,7 +1,7 @@
 Aim Gimbal
 ==========
 
-A pure mathematical hinge for accumulating 2D input into clamped, gimbal-lock-safe pitch and yaw rotations.
+Turns mouse or stick movement into pitch and yaw, with limits on each. Pitch and yaw are separate nodes, so looking up never rolls the horizon.
 
 Accumulates 2D input into pitch and yaw.
 

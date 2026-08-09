@@ -1,1 +1,1 @@
-Damage: A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (hit areas, raycasts and shapecasts) and receivers (hurt areas) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic. The 2d and 3d folders hold the same pipeline for each dimension.
+Damage: Hit areas, raycasts, and shapecasts that deliver a payload to hurt areas. The payload is whatever you put in it, so the module never learns what damage means in your game.

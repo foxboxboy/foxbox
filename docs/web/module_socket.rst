@@ -1,7 +1,7 @@
 Socket
 ======
 
-A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." The 2d and 3d folders hold the same pair of socket and map for each dimension.
+Named seats that a node can be attached to, one occupant each. Attaching reparents and snaps to the marker; detaching hands the node back.
 
 A slot that holds one node, reparenting it and optionally snapping its transform.
 :ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes, and live in the

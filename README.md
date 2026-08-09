@@ -17,19 +17,19 @@ The rest are listed with what they target.
 
 | Module | Works in | Description |
 | --- | --- | --- |
-| `core` | any | Rudimentary and abstract classes, utilities, and generic helpers used universally across the FoxFabric framework. |
-| `attribute_map` | any | A recursive, hierarchical data structure for safely managing, clamping, and querying dynamic entity statistics and state variables. |
-| `effect` | any | A memory-safe Flyweight architecture for managing the lifecycle, stacking, and interval ticking of temporary gameplay modifiers (buffs and debuffs) without SceneTree bloat. |
-| `state_machine` | any | A node-based Finite State Machine (FSM) architecture for separating complex entity logic (like player movement or enemy AI) into discrete, manageable, and isolated state nodes. |
-| `shop` | any | A highly abstracted, decoupled transaction system. Instead of relying on hardcoded "number" currencies, it routes arbitrary data between generic Wallets and Shops, allowing currency to be anything from integers to physical items. |
-| `socket` | 2D and 3D | A spatial occupancy and reparenting system that allows for safely attaching nodes to defined "seats." The 2d and 3d folders hold the same pair of socket and map for each dimension. |
-| `damage` | 2D and 3D | A completely decoupled, physics-based data routing pipeline. It uses a network of spatial deliverers (hit areas, raycasts and shapecasts) and receivers (hurt areas) to transport arbitrary Variant payloads across the game world without hardcoding damage or combat logic. The 2d and 3d folders hold the same pipeline for each dimension. |
-| `interaction` | 2D and 3D | A raycast-driven focus and activation pipeline. An interaction raycast focuses and triggers interactable volumes, which emit an arbitrary Variant context so the initiator decides what interacting actually means. The 2d and 3d folders hold the same pipeline for each dimension. |
-| `aim_gimbal` | 3D | A pure mathematical hinge for accumulating 2D input into clamped, gimbal-lock-safe pitch and yaw rotations. |
-| `zoom_spring_arm` | 3D | An extended SpringArm3D component for camera controllers. It replaces standard length adjustments with smooth, frame-independent zoom interpolation, clamp limits, precise signal emissions for UI/visibility toggling, and built-in multiplayer authority checks. |
-| `physics_dragging` | 2D and 3D | Manipulates a RigidBody by applying localized forces and torques to pull it toward a target node. Stiffness, damping, and force limits live in swappable FoxPhysicsDragProfile resources, which are shared by both dimensions. The 2d and 3d folders hold a dragger each. |
-| `view_model` | 3D | A SubViewportContainer that keeps its SubViewport matched to the main viewport size, for rendering first person view models in a layer separate from the world. |
-| `world_environments` | 3D | Provides some generic world environments, skyboxes, etc. |
+| `core` | any | The base classes the other modules extend, and the maths helpers they share. Every module needs this one. |
+| `attribute_map` | any | Holds an entity's data in a tree. Rules and flags put on a parent reach every map beneath it, so one debuff on a vehicle can slow everything riding in it. |
+| `effect` | any | Buffs and debuffs that stack, expire, and tick on a timer. One resource describes the effect and the manager runs however many are active, so nothing is added to the scene tree per effect. |
+| `state_machine` | any | States as child nodes. The machine forwards process, physics, and input to whichever one is current, and states ask it to change. |
+| `shop` | any | Wallets, prices, and catalogues for buying things. A price decides for itself whether a wallet can pay, so currency can be coins, scrap, or a specific item. |
+| `socket` | 2D and 3D | Named seats that a node can be attached to, one occupant each. Attaching reparents and snaps to the marker; detaching hands the node back. |
+| `damage` | 2D and 3D | Hit areas, raycasts, and shapecasts that deliver a payload to hurt areas. The payload is whatever you put in it, so the module never learns what damage means in your game. |
+| `interaction` | 2D and 3D | A raycast that tracks what it is pointing at, and areas that answer when you interact with them. Interacting emits a signal carrying whatever context you passed, so what it means is up to the receiver. |
+| `aim_gimbal` | 3D | Turns mouse or stick movement into pitch and yaw, with limits on each. Pitch and yaw are separate nodes, so looking up never rolls the horizon. |
+| `zoom_spring_arm` | 3D | A SpringArm3D that eases to a new length instead of snapping, between a minimum and maximum. Emits when it reaches either end, so UI can show or hide with the camera. |
+| `physics_dragging` | 2D and 3D | Pulls a RigidBody towards a target node with forces and torque, so it still collides with the world on the way. Stiffness and damping live in a resource you can swap. |
+| `view_model` | 3D | A SubViewportContainer that keeps its SubViewport the same size as the main one, for drawing first person hands and weapons in a layer of their own. |
+| `world_environments` | 3D | Ready-made WorldEnvironment scenes, including a stylized sky and a cheaper one for mobile. Drop one in rather than dialling in tonemapping and fog by hand. |
 | `character` | 3D | Motors, abilities, and states for driving a CharacterBody3D, plus the mannequin and accessory assets used by the demos. Under heavy refactor and not representative of the rest of the library. |
 | `deprecated` | n/a | Graveyard for old code and retired prototypes. |
 

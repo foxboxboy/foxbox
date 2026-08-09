@@ -1,7 +1,7 @@
 Effect
 ======
 
-A memory-safe Flyweight architecture for managing the lifecycle, stacking, and interval ticking of temporary gameplay modifiers (buffs and debuffs) without SceneTree bloat.
+Buffs and debuffs that stack, expire, and tick on a timer. One resource describes the effect and the manager runs however many are active, so nothing is added to the scene tree per effect.
 
 A :ref:`class_FoxEffect` is a ``Resource`` holding the definition: duration, tick rate and
 stacking rules. A :ref:`class_FoxEffectInstance` is created per application and holds the mutable
