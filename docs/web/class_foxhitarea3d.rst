@@ -62,15 +62,9 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+-------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`fire<class_FoxHitArea3D_method_fire>`\ (\ )                                                                             |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_ready<class_FoxHitArea3D_private_method__ready>`\ (\ )                                                                 |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_area_entered<class_FoxHitArea3D_private_method__on_area_entered>`\ (\ area\: :ref:`Area3D<class_Area3D>`\ )         |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_try_deliver_payload<class_FoxHitArea3D_private_method__try_deliver_payload>`\ (\ area\: :ref:`Area3D<class_Area3D>`\ ) |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------+
+   +--------+---------------------------------------------------+
+   | |void| | :ref:`fire<class_FoxHitArea3D_method_fire>`\ (\ ) |
+   +--------+---------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -122,48 +116,6 @@ Method Descriptions
 |void| **fire**\ (\ ) :ref:`🔗<class_FoxHitArea3D_method_fire>`
 
 Instantly delivers the payload to all :ref:`FoxHurtArea3D<class_FoxHurtArea3D>` nodes currently inside this area. Useful for immediate Area-of-Effect interactions like explosions.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxHitArea3D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxHitArea3D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxHitArea3D_private_method__on_area_entered:
-
-.. rst-class:: classref-method
-
-|void| **_on_area_entered**\ (\ area\: :ref:`Area3D<class_Area3D>`\ ) :ref:`🔗<class_FoxHitArea3D_private_method__on_area_entered>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxHitArea3D_private_method__try_deliver_payload:
-
-.. rst-class:: classref-method
-
-|void| **_try_deliver_payload**\ (\ area\: :ref:`Area3D<class_Area3D>`\ ) :ref:`🔗<class_FoxHitArea3D_private_method__try_deliver_payload>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

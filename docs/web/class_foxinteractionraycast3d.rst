@@ -29,11 +29,9 @@ Properties
 .. table::
    :widths: auto
 
-   +-----------------------------------------------------------+------------------------------------------------------------------------------------+----------+
-   | :ref:`float<class_float>`                                 | :ref:`interaction_range<class_FoxInteractionRayCast3D_property_interaction_range>` | ``-1.0`` |
-   +-----------------------------------------------------------+------------------------------------------------------------------------------------+----------+
-   | :ref:`FoxInteractableArea3D<class_FoxInteractableArea3D>` | :ref:`_current_target<class_FoxInteractionRayCast3D_property__current_target>`     | ``null`` |
-   +-----------------------------------------------------------+------------------------------------------------------------------------------------+----------+
+   +---------------------------+------------------------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`interaction_range<class_FoxInteractionRayCast3D_property_interaction_range>` | ``-1.0`` |
+   +---------------------------+------------------------------------------------------------------------------------+----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -48,15 +46,7 @@ Methods
    +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                    | :ref:`interact_with_target<class_FoxInteractionRayCast3D_method_interact_with_target>`\ (\ context\: :ref:`Variant<class_Variant>` = null\ )                 |
    +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                    | :ref:`_ready<class_FoxInteractionRayCast3D_private_method__ready>`\ (\ )                                                                                     |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                    | :ref:`_physics_process<class_FoxInteractionRayCast3D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                             |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                    | :ref:`_clear_target<class_FoxInteractionRayCast3D_private_method__clear_target>`\ (\ )                                                                       |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                                   | :ref:`_set<class_FoxInteractionRayCast3D_private_method__set>`\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>`         | :ref:`_get_configuration_warnings<class_FoxInteractionRayCast3D_private_method__get_configuration_warnings>`\ (\ )                                           |
    +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
@@ -121,20 +111,6 @@ Property Descriptions
 
 How far the raycast will project along the local -Z axis. Leave as ``-1.0`` to ignore and use the manual :ref:`RayCast3D.target_position<class_RayCast3D_property_target_position>`.
 
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractionRayCast3D_property__current_target:
-
-.. rst-class:: classref-property
-
-:ref:`FoxInteractableArea3D<class_FoxInteractableArea3D>` **_current_target** = ``null`` :ref:`🔗<class_FoxInteractionRayCast3D_property__current_target>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
 .. rst-class:: classref-section-separator
 
 ----
@@ -168,48 +144,6 @@ Attempts to interact with the currently focused target, passing the given ``cont
 
 ----
 
-.. _class_FoxInteractionRayCast3D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxInteractionRayCast3D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractionRayCast3D_private_method__physics_process:
-
-.. rst-class:: classref-method
-
-|void| **_physics_process**\ (\ _delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxInteractionRayCast3D_private_method__physics_process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractionRayCast3D_private_method__clear_target:
-
-.. rst-class:: classref-method
-
-|void| **_clear_target**\ (\ ) :ref:`🔗<class_FoxInteractionRayCast3D_private_method__clear_target>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxInteractionRayCast3D_private_method__set:
 
 .. rst-class:: classref-method
@@ -219,20 +153,6 @@ Attempts to interact with the currently focused target, passing the given ``cont
 :ref:`RayCast3D.collide_with_areas<class_RayCast3D_property_collide_with_areas>` belongs to the parent class, so it cannot be given a setter here. :ref:`Object._set()<class_Object_private_method__set>` sees the assignment first; returning ``false`` leaves the engine to apply it as normal. 
 
 The refresh is deferred because this runs before the new value lands, and the warning is computed from it.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractionRayCast3D_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxInteractionRayCast3D_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

@@ -51,23 +51,11 @@ Properties
 .. table::
    :widths: auto
 
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`bool<class_bool>`                                                                                   | :ref:`can_receive_rules<class_FoxAttributeMap_property_can_receive_rules>` | ``true`` |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`bool<class_bool>`                                                                                   | :ref:`can_send_rules<class_FoxAttributeMap_property_can_send_rules>`       | ``true`` |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`Variant<class_Variant>`\] | :ref:`_data<class_FoxAttributeMap_property__data>`                         | ``{}``   |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`Array<class_Array>`\]     | :ref:`_groups<class_FoxAttributeMap_property__groups>`                     | ``{}``   |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`Array<class_Array>`\[:ref:`FoxAttributeRule<class_FoxAttributeRule>`\]                              | :ref:`_active_rules<class_FoxAttributeMap_property__active_rules>`         | ``[]``   |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`int<class_int>`\]         | :ref:`_flags<class_FoxAttributeMap_property__flags>`                       | ``{}``   |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`FoxAttributeMap<class_FoxAttributeMap>`                                                             | :ref:`_parent_map<class_FoxAttributeMap_property__parent_map>`             |          |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
-   | :ref:`Array<class_Array>`\[:ref:`FoxAttributeMap<class_FoxAttributeMap>`\]                                | :ref:`_child_maps<class_FoxAttributeMap_property__child_maps>`             | ``[]``   |
-   +-----------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------+----------+
+   +-------------------------+----------------------------------------------------------------------------+----------+
+   | :ref:`bool<class_bool>` | :ref:`can_receive_rules<class_FoxAttributeMap_property_can_receive_rules>` | ``true`` |
+   +-------------------------+----------------------------------------------------------------------------+----------+
+   | :ref:`bool<class_bool>` | :ref:`can_send_rules<class_FoxAttributeMap_property_can_send_rules>`       | ``true`` |
+   +-------------------------+----------------------------------------------------------------------------+----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -122,19 +110,9 @@ Methods
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                                                          | :ref:`add_rule<class_FoxAttributeMap_method_add_rule>`\ (\ rule\: :ref:`FoxAttributeRule<class_FoxAttributeRule>`\ )                                                           |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                                                          | :ref:`_apply_rule<class_FoxAttributeMap_private_method__apply_rule>`\ (\ rule\: :ref:`FoxAttributeRule<class_FoxAttributeRule>`, from_parent\: :ref:`bool<class_bool>`\ )      |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                                                          | :ref:`remove_rule<class_FoxAttributeMap_method_remove_rule>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Array<class_Array>`\[:ref:`FoxAttributeRule<class_FoxAttributeRule>`\]                                    | :ref:`get_active_rules<class_FoxAttributeMap_method_get_active_rules>`\ (\ )                                                                                                   |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxAttributeRule<class_FoxAttributeRule>`                                                                 | :ref:`_find_rule<class_FoxAttributeMap_private_method__find_rule>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                             |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                                                          | :ref:`_enter_tree<class_FoxAttributeMap_private_method__enter_tree>`\ (\ )                                                                                                     |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxAttributeMap<class_FoxAttributeMap>`                                                                   | :ref:`_find_parent_map<class_FoxAttributeMap_private_method__find_parent_map>`\ (\ node\: :ref:`Node<class_Node>`\ )                                                           |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                                                          | :ref:`_exit_tree<class_FoxAttributeMap_private_method__exit_tree>`\ (\ )                                                                                                       |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                                                          | :ref:`register_child_map<class_FoxAttributeMap_method_register_child_map>`\ (\ child\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ )                                        |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -147,8 +125,6 @@ Methods
    | :ref:`Array<class_Array>`\[:ref:`Dictionary<class_Dictionary>`\]                                                | :ref:`_get_property_list<class_FoxAttributeMap_private_method__get_property_list>`\ (\ )                                                                                       |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>`                                                                             | :ref:`_read_only<class_FoxAttributeMap_private_method__read_only>`\ (\ name\: :ref:`StringName<class_StringName>`, type\: :ref:`int<class_int>`\ )                             |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                                                                   | :ref:`_get<class_FoxAttributeMap_private_method__get>`\ (\ property\: :ref:`StringName<class_StringName>`\ )                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`StringName<class_StringName>`\] | :ref:`get_rule_summary<class_FoxAttributeMap_method_get_rule_summary>`\ (\ )                                                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -306,90 +282,6 @@ If ``true``, this map will accept and apply rules propagated from a parent map.
 :ref:`bool<class_bool>` **can_send_rules** = ``true`` :ref:`🔗<class_FoxAttributeMap_property_can_send_rules>`
 
 If ``true``, this map will propagate its active rules down to any registered child maps.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__data:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`Variant<class_Variant>`\] **_data** = ``{}`` :ref:`🔗<class_FoxAttributeMap_property__data>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__groups:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`Array<class_Array>`\] **_groups** = ``{}`` :ref:`🔗<class_FoxAttributeMap_property__groups>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__active_rules:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>`\[:ref:`FoxAttributeRule<class_FoxAttributeRule>`\] **_active_rules** = ``[]`` :ref:`🔗<class_FoxAttributeMap_property__active_rules>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__flags:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`int<class_int>`\] **_flags** = ``{}`` :ref:`🔗<class_FoxAttributeMap_property__flags>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__parent_map:
-
-.. rst-class:: classref-property
-
-:ref:`FoxAttributeMap<class_FoxAttributeMap>` **_parent_map** :ref:`🔗<class_FoxAttributeMap_property__parent_map>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_property__child_maps:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>`\[:ref:`FoxAttributeMap<class_FoxAttributeMap>`\] **_child_maps** = ``[]`` :ref:`🔗<class_FoxAttributeMap_property__child_maps>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 
@@ -672,20 +564,6 @@ Applies a data-modifying :ref:`FoxAttributeRule<class_FoxAttributeRule>` to the 
 
 ----
 
-.. _class_FoxAttributeMap_private_method__apply_rule:
-
-.. rst-class:: classref-method
-
-|void| **_apply_rule**\ (\ rule\: :ref:`FoxAttributeRule<class_FoxAttributeRule>`, from_parent\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__apply_rule>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxAttributeMap_method_remove_rule:
 
 .. rst-class:: classref-method
@@ -705,62 +583,6 @@ Removes a :ref:`FoxAttributeRule<class_FoxAttributeRule>` by matching its :ref:`
 :ref:`Array<class_Array>`\[:ref:`FoxAttributeRule<class_FoxAttributeRule>`\] **get_active_rules**\ (\ ) :ref:`🔗<class_FoxAttributeMap_method_get_active_rules>`
 
 Returns a copy of the currently active :ref:`FoxAttributeRule<class_FoxAttributeRule>`\ s. Editing it will not change the map.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__find_rule:
-
-.. rst-class:: classref-method
-
-:ref:`FoxAttributeRule<class_FoxAttributeRule>` **_find_rule**\ (\ id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__find_rule>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__enter_tree:
-
-.. rst-class:: classref-method
-
-|void| **_enter_tree**\ (\ ) :ref:`🔗<class_FoxAttributeMap_private_method__enter_tree>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__find_parent_map:
-
-.. rst-class:: classref-method
-
-:ref:`FoxAttributeMap<class_FoxAttributeMap>` **_find_parent_map**\ (\ node\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__find_parent_map>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__exit_tree:
-
-.. rst-class:: classref-method
-
-|void| **_exit_tree**\ (\ ) :ref:`🔗<class_FoxAttributeMap_private_method__exit_tree>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -835,20 +657,6 @@ A map holds nothing until the game runs, so these are empty while editing. They 
 :ref:`Dictionary<class_Dictionary>` **_read_only**\ (\ name\: :ref:`StringName<class_StringName>`, type\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__read_only>`
 
 No PROPERTY_USAGE_STORAGE, so none of this is written into a .tscn.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__get:
-
-.. rst-class:: classref-method
-
-:ref:`Variant<class_Variant>` **_get**\ (\ property\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__get>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 

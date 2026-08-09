@@ -130,6 +130,7 @@ func clear_multiplier_max_modifier(id: StringName) -> void:
 
 #region Private
 
+## Builds an empty pool. Set [member base_max] before using it, or it starts at nothing.
 func _init() -> void:
 	_max_stat = FoxModifiableStat.new(base_max)
 	_pool = FoxBoundedValue.new(base_max, base_max, 0.0)

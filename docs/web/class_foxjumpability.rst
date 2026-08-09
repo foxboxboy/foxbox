@@ -29,29 +29,19 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`int<class_int>`     | :ref:`max_jumps<class_FoxJumpAbility_property_max_jumps>`                     | ``1``       |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`coyote_duration<class_FoxJumpAbility_property_coyote_duration>`         | ``0.15``    |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`buffer_time<class_FoxJumpAbility_property_buffer_time>`                 | ``0.1``     |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`jump_cut_multiplier<class_FoxJumpAbility_property_jump_cut_multiplier>` | ``0.5``     |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`strength<class_FoxJumpAbility_property_strength>`                       | ``2.0``     |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`bool<class_bool>`   | :ref:`is_grounded<class_FoxJumpAbility_property_is_grounded>`                 | ``false``   |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`bool<class_bool>`   | :ref:`_is_request_active<class_FoxJumpAbility_property__is_request_active>`   | ``false``   |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`int<class_int>`     | :ref:`_jumps_made<class_FoxJumpAbility_property__jumps_made>`                 | ``0``       |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`int<class_int>`     | :ref:`_last_grounded_time<class_FoxJumpAbility_property__last_grounded_time>` | ``-100000`` |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`int<class_int>`     | :ref:`_last_jump_time<class_FoxJumpAbility_property__last_jump_time>`         | ``-100000`` |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`_buffer_timer<class_FoxJumpAbility_property__buffer_timer>`             | ``0.0``     |
-   +---------------------------+-------------------------------------------------------------------------------+-------------+
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`int<class_int>`     | :ref:`max_jumps<class_FoxJumpAbility_property_max_jumps>`                     | ``1``     |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`coyote_duration<class_FoxJumpAbility_property_coyote_duration>`         | ``0.15``  |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`buffer_time<class_FoxJumpAbility_property_buffer_time>`                 | ``0.1``   |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`jump_cut_multiplier<class_FoxJumpAbility_property_jump_cut_multiplier>` | ``0.5``   |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`strength<class_FoxJumpAbility_property_strength>`                       | ``2.0``   |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>`   | :ref:`is_grounded<class_FoxJumpAbility_property_is_grounded>`                 | ``false`` |
+   +---------------------------+-------------------------------------------------------------------------------+-----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -61,8 +51,6 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------------------+------------------------------------------------------------------------------------------------------------+
-   | |void|                  | :ref:`_process<class_FoxJumpAbility_private_method__process>`\ (\ delta\: :ref:`float<class_float>`\ )     |
    +-------------------------+------------------------------------------------------------------------------------------------------------+
    | |void|                  | :ref:`request<class_FoxJumpAbility_method_request>`\ (\ )                                                  |
    +-------------------------+------------------------------------------------------------------------------------------------------------+
@@ -183,7 +171,7 @@ Documentation needed
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -201,77 +189,7 @@ Documentation needed
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJumpAbility_property__is_request_active:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_is_request_active** = ``false`` :ref:`🔗<class_FoxJumpAbility_property__is_request_active>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJumpAbility_property__jumps_made:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_jumps_made** = ``0`` :ref:`🔗<class_FoxJumpAbility_property__jumps_made>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJumpAbility_property__last_grounded_time:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_last_grounded_time** = ``-100000`` :ref:`🔗<class_FoxJumpAbility_property__last_grounded_time>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJumpAbility_property__last_jump_time:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_last_jump_time** = ``-100000`` :ref:`🔗<class_FoxJumpAbility_property__last_jump_time>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJumpAbility_property__buffer_timer:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_buffer_timer** = ``0.0`` :ref:`🔗<class_FoxJumpAbility_property__buffer_timer>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -281,20 +199,6 @@ Documentation needed
 
 Method Descriptions
 -------------------
-
-.. _class_FoxJumpAbility_private_method__process:
-
-.. rst-class:: classref-method
-
-|void| **_process**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxJumpAbility_private_method__process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxJumpAbility_method_request:
 

@@ -35,20 +35,6 @@ Properties
    | :ref:`SubViewport<class_SubViewport>` | :ref:`sub_viewport<class_FoxViewModelContainer_property_sub_viewport>` | ``<unknown>`` |
    +---------------------------------------+------------------------------------------------------------------------+---------------+
 
-.. rst-class:: classref-reftable-group
-
-Methods
--------
-
-.. table::
-   :widths: auto
-
-   +--------+--------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_ready<class_FoxViewModelContainer_private_method__ready>`\ (\ )                                 |
-   +--------+--------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_viewport_size_changed<class_FoxViewModelContainer_private_method__viewport_size_changed>`\ (\ ) |
-   +--------+--------------------------------------------------------------------------------------------------------+
-
 .. rst-class:: classref-section-separator
 
 ----
@@ -65,39 +51,6 @@ Property Descriptions
 :ref:`SubViewport<class_SubViewport>` **sub_viewport** = ``<unknown>`` :ref:`🔗<class_FoxViewModelContainer_property_sub_viewport>`
 
 The child viewport that gets resized. Expected to be a direct child named :ref:`SubViewport<class_SubViewport>`.
-
-.. rst-class:: classref-section-separator
-
-----
-
-.. rst-class:: classref-descriptions-group
-
-Method Descriptions
--------------------
-
-.. _class_FoxViewModelContainer_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxViewModelContainer_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxViewModelContainer_private_method__viewport_size_changed:
-
-.. rst-class:: classref-method
-
-|void| **_viewport_size_changed**\ (\ ) :ref:`🔗<class_FoxViewModelContainer_private_method__viewport_size_changed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

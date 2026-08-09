@@ -45,19 +45,13 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`populate<class_FoxShopMenu_method_populate>`\ (\ catalog\: :ref:`FoxShopCatalog<class_FoxShopCatalog>`, wallet\: :ref:`FoxWallet<class_FoxWallet>` = null\ ) |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`add_item<class_FoxShopMenu_method_add_item>`\ (\ item\: :ref:`FoxShopItem<class_FoxShopItem>`\ )                                                             |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`update_affordability<class_FoxShopMenu_method_update_affordability>`\ (\ wallet\: :ref:`FoxWallet<class_FoxWallet>` = _current_wallet\ )                     |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_clear_all_options<class_FoxShopMenu_private_method__clear_all_options>`\ (\ )                                                                               |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_on_slot_pressed<class_FoxShopMenu_private_method__on_slot_pressed>`\ (\ item\: :ref:`FoxShopItem<class_FoxShopItem>`\ )                                     |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxShopMenu_private_method__get_configuration_warnings>`\ (\ )                                                             |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`populate<class_FoxShopMenu_method_populate>`\ (\ catalog\: :ref:`FoxShopCatalog<class_FoxShopCatalog>`, wallet\: :ref:`FoxWallet<class_FoxWallet>` = null\ ) |
+   +--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`add_item<class_FoxShopMenu_method_add_item>`\ (\ item\: :ref:`FoxShopItem<class_FoxShopItem>`\ )                                                             |
+   +--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`update_affordability<class_FoxShopMenu_method_update_affordability>`\ (\ wallet\: :ref:`FoxWallet<class_FoxWallet>` = _current_wallet\ )                     |
+   +--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -215,48 +209,6 @@ Instantiates a new slot for the given ``item`` and connects its signals.
 |void| **update_affordability**\ (\ wallet\: :ref:`FoxWallet<class_FoxWallet>` = _current_wallet\ ) :ref:`🔗<class_FoxShopMenu_method_update_affordability>`
 
 Forces all child slots to recalculate affordability.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopMenu_private_method__clear_all_options:
-
-.. rst-class:: classref-method
-
-|void| **_clear_all_options**\ (\ ) :ref:`🔗<class_FoxShopMenu_private_method__clear_all_options>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopMenu_private_method__on_slot_pressed:
-
-.. rst-class:: classref-method
-
-|void| **_on_slot_pressed**\ (\ item\: :ref:`FoxShopItem<class_FoxShopItem>`\ ) :ref:`🔗<class_FoxShopMenu_private_method__on_slot_pressed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopMenu_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxShopMenu_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

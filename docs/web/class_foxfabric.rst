@@ -23,30 +23,12 @@ Registers the editor extras that individual modules ship. Modules are meant to b
 
 .. rst-class:: classref-reftable-group
 
-Properties
-----------
-
-.. table::
-   :widths: auto
-
-   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
-   | :ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] | :ref:`_gizmos<class_FoxFabric_property__gizmos>`         | ``[]`` |
-   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
-   | :ref:`Array<class_Array>`\[:ref:`EditorInspectorPlugin<class_EditorInspectorPlugin>`\]     | :ref:`_inspectors<class_FoxFabric_property__inspectors>` | ``[]`` |
-   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
-
-.. rst-class:: classref-reftable-group
-
 Methods
 -------
 
 .. table::
    :widths: auto
 
-   +-----------------------------+------------------------------------------------------------------------------------------------------------+
-   | |void|                      | :ref:`_enter_tree<class_FoxFabric_private_method__enter_tree>`\ (\ )                                       |
-   +-----------------------------+------------------------------------------------------------------------------------------------------------+
-   | |void|                      | :ref:`_exit_tree<class_FoxFabric_private_method__exit_tree>`\ (\ )                                         |
    +-----------------------------+------------------------------------------------------------------------------------------------------------+
    | :ref:`Object<class_Object>` | :ref:`_instantiate<class_FoxFabric_private_method__instantiate>`\ (\ path\: :ref:`String<class_String>`\ ) |
    +-----------------------------+------------------------------------------------------------------------------------------------------------+
@@ -82,69 +64,8 @@ Inspector plugins to register, by path. Same rule as the gizmos.
 
 .. rst-class:: classref-descriptions-group
 
-Property Descriptions
----------------------
-
-.. _class_FoxFabric_property__gizmos:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] **_gizmos** = ``[]`` :ref:`🔗<class_FoxFabric_property__gizmos>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxFabric_property__inspectors:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>`\[:ref:`EditorInspectorPlugin<class_EditorInspectorPlugin>`\] **_inspectors** = ``[]`` :ref:`🔗<class_FoxFabric_property__inspectors>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-section-separator
-
-----
-
-.. rst-class:: classref-descriptions-group
-
 Method Descriptions
 -------------------
-
-.. _class_FoxFabric_private_method__enter_tree:
-
-.. rst-class:: classref-method
-
-|void| **_enter_tree**\ (\ ) :ref:`🔗<class_FoxFabric_private_method__enter_tree>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxFabric_private_method__exit_tree:
-
-.. rst-class:: classref-method
-
-|void| **_exit_tree**\ (\ ) :ref:`🔗<class_FoxFabric_private_method__exit_tree>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxFabric_private_method__instantiate:
 

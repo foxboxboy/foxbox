@@ -46,19 +46,11 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_ready<class_FoxCharacterMotor3D_private_method__ready>`\ (\ )                                                                |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_physics_process<class_FoxCharacterMotor3D_private_method__physics_process>`\ (\ delta\: :ref:`Variant<class_Variant>`\ )     |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>` | :ref:`enable<class_FoxCharacterMotor3D_method_enable>`\ (\ )                                                                        |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>` | :ref:`disable<class_FoxCharacterMotor3D_method_disable>`\ (\ )                                                                      |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_update_movement<class_FoxCharacterMotor3D_private_method__update_movement>`\ (\ _delta\: :ref:`Variant<class_Variant>`\ )    |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_update_y_velocity<class_FoxCharacterMotor3D_private_method__update_y_velocity>`\ (\ delta\: :ref:`Variant<class_Variant>`\ ) |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------------------+----------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`enable<class_FoxCharacterMotor3D_method_enable>`\ (\ )   |
+   +-------------------------------+----------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`disable<class_FoxCharacterMotor3D_method_disable>`\ (\ ) |
+   +-------------------------------+----------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -150,34 +142,6 @@ Whether or not this motor will process.
 Method Descriptions
 -------------------
 
-.. _class_FoxCharacterMotor3D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxCharacterMotor3D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterMotor3D_private_method__physics_process:
-
-.. rst-class:: classref-method
-
-|void| **_physics_process**\ (\ delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxCharacterMotor3D_private_method__physics_process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxCharacterMotor3D_method_enable:
 
 .. rst-class:: classref-method
@@ -197,34 +161,6 @@ Enables the motor to work.
 :ref:`Variant<class_Variant>` **disable**\ (\ ) :ref:`🔗<class_FoxCharacterMotor3D_method_disable>`
 
 Enables the motor to work.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterMotor3D_private_method__update_movement:
-
-.. rst-class:: classref-method
-
-|void| **_update_movement**\ (\ _delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxCharacterMotor3D_private_method__update_movement>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterMotor3D_private_method__update_y_velocity:
-
-.. rst-class:: classref-method
-
-|void| **_update_y_velocity**\ (\ delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxCharacterMotor3D_private_method__update_y_velocity>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

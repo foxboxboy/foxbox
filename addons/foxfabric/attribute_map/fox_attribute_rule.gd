@@ -46,6 +46,8 @@ var id: StringName = &""
 ## The specific dictionary key in the [FoxAttributeMap] that this rule targets (e.g., [code]&"health"[/code], [code]&"move_speed"[/code]).
 var target_key: StringName = &""
 
+## Builds a rule with the [param p_id] it will be removed by and the [param p_target_key] it
+## acts on. Subclasses call this with [code]super()[/code].
 func _init(p_id: StringName = &"", p_target_key: StringName = &"") -> void:
 	id = p_id
 	target_key = p_target_key

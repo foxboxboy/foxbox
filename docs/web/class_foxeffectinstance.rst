@@ -36,23 +36,17 @@ Properties
 .. table::
    :widths: auto
 
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`FoxEffect<class_FoxEffect>` | :ref:`effect<class_FoxEffectInstance_property_effect>`           |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`Object<class_Object>`       | :ref:`target<class_FoxEffectInstance_property_target>`           |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`         | :ref:`time_left<class_FoxEffectInstance_property_time_left>`     |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`int<class_int>`             | :ref:`stack<class_FoxEffectInstance_property_stack>`             |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`bool<class_bool>`           | :ref:`is_expired<class_FoxEffectInstance_property_is_expired>`   |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`         | :ref:`_time_left<class_FoxEffectInstance_property__time_left>`   |         |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`int<class_int>`             | :ref:`_stack<class_FoxEffectInstance_property__stack>`           | ``1``   |
-   +-----------------------------------+------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`         | :ref:`_tick_timer<class_FoxEffectInstance_property__tick_timer>` | ``0.0`` |
-   +-----------------------------------+------------------------------------------------------------------+---------+
+   +-----------------------------------+----------------------------------------------------------------+
+   | :ref:`FoxEffect<class_FoxEffect>` | :ref:`effect<class_FoxEffectInstance_property_effect>`         |
+   +-----------------------------------+----------------------------------------------------------------+
+   | :ref:`Object<class_Object>`       | :ref:`target<class_FoxEffectInstance_property_target>`         |
+   +-----------------------------------+----------------------------------------------------------------+
+   | :ref:`float<class_float>`         | :ref:`time_left<class_FoxEffectInstance_property_time_left>`   |
+   +-----------------------------------+----------------------------------------------------------------+
+   | :ref:`int<class_int>`             | :ref:`stack<class_FoxEffectInstance_property_stack>`           |
+   +-----------------------------------+----------------------------------------------------------------+
+   | :ref:`bool<class_bool>`           | :ref:`is_expired<class_FoxEffectInstance_property_is_expired>` |
+   +-----------------------------------+----------------------------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -197,48 +191,6 @@ The current intensity level of the effect.
 Returns ``true`` if the timer has reached zero. Permanent effects always return ``false``. 
 
 \ :ref:`time_left<class_FoxEffectInstance_property_time_left>` is floored at zero rather than running negative, so it can never collide with the ``-1.0`` sentinel that marks an effect permanent.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectInstance_property__time_left:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_time_left** :ref:`🔗<class_FoxEffectInstance_property__time_left>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectInstance_property__stack:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_stack** = ``1`` :ref:`🔗<class_FoxEffectInstance_property__stack>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectInstance_property__tick_timer:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_tick_timer** = ``0.0`` :ref:`🔗<class_FoxEffectInstance_property__tick_timer>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 

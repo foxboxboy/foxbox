@@ -41,33 +41,19 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`max_rotation_lead<class_FoxPhysicsDragger2D_property_max_rotation_lead>`         | ``1.5707963267948966`` |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`default_stiffness<class_FoxPhysicsDragger2D_property_default_stiffness>`         | ``800.0``              |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`default_damping<class_FoxPhysicsDragger2D_property_default_damping>`             | ``25.0``               |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`bool<class_bool>`               | :ref:`default_keep_upright<class_FoxPhysicsDragger2D_property_default_keep_upright>`   | ``false``              |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`max_pull_force<class_FoxPhysicsDragger2D_property_max_pull_force>`               | ``4000.0``             |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`swing_response<class_FoxPhysicsDragger2D_property_swing_response>`               | ``0.25``               |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`RigidBody2D<class_RigidBody2D>` | :ref:`_current_body<class_FoxPhysicsDragger2D_property__current_body>`                 |                        |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`Vector2<class_Vector2>`         | :ref:`_grab_offset_local<class_FoxPhysicsDragger2D_property__grab_offset_local>`       |                        |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`bool<class_bool>`               | :ref:`_skip_first_frame<class_FoxPhysicsDragger2D_property__skip_first_frame>`         | ``false``              |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`_current_stiffness<class_FoxPhysicsDragger2D_property__current_stiffness>`       |                        |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`_current_damping<class_FoxPhysicsDragger2D_property__current_damping>`           |                        |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`bool<class_bool>`               | :ref:`_current_keep_upright<class_FoxPhysicsDragger2D_property__current_keep_upright>` |                        |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`             | :ref:`_current_torque_scale<class_FoxPhysicsDragger2D_property__current_torque_scale>` | ``1.0``                |
-   +---------------------------------------+----------------------------------------------------------------------------------------+------------------------+
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>` | :ref:`max_rotation_lead<class_FoxPhysicsDragger2D_property_max_rotation_lead>`       | ``1.5707963267948966`` |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>` | :ref:`default_stiffness<class_FoxPhysicsDragger2D_property_default_stiffness>`       | ``800.0``              |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>` | :ref:`default_damping<class_FoxPhysicsDragger2D_property_default_damping>`           | ``25.0``               |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`bool<class_bool>`   | :ref:`default_keep_upright<class_FoxPhysicsDragger2D_property_default_keep_upright>` | ``false``              |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>` | :ref:`max_pull_force<class_FoxPhysicsDragger2D_property_max_pull_force>`             | ``4000.0``             |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>` | :ref:`swing_response<class_FoxPhysicsDragger2D_property_swing_response>`             | ``0.25``               |
+   +---------------------------+--------------------------------------------------------------------------------------+------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -89,8 +75,6 @@ Methods
    | :ref:`float<class_float>`     | :ref:`target_rotation_for<class_FoxPhysicsDragger2D_method_target_rotation_for>`\ (\ rotation\: :ref:`float<class_float>`, keep_upright\: :ref:`bool<class_bool>`\ ) |static|                                                 |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`release<class_FoxPhysicsDragger2D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_physics_process<class_FoxPhysicsDragger2D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`_rein_in_rotation<class_FoxPhysicsDragger2D_private_method__rein_in_rotation>`\ (\ )                                                                                                                                    |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -114,9 +98,9 @@ Constants
 
 **TORQUE_SPRING_GAIN** = ``0.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_SPRING_GAIN>`
 
-Gains applied to the profile when it drives rotation rather than position. 
+How much of the profile's stiffness drives rotation rather than position. 
 
-Matched on purpose, so a profile damped sensibly for pulling is damped sensibly for turning too. Once :ref:`torque_scale_for()<class_FoxPhysicsDragger2D_method_torque_scale_for>` has removed the difference in units between the two, the same stiffness and damping describe both, and one number does not have to be a compromise between them.
+Matched to :ref:`TORQUE_DAMPING_GAIN<class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN>` on purpose, so a profile damped sensibly for pulling is damped sensibly for turning too. Once :ref:`torque_scale_for()<class_FoxPhysicsDragger2D_method_torque_scale_for>` has removed the difference in units between the two, the same stiffness and damping describe both.
 
 .. _class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN:
 
@@ -124,11 +108,7 @@ Matched on purpose, so a profile damped sensibly for pulling is damped sensibly 
 
 **TORQUE_DAMPING_GAIN** = ``0.5`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_TORQUE_DAMPING_GAIN>`
 
-.. container:: contribute
-
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-
+How much of the profile's damping drives rotation. Matched to :ref:`TORQUE_SPRING_GAIN<class_FoxPhysicsDragger2D_constant_TORQUE_SPRING_GAIN>`.
 
 .. _class_FoxPhysicsDragger2D_constant_DEFAULT_ROTATION_LEAD:
 
@@ -220,104 +200,6 @@ How much of the pull's leverage becomes swing.
 Pulling at the point you grabbed is the same as pulling at the centre and adding the torque that offset produces. At 1.0 that torque is applied in full, which is physically honest and, on a long prop with a strong pull, larger than the orientation spring can answer: flick the cursor and the prop spins one way, is dragged back the other, and never settles. 
 
 Lowering it keeps the swing, so a plank grabbed by one end still trails behind, while leaving the orientation spring able to win. Set it to 0.0 to carry things rigidly.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__current_body:
-
-.. rst-class:: classref-property
-
-:ref:`RigidBody2D<class_RigidBody2D>` **_current_body** :ref:`🔗<class_FoxPhysicsDragger2D_property__current_body>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__grab_offset_local:
-
-.. rst-class:: classref-property
-
-:ref:`Vector2<class_Vector2>` **_grab_offset_local** :ref:`🔗<class_FoxPhysicsDragger2D_property__grab_offset_local>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__skip_first_frame:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_skip_first_frame** = ``false`` :ref:`🔗<class_FoxPhysicsDragger2D_property__skip_first_frame>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__current_stiffness:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_current_stiffness** :ref:`🔗<class_FoxPhysicsDragger2D_property__current_stiffness>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__current_damping:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_current_damping** :ref:`🔗<class_FoxPhysicsDragger2D_property__current_damping>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__current_keep_upright:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_current_keep_upright** :ref:`🔗<class_FoxPhysicsDragger2D_property__current_keep_upright>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_property__current_torque_scale:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_current_torque_scale** = ``1.0`` :ref:`🔗<class_FoxPhysicsDragger2D_property__current_torque_scale>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 
@@ -414,20 +296,6 @@ Static so the result can be checked without a body in hand.
 |void| **release**\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_release>`
 
 Releases the currently held :ref:`RigidBody2D<class_RigidBody2D>`. If ``dampen_spin`` is ``true``, it will aggressively kill residual angular velocity to prevent unrealistic spinning upon release.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_private_method__physics_process:
-
-.. rst-class:: classref-method
-
-|void| **_physics_process**\ (\ _delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxPhysicsDragger2D_private_method__physics_process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 

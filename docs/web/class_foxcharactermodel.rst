@@ -22,35 +22,25 @@ Properties
 .. table::
    :widths: auto
 
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`FoxCharacterAnimationTree<class_FoxCharacterAnimationTree>`        | :ref:`animation_tree<class_FoxCharacterModel_property_animation_tree>`                             |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`FoxCharacterHands<class_FoxCharacterHands>`                        | :ref:`hands<class_FoxCharacterModel_property_hands>`                                               |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`Skeleton3D<class_Skeleton3D>`                                      | :ref:`skeleton<class_FoxCharacterModel_property_skeleton>`                                         |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`FoxCharacterAccessories<class_FoxCharacterAccessories>`            | :ref:`accessories<class_FoxCharacterModel_property_accessories>`                                   |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`String<class_String>`                                              | :ref:`spine_bone_name<class_FoxCharacterModel_property_spine_bone_name>`                           | ``"spine"``            |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`                                                | :ref:`lean_into_turn_amount<class_FoxCharacterModel_property_lean_into_turn_amount>`               | ``0.7853981633974483`` |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`                                                | :ref:`animation_spine_pitch_offset<class_FoxCharacterModel_property_animation_spine_pitch_offset>` | ``0.0``                |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`int<class_int>`                                                    | :ref:`_spine_bone_index<class_FoxCharacterModel_property__spine_bone_index>`                       |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`int<class_int>`                                                    | :ref:`_pelvis_bone_index<class_FoxCharacterModel_property__pelvis_bone_index>`                     |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] | :ref:`_meshes<class_FoxCharacterModel_property__meshes>`                                           | ``[]``                 |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`bool<class_bool>`                                                  | :ref:`_meshes_shown<class_FoxCharacterModel_property__meshes_shown>`                               | ``true``               |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`Transform3D<class_Transform3D>`                                    | :ref:`_smoothed_anim_transform<class_FoxCharacterModel_property__smoothed_anim_transform>`         |                        |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`                                                | :ref:`pitch<class_FoxCharacterModel_property_pitch>`                                               | ``0.0``                |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
-   | :ref:`float<class_float>`                                                | :ref:`yaw<class_FoxCharacterModel_property_yaw>`                                                   | ``0.0``                |
-   +--------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`FoxCharacterAnimationTree<class_FoxCharacterAnimationTree>` | :ref:`animation_tree<class_FoxCharacterModel_property_animation_tree>`                             |                        |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`FoxCharacterHands<class_FoxCharacterHands>`                 | :ref:`hands<class_FoxCharacterModel_property_hands>`                                               |                        |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`Skeleton3D<class_Skeleton3D>`                               | :ref:`skeleton<class_FoxCharacterModel_property_skeleton>`                                         |                        |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`FoxCharacterAccessories<class_FoxCharacterAccessories>`     | :ref:`accessories<class_FoxCharacterModel_property_accessories>`                                   |                        |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`String<class_String>`                                       | :ref:`spine_bone_name<class_FoxCharacterModel_property_spine_bone_name>`                           | ``"spine"``            |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`                                         | :ref:`lean_into_turn_amount<class_FoxCharacterModel_property_lean_into_turn_amount>`               | ``0.7853981633974483`` |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`                                         | :ref:`animation_spine_pitch_offset<class_FoxCharacterModel_property_animation_spine_pitch_offset>` | ``0.0``                |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`                                         | :ref:`pitch<class_FoxCharacterModel_property_pitch>`                                               | ``0.0``                |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
+   | :ref:`float<class_float>`                                         | :ref:`yaw<class_FoxCharacterModel_property_yaw>`                                                   | ``0.0``                |
+   +-------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -60,35 +50,25 @@ Methods
 .. table::
    :widths: auto
 
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`_ready<class_FoxCharacterModel_private_method__ready>`\ (\ )                                                                                                                                                              |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`_process<class_FoxCharacterModel_private_method__process>`\ (\ _delta\: :ref:`Variant<class_Variant>`\ )                                                                                                                  |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`update_strafe<class_FoxCharacterModel_method_update_strafe>`\ (\ input_direction\: :ref:`Vector2<class_Vector2>`\ )                                                                                                       |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`update_pitch_and_yaw<class_FoxCharacterModel_method_update_pitch_and_yaw>`\ (\ new_pitch\: :ref:`float<class_float>`, new_yaw\: :ref:`float<class_float>`\ )                                                              |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`hide_meshes<class_FoxCharacterModel_method_hide_meshes>`\ (\ )                                                                                                                                                            |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`show_meshes<class_FoxCharacterModel_method_show_meshes>`\ (\ )                                                                                                                                                            |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`stand<class_FoxCharacterModel_method_stand>`\ (\ )                                                                                                                                                                        |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`crouch<class_FoxCharacterModel_method_crouch>`\ (\ )                                                                                                                                                                      |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`enter_air<class_FoxCharacterModel_method_enter_air>`\ (\ )                                                                                                                                                                |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`set_move_speed<class_FoxCharacterModel_method_set_move_speed>`\ (\ speed_percent\: :ref:`float<class_float>`\ )                                                                                                           |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                                   | :ref:`set_vertical_speed<class_FoxCharacterModel_method_set_vertical_speed>`\ (\ vertical_speed\: :ref:`float<class_float>`\ )                                                                                                  |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] | :ref:`_get_all_meshes<class_FoxCharacterModel_private_method__get_all_meshes>`\ (\ _under_node\: :ref:`Node<class_Node>` = <unknown>, _array\: :ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] = []\ ) |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Skeleton3D<class_Skeleton3D>`                                      | :ref:`_get_first_skeleton<class_FoxCharacterModel_private_method__get_first_skeleton>`\ (\ _under_node\: :ref:`Node<class_Node>` = <unknown>\ )                                                                                 |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>`                                            | :ref:`_update_spine_bone<class_FoxCharacterModel_private_method__update_spine_bone>`\ (\ )                                                                                                                                      |
-   +--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`update_strafe<class_FoxCharacterModel_method_update_strafe>`\ (\ input_direction\: :ref:`Vector2<class_Vector2>`\ )                                          |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`update_pitch_and_yaw<class_FoxCharacterModel_method_update_pitch_and_yaw>`\ (\ new_pitch\: :ref:`float<class_float>`, new_yaw\: :ref:`float<class_float>`\ ) |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`hide_meshes<class_FoxCharacterModel_method_hide_meshes>`\ (\ )                                                                                               |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`show_meshes<class_FoxCharacterModel_method_show_meshes>`\ (\ )                                                                                               |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`stand<class_FoxCharacterModel_method_stand>`\ (\ )                                                                                                           |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Variant<class_Variant>` | :ref:`crouch<class_FoxCharacterModel_method_crouch>`\ (\ )                                                                                                         |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`enter_air<class_FoxCharacterModel_method_enter_air>`\ (\ )                                                                                                   |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`set_move_speed<class_FoxCharacterModel_method_set_move_speed>`\ (\ speed_percent\: :ref:`float<class_float>`\ )                                              |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`set_vertical_speed<class_FoxCharacterModel_method_set_vertical_speed>`\ (\ vertical_speed\: :ref:`float<class_float>`\ )                                     |
+   +-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -107,7 +87,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -121,7 +101,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -140,7 +120,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -154,7 +134,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -168,7 +148,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -182,7 +162,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -196,7 +176,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -210,7 +190,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -224,77 +204,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_property__spine_bone_index:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_spine_bone_index** :ref:`🔗<class_FoxCharacterModel_property__spine_bone_index>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_property__pelvis_bone_index:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_pelvis_bone_index** :ref:`🔗<class_FoxCharacterModel_property__pelvis_bone_index>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_property__meshes:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] **_meshes** = ``[]`` :ref:`🔗<class_FoxCharacterModel_property__meshes>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_property__meshes_shown:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_meshes_shown** = ``true`` :ref:`🔗<class_FoxCharacterModel_property__meshes_shown>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_property__smoothed_anim_transform:
-
-.. rst-class:: classref-property
-
-:ref:`Transform3D<class_Transform3D>` **_smoothed_anim_transform** :ref:`🔗<class_FoxCharacterModel_property__smoothed_anim_transform>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -308,7 +218,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -322,7 +232,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -333,34 +243,6 @@ Property Descriptions
 Method Descriptions
 -------------------
 
-.. _class_FoxCharacterModel_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxCharacterModel_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_private_method__process:
-
-.. rst-class:: classref-method
-
-|void| **_process**\ (\ _delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxCharacterModel_private_method__process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxCharacterModel_method_update_strafe:
 
 .. rst-class:: classref-method
@@ -369,7 +251,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -383,7 +265,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -397,7 +279,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -411,7 +293,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -425,7 +307,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -439,7 +321,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -453,7 +335,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -467,7 +349,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -481,49 +363,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_private_method__get_all_meshes:
-
-.. rst-class:: classref-method
-
-:ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] **_get_all_meshes**\ (\ _under_node\: :ref:`Node<class_Node>` = <unknown>, _array\: :ref:`Array<class_Array>`\[:ref:`MeshInstance3D<class_MeshInstance3D>`\] = []\ ) :ref:`🔗<class_FoxCharacterModel_private_method__get_all_meshes>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_private_method__get_first_skeleton:
-
-.. rst-class:: classref-method
-
-:ref:`Skeleton3D<class_Skeleton3D>` **_get_first_skeleton**\ (\ _under_node\: :ref:`Node<class_Node>` = <unknown>\ ) :ref:`🔗<class_FoxCharacterModel_private_method__get_first_skeleton>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterModel_private_method__update_spine_bone:
-
-.. rst-class:: classref-method
-
-:ref:`Variant<class_Variant>` **_update_spine_bone**\ (\ ) :ref:`🔗<class_FoxCharacterModel_private_method__update_spine_bone>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

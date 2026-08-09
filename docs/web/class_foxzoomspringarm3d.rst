@@ -49,27 +49,15 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`zoom_in<class_FoxZoomSpringArm3D_method_zoom_in>`\ (\ )                                                                              |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`zoom_out<class_FoxZoomSpringArm3D_method_zoom_out>`\ (\ )                                                                            |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`change_zoom<class_FoxZoomSpringArm3D_method_change_zoom>`\ (\ amount\: :ref:`float<class_float>`\ )                                  |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`float<class_float>`                         | :ref:`get_zoom_percentage<class_FoxZoomSpringArm3D_method_get_zoom_percentage>`\ (\ )                                                      |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_ready<class_FoxZoomSpringArm3D_private_method__ready>`\ (\ )                                                                        |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_process<class_FoxZoomSpringArm3D_private_method__process>`\ (\ delta\: :ref:`float<class_float>`\ )                                 |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_update_zoom<class_FoxZoomSpringArm3D_private_method__update_zoom>`\ (\ delta\: :ref:`float<class_float>`\ )                         |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`float<class_float>`                         | :ref:`_calculate_smooth_length<class_FoxZoomSpringArm3D_private_method__calculate_smooth_length>`\ (\ delta\: :ref:`float<class_float>`\ ) |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_emit_zoom_signals<class_FoxZoomSpringArm3D_private_method__emit_zoom_signals>`\ (\ old_length\: :ref:`float<class_float>`\ )        |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxZoomSpringArm3D_private_method__get_configuration_warnings>`\ (\ )                              |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------+-----------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`zoom_in<class_FoxZoomSpringArm3D_method_zoom_in>`\ (\ )                                             |
+   +---------------------------+-----------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`zoom_out<class_FoxZoomSpringArm3D_method_zoom_out>`\ (\ )                                           |
+   +---------------------------+-----------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`change_zoom<class_FoxZoomSpringArm3D_method_change_zoom>`\ (\ amount\: :ref:`float<class_float>`\ ) |
+   +---------------------------+-----------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>` | :ref:`get_zoom_percentage<class_FoxZoomSpringArm3D_method_get_zoom_percentage>`\ (\ )                     |
+   +---------------------------+-----------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -249,90 +237,6 @@ Directly modifies the target length by a specific ``amount``, clamping it to :re
 :ref:`float<class_float>` **get_zoom_percentage**\ (\ ) :ref:`🔗<class_FoxZoomSpringArm3D_method_get_zoom_percentage>`
 
 Returns the current visual zoom as a decimal between ``0.0`` and ``1.0``.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__process:
-
-.. rst-class:: classref-method
-
-|void| **_process**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__update_zoom:
-
-.. rst-class:: classref-method
-
-|void| **_update_zoom**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__update_zoom>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__calculate_smooth_length:
-
-.. rst-class:: classref-method
-
-:ref:`float<class_float>` **_calculate_smooth_length**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__calculate_smooth_length>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__emit_zoom_signals:
-
-.. rst-class:: classref-method
-
-|void| **_emit_zoom_signals**\ (\ old_length\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__emit_zoom_signals>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxZoomSpringArm3D_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxZoomSpringArm3D_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

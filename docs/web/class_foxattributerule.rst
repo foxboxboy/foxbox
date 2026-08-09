@@ -128,9 +128,7 @@ Method Descriptions
 
 |void| **_init**\ (\ p_id\: :ref:`StringName<class_StringName>` = &"", p_target_key\: :ref:`StringName<class_StringName>` = &""\ ) :ref:`🔗<class_FoxAttributeRule_private_method__init>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Builds a rule with the ``p_id`` it will be removed by and the ``p_target_key`` it acts on. Subclasses call this with ``super()``.
 
 .. rst-class:: classref-item-separator
 

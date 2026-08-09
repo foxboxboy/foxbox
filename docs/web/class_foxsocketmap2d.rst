@@ -54,21 +54,13 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`int<class_int>`                             | :ref:`get_available_socket_count<class_FoxSocketMap2D_method_get_available_socket_count>`\ (\ )                                                                                     |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                           | :ref:`attach<class_FoxSocketMap2D_method_attach>`\ (\ node\: :ref:`Node2D<class_Node2D>`, target_socket\: :ref:`StringName<class_StringName>` = &""\ )                              |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxSocket2D<class_FoxSocket2D>`             | :ref:`get_socket<class_FoxSocketMap2D_method_get_socket>`\ (\ socket_name\: :ref:`StringName<class_StringName>`\ )                                                                  |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_ready<class_FoxSocketMap2D_private_method__ready>`\ (\ )                                                                                                                     |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_on_socket_attached<class_FoxSocketMap2D_private_method__on_socket_attached>`\ (\ attachment\: :ref:`Node2D<class_Node2D>`, socket\: :ref:`FoxSocket2D<class_FoxSocket2D>`\ ) |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_on_socket_detached<class_FoxSocketMap2D_private_method__on_socket_detached>`\ (\ attachment\: :ref:`Node2D<class_Node2D>`, socket\: :ref:`FoxSocket2D<class_FoxSocket2D>`\ ) |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxSocketMap2D_private_method__get_configuration_warnings>`\ (\ )                                                                           |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                 | :ref:`get_available_socket_count<class_FoxSocketMap2D_method_get_available_socket_count>`\ (\ )                                                        |
+   +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`               | :ref:`attach<class_FoxSocketMap2D_method_attach>`\ (\ node\: :ref:`Node2D<class_Node2D>`, target_socket\: :ref:`StringName<class_StringName>` = &""\ ) |
+   +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`FoxSocket2D<class_FoxSocket2D>` | :ref:`get_socket<class_FoxSocketMap2D_method_get_socket>`\ (\ socket_name\: :ref:`StringName<class_StringName>`\ )                                     |
+   +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -156,62 +148,6 @@ Plugs ``node`` into a socket. If ``target_socket`` is specified, it targets that
 :ref:`FoxSocket2D<class_FoxSocket2D>` **get_socket**\ (\ socket_name\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxSocketMap2D_method_get_socket>`
 
 Safely retrieves a socket by name, returning null if it doesn't exist.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocketMap2D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxSocketMap2D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocketMap2D_private_method__on_socket_attached:
-
-.. rst-class:: classref-method
-
-|void| **_on_socket_attached**\ (\ attachment\: :ref:`Node2D<class_Node2D>`, socket\: :ref:`FoxSocket2D<class_FoxSocket2D>`\ ) :ref:`🔗<class_FoxSocketMap2D_private_method__on_socket_attached>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocketMap2D_private_method__on_socket_detached:
-
-.. rst-class:: classref-method
-
-|void| **_on_socket_detached**\ (\ attachment\: :ref:`Node2D<class_Node2D>`, socket\: :ref:`FoxSocket2D<class_FoxSocket2D>`\ ) :ref:`🔗<class_FoxSocketMap2D_private_method__on_socket_detached>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocketMap2D_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxSocketMap2D_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

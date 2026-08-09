@@ -197,6 +197,7 @@ func pop_multiplier_modifier(id: StringName) -> void:
 
 #region Private
 
+## Builds a stat sitting at [param p_base] with no modifiers on it yet.
 func _init(p_base: float = 0.0) -> void:
 	base_value = p_base
 	_current_value = base_value

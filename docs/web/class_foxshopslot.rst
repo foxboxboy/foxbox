@@ -64,12 +64,6 @@ Methods
    +--------+------------------------------------------------------------------------------------------------------------------+
    | |void| | :ref:`set_affordability<class_FoxShopSlot_method_set_affordability>`\ (\ can_afford\: :ref:`bool<class_bool>`\ ) |
    +--------+------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_ready<class_FoxShopSlot_private_method__ready>`\ (\ )                                                     |
-   +--------+------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_buy_button_focus_entered<class_FoxShopSlot_private_method__on_buy_button_focus_entered>`\ (\ )         |
-   +--------+------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_buy_button_focus_exited<class_FoxShopSlot_private_method__on_buy_button_focus_exited>`\ (\ )           |
-   +--------+------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -265,48 +259,6 @@ Populates the internal UI nodes with data from the provided ``item_data``.
 |void| **set_affordability**\ (\ can_afford\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_FoxShopSlot_method_set_affordability>`
 
 Visually updates the slot based on the ``can_afford`` state.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopSlot_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxShopSlot_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopSlot_private_method__on_buy_button_focus_entered:
-
-.. rst-class:: classref-method
-
-|void| **_on_buy_button_focus_entered**\ (\ ) :ref:`🔗<class_FoxShopSlot_private_method__on_buy_button_focus_entered>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopSlot_private_method__on_buy_button_focus_exited:
-
-.. rst-class:: classref-method
-
-|void| **_on_buy_button_focus_exited**\ (\ ) :ref:`🔗<class_FoxShopSlot_private_method__on_buy_button_focus_exited>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

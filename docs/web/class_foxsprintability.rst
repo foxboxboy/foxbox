@@ -29,13 +29,11 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------+-----------------------------------------------------------------------------+-----------+
-   | :ref:`float<class_float>` | :ref:`speed<class_FoxSprintAbility_property_speed>`                         | ``9.0``   |
-   +---------------------------+-----------------------------------------------------------------------------+-----------+
-   | :ref:`float<class_float>` | :ref:`dropoff_threshold<class_FoxSprintAbility_property_dropoff_threshold>` | ``0.05``  |
-   +---------------------------+-----------------------------------------------------------------------------+-----------+
-   | :ref:`bool<class_bool>`   | :ref:`_is_requested<class_FoxSprintAbility_property__is_requested>`         | ``false`` |
-   +---------------------------+-----------------------------------------------------------------------------+-----------+
+   +---------------------------+-----------------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`speed<class_FoxSprintAbility_property_speed>`                         | ``9.0``  |
+   +---------------------------+-----------------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`dropoff_threshold<class_FoxSprintAbility_property_dropoff_threshold>` | ``0.05`` |
+   +---------------------------+-----------------------------------------------------------------------------+----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -112,20 +110,6 @@ The target speed when sprinting, in meters per second.
 :ref:`float<class_float>` **dropoff_threshold** = ``0.05`` :ref:`🔗<class_FoxSprintAbility_property_dropoff_threshold>`
 
 The percentage of sprint_speed the character's velocity must drop below to automatically break out of a sprint. (Default 0.05 = 5%).
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSprintAbility_property__is_requested:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_is_requested** = ``false`` :ref:`🔗<class_FoxSprintAbility_property__is_requested>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 

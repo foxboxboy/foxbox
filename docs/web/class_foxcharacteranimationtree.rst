@@ -14,7 +14,7 @@ FoxCharacterAnimationTree
 
 .. container:: contribute
 
-	There is currently no description for this class. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this class. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-reftable-group
 
@@ -24,15 +24,9 @@ Properties
 .. table::
    :widths: auto
 
-   +-----------------------------------------------+--------------------------------------------------------------------------------------+-------------------+
-   | :ref:`AnimationTree<class_AnimationTree>`     | :ref:`animation_tree<class_FoxCharacterAnimationTree_property_animation_tree>`       |                   |
-   +-----------------------------------------------+--------------------------------------------------------------------------------------+-------------------+
-   | :ref:`AnimationPlayer<class_AnimationPlayer>` | :ref:`_animation_player<class_FoxCharacterAnimationTree_property__animation_player>` | ``get_node(...)`` |
-   +-----------------------------------------------+--------------------------------------------------------------------------------------+-------------------+
-   | :ref:`Variant<class_Variant>`                 | :ref:`_base_movement<class_FoxCharacterAnimationTree_property__base_movement>`       | ``<unknown>``     |
-   +-----------------------------------------------+--------------------------------------------------------------------------------------+-------------------+
-   | :ref:`Variant<class_Variant>`                 | :ref:`_upper_body<class_FoxCharacterAnimationTree_property__upper_body>`             | ``<unknown>``     |
-   +-----------------------------------------------+--------------------------------------------------------------------------------------+-------------------+
+   +-------------------------------------------+--------------------------------------------------------------------------------+
+   | :ref:`AnimationTree<class_AnimationTree>` | :ref:`animation_tree<class_FoxCharacterAnimationTree_property_animation_tree>` |
+   +-------------------------------------------+--------------------------------------------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -73,7 +67,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -87,7 +81,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -101,7 +95,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -115,7 +109,7 @@ Signals
 
 .. container:: contribute
 
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this signal. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -134,7 +128,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -146,7 +140,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -158,7 +152,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -170,7 +164,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -182,7 +176,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -194,7 +188,7 @@ Constants
 
 .. container:: contribute
 
-	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this constant. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 
 
@@ -215,49 +209,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterAnimationTree_property__animation_player:
-
-.. rst-class:: classref-property
-
-:ref:`AnimationPlayer<class_AnimationPlayer>` **_animation_player** = ``get_node(...)`` :ref:`🔗<class_FoxCharacterAnimationTree_property__animation_player>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterAnimationTree_property__base_movement:
-
-.. rst-class:: classref-property
-
-:ref:`Variant<class_Variant>` **_base_movement** = ``<unknown>`` :ref:`🔗<class_FoxCharacterAnimationTree_property__base_movement>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterAnimationTree_property__upper_body:
-
-.. rst-class:: classref-property
-
-:ref:`Variant<class_Variant>` **_upper_body** = ``<unknown>`` :ref:`🔗<class_FoxCharacterAnimationTree_property__upper_body>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -288,7 +240,7 @@ blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -302,7 +254,7 @@ blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -316,7 +268,7 @@ blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -330,7 +282,7 @@ blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -344,7 +296,7 @@ blend_amount: -1.0 = full backwards, 0.0 = neutral, 1.0 = full fowardwards
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

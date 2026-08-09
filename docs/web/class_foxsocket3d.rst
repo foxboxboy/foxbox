@@ -60,21 +60,15 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                           | :ref:`is_empty<class_FoxSocket3D_method_is_empty>`\ (\ )                                               |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | :ref:`Node3D<class_Node3D>`                       | :ref:`get_attachment<class_FoxSocket3D_method_get_attachment>`\ (\ )                                   |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`attach<class_FoxSocket3D_method_attach>`\ (\ new_attachment\: :ref:`Node3D<class_Node3D>`\ )     |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | :ref:`Node3D<class_Node3D>`                       | :ref:`detach<class_FoxSocket3D_method_detach>`\ (\ )                                                   |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_ready<class_FoxSocket3D_private_method__ready>`\ (\ )                                           |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_attachment_changed<class_FoxSocket3D_private_method__attachment_changed>`\ (\ )                 |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxSocket3D_private_method__get_configuration_warnings>`\ (\ ) |
-   +---------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+   +-----------------------------+----------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`     | :ref:`is_empty<class_FoxSocket3D_method_is_empty>`\ (\ )                                           |
+   +-----------------------------+----------------------------------------------------------------------------------------------------+
+   | :ref:`Node3D<class_Node3D>` | :ref:`get_attachment<class_FoxSocket3D_method_get_attachment>`\ (\ )                               |
+   +-----------------------------+----------------------------------------------------------------------------------------------------+
+   | |void|                      | :ref:`attach<class_FoxSocket3D_method_attach>`\ (\ new_attachment\: :ref:`Node3D<class_Node3D>`\ ) |
+   +-----------------------------+----------------------------------------------------------------------------------------------------+
+   | :ref:`Node3D<class_Node3D>` | :ref:`detach<class_FoxSocket3D_method_detach>`\ (\ )                                               |
+   +-----------------------------+----------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -240,48 +234,6 @@ Reparents ``new_attachment`` to this socket and snaps its transform to :ref:`mar
 Safely unplugs the attachment from the socket and returns it. 
 
 \ **Note:** This does not reparent the attachment anywhere else in the scene tree.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocket3D_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxSocket3D_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocket3D_private_method__attachment_changed:
-
-.. rst-class:: classref-method
-
-|void| **_attachment_changed**\ (\ ) :ref:`🔗<class_FoxSocket3D_private_method__attachment_changed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxSocket3D_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxSocket3D_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

@@ -63,10 +63,6 @@ Methods
    :widths: auto
 
    +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`_ready<class_FoxEffectManager_private_method__ready>`\ (\ )                                                                                                                                  |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`_process<class_FoxEffectManager_private_method__process>`\ (\ delta\: :ref:`float<class_float>`\ )                                                                                           |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`FoxEffectInstance<class_FoxEffectInstance>`                | :ref:`add_effect<class_FoxEffectManager_method_add_effect>`\ (\ effect\: :ref:`FoxEffect<class_FoxEffect>`, target\: :ref:`Object<class_Object>`\ )                                                |
    +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`remove_instance<class_FoxEffectManager_method_remove_instance>`\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ )                                                          |
@@ -82,14 +78,6 @@ Methods
    | :ref:`Array<class_Array>`\[:ref:`Dictionary<class_Dictionary>`\] | :ref:`serialize<class_FoxEffectManager_method_serialize>`\ (\ )                                                                                                                                    |
    +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`load_state<class_FoxEffectManager_method_load_state>`\ (\ save_data\: :ref:`Array<class_Array>`, target\: :ref:`Object<class_Object>`, blueprint_lookup\: :ref:`Callable<class_Callable>`\ ) |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxEffectInstance<class_FoxEffectInstance>`                | :ref:`_get_instance_by_id<class_FoxEffectManager_private_method__get_instance_by_id>`\ (\ target_id\: :ref:`StringName<class_StringName>`\ )                                                       |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`_remove_instance_at<class_FoxEffectManager_private_method__remove_instance_at>`\ (\ index\: :ref:`int<class_int>`\ )                                                                         |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`_on_instance_request_destruction<class_FoxEffectManager_private_method__on_instance_request_destruction>`\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ )                |
-   +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxEffectInstance<class_FoxEffectInstance>`                | :ref:`_create_new_instance<class_FoxEffectManager_private_method__create_new_instance>`\ (\ effect\: :ref:`FoxEffect<class_FoxEffect>`, target\: :ref:`Object<class_Object>`\ )                    |
    +------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
@@ -146,34 +134,6 @@ The internal list of currently active effect instances.
 
 Method Descriptions
 -------------------
-
-.. _class_FoxEffectManager_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxEffectManager_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectManager_private_method__process:
-
-.. rst-class:: classref-method
-
-|void| **_process**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxEffectManager_private_method__process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxEffectManager_method_add_effect:
 
@@ -270,62 +230,6 @@ Returns an array of dictionaries representing the active state of all managed ef
 |void| **load_state**\ (\ save_data\: :ref:`Array<class_Array>`, target\: :ref:`Object<class_Object>`, blueprint_lookup\: :ref:`Callable<class_Callable>`\ ) :ref:`🔗<class_FoxEffectManager_method_load_state>`
 
 Rebuilds the active effects from saved data. Requires the ``target`` and a :ref:`Callable<class_Callable>` that takes a :ref:`StringName<class_StringName>` ID and returns a :ref:`FoxEffect<class_FoxEffect>`.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectManager_private_method__get_instance_by_id:
-
-.. rst-class:: classref-method
-
-:ref:`FoxEffectInstance<class_FoxEffectInstance>` **_get_instance_by_id**\ (\ target_id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxEffectManager_private_method__get_instance_by_id>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectManager_private_method__remove_instance_at:
-
-.. rst-class:: classref-method
-
-|void| **_remove_instance_at**\ (\ index\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxEffectManager_private_method__remove_instance_at>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectManager_private_method__on_instance_request_destruction:
-
-.. rst-class:: classref-method
-
-|void| **_on_instance_request_destruction**\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ ) :ref:`🔗<class_FoxEffectManager_private_method__on_instance_request_destruction>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectManager_private_method__create_new_instance:
-
-.. rst-class:: classref-method
-
-:ref:`FoxEffectInstance<class_FoxEffectInstance>` **_create_new_instance**\ (\ effect\: :ref:`FoxEffect<class_FoxEffect>`, target\: :ref:`Object<class_Object>`\ ) :ref:`🔗<class_FoxEffectManager_private_method__create_new_instance>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

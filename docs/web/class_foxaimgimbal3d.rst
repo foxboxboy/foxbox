@@ -55,17 +55,15 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`apply_rotation_input<class_FoxAimGimbal3D_method_apply_rotation_input>`\ (\ input_delta\: :ref:`Vector2<class_Vector2>`\ )                                                                            |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`look_at<class_FoxAimGimbal3D_method_look_at>`\ (\ target\: :ref:`Vector3<class_Vector3>`, up\: :ref:`Vector3<class_Vector3>` = Vector3(0, 1, 0), use_model_front\: :ref:`bool<class_bool>` = false\ ) |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`aim_at_position<class_FoxAimGimbal3D_method_aim_at_position>`\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ )                                                                                |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_limits_changed<class_FoxAimGimbal3D_private_method__limits_changed>`\ (\ )                                                                                                                           |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxAimGimbal3D_private_method__get_configuration_warnings>`\ (\ )                                                                                                   |
-   +---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`apply_rotation_input<class_FoxAimGimbal3D_method_apply_rotation_input>`\ (\ input_delta\: :ref:`Vector2<class_Vector2>`\ )                                                                            |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`look_at<class_FoxAimGimbal3D_method_look_at>`\ (\ target\: :ref:`Vector3<class_Vector3>`, up\: :ref:`Vector3<class_Vector3>` = Vector3(0, 1, 0), use_model_front\: :ref:`bool<class_bool>` = false\ ) |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`aim_at_position<class_FoxAimGimbal3D_method_aim_at_position>`\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ )                                                                                |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`_limits_changed<class_FoxAimGimbal3D_private_method__limits_changed>`\ (\ )                                                                                                                           |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -256,20 +254,6 @@ Instantly calculates the pitch and yaw required to face a global 3D position, th
 |void| **_limits_changed**\ (\ ) :ref:`🔗<class_FoxAimGimbal3D_private_method__limits_changed>`
 
 The configuration warning and the clamp gizmo are both read off the limits, and neither refreshes on its own when one changes in the inspector.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAimGimbal3D_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxAimGimbal3D_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

@@ -38,17 +38,13 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
-   | :ref:`float<class_float>`                         | :ref:`base_max<class_FoxStatPool_property_base_max>`   | ``100.0`` |
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
-   | :ref:`FoxModifiableStat<class_FoxModifiableStat>` | :ref:`_max_stat<class_FoxStatPool_property__max_stat>` |           |
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
-   | :ref:`FoxBoundedValue<class_FoxBoundedValue>`     | :ref:`_pool<class_FoxStatPool_property__pool>`         |           |
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
-   | :ref:`float<class_float>`                         | :ref:`max_value<class_FoxStatPool_property_max_value>` |           |
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
-   | :ref:`float<class_float>`                         | :ref:`current<class_FoxStatPool_property_current>`     |           |
-   +---------------------------------------------------+--------------------------------------------------------+-----------+
+   +---------------------------+--------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`base_max<class_FoxStatPool_property_base_max>`   | ``100.0`` |
+   +---------------------------+--------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`max_value<class_FoxStatPool_property_max_value>` |           |
+   +---------------------------+--------------------------------------------------------+-----------+
+   | :ref:`float<class_float>` | :ref:`current<class_FoxStatPool_property_current>`     |           |
+   +---------------------------+--------------------------------------------------------+-----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -86,14 +82,6 @@ Methods
    | |void|                    | :ref:`clear_multiplier_max_modifier<class_FoxStatPool_method_clear_multiplier_max_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                            |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                    | :ref:`_init<class_FoxStatPool_private_method__init>`\ (\ )                                                                                                                                                              |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_on_max_stat_changed<class_FoxStatPool_private_method__on_max_stat_changed>`\ (\ new_max\: :ref:`float<class_float>`\ )                                                                                           |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_on_pool_changed<class_FoxStatPool_private_method__on_pool_changed>`\ (\ curr\: :ref:`float<class_float>`, _min\: :ref:`float<class_float>`, _max\: :ref:`float<class_float>`\ )                                  |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_on_pool_depleted<class_FoxStatPool_private_method__on_pool_depleted>`\ (\ underflow\: :ref:`float<class_float>`\ )                                                                                               |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_on_pool_saturated<class_FoxStatPool_private_method__on_pool_saturated>`\ (\ overflow\: :ref:`float<class_float>`\ )                                                                                              |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
@@ -157,34 +145,6 @@ Property Descriptions
 - |void| **@base_max_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
 The initial, unmodified maximum capacity.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_property__max_stat:
-
-.. rst-class:: classref-property
-
-:ref:`FoxModifiableStat<class_FoxModifiableStat>` **_max_stat** :ref:`🔗<class_FoxStatPool_property__max_stat>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_property__pool:
-
-.. rst-class:: classref-property
-
-:ref:`FoxBoundedValue<class_FoxBoundedValue>` **_pool** :ref:`🔗<class_FoxStatPool_property__pool>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -390,65 +350,7 @@ Helper to instantly remove all multiplier modifiers under a specific ID from the
 
 |void| **_init**\ (\ ) :ref:`🔗<class_FoxStatPool_private_method__init>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_private_method__on_max_stat_changed:
-
-.. rst-class:: classref-method
-
-|void| **_on_max_stat_changed**\ (\ new_max\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStatPool_private_method__on_max_stat_changed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_private_method__on_pool_changed:
-
-.. rst-class:: classref-method
-
-|void| **_on_pool_changed**\ (\ curr\: :ref:`float<class_float>`, _min\: :ref:`float<class_float>`, _max\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStatPool_private_method__on_pool_changed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_private_method__on_pool_depleted:
-
-.. rst-class:: classref-method
-
-|void| **_on_pool_depleted**\ (\ underflow\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStatPool_private_method__on_pool_depleted>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_private_method__on_pool_saturated:
-
-.. rst-class:: classref-method
-
-|void| **_on_pool_saturated**\ (\ overflow\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStatPool_private_method__on_pool_saturated>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Builds an empty pool. Set :ref:`base_max<class_FoxStatPool_property_base_max>` before using it, or it starts at nothing.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

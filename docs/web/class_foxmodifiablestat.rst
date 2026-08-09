@@ -49,17 +49,11 @@ Properties
 .. table::
    :widths: auto
 
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`           | :ref:`base_value<class_FoxModifiableStat_property_base_value>`                       | ``0.0`` |
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`_flat_modifiers<class_FoxModifiableStat_property__flat_modifiers>`             | ``{}``  |
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`_multiplier_modifiers<class_FoxModifiableStat_property__multiplier_modifiers>` | ``{}``  |
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`           | :ref:`_current_value<class_FoxModifiableStat_property__current_value>`               | ``0.0`` |
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
-   | :ref:`float<class_float>`           | :ref:`value<class_FoxModifiableStat_property_value>`                                 |         |
-   +-------------------------------------+--------------------------------------------------------------------------------------+---------+
+   +---------------------------+----------------------------------------------------------------+---------+
+   | :ref:`float<class_float>` | :ref:`base_value<class_FoxModifiableStat_property_base_value>` | ``0.0`` |
+   +---------------------------+----------------------------------------------------------------+---------+
+   | :ref:`float<class_float>` | :ref:`value<class_FoxModifiableStat_property_value>`           |         |
+   +---------------------------+----------------------------------------------------------------+---------+
 
 .. rst-class:: classref-reftable-group
 
@@ -69,33 +63,29 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`add_modifier<class_FoxModifiableStat_method_add_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`, amount\: :ref:`float<class_float>`\ )                                  |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`             | :ref:`pop_modifier<class_FoxModifiableStat_method_pop_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                      |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`clear_modifier<class_FoxModifiableStat_method_clear_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                  |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`clear_all_modifiers<class_FoxModifiableStat_method_clear_all_modifiers>`\ (\ )                                                                                                                                                                   |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`             | :ref:`has_modifier<class_FoxModifiableStat_method_has_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                      |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`             | :ref:`remove_specific_modifier<class_FoxModifiableStat_method_remove_specific_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`, specific_amount\: :ref:`float<class_float>`\ ) |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`add_flat_modifier<class_FoxModifiableStat_method_add_flat_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, amount\: :ref:`float<class_float>`\ )                                                                                         |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`add_multiplier_modifier<class_FoxModifiableStat_method_add_multiplier_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, amount\: :ref:`float<class_float>`\ )                                                                             |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`pop_flat_modifier<class_FoxModifiableStat_method_pop_flat_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                                                                             |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`pop_multiplier_modifier<class_FoxModifiableStat_method_pop_multiplier_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                                                                 |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`_init<class_FoxModifiableStat_private_method__init>`\ (\ p_base\: :ref:`float<class_float>` = 0.0\ )                                                                                                                                             |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`_get_dict<class_FoxModifiableStat_private_method__get_dict>`\ (\ type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                                                              |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`_recalculate<class_FoxModifiableStat_private_method__recalculate>`\ (\ )                                                                                                                                                                         |
-   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`add_modifier<class_FoxModifiableStat_method_add_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`, amount\: :ref:`float<class_float>`\ )                                  |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`pop_modifier<class_FoxModifiableStat_method_pop_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                      |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`clear_modifier<class_FoxModifiableStat_method_clear_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                  |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`clear_all_modifiers<class_FoxModifiableStat_method_clear_all_modifiers>`\ (\ )                                                                                                                                                                   |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`has_modifier<class_FoxModifiableStat_method_has_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ )                                                                      |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`remove_specific_modifier<class_FoxModifiableStat_method_remove_specific_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`, specific_amount\: :ref:`float<class_float>`\ ) |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`add_flat_modifier<class_FoxModifiableStat_method_add_flat_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, amount\: :ref:`float<class_float>`\ )                                                                                         |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`add_multiplier_modifier<class_FoxModifiableStat_method_add_multiplier_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`, amount\: :ref:`float<class_float>`\ )                                                                             |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`pop_flat_modifier<class_FoxModifiableStat_method_pop_flat_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                                                                             |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`pop_multiplier_modifier<class_FoxModifiableStat_method_pop_multiplier_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                                                                 |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`_init<class_FoxModifiableStat_private_method__init>`\ (\ p_base\: :ref:`float<class_float>` = 0.0\ )                                                                                                                                             |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -201,48 +191,6 @@ Property Descriptions
 - |void| **@base_value_setter**\ (\ value\: :ref:`float<class_float>`\ )
 
 The base, unmodified value.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_property__flat_modifiers:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>` **_flat_modifiers** = ``{}`` :ref:`🔗<class_FoxModifiableStat_property__flat_modifiers>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_property__multiplier_modifiers:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>` **_multiplier_modifiers** = ``{}`` :ref:`🔗<class_FoxModifiableStat_property__multiplier_modifiers>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_property__current_value:
-
-.. rst-class:: classref-property
-
-:ref:`float<class_float>` **_current_value** = ``0.0`` :ref:`🔗<class_FoxModifiableStat_property__current_value>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -398,37 +346,7 @@ Helper to quickly pop a multiplier modifier without typing the enum.
 
 |void| **_init**\ (\ p_base\: :ref:`float<class_float>` = 0.0\ ) :ref:`🔗<class_FoxModifiableStat_private_method__init>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_private_method__get_dict:
-
-.. rst-class:: classref-method
-
-:ref:`Dictionary<class_Dictionary>` **_get_dict**\ (\ type\: :ref:`ModifierType<enum_FoxModifiableStat_ModifierType>`\ ) :ref:`🔗<class_FoxModifiableStat_private_method__get_dict>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_private_method__recalculate:
-
-.. rst-class:: classref-method
-
-|void| **_recalculate**\ (\ ) :ref:`🔗<class_FoxModifiableStat_private_method__recalculate>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Builds a stat sitting at ``p_base`` with no modifiers on it yet.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

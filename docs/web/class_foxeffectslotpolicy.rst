@@ -66,21 +66,13 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_ready<class_FoxEffectSlotPolicy_private_method__ready>`\ (\ )                                                                                                       |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                           | :ref:`add_effect<class_FoxEffectSlotPolicy_method_add_effect>`\ (\ effect\: :ref:`FoxEffect<class_FoxEffect>`, target\: :ref:`Object<class_Object>`\ )                     |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`remove_effect<class_FoxEffectSlotPolicy_method_remove_effect>`\ (\ effect_id\: :ref:`StringName<class_StringName>`\ )                                                |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`clear_slots<class_FoxEffectSlotPolicy_method_clear_slots>`\ (\ )                                                                                                     |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_on_manager_effect_removed<class_FoxEffectSlotPolicy_private_method__on_manager_effect_removed>`\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ ) |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_push_out_oldest<class_FoxEffectSlotPolicy_private_method__push_out_oldest>`\ (\ )                                                                                   |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxEffectSlotPolicy_private_method__get_configuration_warnings>`\ (\ )                                                             |
-   +---------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`add_effect<class_FoxEffectSlotPolicy_method_add_effect>`\ (\ effect\: :ref:`FoxEffect<class_FoxEffect>`, target\: :ref:`Object<class_Object>`\ ) |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`remove_effect<class_FoxEffectSlotPolicy_method_remove_effect>`\ (\ effect_id\: :ref:`StringName<class_StringName>`\ )                            |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`clear_slots<class_FoxEffectSlotPolicy_method_clear_slots>`\ (\ )                                                                                 |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -203,20 +195,6 @@ Resolves to ``null`` rather than erroring when the parent is something else. The
 Method Descriptions
 -------------------
 
-.. _class_FoxEffectSlotPolicy_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxEffectSlotPolicy_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxEffectSlotPolicy_method_add_effect:
 
 .. rst-class:: classref-method
@@ -248,48 +226,6 @@ Manually removes a tracked slot by its effect ID.
 |void| **clear_slots**\ (\ ) :ref:`🔗<class_FoxEffectSlotPolicy_method_clear_slots>`
 
 Clears all tracked slots and forces the Manager to purge them.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectSlotPolicy_private_method__on_manager_effect_removed:
-
-.. rst-class:: classref-method
-
-|void| **_on_manager_effect_removed**\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ ) :ref:`🔗<class_FoxEffectSlotPolicy_private_method__on_manager_effect_removed>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectSlotPolicy_private_method__push_out_oldest:
-
-.. rst-class:: classref-method
-
-|void| **_push_out_oldest**\ (\ ) :ref:`🔗<class_FoxEffectSlotPolicy_private_method__push_out_oldest>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectSlotPolicy_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxEffectSlotPolicy_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

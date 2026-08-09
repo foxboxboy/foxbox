@@ -22,13 +22,14 @@ extends Node2D
 
 
 
-## Gains applied to the profile when it drives rotation rather than position.
+## How much of the profile's stiffness drives rotation rather than position.
 ## [br][br]
-## Matched on purpose, so a profile damped sensibly for pulling is damped sensibly for turning
-## too. Once [method torque_scale_for] has removed the difference in units between the two, the
-## same stiffness and damping describe both, and one number does not have to be a compromise
-## between them.
+## Matched to [constant TORQUE_DAMPING_GAIN] on purpose, so a profile damped sensibly for pulling
+## is damped sensibly for turning too. Once [method torque_scale_for] has removed the difference in
+## units between the two, the same stiffness and damping describe both.
 const TORQUE_SPRING_GAIN: float = 0.5
+
+## How much of the profile's damping drives rotation. Matched to [constant TORQUE_SPRING_GAIN].
 const TORQUE_DAMPING_GAIN: float = 0.5
 
 ## The lead a dragger starts with, a quarter turn.

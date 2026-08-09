@@ -39,8 +39,6 @@ Methods
    :widths: auto
 
    +--------+------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_ready<class_FoxGroundState_private_method__ready>`\ (\ )                                            |
-   +--------+------------------------------------------------------------------------------------------------------------+
    | |void| | :ref:`enter<class_FoxGroundState_method_enter>`\ (\ )                                                      |
    +--------+------------------------------------------------------------------------------------------------------------+
    | |void| | :ref:`exit<class_FoxGroundState_method_exit>`\ (\ )                                                        |
@@ -67,7 +65,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -81,7 +79,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -95,7 +93,7 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this property. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-section-separator
 
@@ -106,20 +104,6 @@ Property Descriptions
 Method Descriptions
 -------------------
 
-.. _class_FoxGroundState_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxGroundState_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxGroundState_method_enter:
 
 .. rst-class:: classref-method
@@ -128,7 +112,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -142,7 +126,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -156,7 +140,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. rst-class:: classref-item-separator
 
@@ -170,7 +154,7 @@ Method Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+	There is currently no description for this method. Please open an issue at `foxfabric-godot <https://github.com/tateorrtot/foxfabric-godot/issues>`__.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

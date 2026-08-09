@@ -64,21 +64,11 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`transition_to<class_FoxStateMachine_method_transition_to>`\ (\ new_state_name\: :ref:`StringName<class_StringName>`\ )                                                                                        |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxState<class_FoxState>`                   | :ref:`get_state<class_FoxStateMachine_method_get_state>`\ (\ state_name\: :ref:`StringName<class_StringName>`\ )                                                                                                    |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_ready<class_FoxStateMachine_private_method__ready>`\ (\ )                                                                                                                                                    |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_process<class_FoxStateMachine_private_method__process>`\ (\ delta\: :ref:`float<class_float>`\ )                                                                                                             |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_physics_process<class_FoxStateMachine_private_method__physics_process>`\ (\ delta\: :ref:`float<class_float>`\ )                                                                                             |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                            | :ref:`_on_child_transition_requested<class_FoxStateMachine_private_method__on_child_transition_requested>`\ (\ old_state\: :ref:`FoxState<class_FoxState>`, new_state_name\: :ref:`StringName<class_StringName>`\ ) |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`_get_configuration_warnings<class_FoxStateMachine_private_method__get_configuration_warnings>`\ (\ )                                                                                                          |
-   +---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                          | :ref:`transition_to<class_FoxStateMachine_method_transition_to>`\ (\ new_state_name\: :ref:`StringName<class_StringName>`\ ) |
+   +---------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`FoxState<class_FoxState>` | :ref:`get_state<class_FoxStateMachine_method_get_state>`\ (\ state_name\: :ref:`StringName<class_StringName>`\ )             |
+   +---------------------------------+------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -153,76 +143,6 @@ Transitions to a :ref:`FoxState<class_FoxState>` matching the provided ``new_sta
 :ref:`FoxState<class_FoxState>` **get_state**\ (\ state_name\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxStateMachine_method_get_state>`
 
 Returns a :ref:`FoxState<class_FoxState>` from the managed dictionary, or ``null`` if missing.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStateMachine_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxStateMachine_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStateMachine_private_method__process:
-
-.. rst-class:: classref-method
-
-|void| **_process**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStateMachine_private_method__process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStateMachine_private_method__physics_process:
-
-.. rst-class:: classref-method
-
-|void| **_physics_process**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxStateMachine_private_method__physics_process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStateMachine_private_method__on_child_transition_requested:
-
-.. rst-class:: classref-method
-
-|void| **_on_child_transition_requested**\ (\ old_state\: :ref:`FoxState<class_FoxState>`, new_state_name\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxStateMachine_private_method__on_child_transition_requested>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStateMachine_private_method__get_configuration_warnings:
-
-.. rst-class:: classref-method
-
-:ref:`PackedStringArray<class_PackedStringArray>` **_get_configuration_warnings**\ (\ ) :ref:`🔗<class_FoxStateMachine_private_method__get_configuration_warnings>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

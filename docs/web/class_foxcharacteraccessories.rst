@@ -39,8 +39,6 @@ Methods
    :widths: auto
 
    +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                              | :ref:`_ready<class_FoxCharacterAccessories_private_method__ready>`\ (\ )                                                                                                                                                           |
-   +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                              | :ref:`equip_rigid_accessory<class_FoxCharacterAccessories_method_equip_rigid_accessory>`\ (\ accessory\: :ref:`Node3D<class_Node3D>`, bone_name\: :ref:`String<class_String>`, reset_transform\: :ref:`bool<class_bool>` = true\ ) |
    +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`             | :ref:`has_rigid_accessory_in_slot<class_FoxCharacterAccessories_method_has_rigid_accessory_in_slot>`\ (\ bone_name\: :ref:`String<class_String>`\ )                                                                                |
@@ -166,20 +164,6 @@ Tracks all instances of rigid accessories.
 
 Method Descriptions
 -------------------
-
-.. _class_FoxCharacterAccessories_private_method__ready:
-
-.. rst-class:: classref-method
-
-|void| **_ready**\ (\ ) :ref:`🔗<class_FoxCharacterAccessories_private_method__ready>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxCharacterAccessories_method_equip_rigid_accessory:
 

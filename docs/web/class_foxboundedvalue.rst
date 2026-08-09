@@ -29,15 +29,13 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------+--------------------------------------------------------------------+-----------+
-   | :ref:`bool<class_bool>`   | :ref:`_constructing<class_FoxBoundedValue_property__constructing>` | ``false`` |
-   +---------------------------+--------------------------------------------------------------------+-----------+
-   | :ref:`float<class_float>` | :ref:`max_value<class_FoxBoundedValue_property_max_value>`         | ``1.0``   |
-   +---------------------------+--------------------------------------------------------------------+-----------+
-   | :ref:`float<class_float>` | :ref:`min_value<class_FoxBoundedValue_property_min_value>`         | ``0.0``   |
-   +---------------------------+--------------------------------------------------------------------+-----------+
-   | :ref:`float<class_float>` | :ref:`value<class_FoxBoundedValue_property_value>`                 | ``1.0``   |
-   +---------------------------+--------------------------------------------------------------------+-----------+
+   +---------------------------+------------------------------------------------------------+---------+
+   | :ref:`float<class_float>` | :ref:`max_value<class_FoxBoundedValue_property_max_value>` | ``1.0`` |
+   +---------------------------+------------------------------------------------------------+---------+
+   | :ref:`float<class_float>` | :ref:`min_value<class_FoxBoundedValue_property_min_value>` | ``0.0`` |
+   +---------------------------+------------------------------------------------------------+---------+
+   | :ref:`float<class_float>` | :ref:`value<class_FoxBoundedValue_property_value>`         | ``1.0`` |
+   +---------------------------+------------------------------------------------------------+---------+
 
 .. rst-class:: classref-reftable-group
 
@@ -106,20 +104,6 @@ Emitted when :ref:`value<class_FoxBoundedValue_property_value>` exceeds :ref:`ma
 
 Property Descriptions
 ---------------------
-
-.. _class_FoxBoundedValue_property__constructing:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_constructing** = ``false`` :ref:`🔗<class_FoxBoundedValue_property__constructing>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxBoundedValue_property_max_value:
 

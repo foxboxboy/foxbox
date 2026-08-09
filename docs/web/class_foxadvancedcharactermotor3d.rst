@@ -36,13 +36,9 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_physics_process<class_FoxAdvancedCharacterMotor3D_private_method__physics_process>`\ (\ delta\: :ref:`Variant<class_Variant>`\ ) |
-   +-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_update_movement<class_FoxAdvancedCharacterMotor3D_private_method__update_movement>`\ (\ delta\: :ref:`Variant<class_Variant>`\ ) |
-   +-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Variant<class_Variant>` | :ref:`_push_away_rigid_bodies<class_FoxAdvancedCharacterMotor3D_private_method__push_away_rigid_bodies>`\ (\ )                          |
-   +-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`_update_movement<class_FoxAdvancedCharacterMotor3D_private_method__update_movement>`\ (\ delta\: :ref:`Variant<class_Variant>`\ ) |
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -82,20 +78,6 @@ How quickly the character will slow down. Use lower numbers for a "walking on ic
 Method Descriptions
 -------------------
 
-.. _class_FoxAdvancedCharacterMotor3D_private_method__physics_process:
-
-.. rst-class:: classref-method
-
-|void| **_physics_process**\ (\ delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxAdvancedCharacterMotor3D_private_method__physics_process>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
 .. _class_FoxAdvancedCharacterMotor3D_private_method__update_movement:
 
 .. rst-class:: classref-method
@@ -103,20 +85,6 @@ Method Descriptions
 |void| **_update_movement**\ (\ delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxAdvancedCharacterMotor3D_private_method__update_movement>`
 
 More advanced _update_movement() from FoxCharacterMotor3D.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAdvancedCharacterMotor3D_private_method__push_away_rigid_bodies:
-
-.. rst-class:: classref-method
-
-:ref:`Variant<class_Variant>` **_push_away_rigid_bodies**\ (\ ) :ref:`🔗<class_FoxAdvancedCharacterMotor3D_private_method__push_away_rigid_bodies>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

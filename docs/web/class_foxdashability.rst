@@ -29,17 +29,13 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`speed<class_FoxDashAbility_property_speed>`                           | ``20.0``    |
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`duration<class_FoxDashAbility_property_duration>`                     | ``0.2``     |
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
-   | :ref:`float<class_float>` | :ref:`cooldown<class_FoxDashAbility_property_cooldown>`                     | ``1.0``     |
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
-   | :ref:`bool<class_bool>`   | :ref:`_is_request_active<class_FoxDashAbility_property__is_request_active>` | ``false``   |
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
-   | :ref:`int<class_int>`     | :ref:`_last_dash_time<class_FoxDashAbility_property__last_dash_time>`       | ``-100000`` |
-   +---------------------------+-----------------------------------------------------------------------------+-------------+
+   +---------------------------+---------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`speed<class_FoxDashAbility_property_speed>`       | ``20.0`` |
+   +---------------------------+---------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`duration<class_FoxDashAbility_property_duration>` | ``0.2``  |
+   +---------------------------+---------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`cooldown<class_FoxDashAbility_property_cooldown>` | ``1.0``  |
+   +---------------------------+---------------------------------------------------------+----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -144,34 +140,6 @@ The total time the dash state remains active, in seconds.
 :ref:`float<class_float>` **cooldown** = ``1.0`` :ref:`🔗<class_FoxDashAbility_property_cooldown>`
 
 The required wait time before another dash can be requested, in seconds.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxDashAbility_property__is_request_active:
-
-.. rst-class:: classref-property
-
-:ref:`bool<class_bool>` **_is_request_active** = ``false`` :ref:`🔗<class_FoxDashAbility_property__is_request_active>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxDashAbility_property__last_dash_time:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **_last_dash_time** = ``-100000`` :ref:`🔗<class_FoxDashAbility_property__last_dash_time>`
-
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 
