@@ -59,6 +59,23 @@ Requires Godot 4.7 or newer. The demos assume the Jolt physics engine.
 `demos/` has a scene per module. They are the quickest way to see what
 something does before reading it.
 
+## Documentation
+
+The class reference is published at
+[foxfabric-godot.readthedocs.io](https://foxfabric-godot.readthedocs.io). It is generated from
+the same `##` comments that fill Godot's built-in help, using Godot's own doc tooling, so the
+two cannot disagree.
+
+To build it yourself:
+
+```
+pip install sphinx sphinx-rtd-theme
+python docs/build_docs.py --open
+```
+
+Only the tooling and the hand written pages are tracked. See [docs/README.txt](docs/README.txt)
+for the steps it runs and how to do them by hand.
+
 ## Status
 
 Version 0.1. This is a personal library first, so expect churn.
@@ -66,17 +83,6 @@ Version 0.1. This is a personal library first, so expect churn.
 The `character` module needs a heavy refactor and does not reflect how the rest of the
 library is written. Parts of it still hardcode things they should not, like a `crouch()`
 on the hitbox. Read any other module for the intended style.
-
-`docs/` builds a browsable web version of the API from the same `##` comments the editor help
-uses, via Godot's own doc tooling. Only the tooling and the hand written pages are tracked, so
-the output cannot drift from the source.
-
-```
-pip install sphinx sphinx-rtd-theme
-python docs/build_docs.py --open
-```
-
-See [docs/README.txt](docs/README.txt) for the steps it runs and how to do them by hand.
 
 ## Tests
 
