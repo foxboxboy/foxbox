@@ -19,7 +19,7 @@ An abstract base class for defining mathematical or logical modifiers applied to
 Description
 -----------
 
-Designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule). When added to a :ref:`FoxAttributeMap<class_FoxAttributeMap>`, the map automatically routes the correct data to :ref:`apply_to()<class_FoxAttributeRule_method_apply_to>` and :ref:`remove_from()<class_FoxAttributeRule_method_remove_from>` based on the :ref:`target_key<class_FoxAttributeRule_property_target_key>`. 
+**FoxAttributeRule** is designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule). When added to a :ref:`FoxAttributeMap<class_FoxAttributeMap>`, the map automatically routes the correct data to :ref:`apply_to()<class_FoxAttributeRule_method_apply_to>` and :ref:`remove_from()<class_FoxAttributeRule_method_remove_from>` based on the :ref:`target_key<class_FoxAttributeRule_property_target_key>`. 
 
 A rule must be reversible. Whatever :ref:`apply_to()<class_FoxAttributeRule_method_apply_to>` does to the data, :ref:`remove_from()<class_FoxAttributeRule_method_remove_from>` has to undo exactly, because the map calls it when the rule is removed or when a child map stops inheriting.
 

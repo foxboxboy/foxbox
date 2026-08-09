@@ -19,7 +19,7 @@ A specialized :ref:`CollisionShape3D<class_CollisionShape3D>` that animates its 
 Description
 -----------
 
-Automatically calculates the :ref:`Node3D.position<class_Node3D_property_position>` Y-offset needed to keep the base of a :ref:`CapsuleShape3D<class_CapsuleShape3D>` flush with the floor when its height changes.
+**FoxDynamicCapsule** automatically calculates the :ref:`Node3D.position<class_Node3D_property_position>` Y-offset needed to keep the base of a :ref:`CapsuleShape3D<class_CapsuleShape3D>` flush with the floor when its height changes.
 
 .. rst-class:: classref-reftable-group
 

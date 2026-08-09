@@ -3,7 +3,7 @@ class_name FoxHitArea3D
 extends Area3D
 ## A 3D area that delivers a [Variant] payload to overlapping [FoxHurtArea3D] nodes.
 ##
-## Can act passively via physics overlaps, or instantly via the [method fire] method.
+## [FoxHitArea3D] can act passively via physics overlaps, or instantly via the [method fire] method.
 ## [br][br]
 ## The payload is whatever your project needs it to be. Nothing in this module reads it, so the
 ## same hitbox can carry a number, a dictionary, or a custom resource.

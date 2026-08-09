@@ -19,7 +19,7 @@ A 3D shape cast that delivers a :ref:`Variant<class_Variant>` payload to every :
 Description
 -----------
 
-Acts as a "thick raycast" or swept-shape trigger. Perfect for thick lasers or high-speed melee sweeps that might tunnel through standard areas.
+**FoxHitShapeCast3D** acts as a "thick raycast" or swept-shape trigger. Perfect for thick lasers or high-speed melee sweeps that might tunnel through standard areas.
 
 .. rst-class:: classref-reftable-group
 

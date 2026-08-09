@@ -19,7 +19,7 @@ Component that manages the math, memory, and rules for a dash ability.
 Description
 -----------
 
-Acts as a specialized stopwatch and data container, tracking cooldowns and duration without directly applying physics.
+**FoxDashAbility** acts as a specialized stopwatch and data container, tracking cooldowns and duration without directly applying physics.
 
 .. rst-class:: classref-reftable-group
 

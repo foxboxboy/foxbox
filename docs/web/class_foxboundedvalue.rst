@@ -19,7 +19,7 @@ A resource that manages a :ref:`float<class_float>` value within a defined minim
 Description
 -----------
 
-Emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
+**FoxBoundedValue** emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
 
 .. rst-class:: classref-reftable-group
 

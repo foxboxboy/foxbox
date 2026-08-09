@@ -19,7 +19,9 @@ A specialized raycast for detecting and managing focus on :ref:`FoxInteractableA
 Description
 -----------
 
-**Note:** Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
+**FoxInteractionRayCast2D** reports which :ref:`FoxInteractableArea2D<class_FoxInteractableArea2D>` it is pointing at and when that changes. 
+
+\ **Note:** Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
 
 .. rst-class:: classref-reftable-group
 

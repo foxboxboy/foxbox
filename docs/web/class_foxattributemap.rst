@@ -19,7 +19,7 @@ A node that holds an entity's data, counted flags and rules, and propagates them
 Description
 -----------
 
-Acts as a centralized data hub for an entity. It can store any arbitrary :ref:`Variant<class_Variant>` data (such as :ref:`int<class_int>`, :ref:`String<class_String>`, or :ref:`FoxStatPool<class_FoxStatPool>` resources), tracks temporary binary states via stacked string flags, and safely propagates :ref:`FoxAttributeRule<class_FoxAttributeRule>`\ s up and down a node hierarchy.
+**FoxAttributeMap** stores an entity's values under :ref:`StringName<class_StringName>` keys, holding anything a :ref:`Variant<class_Variant>` can (such as :ref:`int<class_int>`, :ref:`String<class_String>`, or :ref:`FoxStatPool<class_FoxStatPool>` resources), tracks temporary states with counted flags, and propagates :ref:`FoxAttributeRule<class_FoxAttributeRule>`\ s up and down a node hierarchy.
 
 ::
 

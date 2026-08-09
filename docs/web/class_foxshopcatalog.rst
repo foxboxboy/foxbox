@@ -19,7 +19,7 @@ An ordered list of :ref:`FoxShopItem<class_FoxShopItem>` resources offered by a 
 Description
 -----------
 
-Holds no transaction logic of its own. A catalog is just the stock list, so the same one can be shared between several shops or swapped out to change what a single shop sells.
+**FoxShopCatalog** holds no transaction logic of its own. A catalog is just the stock list, so the same one can be shared between several shops or swapped out to change what a single shop sells.
 
 .. rst-class:: classref-reftable-group
 

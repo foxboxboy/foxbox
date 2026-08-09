@@ -4,7 +4,7 @@ class_name FoxAimGimbal3D
 extends Node3D
 ## A mathematical hinge that accumulates 2D input into safe 3D pitch and yaw rotations.
 ##
-## Useful for camera controllers, turrets, or any object that requires
+## [FoxAimGimbal3D] is useful for camera controllers, turrets, or any object that requires
 ## clamped or wrapped two-axis rotation without encountering gimbal lock.
 
 @export_group("Pitch")

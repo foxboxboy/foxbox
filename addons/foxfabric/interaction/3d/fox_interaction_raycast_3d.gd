@@ -4,6 +4,8 @@ class_name FoxInteractionRayCast3D
 extends RayCast3D
 ## A specialized raycast for detecting and managing focus on [FoxInteractableArea3D] nodes.
 ##
+## [FoxInteractionRayCast3D] reports which [FoxInteractableArea3D] it is pointing at and when that changes.
+## [br][br]
 ## [b]Note:[/b] Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
 
 

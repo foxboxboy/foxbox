@@ -3,7 +3,7 @@ extends CollisionShape3D
 
 ## A specialized [CollisionShape3D] that animates its height while remaining grounded.
 ##
-## Automatically calculates the [member Node3D.position] Y-offset needed to keep the
+## [FoxDynamicCapsule] automatically calculates the [member Node3D.position] Y-offset needed to keep the
 ## base of a [CapsuleShape3D] flush with the floor when its height changes.
 
 

@@ -3,7 +3,7 @@ class_name FoxShopCatalog
 extends FoxResource
 ## An ordered list of [FoxShopItem] resources offered by a shop.
 ##
-## Holds no transaction logic of its own. A catalog is just the stock list, so the same one can
+## [FoxShopCatalog] holds no transaction logic of its own. A catalog is just the stock list, so the same one can
 ## be shared between several shops or swapped out to change what a single shop sells.
 
 ## The items this catalog offers, in the order they should be presented.

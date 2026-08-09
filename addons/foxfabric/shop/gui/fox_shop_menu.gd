@@ -4,7 +4,7 @@ class_name FoxShopMenu
 extends FoxControl
 ## A UI controller that populates and manages a list of shop items.
 ##
-## Handles the instantiation of UI slots and routes purchase requests.
+## [FoxShopMenu] instantiates the UI slots and routes purchase requests.
 
 ## The [PackedScene] to instantiate for each item.
 @export var slot_scene: PackedScene:

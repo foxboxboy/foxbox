@@ -4,7 +4,7 @@ class_name FoxSocket2D
 extends Marker2D
 ## A physical 2D location that reparents and holds a single attachment.
 ##
-## Attaching reparents the node under the socket and snaps its transform to [member marker], so
+## Attaching to a [FoxSocket2D] reparents the node under the socket and snaps its transform to [member marker], so
 ## the socket owns whatever is plugged into it.
 ## [codeblock]
 ## var hand: FoxSocket2D = $Model/RightHand

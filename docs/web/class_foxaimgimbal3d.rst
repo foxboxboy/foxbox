@@ -19,7 +19,7 @@ A mathematical hinge that accumulates 2D input into safe 3D pitch and yaw rotati
 Description
 -----------
 
-Useful for camera controllers, turrets, or any object that requires clamped or wrapped two-axis rotation without encountering gimbal lock.
+**FoxAimGimbal3D** is useful for camera controllers, turrets, or any object that requires clamped or wrapped two-axis rotation without encountering gimbal lock.
 
 .. rst-class:: classref-reftable-group
 

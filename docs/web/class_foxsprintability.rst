@@ -19,7 +19,7 @@ Component that manages the intents and threshold math for sprinting.
 Description
 -----------
 
-Tracks the player's sprint requests and provides the speed variables needed by the state machine, decoupling locomotion tuning from the root character.
+**FoxSprintAbility** tracks the player's sprint requests and provides the speed variables needed by the state machine, decoupling locomotion tuning from the root character.
 
 .. rst-class:: classref-reftable-group
 

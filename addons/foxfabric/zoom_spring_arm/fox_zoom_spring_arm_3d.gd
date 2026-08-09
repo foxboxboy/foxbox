@@ -4,7 +4,7 @@ class_name FoxZoomSpringArm3D
 extends SpringArm3D
 ## An extended [SpringArm3D] designed for camera controllers.
 ##
-## It overrides standard length adjustments with smooth, frame-independent
+## [FoxZoomSpringArm3D] overrides standard length adjustments with smooth, frame-independent
 ## zoom interpolation and provides a dedicated API for stepping the zoom in and out.
 
 ## Emitted when the arm's zoom distance visually changes.

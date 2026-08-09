@@ -19,7 +19,7 @@ A 2D node that drags a :ref:`RigidBody2D<class_RigidBody2D>` to its own position
 Description
 -----------
 
-Move this node and the grabbed body chases it. The pull is a force rather than a teleport, so the body still collides with the world on the way.
+**FoxPhysicsDragger2D** pulls its grabbed body toward itself as it moves. The pull is a force rather than a teleport, so the body still collides with the world on the way.
 
 ::
 

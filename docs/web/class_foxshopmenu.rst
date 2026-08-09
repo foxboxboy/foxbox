@@ -19,7 +19,7 @@ A UI controller that populates and manages a list of shop items.
 Description
 -----------
 
-Handles the instantiation of UI slots and routes purchase requests.
+**FoxShopMenu** instantiates the UI slots and routes purchase requests.
 
 .. rst-class:: classref-reftable-group
 

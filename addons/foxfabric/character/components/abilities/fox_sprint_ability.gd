@@ -3,7 +3,7 @@ extends FoxNode
 
 ## Component that manages the intents and threshold math for sprinting.
 ##
-## Tracks the player's sprint requests and provides the speed variables
+## [FoxSprintAbility] tracks the player's sprint requests and provides the speed variables
 ## needed by the state machine, decoupling locomotion tuning from the root character.
 
 ## Emitted when a sprint is requested.

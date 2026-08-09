@@ -3,7 +3,7 @@ extends FoxResource
 class_name FoxBoundedValue
 ## A resource that manages a [float] value within a defined minimum and maximum range.
 ##
-## Emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
+## [FoxBoundedValue] emits signals for overflow and underflow, allowing for secondary mechanics such as overkill or overhealing.
 
 
 

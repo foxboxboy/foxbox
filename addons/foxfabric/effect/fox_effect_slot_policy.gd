@@ -4,7 +4,7 @@ class_name FoxEffectSlotPolicy
 extends FoxNode
 ## A cap on how many distinct [FoxEffectInstance] objects a [FoxEffectManager] holds at once.
 ##
-## Sits as a child of the manager it gates. Route calls through the policy rather than the
+## [FoxEffectSlotPolicy] sits as a child of the manager it gates. Route calls through the policy rather than the
 ## manager and the limit applies.
 ## [codeblock]
 ## # Fighter

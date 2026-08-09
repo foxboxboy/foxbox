@@ -19,7 +19,7 @@ A cap on how many distinct :ref:`FoxEffectInstance<class_FoxEffectInstance>` obj
 Description
 -----------
 
-Sits as a child of the manager it gates. Route calls through the policy rather than the manager and the limit applies.
+**FoxEffectSlotPolicy** sits as a child of the manager it gates. Route calls through the policy rather than the manager and the limit applies.
 
 ::
 

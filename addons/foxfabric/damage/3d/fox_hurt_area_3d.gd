@@ -3,7 +3,7 @@ class_name FoxHurtArea3D
 extends Area3D
 ## A 3D area that receives [Variant] payloads from hit sources and routes them.
 ##
-## Acts as the receiving end of the FoxFabric interaction pipeline. It listens
+## [FoxHurtArea3D] acts as the receiving end of the FoxFabric damage pipeline. It listens
 ## for overlapping [FoxHitArea3D] nodes and broadcasts their payload.
 ## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 

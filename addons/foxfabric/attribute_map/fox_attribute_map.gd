@@ -3,8 +3,9 @@ class_name FoxAttributeMap
 extends FoxNode
 ## A node that holds an entity's data, counted flags and rules, and propagates them to child maps.
 ##
-## Acts as a centralized data hub for an entity. It can store any arbitrary [Variant] data (such as [int], [String], or [FoxStatPool] resources),
-## tracks temporary binary states via stacked string flags, and safely propagates [FoxAttributeRule]s up and down a node hierarchy.
+## [FoxAttributeMap] stores an entity's values under [StringName] keys, holding anything a [Variant] can
+## (such as [int], [String], or [FoxStatPool] resources), tracks temporary states with counted flags, and
+## propagates [FoxAttributeRule]s up and down a node hierarchy.
 ## [codeblock]
 ## var stats: FoxAttributeMap = $AttributeMap
 ##

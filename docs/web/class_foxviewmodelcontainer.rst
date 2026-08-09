@@ -21,7 +21,7 @@ A :ref:`SubViewport<class_SubViewport>` container kept matched to the size of th
 Description
 -----------
 
-Used to render first person view models in a layer separate from the world, so held items never clip into nearby geometry. Put a camera and the view model inside the :ref:`SubViewport<class_SubViewport>` child, and keep its field of view in sync with the world camera yourself.  library uses it. Expect it to change or move to deprecated.
+**FoxViewModelContainer** renders first person view models in a layer separate from the world, so held items never clip into nearby geometry. Put a camera and the view model inside the :ref:`SubViewport<class_SubViewport>` child, and keep its field of view in sync with the world camera yourself.  library uses it. Expect it to change or move to deprecated.
 
 .. rst-class:: classref-reftable-group
 

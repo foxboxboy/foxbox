@@ -19,7 +19,7 @@ A resource that manages a dynamic value bounded by a modifiable maximum capacity
 Description
 -----------
 
-Combines a :ref:`FoxModifiableStat<class_FoxModifiableStat>` for the maximum bound and a :ref:`FoxBoundedValue<class_FoxBoundedValue>` for the current pool. 
+**FoxStatPool** combines a :ref:`FoxModifiableStat<class_FoxModifiableStat>` for the maximum bound and a :ref:`FoxBoundedValue<class_FoxBoundedValue>` for the current pool. 
 
 \ **Note:** Ensure :ref:`Resource.resource_local_to_scene<class_Resource_property_resource_local_to_scene>` is enabled when assigning to multiple instances to prevent shared state.
 

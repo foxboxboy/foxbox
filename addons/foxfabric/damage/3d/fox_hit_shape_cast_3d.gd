@@ -4,7 +4,7 @@ class_name FoxHitShapeCast3D
 extends ShapeCast3D
 ## A 3D shape cast that delivers a [Variant] payload to every [FoxHurtArea3D] it strikes.
 ##
-## Acts as a "thick raycast" or swept-shape trigger. Perfect for thick lasers
+## [FoxHitShapeCast3D] acts as a "thick raycast" or swept-shape trigger. Perfect for thick lasers
 ## or high-speed melee sweeps that might tunnel through standard areas.
 
 ## Emitted when this shapecast successfully delivers its [param payload] to a [param target].

@@ -3,7 +3,7 @@ class_name FoxAttributeRule
 extends FoxRefCounted
 ## An abstract base class for defining mathematical or logical modifiers applied to data.
 ##
-## Designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule).
+## [FoxAttributeRule] is designed to be extended by custom rule scripts (e.g., a flat addition rule, a percentage multiplier rule).
 ## When added to a [FoxAttributeMap], the map automatically routes the correct data to [method apply_to]
 ## and [method remove_from] based on the [member target_key].
 ## [br][br]

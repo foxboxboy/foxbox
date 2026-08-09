@@ -3,7 +3,7 @@ class_name FoxFabric
 extends EditorPlugin
 ## A lightweight, general purpose library of modular systems.
 ##
-## Registers the editor extras that individual modules ship. Modules are meant to be deletable,
+## [FoxFabric] registers the editor extras that individual modules ship. Modules are meant to be deletable,
 ## so anything listed here is loaded only if it is still on disk.
 
 

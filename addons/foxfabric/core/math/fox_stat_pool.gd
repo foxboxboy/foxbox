@@ -3,7 +3,7 @@ class_name FoxStatPool
 extends FoxResource
 ## A resource that manages a dynamic value bounded by a modifiable maximum capacity.
 ##
-## Combines a [FoxModifiableStat] for the maximum bound and a [FoxBoundedValue] for the current pool.
+## [FoxStatPool] combines a [FoxModifiableStat] for the maximum bound and a [FoxBoundedValue] for the current pool.
 ## [br][b]Note:[/b] Ensure [member Resource.resource_local_to_scene] is enabled when assigning to multiple instances to prevent shared state.
 ## @tutorial(Building a status effect system): https://foxfabric-godot.readthedocs.io/en/latest/guide_status_effects.html
 

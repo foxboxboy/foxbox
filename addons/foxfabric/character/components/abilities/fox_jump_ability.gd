@@ -3,7 +3,7 @@ extends FoxNode
 
 ## Component that manages the math, memory, and rules for jumping.
 ##
-## Tracks jump buffers, coyote time, and multi-jump charges without
+## [FoxJumpAbility] tracks jump buffers, coyote time, and multi-jump charges without
 ## directly interacting with the character motor or physics body.
 
 ## Emitted when a jump request is validated and consumed with [method consume].

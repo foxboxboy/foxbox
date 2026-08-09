@@ -19,7 +19,7 @@ A 3D area that receives :ref:`Variant<class_Variant>` payloads from hit sources 
 Description
 -----------
 
-Acts as the receiving end of the FoxFabric interaction pipeline. It listens for overlapping :ref:`FoxHitArea3D<class_FoxHitArea3D>` nodes and broadcasts their payload.
+**FoxHurtArea3D** acts as the receiving end of the FoxFabric damage pipeline. It listens for overlapping :ref:`FoxHitArea3D<class_FoxHitArea3D>` nodes and broadcasts their payload.
 
 .. rst-class:: classref-introduction-group
 

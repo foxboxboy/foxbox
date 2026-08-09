@@ -19,7 +19,7 @@ A physical 2D location that reparents and holds a single attachment.
 Description
 -----------
 
-Attaching reparents the node under the socket and snaps its transform to :ref:`marker<class_FoxSocket2D_property_marker>`, so the socket owns whatever is plugged into it.
+Attaching to a **FoxSocket2D** reparents the node under the socket and snaps its transform to :ref:`marker<class_FoxSocket2D_property_marker>`, so the socket owns whatever is plugged into it.
 
 ::
 

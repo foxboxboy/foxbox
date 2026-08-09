@@ -19,7 +19,7 @@ A 3D volume that can be detected and interacted with.
 Description
 -----------
 
-Designed to be extended or used in conjunction with signals. It accepts a generic :ref:`Variant<class_Variant>` context during interaction, allowing the initiator to pass a :ref:`Node<class_Node>`, a Dictionary of parameters, or a custom context object.
+**FoxInteractableArea3D** is designed to be extended or used in conjunction with signals. It accepts a generic :ref:`Variant<class_Variant>` context during interaction, allowing the initiator to pass a :ref:`Node<class_Node>`, a Dictionary of parameters, or a custom context object.
 
 .. rst-class:: classref-reftable-group
 

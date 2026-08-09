@@ -3,7 +3,7 @@ class_name FoxShopSlot
 extends FoxControl
 ## A UI component representing a single purchasable item.
 ##
-## Connects internal UI nodes to an item resource and visually updates based on affordability.
+## [FoxShopSlot] connects internal UI nodes to an item resource and visually updates based on affordability.
 
 @export_group("Components")
 

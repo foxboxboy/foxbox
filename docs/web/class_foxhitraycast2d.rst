@@ -19,7 +19,7 @@ A 2D ray that delivers a :ref:`Variant<class_Variant>` payload to the first :ref
 Description
 -----------
 
-Acts as the hitscan trigger for the FoxFabric damage pipeline. 
+**FoxHitRayCast2D** acts as the hitscan trigger for the FoxFabric damage pipeline. 
 
 \ **Note:** Ensure :ref:`RayCast2D.collide_with_areas<class_RayCast2D_property_collide_with_areas>` is enabled in the inspector.
 

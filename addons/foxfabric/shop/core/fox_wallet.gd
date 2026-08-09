@@ -4,7 +4,7 @@ class_name FoxWallet
 extends FoxResource
 ## Abstract base class for all currency containers.
 ##
-## Carries no members of its own. It exists as a shared type so [FoxPrice] can accept any
+## [FoxWallet] carries no members of its own. It exists as a shared type so [FoxPrice] can accept any
 ## currency container without knowing what the currency is.
 ## [br][br]
 ## Because there is no common interface here, a [FoxPrice] implementation is responsible for

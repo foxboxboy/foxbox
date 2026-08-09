@@ -4,7 +4,7 @@ class_name FoxHitRayCast2D
 extends RayCast2D
 ## A 2D ray that delivers a [Variant] payload to the first [FoxHurtArea2D] it strikes.
 ##
-## Acts as the hitscan trigger for the FoxFabric damage pipeline.
+## [FoxHitRayCast2D] acts as the hitscan trigger for the FoxFabric damage pipeline.
 ## [br][b]Note:[/b] Ensure [member RayCast2D.collide_with_areas] is enabled in the inspector.
 
 

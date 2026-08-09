@@ -19,7 +19,7 @@ Component that manages the math, memory, and rules for jumping.
 Description
 -----------
 
-Tracks jump buffers, coyote time, and multi-jump charges without directly interacting with the character motor or physics body.
+**FoxJumpAbility** tracks jump buffers, coyote time, and multi-jump charges without directly interacting with the character motor or physics body.
 
 .. rst-class:: classref-reftable-group
 

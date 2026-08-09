@@ -3,7 +3,7 @@ extends FoxNode
 
 ## Component that manages the math, memory, and rules for a dash ability.
 ##
-## Acts as a specialized stopwatch and data container, tracking cooldowns
+## [FoxDashAbility] acts as a specialized stopwatch and data container, tracking cooldowns
 ## and duration without directly applying physics.
 
 ## Emitted when a dash request is validated and consumed with [method consume].

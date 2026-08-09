@@ -19,7 +19,7 @@ A 3D area that delivers a :ref:`Variant<class_Variant>` payload to overlapping :
 Description
 -----------
 
-Can act passively via physics overlaps, or instantly via the :ref:`fire()<class_FoxHitArea3D_method_fire>` method. 
+**FoxHitArea3D** can act passively via physics overlaps, or instantly via the :ref:`fire()<class_FoxHitArea3D_method_fire>` method. 
 
 The payload is whatever your project needs it to be. Nothing in this module reads it, so the same hitbox can carry a number, a dictionary, or a custom resource.
 

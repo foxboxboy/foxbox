@@ -19,7 +19,7 @@ An extended :ref:`SpringArm3D<class_SpringArm3D>` designed for camera controller
 Description
 -----------
 
-It overrides standard length adjustments with smooth, frame-independent zoom interpolation and provides a dedicated API for stepping the zoom in and out.
+**FoxZoomSpringArm3D** overrides standard length adjustments with smooth, frame-independent zoom interpolation and provides a dedicated API for stepping the zoom in and out.
 
 .. rst-class:: classref-reftable-group
 

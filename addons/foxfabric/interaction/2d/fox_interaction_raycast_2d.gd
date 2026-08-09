@@ -4,6 +4,8 @@ class_name FoxInteractionRayCast2D
 extends RayCast2D
 ## A specialized raycast for detecting and managing focus on [FoxInteractableArea2D] nodes.
 ##
+## [FoxInteractionRayCast2D] reports which [FoxInteractableArea2D] it is pointing at and when that changes.
+## [br][br]
 ## [b]Note:[/b] Ensure the raycast's Collision Mask is set only to your Interactables physics layer for optimal performance.
 
 

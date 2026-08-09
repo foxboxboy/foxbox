@@ -3,7 +3,7 @@ class_name FoxInteractableArea2D
 extends Area2D
 ## A 2D volume that can be detected and interacted with.
 ##
-## Designed to be extended or used in conjunction with signals. It accepts a generic
+## [FoxInteractableArea2D] is designed to be extended or used in conjunction with signals. It accepts a generic
 ## [Variant] context during interaction, allowing the initiator to pass a [Node],
 ## a Dictionary of parameters, or a custom context object.
 

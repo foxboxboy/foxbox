@@ -3,7 +3,7 @@ class_name FoxInteractableArea3D
 extends Area3D
 ## A 3D volume that can be detected and interacted with.
 ##
-## Designed to be extended or used in conjunction with signals. It accepts a generic
+## [FoxInteractableArea3D] is designed to be extended or used in conjunction with signals. It accepts a generic
 ## [Variant] context during interaction, allowing the initiator to pass a [Node],
 ## a Dictionary of parameters, or a custom context object.
 

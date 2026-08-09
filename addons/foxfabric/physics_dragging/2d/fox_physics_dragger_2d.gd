@@ -3,7 +3,7 @@ class_name FoxPhysicsDragger2D
 extends Node2D
 ## A 2D node that drags a [RigidBody2D] to its own position and rotation using forces.
 ##
-## Move this node and the grabbed body chases it. The pull is a force rather than a teleport, so
+## [FoxPhysicsDragger2D] pulls its grabbed body toward itself as it moves. The pull is a force rather than a teleport, so
 ## the body still collides with the world on the way.
 ## [codeblock]
 ## @onready var dragger: FoxPhysicsDragger2D = $Dragger

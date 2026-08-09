@@ -21,7 +21,7 @@ Abstract base class for all currency containers.
 Description
 -----------
 
-Carries no members of its own. It exists as a shared type so :ref:`FoxPrice<class_FoxPrice>` can accept any currency container without knowing what the currency is. 
+**FoxWallet** carries no members of its own. It exists as a shared type so :ref:`FoxPrice<class_FoxPrice>` can accept any currency container without knowing what the currency is. 
 
 Because there is no common interface here, a :ref:`FoxPrice<class_FoxPrice>` implementation is responsible for casting to the concrete wallet type it understands and failing gracefully when it receives something else. See :ref:`FoxSimplePrice<class_FoxSimplePrice>` for the expected pattern. 
 

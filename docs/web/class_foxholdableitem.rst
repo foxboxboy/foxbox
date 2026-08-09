@@ -19,7 +19,7 @@ An item held by a character, positioned with IK targets and poles.
 Description
 -----------
 
-Keep the item's transform at the origin when setting it up.
+**FoxHoldableItem** is placed by the hands holding it, so keep its own transform at the origin when setting it up.
 
 .. rst-class:: classref-reftable-group
 

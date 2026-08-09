@@ -3,7 +3,7 @@ class_name FoxHurtArea2D
 extends Area2D
 ## A 2D area that receives [Variant] payloads from hit sources and routes them.
 ##
-## Acts as the receiving end of the FoxFabric damage pipeline. It listens
+## [FoxHurtArea2D] acts as the receiving end of the FoxFabric damage pipeline. It listens
 ## for overlapping [FoxHitArea2D] nodes and broadcasts their payload.
 
 
