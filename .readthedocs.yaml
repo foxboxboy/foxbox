@@ -4,8 +4,11 @@
 # Read the Docs cannot run Godot, so it cannot regenerate the class pages. It builds whatever
 # reStructuredText is committed, which is why docs/web/class_*.rst and module_*.rst are tracked.
 #
-# Keeping them current is not your job. .github/workflows/docs.yml runs Godot on every push
-# that touches addons/ or docs/, and pushes the regenerated pages back.
+# Regenerate them yourself when you change a ## comment, with
+#
+#     python docs/build_docs.py --skip-html
+#
+# and commit the result. .github/workflows/docs.yml checks that you did and fails if not.
 
 version: 2
 

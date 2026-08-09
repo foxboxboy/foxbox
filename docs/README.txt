@@ -29,9 +29,14 @@ Read the Docs has no Godot to run, so it can only render reStructuredText that i
 the repo. That is why class_*.rst and module_*.rst are tracked rather than ignored, and it is
 how the engine's own docs work too.
 
-Keeping them current is automated. .github/workflows/docs.yml downloads Godot on every push
-that touches addons/ or docs/, runs the build, and pushes the regenerated pages back with
-[skip ci] so it does not retrigger itself. You never regenerate them by hand.
+Keeping them current is on you. Change a ## comment and regenerate in the same commit:
+
+    python docs/build_docs.py --skip-html
+
+.github/workflows/docs.yml checks this on every push that touches addons/ or docs/, and fails
+if the committed pages no longer match the source. It used to regenerate and push them back
+itself, which moved main under whoever had just pushed to it, and left the published pages
+wrong until the job finished.
 
 Connect the repo once at https://readthedocs.org and it publishes on every push to main.
 
