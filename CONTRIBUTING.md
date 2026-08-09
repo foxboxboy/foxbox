@@ -98,9 +98,9 @@ has not landed yet:
 
 ```gdscript
 func _set(property: StringName, _value: Variant) -> bool:
-    if property == &"collide_with_areas":
-        update_configuration_warnings.call_deferred()
-    return false
+	if property == &"collide_with_areas":
+		update_configuration_warnings.call_deferred()
+	return false
 ```
 
 ## Editor extras
