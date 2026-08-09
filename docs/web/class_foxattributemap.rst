@@ -12,7 +12,7 @@ FoxAttributeMap
 
 **Inherits:** :ref:`FoxNode<class_FoxNode>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-A recursive, hierarchical Blackboard node for safely managing dynamic entity data, stacked flags, and rules.
+A node that holds an entity's data, counted flags and rules, and propagates them to child maps.
 
 .. rst-class:: classref-introduction-group
 
