@@ -147,11 +147,14 @@ text = "machine gun"
 [node name="UI" type="CanvasLayer" parent="." unique_id=1281712033]
 layer = 2
 
-[node name="Readout" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("status", "tank_cells", "turret_cells", "cannon_cells", "machine_gun_cells", "tank", "turret", "cannon", "machine_gun", "wall", "controls")]
+[node name="Column" type="VBoxContainer" parent="UI"]
 offset_left = 20.0
 offset_top = 12.0
 offset_right = 1130.0
-offset_bottom = 250.0
+offset_bottom = 600.0
+theme_override_constants/separation = 30
+
+[node name="Readout" type="VBoxContainer" parent="UI/Column" node_paths=PackedStringArray("status", "tank_cells", "turret_cells", "cannon_cells", "machine_gun_cells", "tank", "turret", "cannon", "machine_gun", "wall", "controls")]
 theme_override_constants/separation = 16
 theme_override_fonts/font = SubResource("SystemFont_mono")
 theme_override_font_sizes/font_size = 13
@@ -161,133 +164,131 @@ tank_cells = [NodePath("Table/TankName"), NodePath("Table/TankDamage"), NodePath
 turret_cells = [NodePath("Table/TurretName"), NodePath("Table/TurretDamage"), NodePath("Table/TurretStats"), NodePath("Table/TurretGroup"), NodePath("Table/TurretRules"), NodePath("Table/TurretFlags")]
 cannon_cells = [NodePath("Table/CannonName"), NodePath("Table/CannonDamage"), NodePath("Table/CannonStats"), NodePath("Table/CannonGroup"), NodePath("Table/CannonRules"), NodePath("Table/CannonFlags")]
 machine_gun_cells = [NodePath("Table/MachineGunName"), NodePath("Table/MachineGunDamage"), NodePath("Table/MachineGunStats"), NodePath("Table/MachineGunGroup"), NodePath("Table/MachineGunRules"), NodePath("Table/MachineGunFlags")]
-tank = NodePath("../../Tank")
-turret = NodePath("../../Tank/Turret")
-cannon = NodePath("../../Tank/Turret/Cannon")
-machine_gun = NodePath("../../Tank/MachineGun")
-wall = NodePath("../../Wall")
+tank = NodePath("../../../Tank")
+turret = NodePath("../../../Tank/Turret")
+cannon = NodePath("../../../Tank/Turret/Cannon")
+machine_gun = NodePath("../../../Tank/MachineGun")
+wall = NodePath("../../../Wall")
 controls = NodePath("../Controls")
 
-[node name="Status" type="Label" parent="UI/Readout"]
+[node name="Status" type="Label" parent="UI/Column/Readout"]
 text = "wall 600      damage boost +0"
 
-[node name="Table" type="GridContainer" parent="UI/Readout"]
+[node name="Table" type="GridContainer" parent="UI/Column/Readout"]
 columns = 6
 theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 6
 
-[node name="HeadName" type="Label" parent="UI/Readout/Table"]
+[node name="HeadName" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "part"
 
-[node name="HeadDamage" type="Label" parent="UI/Readout/Table"]
+[node name="HeadDamage" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "damage"
 
-[node name="HeadStats" type="Label" parent="UI/Readout/Table"]
+[node name="HeadStats" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "its own stats"
 
-[node name="HeadGroup" type="Label" parent="UI/Readout/Table"]
+[node name="HeadGroup" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "group"
 
-[node name="HeadRules" type="Label" parent="UI/Readout/Table"]
+[node name="HeadRules" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "rules it tracks"
 
-[node name="HeadFlags" type="Label" parent="UI/Readout/Table"]
+[node name="HeadFlags" type="Label" parent="UI/Column/Readout/Table"]
 modulate = Color(1, 1, 1, 0.55)
 text = "flags"
 
-[node name="TankName" type="Label" parent="UI/Readout/Table"]
+[node name="TankName" type="Label" parent="UI/Column/Readout/Table"]
 text = "tank"
 
-[node name="TankDamage" type="Label" parent="UI/Readout/Table"]
+[node name="TankDamage" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="TankStats" type="Label" parent="UI/Readout/Table"]
+[node name="TankStats" type="Label" parent="UI/Column/Readout/Table"]
 text = "armour 60, crew 4"
 
-[node name="TankGroup" type="Label" parent="UI/Readout/Table"]
+[node name="TankGroup" type="Label" parent="UI/Column/Readout/Table"]
 text = "survivability"
 
-[node name="TankRules" type="Label" parent="UI/Readout/Table"]
+[node name="TankRules" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="TankFlags" type="Label" parent="UI/Readout/Table"]
+[node name="TankFlags" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="TurretName" type="Label" parent="UI/Readout/Table"]
+[node name="TurretName" type="Label" parent="UI/Column/Readout/Table"]
 text = "    turret"
 
-[node name="TurretDamage" type="Label" parent="UI/Readout/Table"]
+[node name="TurretDamage" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="TurretStats" type="Label" parent="UI/Readout/Table"]
+[node name="TurretStats" type="Label" parent="UI/Column/Readout/Table"]
 text = "traverse 25"
 
-[node name="TurretGroup" type="Label" parent="UI/Readout/Table"]
+[node name="TurretGroup" type="Label" parent="UI/Column/Readout/Table"]
 text = "mounting"
 
-[node name="TurretRules" type="Label" parent="UI/Readout/Table"]
+[node name="TurretRules" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="TurretFlags" type="Label" parent="UI/Readout/Table"]
+[node name="TurretFlags" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="CannonName" type="Label" parent="UI/Readout/Table"]
+[node name="CannonName" type="Label" parent="UI/Column/Readout/Table"]
 text = "        cannon"
 
-[node name="CannonDamage" type="Label" parent="UI/Readout/Table"]
+[node name="CannonDamage" type="Label" parent="UI/Column/Readout/Table"]
 text = "30"
 
-[node name="CannonStats" type="Label" parent="UI/Readout/Table"]
+[node name="CannonStats" type="Label" parent="UI/Column/Readout/Table"]
 text = "calibre 90, fire_rate 0.5"
 
-[node name="CannonGroup" type="Label" parent="UI/Readout/Table"]
+[node name="CannonGroup" type="Label" parent="UI/Column/Readout/Table"]
 text = "firepower"
 
-[node name="CannonRules" type="Label" parent="UI/Readout/Table"]
+[node name="CannonRules" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="CannonFlags" type="Label" parent="UI/Readout/Table"]
+[node name="CannonFlags" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="MachineGunName" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunName" type="Label" parent="UI/Column/Readout/Table"]
 text = "    machine gun"
 
-[node name="MachineGunDamage" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunDamage" type="Label" parent="UI/Column/Readout/Table"]
 text = "3"
 
-[node name="MachineGunStats" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunStats" type="Label" parent="UI/Column/Readout/Table"]
 text = "fire_rate 5"
 
-[node name="MachineGunGroup" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunGroup" type="Label" parent="UI/Column/Readout/Table"]
 text = "firepower"
 
-[node name="MachineGunRules" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunRules" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="MachineGunFlags" type="Label" parent="UI/Readout/Table"]
+[node name="MachineGunFlags" type="Label" parent="UI/Column/Readout/Table"]
 text = "-"
 
-[node name="Note" type="Label" parent="UI/Readout"]
+[node name="Note" type="Label" parent="UI/Column/Readout"]
 modulate = Color(1, 1, 1, 0.55)
 text = "Rules travel to every map below where they were added, and land only on the ones
 holding the key they target. The hull and turret hold no damage, so they track
 the boost without it doing a thing to them."
 
-[node name="Controls" type="VBoxContainer" parent="UI" unique_id=1277216541 node_paths=PackedStringArray("tank", "cannon", "wall")]
-offset_left = 20.0
-offset_top = 268.0
-offset_right = 270.0
-offset_bottom = 480.0
+[node name="Controls" type="VBoxContainer" parent="UI/Column" unique_id=1277216541 node_paths=PackedStringArray("tank", "cannon", "wall")]
+custom_minimum_size = Vector2(250, 0)
+size_flags_horizontal = 0
 theme_override_constants/separation = 6
 script = ExtResource("4_controls")
-tank = NodePath("../../Tank/Attributes")
-cannon = NodePath("../../Tank/Turret/Cannon/Attributes")
-wall = NodePath("../../Wall")
+tank = NodePath("../../../Tank/Attributes")
+cannon = NodePath("../../../Tank/Turret/Cannon/Attributes")
+wall = NodePath("../../../Wall")
 
 [node name="Label" type="Label" parent="UI" unique_id=1141180575]
 anchors_preset = 2
