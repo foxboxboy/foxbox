@@ -28,6 +28,14 @@ extends Node2D
 ## too. Once [method torque_scale_for] has removed the difference in units between the two, the
 ## same stiffness and damping describe both, and one number does not have to be a compromise
 ## between them.
+## How far this node's orientation may get ahead of what it is holding, in radians.
+## [br][br]
+## The torque always takes the shortest way round to its target. Turn this node more than half a
+## turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the
+## drag instead of following it. Held to a quarter turn there is room to lag behind without ever
+## crossing over.
+const MAX_ROTATION_LEAD: float = PI / 2.0
+
 const TORQUE_SPRING_GAIN: float = 0.5
 const TORQUE_DAMPING_GAIN: float = 0.5
 
@@ -188,8 +196,25 @@ func _physics_process(_delta: float) -> void:
 		_skip_first_frame = false
 		return
 
+	_rein_in_rotation()
 	_apply_positional_force()
 	_apply_rotational_torque()
+
+
+## Pulls this node's angle back to within [constant MAX_ROTATION_LEAD] of the body, so turning it
+## faster than the body can follow saturates rather than reversing.
+## [br][br]
+## With [member default_keep_upright] the target is level rather than this node's angle, so there
+## is nothing to run ahead of.
+func _rein_in_rotation() -> void:
+	if _current_keep_upright:
+		return
+
+	var lead: float = angle_difference(_current_body.global_rotation, global_rotation)
+	if absf(lead) <= MAX_ROTATION_LEAD:
+		return
+
+	global_rotation = _current_body.global_rotation + clampf(lead, -MAX_ROTATION_LEAD, MAX_ROTATION_LEAD)
 
 
 ## Applies a positional force to the grabbed RigidBody2D based on its current position and velocity.

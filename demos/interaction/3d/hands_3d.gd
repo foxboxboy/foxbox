@@ -11,11 +11,6 @@ const Player3D = preload("res://demos/interaction/3d/player_3d.gd")
 ## Degrees of turn per pixel of mouse movement.
 const SPIN_PER_PIXEL: float = 0.2
 
-## How far ahead of the object the commanded orientation may get. The torque takes the shortest way
-## to its target, so past half a turn the shortest way is backwards and the object unwinds against
-## the drag.
-const MAX_SPIN_LEAD: float = PI / 2.0
-
 ## Metres the wheel raises or lowers what is held, and the range it may sit in.
 const LIFT_STEP: float = 0.5
 const LIFT_RANGE: Vector2 = Vector2(0.0, 5.0)
@@ -200,23 +195,5 @@ func _stop_turning() -> void:
 func _turn_held(mouse_delta: Vector2) -> void:
 	dragger.rotate(Vector3.UP, deg_to_rad(-mouse_delta.x * SPIN_PER_PIXEL))
 	dragger.rotate(player.global_transform.basis.x, deg_to_rad(-mouse_delta.y * SPIN_PER_PIXEL))
-	_rein_in_turn()
-
-
-## See MAX_SPIN_LEAD.
-func _rein_in_turn() -> void:
-	var held: Basis = _held.global_transform.basis.orthonormalized()
-	var lead: Quaternion = (dragger.global_transform.basis.orthonormalized() * held.inverse()).get_rotation_quaternion()
-
-	var angle: float = lead.get_angle()
-	if angle > PI:
-		angle -= TAU
-
-	if absf(angle) <= MAX_SPIN_LEAD:
-		return
-
-	var reined: Transform3D = dragger.global_transform
-	reined.basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_SPIN_LEAD, MAX_SPIN_LEAD))
-	dragger.global_transform = reined
 
 #endregion

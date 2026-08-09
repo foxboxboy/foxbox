@@ -24,6 +24,14 @@ extends FoxNode3D
 
 #region Variables
 
+
+## How far this node's orientation may get ahead of what it is holding, in radians.
+## [br][br]
+## The torque always takes the shortest way round to its target. Turn this node more than half a
+## turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the
+## drag instead of following it. Held to a quarter turn there is room to lag behind without ever
+## crossing over.
+const MAX_ROTATION_LEAD: float = PI / 2.0
 @export_group("Default Drag Settings")
 
 ## The default strength of the pull if no profile is provided.
@@ -160,8 +168,33 @@ func _physics_process(_delta: float) -> void:
 		_skip_first_frame = false
 		return
 
+	_rein_in_rotation()
 	_apply_positional_force()
 	_apply_rotational_torque()
+
+
+## Pulls this node's orientation back to within [constant MAX_ROTATION_LEAD] of the body, so
+## turning it faster than the body can follow saturates rather than reversing.
+## [br][br]
+## With [member default_keep_upright] the target is level rather than this node's orientation, so
+## there is nothing to run ahead of.
+func _rein_in_rotation() -> void:
+	if _current_keep_upright:
+		return
+
+	var held: Basis = _current_body.global_transform.basis.orthonormalized()
+	var lead: Quaternion = (global_transform.basis.orthonormalized() * held.inverse()).get_rotation_quaternion()
+
+	var angle: float = lead.get_angle()
+	if angle > PI:
+		angle -= TAU
+
+	if absf(angle) <= MAX_ROTATION_LEAD:
+		return
+
+	var reined: Transform3D = global_transform
+	reined.basis = held * Basis(lead.get_axis().normalized(), clampf(angle, -MAX_ROTATION_LEAD, MAX_ROTATION_LEAD))
+	global_transform = reined
 
 
 ## Applies a positional force to the grabbed RigidBody3D based on its current position and velocity.

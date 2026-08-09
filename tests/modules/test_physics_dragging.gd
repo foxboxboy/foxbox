@@ -20,6 +20,7 @@ func run() -> void:
 	_on_still_follows_yaw()
 	_straight_down()
 	_random_orientations_never_tip()
+	_the_command_cannot_outrun_the_body()
 
 
 ## The basis of a dragger pitched, yawed, and rolled by the given degrees.
@@ -132,3 +133,34 @@ func _grab_point_rides_the_body() -> void:
 
 	dragger.release()
 	check(not dragger.is_holding(), "not holding once released")
+
+
+## Regression: the same shortest-way problem as in 2D, but the axis flips instead of the sign.
+func _the_command_cannot_outrun_the_body() -> void:
+	case("the command cannot get more than a quarter turn ahead")
+	var dragger: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D
+	var body: RigidBody3D = track(RigidBody3D.new()) as RigidBody3D
+	dragger.grab(body, Vector3.ZERO)
+
+	for i: int in 20:
+		dragger.rotate(Vector3.UP, deg_to_rad(45.0))
+		dragger._rein_in_rotation()
+
+	var held: Basis = body.global_transform.basis.orthonormalized()
+	var lead: Quaternion = (dragger.global_transform.basis.orthonormalized() * held.inverse()).get_rotation_quaternion()
+	var angle: float = lead.get_angle()
+	if angle > PI:
+		angle -= TAU
+
+	check(absf(angle) <= FoxPhysicsDragger3D.MAX_ROTATION_LEAD + 0.001,
+		"twenty 45 degree turns leave the command within the lead, not wrapped around behind")
+
+	case("keep_upright has no command to outrun")
+	var upright: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D
+	var carried: RigidBody3D = track(RigidBody3D.new()) as RigidBody3D
+	upright.default_keep_upright = true
+	upright.grab(carried, Vector3.ZERO)
+	upright.rotate(Vector3.UP, PI)
+	var before: Basis = upright.global_transform.basis
+	upright._rein_in_rotation()
+	check(upright.global_transform.basis.is_equal_approx(before), "the node is left exactly where it was put")

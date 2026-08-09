@@ -11,6 +11,7 @@ const Dragger = preload("res://addons/foxfabric/physics_dragging/2d/fox_physics_
 func run() -> void:
 	suite = "physics_dragging_2d"
 	_grab_point_rides_the_body()
+	_the_command_cannot_outrun_the_body()
 	_defaults_leave_rotation_free()
 	_off_copies_the_dragger()
 	_on_holds_it_level()
@@ -149,3 +150,41 @@ func _grab_point_rides_the_body() -> void:
 
 	dragger.release()
 	check(not dragger.is_holding(), "not holding once released")
+
+
+## Regression: the torque takes the shortest way to its target, so a command more than half a turn
+## ahead of the body pointed backwards and the body unwound against the drag instead of following.
+func _the_command_cannot_outrun_the_body() -> void:
+	case("the command cannot get more than a quarter turn ahead")
+	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
+	var body: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
+	dragger.grab(body, Vector2.ZERO)
+
+	# Wind the command a long way past what the body has managed to follow.
+	for i: int in 20:
+		dragger.rotate(deg_to_rad(45.0))
+		dragger._rein_in_rotation()
+
+	var lead: float = angle_difference(body.global_rotation, dragger.global_rotation)
+	check(absf(lead) <= FoxPhysicsDragger2D.MAX_ROTATION_LEAD + 0.001,
+		"twenty 45 degree turns leave the command within the lead, not wrapped around behind")
+	check(lead > 0.0, "and ahead of the body, which is the way it was turned")
+
+	case("winding the other way is just as bounded")
+	for i: int in 20:
+		dragger.rotate(deg_to_rad(-45.0))
+		dragger._rein_in_rotation()
+
+	var back: float = angle_difference(body.global_rotation, dragger.global_rotation)
+	check(absf(back) <= FoxPhysicsDragger2D.MAX_ROTATION_LEAD + 0.001, "still within the lead")
+	check(back < 0.0, "and behind the body now")
+
+	case("keep_upright has no command to outrun")
+	var upright: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
+	var held: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
+	upright.default_keep_upright = true
+	upright.grab(held, Vector2.ZERO)
+	# Not PI, which sits exactly on the wrap boundary and reads back as -PI.
+	upright.global_rotation = 2.0
+	upright._rein_in_rotation()
+	almost(upright.global_rotation, 2.0, "the node is left exactly where it was put")

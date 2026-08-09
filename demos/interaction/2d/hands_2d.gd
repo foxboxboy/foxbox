@@ -15,10 +15,6 @@ const ARENA: Rect2 = Rect2(-396.0, -236.0, 792.0, 472.0)
 ## Degrees of turn per pixel of mouse movement.
 const SPIN_PER_PIXEL: float = 0.4
 
-## How far ahead of the prop the commanded angle may get. The torque takes the shortest way to its
-## target, so past half a turn the shortest way is backwards and the prop unwinds against the drag.
-const MAX_SPIN_LEAD: float = PI / 2.0
-
 @export var player: Player2D
 @export var dragger: FoxPhysicsDragger2D
 
@@ -213,9 +209,5 @@ func _stop_turning() -> void:
 ## keep_upright on that target is level, so turning does nothing.
 func _turn_held(mouse_dx: float) -> void:
 	dragger.rotate(deg_to_rad(mouse_dx * SPIN_PER_PIXEL))
-
-	# See MAX_SPIN_LEAD.
-	var lead: float = angle_difference(_held.global_rotation, dragger.global_rotation)
-	dragger.global_rotation = _held.global_rotation + clampf(lead, -MAX_SPIN_LEAD, MAX_SPIN_LEAD)
 
 #endregion
