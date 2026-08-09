@@ -11,6 +11,10 @@ extends RigidBody2D
 # The interaction module does not define what interacting means, so the prop does. Here it means
 # pick me up, and grab_body is called by name so the prop never learns what is carrying it.
 func _on_interacted(interactor: Variant) -> void:
-	var hands: Node = interactor as Node
-	if hands != null and hands.has_method(&"grab_body"):
+	if not interactor is Node:
+		return
+
+	# Through a typed local, because casting a Variant is what the unsafe_cast warning is about.
+	var hands: Node = interactor
+	if hands.has_method(&"grab_body"):
 		hands.call(&"grab_body", self, drag_profile)

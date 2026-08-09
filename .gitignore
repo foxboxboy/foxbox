@@ -9,6 +9,10 @@ exports/
 .aider*
 *.tmp
 
+# Throwaway scripts run with --script from the repo root
+/probe*.gd
+/probe*.gd.uid
+
 # Python bytecode from the docs tooling
 __pycache__/
 *.py[cod]

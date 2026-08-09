@@ -58,12 +58,13 @@ func _instantiate(path: String) -> Object:
 	if not ResourceLoader.exists(path):
 		return null
 
-	var script: GDScript = load(path) as GDScript
-	if script == null:
+	# Not called "script", which is a property every Object already has.
+	var source: GDScript = load(path) as GDScript
+	if source == null:
 		push_warning("FoxFabric: could not load %s" % path)
 		return null
 
 	# Only with --verbose. Something that silently fails to register looks identical to something
 	# that registered and had nothing to do, and this is the difference.
 	print_verbose("FoxFabric: registered %s" % path)
-	return script.new()
+	return source.new()
