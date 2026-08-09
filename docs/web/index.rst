@@ -42,6 +42,7 @@ no shared state and no autoload.
    :caption: Guides
 
    guide_status_effects
+   guide_picking_things_up
 
 .. toctree::
    :maxdepth: 1
