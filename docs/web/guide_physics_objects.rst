@@ -1,0 +1,82 @@
+Carrying physics objects
+========================
+
+In this guide you will build a player who can look at a crate, pick it up, carry it around, and
+drop it. The crate stays a physics body the whole time, so it bumps into walls on the way.
+
+It uses one module, :doc:`module_physics_dragging`.
+
+The 2D classes work the same way. Swap ``FoxPhysicsDragger3D`` for ``FoxPhysicsDragger2D`` and
+``RigidBody3D`` for ``RigidBody2D``.
+
+Prerequisites
+-------------
+
+FoxFabric installed and enabled, as described in :doc:`getting_started`.
+
+Setting up the scene
+--------------------
+
+.. code-block:: text
+
+    Player           (CharacterBody3D, player.gd)
+    └─ Camera3D
+       ├─ Aim        (RayCast3D)
+       └─ Dragger    (FoxPhysicsDragger3D)
+
+Point ``Aim`` down its local ``-Z`` and set its length to however far you want to reach. Move
+``Dragger`` forward from the camera; whatever it grabs is pulled towards wherever the dragger is,
+so its position is where the crate ends up floating.
+
+The crate is a plain ``RigidBody3D`` with a collision shape. Nothing on it needs a script.
+
+Grabbing and releasing
+----------------------
+
+.. code-block:: gdscript
+
+    class_name Player
+    extends CharacterBody3D
+
+    @onready var aim: RayCast3D = $Camera3D/Aim
+    @onready var dragger: FoxPhysicsDragger3D = $Camera3D/Dragger
+
+    func _unhandled_input(event: InputEvent) -> void:
+        if not event.is_action_pressed(&"interact"):
+            return
+
+        if dragger.is_holding():
+            dragger.release()
+            return
+
+        var body: RigidBody3D = aim.get_collider() as RigidBody3D
+        if body != null:
+            dragger.grab(body, aim.get_collision_point())
+
+One key does both, because ``is_holding`` says which case you are in. ``release`` dampens the
+body's spin by default, so a crate you let go of does not keep rotating.
+
+Where you grab matters
+----------------------
+
+The point handed to ``grab`` is where the ray actually struck the body, and the body pivots
+around that point rather than its centre. Grab a plank by one end and it swings like a plank.
+
+Passing the body's centre instead makes everything behave like a ball on a string, which is
+worth knowing if that is what you wanted.
+
+Changing the feel
+-----------------
+
+The dragger's own ``default_stiffness`` and ``default_damping`` cover most of it. For a heavy
+crate that lags behind, hand ``grab`` a ``FoxPhysicsDragProfile`` instead.
+
+.. code-block:: gdscript
+
+    @export var heavy: FoxPhysicsDragProfile
+
+    dragger.grab(body, aim.get_collision_point(), heavy)
+
+Stiffness pulls harder, damping settles the wobble, and ``keep_upright`` stops the body tumbling
+while carried. ``max_pull_force`` on the dragger caps all of it, so a stiff profile cannot launch
+something across the level.
