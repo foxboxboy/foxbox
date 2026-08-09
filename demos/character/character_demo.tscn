@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://addons/foxfabric/world_environments/stylized_world_environment.tscn" id="1_60qjx"]
 [ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://addons/foxfabric/world_environments/stylized_sky_shader/day_sky.tres" id="2_ac3se"]
-[ext_resource type="Script" uid="uid://b5deh4myjghbj" path="res://demos/old_character/moving_cube.gd" id="3_3tcn1"]
-[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://demos/old_character/triplanar.png" id="4_aledk"]
+[ext_resource type="Script" uid="uid://b5deh4myjghbj" path="res://demos/deprecated/old_character/moving_cube.gd" id="3_3tcn1"]
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://demos/deprecated/old_character/triplanar.png" id="4_aledk"]
 [ext_resource type="Script" uid="uid://dgs3c0cwol5j2" path="res://demos/character/character.gd" id="5_n0elp"]
 [ext_resource type="Script" uid="uid://cwr4tuo3bm2je" path="res://addons/foxfabric/state_machine/fox_state_machine.gd" id="5_r5wjh"]
 [ext_resource type="Script" uid="uid://qbedm6c0d168" path="res://addons/foxfabric/character/components/motors/fox_advanced_character_motor_3d.gd" id="6_80ceg"]

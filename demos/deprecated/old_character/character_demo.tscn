@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bedvskmd1tusw"]
 
-[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://demos/old_character/triplanar.png" id="1_i6m7q"]
-[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://demos/old_character/pc_input_controller.gd" id="2_81bif"]
+[ext_resource type="Texture2D" uid="uid://sv6wvig87vje" path="res://demos/deprecated/old_character/triplanar.png" id="1_i6m7q"]
+[ext_resource type="Script" uid="uid://bn5j6waido2us" path="res://demos/deprecated/old_character/pc_input_controller.gd" id="2_81bif"]
 [ext_resource type="PackedScene" uid="uid://lj85u0xjwhty" path="res://addons/foxfabric/character/components/trash/core/fox_character.tscn" id="2_hbwi6"]
-[ext_resource type="Script" uid="uid://d1ayyn78ij210" path="res://demos/old_character/ai_brain.gd" id="2_phlfe"]
-[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://demos/old_character/player.gd" id="7_3ryqn"]
-[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://demos/old_character/gui.tscn" id="7_aq0ug"]
-[ext_resource type="Script" uid="uid://b5deh4myjghbj" path="res://demos/old_character/moving_cube.gd" id="8_phf47"]
+[ext_resource type="Script" uid="uid://d1ayyn78ij210" path="res://demos/deprecated/old_character/ai_brain.gd" id="2_phlfe"]
+[ext_resource type="Script" uid="uid://chkr10078ai4g" path="res://demos/deprecated/old_character/player.gd" id="7_3ryqn"]
+[ext_resource type="PackedScene" uid="uid://bs6kx0ci2knim" path="res://demos/deprecated/old_character/gui.tscn" id="7_aq0ug"]
+[ext_resource type="Script" uid="uid://b5deh4myjghbj" path="res://demos/deprecated/old_character/moving_cube.gd" id="8_phf47"]
 [ext_resource type="PackedScene" uid="uid://yk4rjw3x4ncw" path="res://addons/foxfabric/world_environments/stylized_world_environment.tscn" id="9_5anb6"]
 [ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://addons/foxfabric/world_environments/stylized_sky_shader/day_sky.tres" id="10_kityc"]
 

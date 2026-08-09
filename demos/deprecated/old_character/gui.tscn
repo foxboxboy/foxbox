@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bs6kx0ci2knim"]
 
-[ext_resource type="Script" uid="uid://die7s45i1ke6g" path="res://demos/old_character/gui.gd" id="1_1lq7s"]
+[ext_resource type="Script" uid="uid://die7s45i1ke6g" path="res://demos/deprecated/old_character/gui.gd" id="1_1lq7s"]
 
 [node name="GUI" type="Control" unique_id=1004730435]
 process_mode = 3

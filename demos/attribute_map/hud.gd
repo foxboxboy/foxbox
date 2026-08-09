@@ -12,6 +12,9 @@ const Part = preload("res://demos/attribute_map/part.gd")
 const Wall = preload("res://demos/attribute_map/wall.gd")
 const Controls = preload("res://demos/attribute_map/controls.gd")
 
+## Which cell in a row is which, so filling one does not mean counting columns.
+enum Column { NAME, DAMAGE, STATS, GROUP, RULES, FLAGS }
+
 @export var status: Label
 
 ## Each row's six cells, in the order the columns sit in the scene: name, damage, other stats,
@@ -52,12 +55,12 @@ func _process(_delta: float) -> void:
 #region Private
 
 func _fill(cells: Array[Label], part: Part, indent: String) -> void:
-	cells[0].text = indent + part.label
-	cells[1].text = _damage(part)
-	cells[2].text = _other_stats(part)
-	cells[3].text = String(part.group)
-	cells[4].text = _rules(part.attributes)
-	cells[5].text = _flags(part.attributes)
+	cells[Column.NAME].text = indent + part.label
+	cells[Column.DAMAGE].text = _damage(part)
+	cells[Column.STATS].text = _other_stats(part)
+	cells[Column.GROUP].text = String(part.group)
+	cells[Column.RULES].text = _rules(part.attributes)
+	cells[Column.FLAGS].text = _flags(part.attributes)
 
 
 ## A dash rather than a zero for the parts carrying no damage at all, so a part that has none
