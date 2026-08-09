@@ -64,6 +64,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Check the doc comments
+        # Needs no Godot and no Sphinx, so it runs before either is installed.
+        run: python docs/check_doc_style.py
+
       - name: Install Sphinx
         run: pip install -r docs/requirements.txt
 

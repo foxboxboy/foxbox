@@ -83,6 +83,8 @@ python docs/build_docs.py --skip-html
 
 CI fails a push that leaves them stale.
 
+`python docs/check_doc_style.py` checks the comments themselves. It runs in CI too.
+
 ## Naming
 
 * Files are `snake_case.gd` and match their class: `fox_attribute_map.gd` holds `FoxAttributeMap`
