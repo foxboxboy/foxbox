@@ -90,6 +90,8 @@ Methods
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`_physics_process<class_FoxPhysicsDragger2D_private_method__physics_process>`\ (\ _delta\: :ref:`float<class_float>`\ )                                                                                                  |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                        | :ref:`_rein_in_rotation<class_FoxPhysicsDragger2D_private_method__rein_in_rotation>`\ (\ )                                                                                                                                    |
+   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`_apply_positional_force<class_FoxPhysicsDragger2D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
@@ -125,6 +127,16 @@ Matched on purpose, so a profile damped sensibly for pulling is damped sensibly 
 	There is currently no description for this constant. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
+
+.. _class_FoxPhysicsDragger2D_constant_MAX_ROTATION_LEAD:
+
+.. rst-class:: classref-constant
+
+**MAX_ROTATION_LEAD** = ``1.5707963267948966`` :ref:`🔗<class_FoxPhysicsDragger2D_constant_MAX_ROTATION_LEAD>`
+
+How far this node's orientation may get ahead of what it is holding, in radians. 
+
+The torque always takes the shortest way round to its target. Turn this node more than half a turn ahead of the body and the shortest way becomes backwards, so the body unwinds against the drag instead of following it. Held to a quarter turn there is room to lag behind without ever crossing over.
 
 .. rst-class:: classref-section-separator
 
@@ -402,6 +414,20 @@ Releases the currently held :ref:`RigidBody2D<class_RigidBody2D>`. If ``dampen_s
 .. container:: contribute
 
 	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxPhysicsDragger2D_private_method__rein_in_rotation:
+
+.. rst-class:: classref-method
+
+|void| **_rein_in_rotation**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_private_method__rein_in_rotation>`
+
+Pulls this node's angle back to within :ref:`MAX_ROTATION_LEAD<class_FoxPhysicsDragger2D_constant_MAX_ROTATION_LEAD>` of the body, so turning it faster than the body can follow saturates rather than reversing. 
+
+With :ref:`default_keep_upright<class_FoxPhysicsDragger2D_property_default_keep_upright>` the target is level rather than this node's angle, so there is nothing to run ahead of.
 
 .. rst-class:: classref-item-separator
 

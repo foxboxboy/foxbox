@@ -29,9 +29,11 @@ Properties
 .. table::
    :widths: auto
 
-   +--------------------------------------------------------------------------------------------+--------------------------------------------------+--------+
-   | :ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] | :ref:`_gizmos<class_FoxFabric_property__gizmos>` | ``[]`` |
-   +--------------------------------------------------------------------------------------------+--------------------------------------------------+--------+
+   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
+   | :ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] | :ref:`_gizmos<class_FoxFabric_property__gizmos>`         | ``[]`` |
+   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
+   | :ref:`Array<class_Array>`\[:ref:`EditorInspectorPlugin<class_EditorInspectorPlugin>`\]     | :ref:`_inspectors<class_FoxFabric_property__inspectors>` | ``[]`` |
+   +--------------------------------------------------------------------------------------------+----------------------------------------------------------+--------+
 
 .. rst-class:: classref-reftable-group
 
@@ -41,11 +43,13 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+----------------------------------------------------------------------+
-   | |void| | :ref:`_enter_tree<class_FoxFabric_private_method__enter_tree>`\ (\ ) |
-   +--------+----------------------------------------------------------------------+
-   | |void| | :ref:`_exit_tree<class_FoxFabric_private_method__exit_tree>`\ (\ )   |
-   +--------+----------------------------------------------------------------------+
+   +-----------------------------+------------------------------------------------------------------------------------------------------------+
+   | |void|                      | :ref:`_enter_tree<class_FoxFabric_private_method__enter_tree>`\ (\ )                                       |
+   +-----------------------------+------------------------------------------------------------------------------------------------------------+
+   | |void|                      | :ref:`_exit_tree<class_FoxFabric_private_method__exit_tree>`\ (\ )                                         |
+   +-----------------------------+------------------------------------------------------------------------------------------------------------+
+   | :ref:`Object<class_Object>` | :ref:`_instantiate<class_FoxFabric_private_method__instantiate>`\ (\ path\: :ref:`String<class_String>`\ ) |
+   +-----------------------------+------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -64,6 +68,14 @@ Constants
 
 Gizmo plugins to register, by path. Each one lives inside the module it draws for.
 
+.. _class_FoxFabric_constant_INSPECTORS:
+
+.. rst-class:: classref-constant
+
+**INSPECTORS** = ``Array[String](["res://addons/foxfabric/attribute_map/editor/fox_attribute_map_inspector.gd"])`` :ref:`🔗<class_FoxFabric_constant_INSPECTORS>`
+
+Inspector plugins to register, by path. Same rule as the gizmos.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -78,6 +90,20 @@ Property Descriptions
 .. rst-class:: classref-property
 
 :ref:`Array<class_Array>`\[:ref:`EditorNode3DGizmoPlugin<class_EditorNode3DGizmoPlugin>`\] **_gizmos** = ``[]`` :ref:`🔗<class_FoxFabric_property__gizmos>`
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxFabric_property__inspectors:
+
+.. rst-class:: classref-property
+
+:ref:`Array<class_Array>`\[:ref:`EditorInspectorPlugin<class_EditorInspectorPlugin>`\] **_inspectors** = ``[]`` :ref:`🔗<class_FoxFabric_property__inspectors>`
 
 .. container:: contribute
 
@@ -115,6 +141,18 @@ Method Descriptions
 .. container:: contribute
 
 	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxFabric_private_method__instantiate:
+
+.. rst-class:: classref-method
+
+:ref:`Object<class_Object>` **_instantiate**\ (\ path\: :ref:`String<class_String>`\ ) :ref:`🔗<class_FoxFabric_private_method__instantiate>`
+
+Returns ``null`` when a module has been deleted, so the rest of the plugin still loads.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
