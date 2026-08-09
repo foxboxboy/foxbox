@@ -8,8 +8,8 @@ extends FoxResource
 ## [br][br]
 ## When an effect is applied to a target, a separate [FoxEffectInstance] is spawned to track its active lifecycle (such as remaining time and current stacks).
 ## [br][br]
-## To create a custom effect, extend this class and override [method _on_execute],
-## [method _on_remove], [method _on_reapply], and [method _on_tick]. All four are abstract,
+## To create a custom effect, extend this class and override [code skip-lint]_on_execute[/code],
+## [code skip-lint]_on_remove[/code], [code skip-lint]_on_reapply[/code], and [code skip-lint]_on_tick[/code]. All four are abstract,
 ## so every subclass must implement them even if the body is left empty.
 ## [codeblock]
 ## # A poison that ticks damage and scales with its stack count.
@@ -37,7 +37,7 @@ extends FoxResource
 enum StackMode {
 	## Prevents duplicate logic. Handles the timer based on [member duration_mode].
 	UNIQUE,
-	## Increases the stack count up to [member max_stacks] and calls [method _on_reapply].
+	## Increases the stack count up to [member max_stacks] and calls [code skip-lint]_on_reapply[/code].
 	INTENSITY,
 	## Instantiates a completely separate timer. Ignores [member max_stacks] and [member duration_mode].
 	MULTIPLE_INSTANCES
@@ -98,7 +98,7 @@ enum DurationMode {
 ## Executes the initial application of this effect on the specified [param target].
 ## [br][br]
 ## This method ensures the [param target] is a valid [Object] in memory before
-## calling the virtual [method _on_execute] method. It is called automatically
+## calling the virtual [code skip-lint]_on_execute[/code] method. It is called automatically
 ## when a new effect instance is spawned.
 func execute(target: Object) -> void:
 	if is_instance_valid(target):
@@ -108,7 +108,7 @@ func execute(target: Object) -> void:
 ## Reverses the impact of this effect from the [param target].
 ## [br][br]
 ## This method ensures the [param target] is a valid [Object]
-## before calling the virtual [method _on_remove] method. It is called
+## before calling the virtual [code skip-lint]_on_remove[/code] method. It is called
 ## automatically when the effect's duration expires or it is explicitly purged.
 func remove(target: Object) -> void:
 	if is_instance_valid(target):
@@ -118,14 +118,14 @@ func remove(target: Object) -> void:
 ## Updates the active effect on the [param target] to match the new [param current_stack] count.
 ## [br][br]
 ## This method ensures the [param target] is a valid [Object] before calling the virtual
-## [method _on_reapply] method. This is exclusively called when [member stack_mode] is
+## [code skip-lint]_on_reapply[/code] method. This is exclusively called when [member stack_mode] is
 ## set to [code]StackMode.INTENSITY[/code] and the [member FoxEffectInstance.stack] count changes.
 func reapply(target: Object, current_stack: int) -> void:
 	if is_instance_valid(target):
 		_on_reapply(target, current_stack)
 
 
-## Triggers the recurring [method _on_tick] logic.
+## Triggers the recurring [code skip-lint]_on_tick[/code] logic.
 ## [br][br]
 ## This method ensures the [param target] is a valid [Object] before executing.
 func tick(target: Object, current_stack: int) -> void:
@@ -147,7 +147,7 @@ func tick(target: Object, current_stack: int) -> void:
 func _on_execute(target: Object) -> void
 
 
-## Reverses whatever [method _on_execute] and [method _on_reapply] did to [param target].
+## Reverses whatever [code skip-lint]_on_execute[/code] and [code skip-lint]_on_reapply[/code] did to [param target].
 ## Called once, when the effect expires or is purged.
 ## [br][br]
 ## [b]Note:[/b] This is skipped when a save file is loaded, so it must not be relied on to

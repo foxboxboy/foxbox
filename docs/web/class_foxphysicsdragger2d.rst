@@ -76,12 +76,6 @@ Methods
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                        | :ref:`release<class_FoxPhysicsDragger2D_method_release>`\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ )                                                                                                                  |
    +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_rein_in_rotation<class_FoxPhysicsDragger2D_private_method__rein_in_rotation>`\ (\ )                                                                                                                                    |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_apply_positional_force<class_FoxPhysicsDragger2D_private_method__apply_positional_force>`\ (\ )                                                                                                                        |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                        | :ref:`_apply_rotational_torque<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`\ (\ )                                                                                                                      |
-   +-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -296,44 +290,6 @@ Static so the result can be checked without a body in hand.
 |void| **release**\ (\ dampen_spin\: :ref:`bool<class_bool>` = true\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_release>`
 
 Releases the currently held :ref:`RigidBody2D<class_RigidBody2D>`. If ``dampen_spin`` is ``true``, it will aggressively kill residual angular velocity to prevent unrealistic spinning upon release.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_private_method__rein_in_rotation:
-
-.. rst-class:: classref-method
-
-|void| **_rein_in_rotation**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_private_method__rein_in_rotation>`
-
-Pulls this node's angle back to within :ref:`max_rotation_lead<class_FoxPhysicsDragger2D_property_max_rotation_lead>` of the body, so turning it faster than the body can follow saturates rather than reversing. 
-
-With :ref:`default_keep_upright<class_FoxPhysicsDragger2D_property_default_keep_upright>` the target is level rather than this node's angle, so there is nothing to run ahead of.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_private_method__apply_positional_force:
-
-.. rst-class:: classref-method
-
-|void| **_apply_positional_force**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_private_method__apply_positional_force>`
-
-Applies a positional force to the grabbed RigidBody2D based on its current position and velocity.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxPhysicsDragger2D_private_method__apply_rotational_torque:
-
-.. rst-class:: classref-method
-
-|void| **_apply_rotational_torque**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_private_method__apply_rotational_torque>`
-
-Applies a rotational torque to the grabbed RigidBody2D based on its current orientation.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

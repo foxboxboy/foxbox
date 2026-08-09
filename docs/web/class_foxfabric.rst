@@ -21,18 +21,6 @@ Description
 
 Registers the editor extras that individual modules ship. Modules are meant to be deletable, so anything listed here is loaded only if it is still on disk.
 
-.. rst-class:: classref-reftable-group
-
-Methods
--------
-
-.. table::
-   :widths: auto
-
-   +-----------------------------+------------------------------------------------------------------------------------------------------------+
-   | :ref:`Object<class_Object>` | :ref:`_instantiate<class_FoxFabric_private_method__instantiate>`\ (\ path\: :ref:`String<class_String>`\ ) |
-   +-----------------------------+------------------------------------------------------------------------------------------------------------+
-
 .. rst-class:: classref-section-separator
 
 ----
@@ -57,23 +45,6 @@ Gizmo plugins to register, by path. Each one lives inside the module it draws fo
 **INSPECTORS** = ``Array[String](["res://addons/foxfabric/attribute_map/editor/fox_attribute_map_inspector.gd"])`` :ref:`🔗<class_FoxFabric_constant_INSPECTORS>`
 
 Inspector plugins to register, by path. Same rule as the gizmos.
-
-.. rst-class:: classref-section-separator
-
-----
-
-.. rst-class:: classref-descriptions-group
-
-Method Descriptions
--------------------
-
-.. _class_FoxFabric_private_method__instantiate:
-
-.. rst-class:: classref-method
-
-:ref:`Object<class_Object>` **_instantiate**\ (\ path\: :ref:`String<class_String>`\ ) :ref:`🔗<class_FoxFabric_private_method__instantiate>`
-
-Returns ``null`` when a module has been deleted, so the rest of the plugin still loads.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

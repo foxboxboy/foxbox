@@ -23,7 +23,7 @@ Description
 
 When an effect is applied to a target, a separate :ref:`FoxEffectInstance<class_FoxEffectInstance>` is spawned to track its active lifecycle (such as remaining time and current stacks). 
 
-To create a custom effect, extend this class and override :ref:`_on_execute()<class_FoxEffect_private_method__on_execute>`, :ref:`_on_remove()<class_FoxEffect_private_method__on_remove>`, :ref:`_on_reapply()<class_FoxEffect_private_method__on_reapply>`, and :ref:`_on_tick()<class_FoxEffect_private_method__on_tick>`. All four are abstract, so every subclass must implement them even if the body is left empty.
+To create a custom effect, extend this class and override ``_on_execute``, ``_on_remove``, ``_on_reapply``, and ``_on_tick``. All four are abstract, so every subclass must implement them even if the body is left empty.
 
 ::
 
@@ -83,23 +83,15 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`execute<class_FoxEffect_method_execute>`\ (\ target\: :ref:`Object<class_Object>`\ )                                                                       |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`remove<class_FoxEffect_method_remove>`\ (\ target\: :ref:`Object<class_Object>`\ )                                                                         |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`reapply<class_FoxEffect_method_reapply>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ )                                |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`tick<class_FoxEffect_method_tick>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ )                                      |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_execute<class_FoxEffect_private_method__on_execute>`\ (\ target\: :ref:`Object<class_Object>`\ ) |abstract|                                            |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_remove<class_FoxEffect_private_method__on_remove>`\ (\ target\: :ref:`Object<class_Object>`\ ) |abstract|                                              |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_reapply<class_FoxEffect_private_method__on_reapply>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>` = 1\ ) |abstract| |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_on_tick<class_FoxEffect_private_method__on_tick>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ ) |abstract|           |
-   +--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`execute<class_FoxEffect_method_execute>`\ (\ target\: :ref:`Object<class_Object>`\ )                                        |
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`remove<class_FoxEffect_method_remove>`\ (\ target\: :ref:`Object<class_Object>`\ )                                          |
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`reapply<class_FoxEffect_method_reapply>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ ) |
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`tick<class_FoxEffect_method_tick>`\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ )       |
+   +--------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -130,7 +122,7 @@ Prevents duplicate logic. Handles the timer based on :ref:`duration_mode<class_F
 
 :ref:`StackMode<enum_FoxEffect_StackMode>` **INTENSITY** = ``1``
 
-Increases the stack count up to :ref:`max_stacks<class_FoxEffect_property_max_stacks>` and calls :ref:`_on_reapply()<class_FoxEffect_private_method__on_reapply>`.
+Increases the stack count up to :ref:`max_stacks<class_FoxEffect_property_max_stacks>` and calls ``_on_reapply``.
 
 .. _class_FoxEffect_constant_MULTIPLE_INSTANCES:
 
@@ -274,7 +266,7 @@ Method Descriptions
 
 Executes the initial application of this effect on the specified ``target``. 
 
-This method ensures the ``target`` is a valid :ref:`Object<class_Object>` in memory before calling the virtual :ref:`_on_execute()<class_FoxEffect_private_method__on_execute>` method. It is called automatically when a new effect instance is spawned.
+This method ensures the ``target`` is a valid :ref:`Object<class_Object>` in memory before calling the virtual ``_on_execute`` method. It is called automatically when a new effect instance is spawned.
 
 .. rst-class:: classref-item-separator
 
@@ -288,7 +280,7 @@ This method ensures the ``target`` is a valid :ref:`Object<class_Object>` in mem
 
 Reverses the impact of this effect from the ``target``. 
 
-This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before calling the virtual :ref:`_on_remove()<class_FoxEffect_private_method__on_remove>` method. It is called automatically when the effect's duration expires or it is explicitly purged.
+This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before calling the virtual ``_on_remove`` method. It is called automatically when the effect's duration expires or it is explicitly purged.
 
 .. rst-class:: classref-item-separator
 
@@ -302,7 +294,7 @@ This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before
 
 Updates the active effect on the ``target`` to match the new ``current_stack`` count. 
 
-This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before calling the virtual :ref:`_on_reapply()<class_FoxEffect_private_method__on_reapply>` method. This is exclusively called when :ref:`stack_mode<class_FoxEffect_property_stack_mode>` is set to ``StackMode.INTENSITY`` and the :ref:`FoxEffectInstance.stack<class_FoxEffectInstance_property_stack>` count changes.
+This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before calling the virtual ``_on_reapply`` method. This is exclusively called when :ref:`stack_mode<class_FoxEffect_property_stack_mode>` is set to ``StackMode.INTENSITY`` and the :ref:`FoxEffectInstance.stack<class_FoxEffectInstance_property_stack>` count changes.
 
 .. rst-class:: classref-item-separator
 
@@ -314,65 +306,9 @@ This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before
 
 |void| **tick**\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxEffect_method_tick>`
 
-Triggers the recurring :ref:`_on_tick()<class_FoxEffect_private_method__on_tick>` logic. 
+Triggers the recurring ``_on_tick`` logic. 
 
 This method ensures the ``target`` is a valid :ref:`Object<class_Object>` before executing.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffect_private_method__on_execute:
-
-.. rst-class:: classref-method
-
-|void| **_on_execute**\ (\ target\: :ref:`Object<class_Object>`\ ) |abstract| :ref:`🔗<class_FoxEffect_private_method__on_execute>`
-
-Applies this effect's initial impact to ``target``. Called once, when the effect is first applied. 
-
-\ ``target`` is guaranteed to be a valid :ref:`Object<class_Object>` by the time this runs.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffect_private_method__on_remove:
-
-.. rst-class:: classref-method
-
-|void| **_on_remove**\ (\ target\: :ref:`Object<class_Object>`\ ) |abstract| :ref:`🔗<class_FoxEffect_private_method__on_remove>`
-
-Reverses whatever :ref:`_on_execute()<class_FoxEffect_private_method__on_execute>` and :ref:`_on_reapply()<class_FoxEffect_private_method__on_reapply>` did to ``target``. Called once, when the effect expires or is purged. 
-
-\ **Note:** This is skipped when a save file is loaded, so it must not be relied on to clean up state that was never applied in this session.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffect_private_method__on_reapply:
-
-.. rst-class:: classref-method
-
-|void| **_on_reapply**\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>` = 1\ ) |abstract| :ref:`🔗<class_FoxEffect_private_method__on_reapply>`
-
-Rescales this effect on ``target`` to match ``current_stack``. 
-
-Only called when :ref:`stack_mode<class_FoxEffect_property_stack_mode>` is ``StackMode.INTENSITY`` and the stack count actually changes. Implementations should recalculate from the stack count rather than adding to whatever they applied last time.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffect_private_method__on_tick:
-
-.. rst-class:: classref-method
-
-|void| **_on_tick**\ (\ target\: :ref:`Object<class_Object>`, current_stack\: :ref:`int<class_int>`\ ) |abstract| :ref:`🔗<class_FoxEffect_private_method__on_tick>`
-
-Runs the recurring behaviour on ``target``, scaled by ``current_stack``. 
-
-Fires every :ref:`tick_interval<class_FoxEffect_property_tick_interval>` seconds while the effect is active. Never called when :ref:`tick_interval<class_FoxEffect_property_tick_interval>` is ``0.0``.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

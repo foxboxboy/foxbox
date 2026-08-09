@@ -84,8 +84,6 @@ Methods
    +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                  | :ref:`pop_multiplier_modifier<class_FoxModifiableStat_method_pop_multiplier_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                                                                 |
    +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                  | :ref:`_init<class_FoxModifiableStat_private_method__init>`\ (\ p_base\: :ref:`float<class_float>` = 0.0\ )                                                                                                                                             |
-   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -335,18 +333,6 @@ Helper to quickly pop a flat modifier without typing the enum.
 |void| **pop_multiplier_modifier**\ (\ id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxModifiableStat_method_pop_multiplier_modifier>`
 
 Helper to quickly pop a multiplier modifier without typing the enum.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxModifiableStat_private_method__init:
-
-.. rst-class:: classref-method
-
-|void| **_init**\ (\ p_base\: :ref:`float<class_float>` = 0.0\ ) :ref:`🔗<class_FoxModifiableStat_private_method__init>`
-
-Builds a stat sitting at ``p_base`` with no modifiers on it yet.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

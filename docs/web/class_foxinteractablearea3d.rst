@@ -29,19 +29,13 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`interact<class_FoxInteractableArea3D_method_interact>`\ (\ context\: :ref:`Variant<class_Variant>` = null\ )     |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`focus<class_FoxInteractableArea3D_method_focus>`\ (\ sensor\: :ref:`Node<class_Node>`\ )                         |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`unfocus<class_FoxInteractableArea3D_method_unfocus>`\ (\ sensor\: :ref:`Node<class_Node>`\ )                     |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_interact<class_FoxInteractableArea3D_private_method__interact>`\ (\ _context\: :ref:`Variant<class_Variant>`\ ) |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_focus<class_FoxInteractableArea3D_private_method__focus>`\ (\ _sensor\: :ref:`Node<class_Node>`\ )              |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_unfocus<class_FoxInteractableArea3D_private_method__unfocus>`\ (\ _sensor\: :ref:`Node<class_Node>`\ )          |
-   +--------+------------------------------------------------------------------------------------------------------------------------+
+   +--------+--------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`interact<class_FoxInteractableArea3D_method_interact>`\ (\ context\: :ref:`Variant<class_Variant>` = null\ ) |
+   +--------+--------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`focus<class_FoxInteractableArea3D_method_focus>`\ (\ sensor\: :ref:`Node<class_Node>`\ )                     |
+   +--------+--------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`unfocus<class_FoxInteractableArea3D_method_unfocus>`\ (\ sensor\: :ref:`Node<class_Node>`\ )                 |
+   +--------+--------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -124,42 +118,6 @@ Called automatically by an external sensor when this object is hovered or target
 |void| **unfocus**\ (\ sensor\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_FoxInteractableArea3D_method_unfocus>`
 
 Called automatically by an external sensor when this object is no longer targeted.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractableArea3D_private_method__interact:
-
-.. rst-class:: classref-method
-
-|void| **_interact**\ (\ _context\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxInteractableArea3D_private_method__interact>`
-
-Virtual method to be overridden in inherited scripts to define custom interaction logic.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractableArea3D_private_method__focus:
-
-.. rst-class:: classref-method
-
-|void| **_focus**\ (\ _sensor\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_FoxInteractableArea3D_private_method__focus>`
-
-Virtual method to be overridden in inherited scripts to define custom focus (hover) behavior.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractableArea3D_private_method__unfocus:
-
-.. rst-class:: classref-method
-
-|void| **_unfocus**\ (\ _sensor\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_FoxInteractableArea3D_private_method__unfocus>`
-
-Virtual method to be overridden in inherited scripts to define custom unfocus behavior.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

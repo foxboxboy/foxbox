@@ -29,13 +29,11 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------------------+--------------------------------------------------------------------+----------+
-   | :ref:`PackedScene<class_PackedScene>` | :ref:`slot_scene<class_FoxShopMenu_property_slot_scene>`           |          |
-   +---------------------------------------+--------------------------------------------------------------------+----------+
-   | :ref:`Control<class_Control>`         | :ref:`container<class_FoxShopMenu_property_container>`             |          |
-   +---------------------------------------+--------------------------------------------------------------------+----------+
-   | :ref:`FoxWallet<class_FoxWallet>`     | :ref:`_current_wallet<class_FoxShopMenu_property__current_wallet>` | ``null`` |
-   +---------------------------------------+--------------------------------------------------------------------+----------+
+   +---------------------------------------+----------------------------------------------------------+
+   | :ref:`PackedScene<class_PackedScene>` | :ref:`slot_scene<class_FoxShopMenu_property_slot_scene>` |
+   +---------------------------------------+----------------------------------------------------------+
+   | :ref:`Control<class_Control>`         | :ref:`container<class_FoxShopMenu_property_container>`   |
+   +---------------------------------------+----------------------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -156,18 +154,6 @@ The :ref:`PackedScene<class_PackedScene>` to instantiate for each item.
 - |void| **@container_setter**\ (\ value\: :ref:`Control<class_Control>`\ )
 
 The parent :ref:`Control<class_Control>` node where instantiated slots are added.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxShopMenu_property__current_wallet:
-
-.. rst-class:: classref-property
-
-:ref:`FoxWallet<class_FoxWallet>` **_current_wallet** = ``null`` :ref:`🔗<class_FoxShopMenu_property__current_wallet>`
-
-The active wallet used to evaluate affordability.
 
 .. rst-class:: classref-section-separator
 

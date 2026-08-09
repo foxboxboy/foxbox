@@ -76,13 +76,11 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_init<class_FoxAttributeRule_private_method__init>`\ (\ p_id\: :ref:`StringName<class_StringName>` = &"", p_target_key\: :ref:`StringName<class_StringName>` = &""\ ) |
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`apply_to<class_FoxAttributeRule_method_apply_to>`\ (\ map\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) |abstract|                                               |
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`remove_from<class_FoxAttributeRule_method_remove_from>`\ (\ map\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) |abstract|                                         |
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`apply_to<class_FoxAttributeRule_method_apply_to>`\ (\ map\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) |abstract|       |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`remove_from<class_FoxAttributeRule_method_remove_from>`\ (\ map\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) |abstract| |
+   +--------+-------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -121,18 +119,6 @@ The specific dictionary key in the :ref:`FoxAttributeMap<class_FoxAttributeMap>`
 
 Method Descriptions
 -------------------
-
-.. _class_FoxAttributeRule_private_method__init:
-
-.. rst-class:: classref-method
-
-|void| **_init**\ (\ p_id\: :ref:`StringName<class_StringName>` = &"", p_target_key\: :ref:`StringName<class_StringName>` = &""\ ) :ref:`🔗<class_FoxAttributeRule_private_method__init>`
-
-Builds a rule with the ``p_id`` it will be removed by and the ``p_target_key`` it acts on. Subclasses call this with ``super()``.
-
-.. rst-class:: classref-item-separator
-
-----
 
 .. _class_FoxAttributeRule_method_apply_to:
 

@@ -62,8 +62,6 @@ Methods
    +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void| | :ref:`aim_at_position<class_FoxAimGimbal3D_method_aim_at_position>`\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ )                                                                                |
    +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_limits_changed<class_FoxAimGimbal3D_private_method__limits_changed>`\ (\ )                                                                                                                           |
-   +--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -242,18 +240,6 @@ Intercepts native look_at calls to prevent internal pitch/yaw desyncs.
 |void| **aim_at_position**\ (\ target_global_pos\: :ref:`Vector3<class_Vector3>`\ ) :ref:`🔗<class_FoxAimGimbal3D_method_aim_at_position>`
 
 Instantly calculates the pitch and yaw required to face a global 3D position, then safely feeds them through the clamps.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAimGimbal3D_private_method__limits_changed:
-
-.. rst-class:: classref-method
-
-|void| **_limits_changed**\ (\ ) :ref:`🔗<class_FoxAimGimbal3D_private_method__limits_changed>`
-
-The configuration warning and the clamp gizmo are both read off the limits, and neither refreshes on its own when one changes in the inspector.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

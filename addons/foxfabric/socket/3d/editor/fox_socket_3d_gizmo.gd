@@ -76,7 +76,7 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 ## An occupied socket gets a second diamond nested inside the first, so occupancy reads from the
 ## shape alone. Colour says the same thing twice for anyone who can see the difference.
 ## [br][br]
-## Split out from [method _redraw] so the geometry can be checked without an editor gizmo to
+## Split out from [code skip-lint]_redraw[/code] so the geometry can be checked without an editor gizmo to
 ## hand it to. Points come in pairs, one segment per pair.
 static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
 	var at: Transform3D = marker_transform(socket)

@@ -81,8 +81,6 @@ Methods
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                    | :ref:`clear_multiplier_max_modifier<class_FoxStatPool_method_clear_multiplier_max_modifier>`\ (\ id\: :ref:`StringName<class_StringName>`\ )                                                                            |
    +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                    | :ref:`_init<class_FoxStatPool_private_method__init>`\ (\ )                                                                                                                                                              |
-   +---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -339,18 +337,6 @@ Helper to instantly remove all flat modifiers under a specific ID from the max c
 |void| **clear_multiplier_max_modifier**\ (\ id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxStatPool_method_clear_multiplier_max_modifier>`
 
 Helper to instantly remove all multiplier modifiers under a specific ID from the max capacity.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxStatPool_private_method__init:
-
-.. rst-class:: classref-method
-
-|void| **_init**\ (\ ) :ref:`🔗<class_FoxStatPool_private_method__init>`
-
-Builds an empty pool. Set :ref:`base_max<class_FoxStatPool_property_base_max>` before using it, or it starts at nothing.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

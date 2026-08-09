@@ -22,13 +22,9 @@ Properties
 .. table::
    :widths: auto
 
-   +-------------------------------------+--------------------------------------------------------------------------------------+--------+
-   | :ref:`Skeleton3D<class_Skeleton3D>` | :ref:`skeleton<class_FoxCharacterAccessories_property_skeleton>`                     |        |
-   +-------------------------------------+--------------------------------------------------------------------------------------+--------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`_skinned_slots<class_FoxCharacterAccessories_property__skinned_slots>`         | ``{}`` |
-   +-------------------------------------+--------------------------------------------------------------------------------------+--------+
-   | :ref:`Array<class_Array>`           | :ref:`_rigid_accessories<class_FoxCharacterAccessories_property__rigid_accessories>` | ``[]`` |
-   +-------------------------------------+--------------------------------------------------------------------------------------+--------+
+   +-------------------------------------+------------------------------------------------------------------+
+   | :ref:`Skeleton3D<class_Skeleton3D>` | :ref:`skeleton<class_FoxCharacterAccessories_property_skeleton>` |
+   +-------------------------------------+------------------------------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -131,30 +127,6 @@ Property Descriptions
 :ref:`Skeleton3D<class_Skeleton3D>` **skeleton** :ref:`🔗<class_FoxCharacterAccessories_property_skeleton>`
 
 The skeleton that the rigid accessories will attach to and the skinned accessories will deform to.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterAccessories_property__skinned_slots:
-
-.. rst-class:: classref-property
-
-:ref:`Dictionary<class_Dictionary>` **_skinned_slots** = ``{}`` :ref:`🔗<class_FoxCharacterAccessories_property__skinned_slots>`
-
-Tracks all instances of skinned accessories.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxCharacterAccessories_property__rigid_accessories:
-
-.. rst-class:: classref-property
-
-:ref:`Array<class_Array>` **_rigid_accessories** = ``[]`` :ref:`🔗<class_FoxCharacterAccessories_property__rigid_accessories>`
-
-Tracks all instances of rigid accessories.
 
 .. rst-class:: classref-section-separator
 

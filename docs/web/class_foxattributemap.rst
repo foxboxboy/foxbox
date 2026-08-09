@@ -122,10 +122,6 @@ Methods
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                                                          | :ref:`unregister_child_map<class_FoxAttributeMap_method_unregister_child_map>`\ (\ child\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ )                                    |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`\[:ref:`Dictionary<class_Dictionary>`\]                                                | :ref:`_get_property_list<class_FoxAttributeMap_private_method__get_property_list>`\ (\ )                                                                                       |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Dictionary<class_Dictionary>`                                                                             | :ref:`_read_only<class_FoxAttributeMap_private_method__read_only>`\ (\ name\: :ref:`StringName<class_StringName>`, type\: :ref:`int<class_int>`\ )                             |
-   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`StringName<class_StringName>`\] | :ref:`get_rule_summary<class_FoxAttributeMap_method_get_rule_summary>`\ (\ )                                                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -631,32 +627,6 @@ A copy of the maps registered beneath this one. Editing it will not change the m
 |void| **unregister_child_map**\ (\ child\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) :ref:`🔗<class_FoxAttributeMap_method_unregister_child_map>`
 
 Unlinks a child map and strips away any rules and flags it inherited from this parent.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__get_property_list:
-
-.. rst-class:: classref-method
-
-:ref:`Array<class_Array>`\[:ref:`Dictionary<class_Dictionary>`\] **_get_property_list**\ (\ ) :ref:`🔗<class_FoxAttributeMap_private_method__get_property_list>`
-
-Publishes the runtime state as read-only inspector properties. The names are written out rather than kept in constants, because a constant on this class shows up as a row of its own every time anyone inspects a map, and four rows spelling out their own names are not worth reading. 
-
-A map holds nothing until the game runs, so these are empty while editing. They exist for the remote inspector: play the scene, pick the node out of the remote tree, and the data, flags and rules update as they change. Nothing here is stored in the scene file.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxAttributeMap_private_method__read_only:
-
-.. rst-class:: classref-method
-
-:ref:`Dictionary<class_Dictionary>` **_read_only**\ (\ name\: :ref:`StringName<class_StringName>`, type\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxAttributeMap_private_method__read_only>`
-
-No PROPERTY_USAGE_STORAGE, so none of this is written into a .tscn.
 
 .. rst-class:: classref-item-separator
 

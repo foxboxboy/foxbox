@@ -198,31 +198,23 @@ def step_xml(godot):
         print("      skipped %d retired class(es) in %s" % (retired, ", ".join(UNDOCUMENTED)))
 
 
-# Godot's own reference never lists private members, because a C++ private is not registered and
-# there is nothing to document. GDScript has no such distinction, so doctool writes out every
-# _name a script declares and the page fills up with internals nobody can call, each carrying an
-# invitation to describe it. _init survives: that is what new() calls.
+PRIVATE_TAGS = ("member", "method", "signal", "constant", "theme_item")
+
+
+# Godot's own reference contains 1441 underscore methods and every one is marked virtual, because
+# C++ registers those two things and nothing else: the public API, and the virtuals the engine
+# calls on you. A private member is never registered, so there is nothing to document and the
+# reference never sees it.
+#
+# GDScript has no registration step. doctool walks the script and emits whatever it finds, so
+# _current_body arrives looking exactly like add_rule. Nothing in the output marks intent, and
+# GDScript cannot produce a virtual qualifier, so every underscore member here is one the engine
+# would never have shown. The editor's own help filters them at display time; this does the same
+# for the generated pages, so the two agree.
 #
 # Cut as text rather than through an XML parser. Re-serialising rewrites the whitespace inside
 # every description, and make_rst.py compares code samples against the source to catch exactly
 # that kind of drift, so a parsed round trip fails the build.
-PRIVATE_TAGS = ("member", "method", "signal", "constant", "theme_item")
-
-# Methods and signals carry their text in a <description> child. Members and constants carry it
-# directly between their own tags.
-DESCRIPTION_CHILD = re.compile(r"<description>(.*?)</description>", re.S)
-OWN_TEXT = re.compile(r"^<[^>]*>(.*)</[a-z_]+>\s*$", re.S)
-
-
-def is_described(body):
-    child = DESCRIPTION_CHILD.search(body)
-    if child is not None:
-        return bool(child.group(1).strip())
-
-    own = OWN_TEXT.match(body.strip())
-    return bool(own and own.group(1).strip())
-
-
 def strip_private_members(path):
     text = path.read_text(encoding="utf-8")
 
@@ -232,21 +224,8 @@ def strip_private_members(path):
             r"[ \t]*<" + tag + r' name="_[^"]*"(?:[^>]*/>|.*?</' + tag + r">)\n",
             re.S,
         )
-
-        def cut(match):
-            nonlocal removed
-            body = match.group(0)
-
-            # Keep anything the author described. _on_execute and friends are virtuals a user
-            # overrides and the class docs link to them, so they are API. _data is not.
-            # _init stays regardless: that is what new() routes to.
-            if 'name="_init"' in body or is_described(body):
-                return body
-
-            removed += 1
-            return ""
-
-        text = pattern.sub(cut, text)
+        text, count = pattern.subn("", text)
+        removed += count
 
     if removed:
         path.write_text(text, encoding="utf-8", newline="\n")

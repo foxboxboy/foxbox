@@ -45,15 +45,11 @@ Methods
 .. table::
    :widths: auto
 
-   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`subtract<class_FoxBoundedValue_method_subtract>`\ (\ amount\: :ref:`float<class_float>`\ )                                                                                                   |
-   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`add<class_FoxBoundedValue_method_add>`\ (\ amount\: :ref:`float<class_float>`\ )                                                                                                             |
-   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_init<class_FoxBoundedValue_private_method__init>`\ (\ starting_value\: :ref:`float<class_float>` = 1.0, p_max\: :ref:`float<class_float>` = 1.0, p_min\: :ref:`float<class_float>` = 0.0\ ) |
-   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_reclamp<class_FoxBoundedValue_private_method__reclamp>`\ (\ )                                                                                                                               |
-   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+--------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`subtract<class_FoxBoundedValue_method_subtract>`\ (\ amount\: :ref:`float<class_float>`\ ) |
+   +--------+--------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`add<class_FoxBoundedValue_method_add>`\ (\ amount\: :ref:`float<class_float>`\ )           |
+   +--------+--------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -179,32 +175,6 @@ Decreases :ref:`value<class_FoxBoundedValue_property_value>` by ``amount``.
 |void| **add**\ (\ amount\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxBoundedValue_method_add>`
 
 Increases :ref:`value<class_FoxBoundedValue_property_value>` by ``amount``.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxBoundedValue_private_method__init:
-
-.. rst-class:: classref-method
-
-|void| **_init**\ (\ starting_value\: :ref:`float<class_float>` = 1.0, p_max\: :ref:`float<class_float>` = 1.0, p_min\: :ref:`float<class_float>` = 0.0\ ) :ref:`🔗<class_FoxBoundedValue_private_method__init>`
-
-Builds a value of ``starting_value`` bounded by ``p_min`` and ``p_max``. 
-
-Note the argument order: the value comes first, then the maximum, then the minimum. The value is clamped into range immediately.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxBoundedValue_private_method__reclamp:
-
-.. rst-class:: classref-method
-
-|void| **_reclamp**\ (\ ) :ref:`🔗<class_FoxBoundedValue_private_method__reclamp>`
-
-Re-runs the clamp against the current bounds. Called when either bound moves.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

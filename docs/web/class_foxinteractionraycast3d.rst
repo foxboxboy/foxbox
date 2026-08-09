@@ -41,13 +41,11 @@ Methods
 .. table::
    :widths: auto
 
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FoxInteractableArea3D<class_FoxInteractableArea3D>` | :ref:`get_current_target<class_FoxInteractionRayCast3D_method_get_current_target>`\ (\ )                                                                     |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                    | :ref:`interact_with_target<class_FoxInteractionRayCast3D_method_interact_with_target>`\ (\ context\: :ref:`Variant<class_Variant>` = null\ )                 |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                                   | :ref:`_set<class_FoxInteractionRayCast3D_private_method__set>`\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) |
-   +-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-----------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`FoxInteractableArea3D<class_FoxInteractableArea3D>` | :ref:`get_current_target<class_FoxInteractionRayCast3D_method_get_current_target>`\ (\ )                                                     |
+   +-----------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                    | :ref:`interact_with_target<class_FoxInteractionRayCast3D_method_interact_with_target>`\ (\ context\: :ref:`Variant<class_Variant>` = null\ ) |
+   +-----------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -139,20 +137,6 @@ Returns the :ref:`FoxInteractableArea3D<class_FoxInteractableArea3D>` currently 
 |void| **interact_with_target**\ (\ context\: :ref:`Variant<class_Variant>` = null\ ) :ref:`🔗<class_FoxInteractionRayCast3D_method_interact_with_target>`
 
 Attempts to interact with the currently focused target, passing the given ``context``.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxInteractionRayCast3D_private_method__set:
-
-.. rst-class:: classref-method
-
-:ref:`bool<class_bool>` **_set**\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxInteractionRayCast3D_private_method__set>`
-
-:ref:`RayCast3D.collide_with_areas<class_RayCast3D_property_collide_with_areas>` belongs to the parent class, so it cannot be given a setter here. :ref:`Object._set()<class_Object_private_method__set>` sees the assignment first; returning ``false`` leaves the engine to apply it as normal. 
-
-The refresh is deferred because this runs before the new value lands, and the warning is computed from it.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

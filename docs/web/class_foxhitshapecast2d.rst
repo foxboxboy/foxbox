@@ -41,11 +41,9 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                  | :ref:`fire<class_FoxHitShapeCast2D_method_fire>`\ (\ )                                                                                                 |
-   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>` | :ref:`_set<class_FoxHitShapeCast2D_private_method__set>`\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) |
-   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +--------+--------------------------------------------------------+
+   | |void| | :ref:`fire<class_FoxHitShapeCast2D_method_fire>`\ (\ ) |
+   +--------+--------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -97,20 +95,6 @@ Method Descriptions
 |void| **fire**\ (\ ) :ref:`🔗<class_FoxHitShapeCast2D_method_fire>`
 
 Forces the shapecast to update immediately and attempts to deliver the :ref:`payload<class_FoxHitShapeCast2D_property_payload>`.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxHitShapeCast2D_private_method__set:
-
-.. rst-class:: classref-method
-
-:ref:`bool<class_bool>` **_set**\ (\ property\: :ref:`StringName<class_StringName>`, _value\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxHitShapeCast2D_private_method__set>`
-
-:ref:`ShapeCast2D.collide_with_areas<class_ShapeCast2D_property_collide_with_areas>` belongs to the parent class, so it cannot be given a setter here. :ref:`Object._set()<class_Object_private_method__set>` sees the assignment first; returning ``false`` leaves the engine to apply it as normal. 
-
-The refresh is deferred because this runs before the new value lands, and the warning is computed from it.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

@@ -28,18 +28,6 @@ Properties
    | :ref:`float<class_float>` | :ref:`friction<class_FoxAdvancedCharacterMotor3D_property_friction>`         | ``1500.0`` |
    +---------------------------+------------------------------------------------------------------------------+------------+
 
-.. rst-class:: classref-reftable-group
-
-Methods
--------
-
-.. table::
-   :widths: auto
-
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------+
-   | |void| | :ref:`_update_movement<class_FoxAdvancedCharacterMotor3D_private_method__update_movement>`\ (\ delta\: :ref:`Variant<class_Variant>`\ ) |
-   +--------+-----------------------------------------------------------------------------------------------------------------------------------------+
-
 .. rst-class:: classref-section-separator
 
 ----
@@ -68,23 +56,6 @@ How responsive input is.
 :ref:`float<class_float>` **friction** = ``1500.0`` :ref:`🔗<class_FoxAdvancedCharacterMotor3D_property_friction>`
 
 How quickly the character will slow down. Use lower numbers for a "walking on ice" feel.
-
-.. rst-class:: classref-section-separator
-
-----
-
-.. rst-class:: classref-descriptions-group
-
-Method Descriptions
--------------------
-
-.. _class_FoxAdvancedCharacterMotor3D_private_method__update_movement:
-
-.. rst-class:: classref-method
-
-|void| **_update_movement**\ (\ delta\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_FoxAdvancedCharacterMotor3D_private_method__update_movement>`
-
-More advanced _update_movement() from FoxCharacterMotor3D.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

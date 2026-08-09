@@ -73,8 +73,6 @@ Methods
    +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                              | :ref:`load_state<class_FoxEffectInstance_method_load_state>`\ (\ data\: :ref:`Dictionary<class_Dictionary>`\ )                                 |
    +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`String<class_String>`         | :ref:`_to_string<class_FoxEffectInstance_private_method__to_string>`\ (\ )                                                                     |
-   +-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -300,18 +298,6 @@ Returns a dictionary containing the instance's current state for saving.
 |void| **load_state**\ (\ data\: :ref:`Dictionary<class_Dictionary>`\ ) :ref:`🔗<class_FoxEffectInstance_method_load_state>`
 
 Restores the private state from a saved dictionary. Must be called immediately after :ref:`setup()<class_FoxEffectInstance_method_setup>`.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxEffectInstance_private_method__to_string:
-
-.. rst-class:: classref-method
-
-:ref:`String<class_String>` **_to_string**\ (\ ) :ref:`🔗<class_FoxEffectInstance_private_method__to_string>`
-
-Overrides the default print() behavior to show readable, human-friendly data instead of a raw memory ID (e.g., \[poison x2 (4.5s)]).
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
