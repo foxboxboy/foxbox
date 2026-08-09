@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://foxfabric-godot.readthedocs.io">
-    <img src="icon.png" width="200" alt="FoxFabric logo">
+    <img src="icons/full_logo.svg" width="400" alt="FoxFabric logo">
   </a>
 </p>
 
