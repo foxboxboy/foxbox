@@ -48,15 +48,6 @@
 .ff-tile-repo  { background-color: #7a2b45; }
 
 /**
- * custom.css reserves 348px at the foot of the sidebar for the Read the Docs version panel and
- * the ethical-ads slot. Neither exists here, so the menu stops well short of the bottom and its
- * scrollbar looks cut off. Reclaim everything except the logo and the search box.
- */
-.wy-menu.wy-menu-vertical {
-    max-height: calc(100% - 140px);
-}
-
-/**
  * custom.css marks external links with an icon. On Godot's own site every engine type links
  * internally, so the icon only ever lands on genuinely offsite links. Here those same types are
  * resolved through intersphinx and count as external, which puts an icon after every int,
