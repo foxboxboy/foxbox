@@ -2,8 +2,8 @@
 extends EditorInspectorPlugin
 ## An [EditorInspectorPlugin] that puts a live read-out above a [FoxAttributeMap]'s properties.
 ##
-## The raw dictionaries stay underneath in the Runtime group, so a value that needs opening up
-## still can be.
+## The Runtime group carries the same state as text. A stored object that needs opening up is in
+## the Members list instead, which the debugger fills in from the map's own variables.
 
 
 ## Named ReadOut because Panel is a native class and a const of that name shadows it.
