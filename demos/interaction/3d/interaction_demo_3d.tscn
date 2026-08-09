@@ -193,14 +193,52 @@ shape = SubResource("BoxShape3D_bound_lid")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=451581112]
 
-[node name="Instructions" type="Label" parent="HUD" node_paths=PackedStringArray("player", "hands")]
-script = ExtResource("9_hud")
-player = NodePath("../../Player")
-hands = NodePath("../../Hands")
+[node name="Readout" type="VBoxContainer" parent="HUD" node_paths=PackedStringArray("player", "hands", "pointing_at", "holding", "lift")]
 offset_left = 16.0
 offset_top = 12.0
 offset_right = 680.0
-offset_bottom = 96.0
+offset_bottom = 160.0
+theme_override_constants/separation = 12
+script = ExtResource("9_hud")
+player = NodePath("../../Player")
+hands = NodePath("../../Hands")
+pointing_at = NodePath("Rows/PointingAt")
+holding = NodePath("Rows/Holding")
+lift = NodePath("Rows/Lift")
+
+[node name="Line1" type="Label" parent="HUD/Readout"]
+modulate = Color(1, 1, 1, 0.75)
+text = "Mouse aims, left click picks up and puts down"
+
+[node name="Line2" type="Label" parent="HUD/Readout"]
+modulate = Color(1, 1, 1, 0.75)
+text = "Right drag turns what you are holding, wheel raises and lowers it"
+
+[node name="Rows" type="GridContainer" parent="HUD/Readout"]
+columns = 2
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 4
+
+[node name="PointingAtName" type="Label" parent="HUD/Readout/Rows"]
+modulate = Color(1, 1, 1, 0.55)
+text = "pointing at"
+
+[node name="PointingAt" type="Label" parent="HUD/Readout/Rows"]
+text = "-"
+
+[node name="HoldingName" type="Label" parent="HUD/Readout/Rows"]
+modulate = Color(1, 1, 1, 0.55)
+text = "holding"
+
+[node name="Holding" type="Label" parent="HUD/Readout/Rows"]
+text = "-"
+
+[node name="LiftName" type="Label" parent="HUD/Readout/Rows"]
+modulate = Color(1, 1, 1, 0.55)
+text = "lift"
+
+[node name="Lift" type="Label" parent="HUD/Readout/Rows"]
+text = "-"
 
 [connection signal="interacted" from="Props/RedBox/InteractableArea3D" to="Props/RedBox" method="_on_interacted"]
 [connection signal="interacted" from="Props/Door/RigidBody3D/InteractableArea3D" to="Props/Door/RigidBody3D" method="_on_interacted"]

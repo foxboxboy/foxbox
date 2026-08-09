@@ -1,4 +1,5 @@
-extends Label
+# The readout. Each row is a pair of Labels in a GridContainer, so this only writes the live half.
+extends VBoxContainer
 
 
 
@@ -11,6 +12,11 @@ const Hands3D = preload("res://demos/interaction/3d/hands_3d.gd")
 @export var player: Player3D
 @export var hands: Hands3D
 
+## The value beside each row's name. The names, and the controls above them, are scene text.
+@export var pointing_at: Label
+@export var holding: Label
+@export var lift: Label
+
 #endregion
 
 
@@ -19,14 +25,9 @@ const Hands3D = preload("res://demos/interaction/3d/hands_3d.gd")
 #region Built-In Virtuals
 
 func _process(_delta: float) -> void:
-	text = "\n".join([
-		"Mouse aims, left click picks up and puts down",
-		"Right drag turns what you are holding, wheel raises and lowers it",
-		"",
-		"pointing at:  %s" % _pointing_at(),
-		"holding:      %s" % ("yes" if hands.is_holding() else "no"),
-		"lift:         %.1f m" % hands.get_lift(),
-	])
+	pointing_at.text = _pointing_at()
+	holding.text = "yes" if hands.is_holding() else "no"
+	lift.text = "%.1f m" % hands.get_lift()
 
 #endregion
 
@@ -46,7 +47,9 @@ func _pointing_at() -> String:
 		return String(target.name)
 
 	if &"label" in prop:
-		return String(prop.get(&"label"))
+		# Through a typed local, because get() comes back as a Variant.
+		var written: String = prop.get(&"label")
+		return written
 
 	return String(prop.name)
 

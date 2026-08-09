@@ -1,4 +1,5 @@
-extends Label
+# The readout. Each row is a pair of Labels in a GridContainer, so this only writes the live half.
+extends VBoxContainer
 
 
 
@@ -11,6 +12,11 @@ const Hands2D = preload("res://demos/interaction/2d/hands_2d.gd")
 @export var player: Player2D
 @export var hands: Hands2D
 
+## The value beside each row's name. The names, and the controls above them, are scene text.
+@export var pointing_at: Label
+@export var holding: Label
+@export var upright: Label
+
 #endregion
 
 
@@ -19,19 +25,14 @@ const Hands2D = preload("res://demos/interaction/2d/hands_2d.gd")
 #region Built-In Virtuals
 
 func _process(_delta: float) -> void:
-	var upright: String = "on" if hands.is_upright() else "off"
+	pointing_at.text = _pointing_at()
+	holding.text = "yes" if hands.is_holding() else "no"
+
 	if hands.is_upright():
 		# Worth saying, or right dragging looks broken.
-		upright += "  (held level, so turning has no effect)"
-
-	text = "\n".join([
-		"Arrows move, mouse aims, left click picks up and puts down",
-		"Right drag turns what you are holding, Space toggles upright",
-		"",
-		"pointing at:  %s" % _pointing_at(),
-		"holding:      %s" % ("yes" if hands.is_holding() else "no"),
-		"keep upright: %s" % upright,
-	])
+		upright.text = "on   (held level, so turning has no effect)"
+	else:
+		upright.text = "off"
 
 #endregion
 
@@ -51,7 +52,9 @@ func _pointing_at() -> String:
 		return String(target.name)
 
 	if &"label" in prop:
-		return String(prop.get(&"label"))
+		# Through a typed local, because get() comes back as a Variant.
+		var written: String = prop.get(&"label")
+		return written
 
 	return String(prop.name)
 

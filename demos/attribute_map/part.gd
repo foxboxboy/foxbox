@@ -38,15 +38,18 @@ var _cooldown: float = 0.0
 
 func _ready() -> void:
 	for key: String in stats:
-		var name: StringName = StringName(key)
+		var stat: StringName = StringName(key)
+
+		# Through a typed local, because a Dictionary lookup comes back as a Variant.
+		var base: float = stats[key]
 
 		# The map stores any Variant, so what goes in is a stat rather than a bare number. Rules
 		# then stack modifiers on it instead of overwriting it, which is what makes them come off
 		# cleanly no matter what order they went on in.
-		attributes.set_data(name, FoxModifiableStat.new(float(stats[key])))
+		attributes.set_data(stat, FoxModifiableStat.new(base))
 
 		if group != &"":
-			attributes.add_data_to_group(name, group)
+			attributes.add_data_to_group(stat, group)
 
 
 func _process(delta: float) -> void:
