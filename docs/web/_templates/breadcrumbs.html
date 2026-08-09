@@ -1,6 +1,6 @@
 {#-
   Reproduces the header row Godot puts above the breadcrumb trail: the project, version and
-  language on one line, and the edit links stacked at the right.
+  language on one line, and the repository links stacked at the right.
 
   The theme's own breadcrumbs.html is extended rather than copied, so the trail keeps whatever the
   theme changes about it later. The "!" prefix means the theme's copy of this file rather than this
@@ -10,17 +10,12 @@
   without a margin holding them apart. Copied here because the spacing comes out of that nesting,
   not out of the stylesheet.
 
-  make_rst.py puts ":github_url: hide" at the top of every class page it generates, because those
-  pages come from ## comments in .gd files and the reStructuredText is overwritten on the next
-  build. Godot's docs act on that directive and show no links at all on a generated page. The stock
-  theme has no idea what "hide" means and renders href="hide", which resolves to /en/latest/hide
-  and 404s.
-
-  sourcename is empty on the pages Sphinx builds itself, genindex and search. hasdoc() is not,
-  which is why the stock theme offers to edit docs/web/genindex, a file that has never existed.
-
-  The tests sit inside the block rather than in a top level set, because Jinja does not leak an
-  assignment out of a block and a set here would not reach the condition.
+  The aside is written out rather than taken from the theme, which builds a link to the current
+  page's own reStructuredText. That suits a handwritten page and nothing else: 102 of the 107 pages
+  here are generated, so a link offering to edit one points at a file the next build overwrites.
+  make_rst.py marks its output with ":github_url: hide" for that reason, which the theme does not
+  understand and renders as href="hide", a 404. Both links below name the repository instead, so
+  they are the same on every page and need no per page test.
 -#}
 {%- extends "!breadcrumbs.html" -%}
 
@@ -34,10 +29,10 @@
 {%- endblock %}
 
 {%- block breadcrumbs_aside %}
-  {%- if sourcename and not (meta is defined and meta is not none and meta.get('github_url') == 'hide') %}
-    {{- super() }}
+    <li class="wy-breadcrumbs-aside">
+      <a href="https://github.com/tateorrtot/foxfabric-godot" class="fa fa-github"> FoxFabric on GitHub</a>
+    </li>
     <li class="wy-breadcrumbs-aside ff-contribute">
       <a href="https://github.com/tateorrtot/foxfabric-godot/blob/main/CONTRIBUTING.md">Learn how to contribute!</a>
     </li>
-  {%- endif %}
 {%- endblock %}
