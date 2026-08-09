@@ -1,10 +1,23 @@
 {#-
   Names the project, version and language above the breadcrumb trail, the way the Godot docs do.
 
-  The theme's own breadcrumbs.html is included below rather than copied, so the trail itself and
-  the Edit on GitHub link keep working and keep whatever the theme changes about them later. The
-  "!" prefix means the theme's copy of this file, not this one, which would recurse.
+  The theme's own breadcrumbs.html is included below rather than copied, so the trail keeps
+  whatever the theme changes about it later. The "!" prefix means the theme's copy of this file
+  rather than this one, which would recurse.
+
+  make_rst.py puts ":github_url: hide" at the top of every class page it generates, because those
+  pages come from ## comments in .gd files and the reStructuredText is overwritten on the next
+  build. Godot's docs act on that directive. The stock theme has no idea what "hide" means and
+  renders href="hide", which resolves to /en/latest/hide and 404s.
+
+  display_vcs_links is the theme's own switch for the whole Edit on GitHub aside, so setting it
+  from here suppresses the link on generated pages and leaves it alone on hand written ones.
+
+  The assignment sits at the top level with the condition inside the expression, because Jinja
+  does not leak a set out of an if block.
 -#}
+{%- set display_vcs_links = not (meta is defined and meta is not none and meta.get('github_url') == 'hide') -%}
+
 <div class="ff-docs-title">{{ project }} {{ release }} documentation in English</div>
 
 {%- include "!breadcrumbs.html" -%}
