@@ -67,6 +67,19 @@
 }
 
 /**
+ * Read the Docs' ad script sets padding-bottom inline on the sidebar to reserve room for the ad
+ * it serves, and the figure it picks does not track the ad it then renders: measured at 264px,
+ * 47px and ~190px on the same page, against a bar that is between 44px and 66px tall. Anything
+ * over the bar's height shows as a band of empty sidebar above it, with the menu cut off mid item.
+ *
+ * 5em clears the tallest bar seen. !important is what beats the inline style, since the script
+ * sets it without one.
+ */
+.wy-nav-side {
+    padding-bottom: 5em !important;
+}
+
+/**
  * The project, version and language line that _templates/breadcrumbs.html puts above the trail.
  * Godot's values. No bottom margin: the gap comes from the nested list the template wraps the
  * trail in, and adding one here pushes the trail a further half rem down.
