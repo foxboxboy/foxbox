@@ -203,6 +203,14 @@ func _init(p_base: float = 0.0) -> void:
 	_current_value = base_value
 
 
+# Without this an object reaches the remote inspector as an encoded id and nothing else, because
+# the debugger cannot send the object itself. Whatever this returns is what a reader sees when a
+# stat is stored in a FoxAttributeMap.
+func _to_string() -> String:
+	var count: int = _flat_modifiers.size() + _multiplier_modifiers.size()
+	return "%s (base %s, %d modifiers)" % [value, base_value, count]
+
+
 func _get_dict(type: ModifierType) -> Dictionary:
 	return _multiplier_modifiers if type == ModifierType.MULTIPLIER else _flat_modifiers
 

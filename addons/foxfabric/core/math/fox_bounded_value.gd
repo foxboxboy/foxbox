@@ -110,6 +110,12 @@ func _init(starting_value: float = 1.0, p_max: float = 1.0, p_min: float = 0.0) 
 	value = starting_value
 
 
+# See FoxModifiableStat._to_string. An object crossing the debugger arrives as an encoded id, so
+# this is the only chance to say something useful about it.
+func _to_string() -> String:
+	return "%s (%s to %s)" % [value, min_value, max_value]
+
+
 ## Re-runs the clamp against the current bounds. Called when either bound moves.
 func _reclamp() -> void:
 	# Assigning the property to itself runs the setter exactly once, which clamps and reports.
