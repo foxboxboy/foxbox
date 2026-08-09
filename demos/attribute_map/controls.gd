@@ -7,6 +7,7 @@ extends VBoxContainer
 const FlatRule = preload("res://demos/attribute_map/rules/flat_rule.gd")
 const BiggerCannon = preload("res://demos/attribute_map/rules/bigger_cannon.gd")
 const KnockedOut = preload("res://demos/attribute_map/rules/knocked_out.gd")
+const Wall = preload("res://demos/attribute_map/wall.gd")
 
 const BOOST: StringName = &"boost"
 const BIGGER: StringName = &"bigger cannon"
@@ -19,7 +20,7 @@ const STUNNED: StringName = &"crew_stunned"
 ## The knocked-out rule remembers what it took, so it goes straight on the weapon it applies to.
 @export var cannon: FoxAttributeMap
 
-@export var target: Node
+@export var wall: Wall
 
 ## How far the boost can be wound down. The machine gun only has three damage to give, and a
 ## weapon doing less than none of it is not a thing worth showing.
@@ -38,19 +39,19 @@ var _boost: int = 0
 #region Built-In Virtuals
 
 func _ready() -> void:
-	_button("+1 damage on the tank", _boost_up)
-	_button("-1 damage on the tank", _boost_down)
-	_button("bigger cannon", _toggle_bigger_cannon)
-	_button("cannon knocked out", _toggle_knocked_out)
-	_button("stun the crew", _toggle_stun)
-	_button("repair the wall", _repair)
+	_make_button("+1 damage on the tank", _boost_up)
+	_make_button("-1 damage on the tank", _boost_down)
+	_make_button("bigger cannon", _toggle_bigger_cannon)
+	_make_button("cannon knocked out", _toggle_knocked_out)
+	_make_button("stun the crew", _toggle_stun)
+	_make_button("repair the wall", _repair)
 
 #endregion
 
 
 #region Private
 
-func _button(text: String, pressed: Callable) -> void:
+func _make_button(text: String, pressed: Callable) -> void:
 	var button: Button = Button.new()
 	button.text = text
 	button.pressed.connect(pressed)
@@ -101,7 +102,7 @@ func _toggle_stun() -> void:
 
 
 func _repair() -> void:
-	target.call(&"reset")
+	wall.reset()
 
 
 ## Read by the readout, so the buttons going quiet at the limit has something to point at.

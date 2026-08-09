@@ -1,43 +1,52 @@
 [gd_scene format=3 uid="uid://csyyxnvtd7qjc"]
 
 [ext_resource type="Script" uid="uid://cwfhq8xve31ou" path="res://addons/foxfabric/attribute_map/fox_attribute_map.gd" id="1_map"]
-[ext_resource type="Script" path="res://demos/attribute_map/part.gd" id="2_part"]
-[ext_resource type="Script" path="res://demos/attribute_map/target.gd" id="3_target"]
-[ext_resource type="Script" path="res://demos/attribute_map/controls.gd" id="4_controls"]
-[ext_resource type="Script" path="res://demos/attribute_map/hud.gd" id="5_hud"]
+[ext_resource type="Script" uid="uid://bdeyo8wqe8cv2" path="res://demos/attribute_map/part.gd" id="2_part"]
+[ext_resource type="Script" uid="uid://cdeyui160wub3" path="res://demos/attribute_map/wall.gd" id="3_target"]
+[ext_resource type="Script" uid="uid://bykmgij5u3pc" path="res://demos/attribute_map/controls.gd" id="4_controls"]
+[ext_resource type="Script" uid="uid://04n3n0jjaosn" path="res://demos/attribute_map/hud.gd" id="5_hud"]
 
 [sub_resource type="SystemFont" id="SystemFont_mono"]
 font_names = PackedStringArray("monospace")
+subpixel_positioning = 0
 
-[node name="AttributeMapDemo" type="Node2D"]
+[node name="AttributeMapDemo" type="Node2D" unique_id=1271528525]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Background" type="CanvasLayer" parent="." unique_id=813576166]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=8699774]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015382661, 1.7645936e-05, 0.069091514, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=658211467]
 position = Vector2(576, 324)
 
-[node name="Wall" type="Node2D" parent="." node_paths=PackedStringArray("bar")]
+[node name="Wall" type="Node2D" parent="." unique_id=785918885 node_paths=PackedStringArray("bar")]
 position = Vector2(900, 300)
 script = ExtResource("3_target")
-starting_health = 600.0
 bar = NodePath("Bar")
-bar_size = Vector2(240, 220)
 
-[node name="Back" type="Polygon2D" parent="Wall"]
+[node name="Back" type="Polygon2D" parent="Wall" unique_id=910248165]
 color = Color(0.2, 0.21, 0.23, 1)
 polygon = PackedVector2Array(0, 0, 240, 0, 240, 220, 0, 220)
 
-[node name="Bar" type="Polygon2D" parent="Wall"]
+[node name="Bar" type="Polygon2D" parent="Wall" unique_id=1635735158]
 color = Color(0.76, 0.36, 0.3, 1)
 polygon = PackedVector2Array(0, 0, 240, 0, 240, 220, 0, 220)
 
-[node name="Name" type="Label" parent="Wall"]
-offset_left = 0.0
+[node name="Name" type="Label" parent="Wall" unique_id=824430345]
 offset_top = 228.0
 offset_right = 240.0
 offset_bottom = 252.0
-horizontal_alignment = 1
 text = "wall"
+horizontal_alignment = 1
 
-[node name="Tank" type="Node2D" parent="." node_paths=PackedStringArray("attributes")]
+[node name="Tank" type="Node2D" parent="." unique_id=1879910169 node_paths=PackedStringArray("attributes")]
 position = Vector2(480, 470)
 script = ExtResource("2_part")
 label = "tank"
@@ -48,15 +57,21 @@ stats = {
 }
 group = &"survivability"
 
-[node name="Attributes" type="Node" parent="Tank"]
+[node name="Attributes" type="Node" parent="Tank" unique_id=76994032]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Hull" type="Polygon2D" parent="Tank"]
+[node name="Hull" type="Polygon2D" parent="Tank" unique_id=1908497766]
 color = Color(0.29, 0.33, 0.28, 1)
 polygon = PackedVector2Array(-110, -30, 110, -30, 110, 30, -110, 30)
 
-[node name="Turret" type="Node2D" parent="Tank" node_paths=PackedStringArray("attributes")]
+[node name="Tracks" type="Polygon2D" parent="Tank" unique_id=193606082]
+position = Vector2(1, 30.000011)
+scale = Vector2(0.8727273, 0.53333294)
+color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+polygon = PackedVector2Array(-110, -30, -0.6134033, -30.00003, 110, -30, 110, 30, -110, 30)
+
+[node name="Turret" type="Node2D" parent="Tank" unique_id=114839956 node_paths=PackedStringArray("attributes")]
 position = Vector2(10, -30)
 script = ExtResource("2_part")
 label = "turret"
@@ -66,15 +81,15 @@ stats = {
 }
 group = &"mounting"
 
-[node name="Attributes" type="Node" parent="Tank/Turret"]
+[node name="Attributes" type="Node" parent="Tank/Turret" unique_id=923758355]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Base" type="Polygon2D" parent="Tank/Turret"]
+[node name="Base" type="Polygon2D" parent="Tank/Turret" unique_id=1961982984]
 color = Color(0.35, 0.4, 0.33, 1)
 polygon = PackedVector2Array(-45, -28, 45, -28, 45, 0, -45, 0)
 
-[node name="Cannon" type="Node2D" parent="Tank/Turret" node_paths=PackedStringArray("attributes", "target")]
+[node name="Cannon" type="Node2D" parent="Tank/Turret" unique_id=151207931 node_paths=PackedStringArray("attributes", "target")]
 position = Vector2(45, -14)
 script = ExtResource("2_part")
 label = "cannon"
@@ -87,23 +102,23 @@ stats = {
 group = &"firepower"
 target = NodePath("../../../Wall")
 
-[node name="Attributes" type="Node" parent="Tank/Turret/Cannon"]
+[node name="Attributes" type="Node" parent="Tank/Turret/Cannon" unique_id=340630978]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Barrel" type="Polygon2D" parent="Tank/Turret/Cannon"]
+[node name="Barrel" type="Polygon2D" parent="Tank/Turret/Cannon" unique_id=779154882]
 color = Color(0.44, 0.49, 0.41, 1)
 polygon = PackedVector2Array(0, -6, 130, -6, 130, 6, 0, 6)
 
-[node name="Name" type="Label" parent="Tank/Turret/Cannon"]
+[node name="Name" type="Label" parent="Tank/Turret/Cannon" unique_id=504842573]
 offset_left = 10.0
 offset_top = -34.0
 offset_right = 120.0
 offset_bottom = -10.0
 text = "cannon"
 
-[node name="MachineGun" type="Node2D" parent="Tank" node_paths=PackedStringArray("attributes", "target")]
-position = Vector2(-70, -30)
+[node name="MachineGun" type="Node2D" parent="Tank" unique_id=2028694912 node_paths=PackedStringArray("attributes", "target")]
+position = Vector2(109, -12)
 script = ExtResource("2_part")
 label = "machine gun"
 attributes = NodePath("Attributes")
@@ -114,24 +129,25 @@ stats = {
 group = &"firepower"
 target = NodePath("../../Wall")
 
-[node name="Attributes" type="Node" parent="Tank/MachineGun"]
+[node name="Attributes" type="Node" parent="Tank/MachineGun" unique_id=1688359314]
 script = ExtResource("1_map")
 metadata/_custom_type_script = "uid://cwfhq8xve31ou"
 
-[node name="Barrel" type="Polygon2D" parent="Tank/MachineGun"]
+[node name="Barrel" type="Polygon2D" parent="Tank/MachineGun" unique_id=2026294221]
 color = Color(0.56, 0.59, 0.52, 1)
 polygon = PackedVector2Array(0, -5, 60, -5, 60, 5, 0, 5)
 
-[node name="Name" type="Label" parent="Tank/MachineGun"]
-offset_left = -55.0
-offset_top = 70.0
-offset_right = 85.0
-offset_bottom = 94.0
+[node name="Name" type="Label" parent="Tank/MachineGun" unique_id=1469989481]
+offset_left = 11.0
+offset_top = 4.0
+offset_right = 151.0
+offset_bottom = 28.0
 text = "machine gun"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1281712033]
+layer = 2
 
-[node name="Readout" type="Label" parent="UI" node_paths=PackedStringArray("tank", "turret", "cannon", "machine_gun", "target", "controls")]
+[node name="Readout" type="Label" parent="UI" unique_id=282978537 node_paths=PackedStringArray("tank", "turret", "cannon", "machine_gun", "wall", "controls")]
 offset_left = 20.0
 offset_top = 12.0
 offset_right = 1140.0
@@ -143,10 +159,10 @@ tank = NodePath("../../Tank")
 turret = NodePath("../../Tank/Turret")
 cannon = NodePath("../../Tank/Turret/Cannon")
 machine_gun = NodePath("../../Tank/MachineGun")
-target = NodePath("../../Wall")
+wall = NodePath("../../Wall")
 controls = NodePath("../Controls")
 
-[node name="Controls" type="VBoxContainer" parent="UI" node_paths=PackedStringArray("tank", "cannon", "target")]
+[node name="Controls" type="VBoxContainer" parent="UI" unique_id=1277216541 node_paths=PackedStringArray("tank", "cannon", "wall")]
 offset_left = 20.0
 offset_top = 268.0
 offset_right = 270.0
@@ -155,4 +171,15 @@ theme_override_constants/separation = 6
 script = ExtResource("4_controls")
 tank = NodePath("../../Tank/Attributes")
 cannon = NodePath("../../Tank/Turret/Cannon/Attributes")
-target = NodePath("../../Wall")
+wall = NodePath("../../Wall")
+
+[node name="Label" type="Label" parent="UI" unique_id=1141180575]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -45.0
+offset_right = 176.0
+offset_bottom = -22.0
+grow_vertical = 0
+text = "AttributeMap Demo"

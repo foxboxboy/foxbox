@@ -7,6 +7,8 @@ extends Node2D
 
 #region Variables
 
+const Wall = preload("res://demos/attribute_map/wall.gd")
+
 const DAMAGE: StringName = &"damage"
 const FIRE_RATE: StringName = &"fire_rate"
 const STUNNED: StringName = &"crew_stunned"
@@ -24,8 +26,8 @@ const STUNNED: StringName = &"crew_stunned"
 ## without knowing what any particular part carries.
 @export var group: StringName = &""
 
-## Only the parts that shoot need one.
-@export var target: Node
+## What this part shoots at. Only the parts that shoot need one.
+@export var target: Wall
 
 var _cooldown: float = 0.0
 
@@ -56,7 +58,7 @@ func _process(delta: float) -> void:
 		return
 
 	_cooldown = 1.0 / get_stat(FIRE_RATE)
-	target.call(&"take_damage", get_stat(DAMAGE))
+	target.take_damage(get_stat(DAMAGE))
 
 #endregion
 
