@@ -67,16 +67,20 @@
 }
 
 /**
- * Read the Docs' ad script sets padding-bottom inline on the sidebar to reserve room for the ad
- * it serves, and the figure it picks does not track the ad it then renders: measured at 264px,
- * 47px and ~190px on the same page, against a bar that is between 44px and 66px tall. Anything
- * over the bar's height shows as a band of empty sidebar above it, with the menu cut off mid item.
+ * custom.css:1836 caps the menu at calc(100% - 348px). On Godot's site those 348px hold the Read
+ * the Docs version panel docked at the foot of the sidebar and the ad slot above it. Neither is
+ * here: conf.py turns the version panel off, and Read the Docs renders the ad as a bar across the
+ * foot of the page rather than inside the sidebar. So the menu stops 348px short and the rest of
+ * the sidebar is empty, with whatever item falls on the boundary cut in half.
  *
- * 5em clears the tallest bar seen. !important is what beats the inline style, since the script
- * sets it without one.
+ * 160px is the logo and the search box above the menu, which is the only part that needs holding
+ * back. Read the Docs' own script pads the sidebar by the height of the ad bar, so the last menu
+ * item clears it without anything further here. Measured: the menu ends 1px above the bar.
+ *
+ * Load order does the overriding. conf.py lists custom.css before this file.
  */
-.wy-nav-side {
-    padding-bottom: 5em !important;
+.wy-menu.wy-menu-vertical {
+    max-height: calc(100% - 160px);
 }
 
 /**
@@ -90,7 +94,17 @@
 }
 
 /**
- * Second line of the aside, under Edit on GitHub. Floated like the first, cleared so it drops
+ * The repository links, as their own column to the right of the trail. Godot gives this list item
+ * the same two properties inline. Without it the links float against the trail's own list, which
+ * is only as wide as its text, and land against the last crumb rather than the page edge.
+ */
+.ff-links {
+    float: right;
+    text-align: right;
+}
+
+/**
+ * Second line of the column, under the GitHub link. Floated like the first, cleared so it drops
  * below instead of sitting beside it, and dropped entirely on phones where the trail already
  * wraps. Godot styles their equivalent link the same way.
  */

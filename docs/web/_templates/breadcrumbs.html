@@ -24,6 +24,11 @@
   <div class="ff-docs-title">{{ project }} {{ release }} documentation in English</div>
   <ul class="wy-breadcrumbs">
     {{- super() }}
+  </ul>
+</li>
+
+<li class="ff-links">
+  <ul>
     <li class="wy-breadcrumbs-aside">
       <a href="https://github.com/tateorrtot/foxfabric-godot" class="fa fa-github"> FoxFabric on GitHub</a>
     </li>
@@ -32,6 +37,6 @@
 </li>
 {%- endblock %}
 
-{#- Emptied. Both links are placed above, inside the list, where Godot puts them. Left in the
-    theme's slot they land after the whole nested block and clear past the trail. -#}
+{#- Emptied. The links are their own floated column above, so the theme's slot would only add a
+    second, narrower one. -#}
 {%- block breadcrumbs_aside %}{%- endblock %}
