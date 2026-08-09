@@ -1,4 +1,4 @@
-# FoxFabric
+# <img src="icon.png" width="32" alt=""> FoxFabric
 
 A lightweight, general purpose library for Godot 4.
 

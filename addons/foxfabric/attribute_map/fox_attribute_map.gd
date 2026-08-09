@@ -512,7 +512,7 @@ func _read_only(name: StringName, type: int) -> Dictionary:
 func _get(property: StringName) -> Variant:
 	match property:
 		&"runtime_data":
-			return _data
+			return get_data_summary()
 		&"runtime_groups":
 			return _groups
 		&"runtime_flags":
@@ -522,6 +522,17 @@ func _get(property: StringName) -> Variant:
 
 	# null means this object does not handle the property, so the engine keeps looking.
 	return null
+
+
+## Every data key with its value as text. A value is turned into text here, inside the running
+## game, because an object reaches the remote inspector as an encoded id and there is nothing
+## readable left on it by then. Types carrying a [method Object._to_string] print their contents.
+func get_data_summary() -> Dictionary[StringName, String]:
+	var summary: Dictionary[StringName, String] = {}
+	for key: StringName in _data:
+		summary[key] = str(_data[key])
+
+	return summary
 
 
 ## Every active rule as [code]id -> target_key[/code]. Ids are unique per map, so nothing is lost

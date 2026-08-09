@@ -2,9 +2,10 @@
 extends VBoxContainer
 ## A live read-out of one [FoxAttributeMap]'s data, groups, flags and rules.
 ##
-## Reads the [code]runtime_*[/code] properties the map publishes, so it works the same whether the
-## object is a real node in the open scene or the stand-in the debugger hands over for a node in a
-## running game. The running game is the interesting case: a map is empty until something fills it.
+## A [FoxAttributeMap] publishes its runtime state as [code]runtime_*[/code] properties, and this
+## control reads them. That works the same whether the object is a real node in the open scene or
+## the stand-in the debugger hands over for a node in a running game. The running game is the
+## interesting case: a map is empty until something fills it.
 
 
 ## How often to look for changes. Fast enough to follow a fight, slow enough that the inspector is

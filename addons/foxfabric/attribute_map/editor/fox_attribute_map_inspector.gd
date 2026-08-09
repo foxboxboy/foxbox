@@ -1,6 +1,6 @@
 @tool
 extends EditorInspectorPlugin
-## Puts a live read-out of a [FoxAttributeMap] at the top of the inspector.
+## An [EditorInspectorPlugin] that puts a live read-out above a [FoxAttributeMap]'s properties.
 ##
 ## The raw dictionaries stay underneath in the Runtime group, so a value that needs opening up
 ## still can be.

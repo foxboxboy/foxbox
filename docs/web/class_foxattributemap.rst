@@ -122,6 +122,8 @@ Methods
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                                                          | :ref:`unregister_child_map<class_FoxAttributeMap_method_unregister_child_map>`\ (\ child\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ )                                    |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`String<class_String>`\]         | :ref:`get_data_summary<class_FoxAttributeMap_method_get_data_summary>`\ (\ )                                                                                                   |
+   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`StringName<class_StringName>`\] | :ref:`get_rule_summary<class_FoxAttributeMap_method_get_rule_summary>`\ (\ )                                                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -627,6 +629,18 @@ A copy of the maps registered beneath this one. Editing it will not change the m
 |void| **unregister_child_map**\ (\ child\: :ref:`FoxAttributeMap<class_FoxAttributeMap>`\ ) :ref:`🔗<class_FoxAttributeMap_method_unregister_child_map>`
 
 Unlinks a child map and strips away any rules and flags it inherited from this parent.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxAttributeMap_method_get_data_summary:
+
+.. rst-class:: classref-method
+
+:ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`String<class_String>`\] **get_data_summary**\ (\ ) :ref:`🔗<class_FoxAttributeMap_method_get_data_summary>`
+
+Every data key with its value as text. A value is turned into text here, inside the running game, because an object reaches the remote inspector as an encoded id and there is nothing readable left on it by then. Types carrying a :ref:`Object._to_string()<class_Object_private_method__to_string>` print their contents.
 
 .. rst-class:: classref-item-separator
 

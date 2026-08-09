@@ -409,6 +409,16 @@ func _runtime_state_reaches_the_inspector() -> void:
 	eq(m.get(&"runtime_flags"), {&"slowed": 2} as Dictionary, "flags come through with their stacks")
 	eq(m.get(&"runtime_rules"), {&"swamp": &"health"} as Dictionary, "rules come through as id to target")
 	eq(m.get(&"runtime_groups"), {&"vitals": [&"health"]} as Dictionary, "groups come through with members")
+	# "75.0" rather than "75": the rule above read health as a float and wrote it back as one.
+	eq(m.get(&"runtime_data"), {&"health": "75.0"} as Dictionary, "data comes through as text")
+
+	case("a stored object is turned into text before it can reach the debugger")
+	m.set_data(&"power", FoxModifiableStat.new(10.0))
+
+	var data: Dictionary = m.get(&"runtime_data")
+	var power: Variant = data[&"power"]
+	check(power is String, "an object value is published as a String")
+	eq(power, str(FoxModifiableStat.new(10.0)), "carrying whatever its _to_string gives it")
 
 	case("unknown properties are left to the engine")
 	eq(m.get(&"not_a_real_property"), null, "_get falls through")
