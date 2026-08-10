@@ -31,6 +31,7 @@ func run() -> void:
 	_flags_propagate_while_attached()
 	_duplicate_rule_ids_are_refused()
 	_read_accessors_do_not_expose_internals()
+	_sibling_maps_are_peers_not_parents()
 	_runtime_state_reaches_the_inspector()
 	_hierarchy_and_inherited_rules_are_published()
 	_inspector_claims_remote_objects_too()
@@ -390,6 +391,47 @@ class RemoteStandIn extends Object:
 			return {&"slowed": 2}
 
 		return null
+
+
+func _sibling_maps_are_peers_not_parents() -> void:
+	case("two maps under one node do not parent each other")
+	var entity: Node = track(Node.new())
+	var a: FoxAttributeMap = FoxAttributeMap.new()
+	entity.add_child(a)
+	var b: FoxAttributeMap = FoxAttributeMap.new()
+	entity.add_child(b)
+
+	check(b.get_parent_map() != a, "the second does not inherit from the first")
+	check(a.get_parent_map() != b, "nor the first from the second")
+	check(not a.get_child_maps().has(b), "neither registers the other beneath it")
+	check(not b.get_child_maps().has(a), "in either direction")
+
+	# Reparenting runs _enter_tree again with the other map already in place. Doing it to both left
+	# them naming each other, and one flag increment then recursed until the stack gave out.
+	case("reparenting both leaves them peers")
+	entity.remove_child(b)
+	entity.add_child(b)
+	entity.remove_child(a)
+	entity.add_child(a)
+
+	var mutual: bool = a.get_parent_map() == b and b.get_parent_map() == a
+	check(not mutual, "neither ends up the other's parent")
+
+	# Guarded, because on a regression this call does not fail, it takes the suite down with it.
+	if not mutual:
+		a.increment_flag(&"slowed")
+		eq(a.get_flag_stacks(&"slowed"), 1, "and a flag put on one stacks exactly once")
+
+	case("a map still inherits from one beside an ancestor")
+	var owner_node: Node = track(Node.new())
+	var owner_map: FoxAttributeMap = FoxAttributeMap.new()
+	owner_node.add_child(owner_map)
+	var part: Node = Node.new()
+	owner_node.add_child(part)
+	var part_map: FoxAttributeMap = FoxAttributeMap.new()
+	part.add_child(part_map)
+
+	eq(part_map.get_parent_map(), owner_map, "the scan still reaches a map one level up")
 
 
 func _runtime_state_reaches_the_inspector() -> void:

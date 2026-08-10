@@ -430,10 +430,15 @@ func _find_parent_map(node: Node) -> FoxAttributeMap:
 	if node is FoxAttributeMap:
 		return node
 
-	# check node for a child FoxAttributeMap
-	for child: Node in node.get_children():
-		if child is FoxAttributeMap and child != self:
-			return child
+	# The first step up is this map's own parent, so the maps under it are this map's siblings. A
+	# sibling is a peer to inherit alongside, not one to inherit from. Taking one left two maps
+	# naming each other once both had been reparented, and a single increment_flag then recursed
+	# between the pair until the stack gave out.
+	if node != get_parent():
+		# check node for a child FoxAttributeMap
+		for child: Node in node.get_children():
+			if child is FoxAttributeMap:
+				return child
 
 	# run again on the parent of node
 	return _find_parent_map(node.get_parent())
