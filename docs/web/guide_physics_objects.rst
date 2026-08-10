@@ -4,7 +4,8 @@ Carrying physics objects
 In this guide you will build a player who can look at a crate, pick it up, carry it around, and
 drop it. The crate stays a physics body the whole time, so it bumps into walls on the way.
 
-It uses one module, :doc:`module_physics_dragging`.
+It uses one module, :doc:`module_physics_dragging`. A runnable version is in
+``demos/guides/carrying_physics_objects``, with mouse look added so there is something to aim at.
 
 The 2D classes work the same way. Swap ``FoxPhysicsDragger3D`` for ``FoxPhysicsDragger2D`` and
 ``RigidBody3D`` for ``RigidBody2D``.
@@ -19,10 +20,13 @@ Setting up the scene
 
 .. code-block:: text
 
-    Player           (CharacterBody3D, player.gd)
+    Player           (player.gd)
     └─ Camera3D
        ├─ Aim        (RayCast3D)
        └─ Dragger    (FoxPhysicsDragger3D)
+
+``Player`` can be whatever you already use. Nothing here needs a physics body; the two nodes
+sit under the camera and that is the whole arrangement.
 
 Point ``Aim`` down its local ``-Z`` and set its length to however far you want to reach. Move
 ``Dragger`` forward from the camera; whatever it grabs is pulled towards wherever the dragger is,
@@ -41,8 +45,7 @@ Grabbing and releasing
 
 .. code-block:: gdscript
 
-    class_name Player
-    extends CharacterBody3D
+    extends Node3D
 
     @onready var aim: RayCast3D = $Camera3D/Aim
     @onready var dragger: FoxPhysicsDragger3D = $Camera3D/Dragger
