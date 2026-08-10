@@ -42,7 +42,6 @@ no shared state and no autoload.
    :caption: Guides
 
    guide_status_effects
-   guide_physics_objects
 
 .. toctree::
    :maxdepth: 1
