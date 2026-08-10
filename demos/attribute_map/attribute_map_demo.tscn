@@ -6,10 +6,6 @@
 [ext_resource type="Script" uid="uid://bykmgij5u3pc" path="res://demos/attribute_map/controls.gd" id="4_controls"]
 [ext_resource type="Script" uid="uid://04n3n0jjaosn" path="res://demos/attribute_map/hud.gd" id="5_hud"]
 
-[sub_resource type="SystemFont" id="SystemFont_mono"]
-font_names = PackedStringArray("monospace")
-subpixel_positioning = 0
-
 [node name="AttributeMapDemo" type="Node2D" unique_id=1271528525]
 
 [node name="Background" type="CanvasLayer" parent="." unique_id=813576166]
@@ -146,17 +142,16 @@ text = "machine gun"
 [node name="UI" type="CanvasLayer" parent="." unique_id=1281712033]
 layer = 2
 
-[node name="Column" type="VBoxContainer" parent="UI"]
+[node name="Column" type="VBoxContainer" parent="UI" unique_id=537828055]
 offset_left = 20.0
 offset_top = 12.0
 offset_right = 1130.0
 offset_bottom = 600.0
 theme_override_constants/separation = 30
 
-[node name="Readout" type="VBoxContainer" parent="UI/Column" node_paths=PackedStringArray("status", "tank_cells", "turret_cells", "cannon_cells", "machine_gun_cells", "tank", "turret", "cannon", "machine_gun", "wall", "controls")]
+[node name="Readout" type="VBoxContainer" parent="UI/Column" unique_id=582583359 node_paths=PackedStringArray("status", "tank_cells", "turret_cells", "cannon_cells", "machine_gun_cells", "tank", "turret", "cannon", "machine_gun", "wall", "controls")]
+layout_mode = 2
 theme_override_constants/separation = 16
-theme_override_fonts/font = SubResource("SystemFont_mono")
-theme_override_font_sizes/font_size = 13
 script = ExtResource("5_hud")
 status = NodePath("Status")
 tank_cells = [NodePath("Table/TankName"), NodePath("Table/TankDamage"), NodePath("Table/TankStats"), NodePath("Table/TankGroup"), NodePath("Table/TankRules"), NodePath("Table/TankFlags")]
@@ -170,118 +165,152 @@ machine_gun = NodePath("../../../Tank/MachineGun")
 wall = NodePath("../../../Wall")
 controls = NodePath("../Controls")
 
-[node name="Status" type="Label" parent="UI/Column/Readout"]
+[node name="Status" type="Label" parent="UI/Column/Readout" unique_id=1996592619]
+layout_mode = 2
 text = "wall 600      damage boost +0"
 
-[node name="Table" type="GridContainer" parent="UI/Column/Readout"]
-columns = 6
+[node name="Table" type="GridContainer" parent="UI/Column/Readout" unique_id=69115479]
+layout_mode = 2
 theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 6
+columns = 6
 
-[node name="HeadName" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadName" type="Label" parent="UI/Column/Readout/Table" unique_id=1628584919]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "part"
 
-[node name="HeadDamage" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadDamage" type="Label" parent="UI/Column/Readout/Table" unique_id=809351160]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "damage"
 
-[node name="HeadStats" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadStats" type="Label" parent="UI/Column/Readout/Table" unique_id=1904879156]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "its own stats"
 
-[node name="HeadGroup" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadGroup" type="Label" parent="UI/Column/Readout/Table" unique_id=359001168]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "group"
 
-[node name="HeadRules" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadRules" type="Label" parent="UI/Column/Readout/Table" unique_id=1407329873]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "rules it tracks"
 
-[node name="HeadFlags" type="Label" parent="UI/Column/Readout/Table"]
+[node name="HeadFlags" type="Label" parent="UI/Column/Readout/Table" unique_id=314427602]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "flags"
 
-[node name="TankName" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankName" type="Label" parent="UI/Column/Readout/Table" unique_id=8015603]
+layout_mode = 2
 text = "tank"
 
-[node name="TankDamage" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankDamage" type="Label" parent="UI/Column/Readout/Table" unique_id=1567180150]
+layout_mode = 2
 text = "-"
 
-[node name="TankStats" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankStats" type="Label" parent="UI/Column/Readout/Table" unique_id=1985242676]
+layout_mode = 2
 text = "armour 60, crew 4"
 
-[node name="TankGroup" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankGroup" type="Label" parent="UI/Column/Readout/Table" unique_id=1626995357]
+layout_mode = 2
 text = "survivability"
 
-[node name="TankRules" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankRules" type="Label" parent="UI/Column/Readout/Table" unique_id=1079495409]
+layout_mode = 2
 text = "-"
 
-[node name="TankFlags" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TankFlags" type="Label" parent="UI/Column/Readout/Table" unique_id=939158231]
+layout_mode = 2
 text = "-"
 
-[node name="TurretName" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretName" type="Label" parent="UI/Column/Readout/Table" unique_id=356554603]
+layout_mode = 2
 text = "    turret"
 
-[node name="TurretDamage" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretDamage" type="Label" parent="UI/Column/Readout/Table" unique_id=1784453960]
+layout_mode = 2
 text = "-"
 
-[node name="TurretStats" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretStats" type="Label" parent="UI/Column/Readout/Table" unique_id=1771064765]
+layout_mode = 2
 text = "traverse 25"
 
-[node name="TurretGroup" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretGroup" type="Label" parent="UI/Column/Readout/Table" unique_id=408407575]
+layout_mode = 2
 text = "mounting"
 
-[node name="TurretRules" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretRules" type="Label" parent="UI/Column/Readout/Table" unique_id=2097499560]
+layout_mode = 2
 text = "-"
 
-[node name="TurretFlags" type="Label" parent="UI/Column/Readout/Table"]
+[node name="TurretFlags" type="Label" parent="UI/Column/Readout/Table" unique_id=1369933671]
+layout_mode = 2
 text = "-"
 
-[node name="CannonName" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonName" type="Label" parent="UI/Column/Readout/Table" unique_id=221210530]
+layout_mode = 2
 text = "        cannon"
 
-[node name="CannonDamage" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonDamage" type="Label" parent="UI/Column/Readout/Table" unique_id=988384741]
+layout_mode = 2
 text = "30"
 
-[node name="CannonStats" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonStats" type="Label" parent="UI/Column/Readout/Table" unique_id=844453698]
+layout_mode = 2
 text = "calibre 90, fire_rate 0.5"
 
-[node name="CannonGroup" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonGroup" type="Label" parent="UI/Column/Readout/Table" unique_id=1724665785]
+layout_mode = 2
 text = "firepower"
 
-[node name="CannonRules" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonRules" type="Label" parent="UI/Column/Readout/Table" unique_id=1955720072]
+layout_mode = 2
 text = "-"
 
-[node name="CannonFlags" type="Label" parent="UI/Column/Readout/Table"]
+[node name="CannonFlags" type="Label" parent="UI/Column/Readout/Table" unique_id=709178083]
+layout_mode = 2
 text = "-"
 
-[node name="MachineGunName" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunName" type="Label" parent="UI/Column/Readout/Table" unique_id=805061190]
+layout_mode = 2
 text = "    machine gun"
 
-[node name="MachineGunDamage" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunDamage" type="Label" parent="UI/Column/Readout/Table" unique_id=402427408]
+layout_mode = 2
 text = "3"
 
-[node name="MachineGunStats" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunStats" type="Label" parent="UI/Column/Readout/Table" unique_id=514338833]
+layout_mode = 2
 text = "fire_rate 5"
 
-[node name="MachineGunGroup" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunGroup" type="Label" parent="UI/Column/Readout/Table" unique_id=1316305825]
+layout_mode = 2
 text = "firepower"
 
-[node name="MachineGunRules" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunRules" type="Label" parent="UI/Column/Readout/Table" unique_id=350555267]
+layout_mode = 2
 text = "-"
 
-[node name="MachineGunFlags" type="Label" parent="UI/Column/Readout/Table"]
+[node name="MachineGunFlags" type="Label" parent="UI/Column/Readout/Table" unique_id=2075382774]
+layout_mode = 2
 text = "-"
 
-[node name="Note" type="Label" parent="UI/Column/Readout"]
+[node name="Note" type="Label" parent="UI/Column/Readout" unique_id=1032827566]
 modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
 text = "Rules travel to every map below where they were added, and land only on the ones
 holding the key they target. The hull and turret hold no damage, so they track
 the boost without it doing a thing to them."
 
 [node name="Controls" type="VBoxContainer" parent="UI/Column" unique_id=1277216541 node_paths=PackedStringArray("tank", "cannon", "wall")]
 custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 6
 script = ExtResource("4_controls")
@@ -289,22 +318,28 @@ tank = NodePath("../../../Tank/Attributes")
 cannon = NodePath("../../../Tank/Turret/Cannon/Attributes")
 wall = NodePath("../../../Wall")
 
-[node name="BoostUp" type="Button" parent="UI/Column/Controls"]
+[node name="BoostUp" type="Button" parent="UI/Column/Controls" unique_id=958333710]
+layout_mode = 2
 text = "+1 damage on the tank"
 
-[node name="BoostDown" type="Button" parent="UI/Column/Controls"]
+[node name="BoostDown" type="Button" parent="UI/Column/Controls" unique_id=755255557]
+layout_mode = 2
 text = "-1 damage on the tank"
 
-[node name="BiggerCannon" type="Button" parent="UI/Column/Controls"]
+[node name="BiggerCannon" type="Button" parent="UI/Column/Controls" unique_id=576185721]
+layout_mode = 2
 text = "bigger cannon"
 
-[node name="KnockedOut" type="Button" parent="UI/Column/Controls"]
+[node name="KnockedOut" type="Button" parent="UI/Column/Controls" unique_id=1049168338]
+layout_mode = 2
 text = "cannon knocked out"
 
-[node name="Stun" type="Button" parent="UI/Column/Controls"]
+[node name="Stun" type="Button" parent="UI/Column/Controls" unique_id=1831024918]
+layout_mode = 2
 text = "stun the crew"
 
-[node name="Repair" type="Button" parent="UI/Column/Controls"]
+[node name="Repair" type="Button" parent="UI/Column/Controls" unique_id=1968067102]
+layout_mode = 2
 text = "repair the wall"
 
 [node name="Label" type="Label" parent="UI" unique_id=1141180575]
