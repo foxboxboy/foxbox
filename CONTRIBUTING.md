@@ -144,7 +144,7 @@ godot --headless --path . --script res://tests/terminal/run_all.gd
 
 The suite must be green before a change lands. The seed is random each run and printed in the
 report. Pass it back with `--seed=` to reproduce a failure. Some tests exercise failure paths, so
-a passing run still prints four warnings.
+a passing run still prints warnings.
 
 ## Commits
 
