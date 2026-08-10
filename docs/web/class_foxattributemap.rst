@@ -126,6 +126,10 @@ Methods
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`StringName<class_StringName>`\] | :ref:`get_rule_summary<class_FoxAttributeMap_method_get_rule_summary>`\ (\ )                                                                                                   |
    +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`\[:ref:`StringName<class_StringName>`\]                                                | :ref:`get_inherited_rule_ids<class_FoxAttributeMap_method_get_inherited_rule_ids>`\ (\ )                                                                                       |
+   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Dictionary<class_Dictionary>`\[:ref:`String<class_String>`, :ref:`int<class_int>`\]                       | :ref:`get_hierarchy_summary<class_FoxAttributeMap_method_get_hierarchy_summary>`\ (\ )                                                                                         |
+   +-----------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -653,6 +657,34 @@ Every data key with its value as text. A value is turned into text here, inside 
 :ref:`Dictionary<class_Dictionary>`\[:ref:`StringName<class_StringName>`, :ref:`StringName<class_StringName>`\] **get_rule_summary**\ (\ ) :ref:`🔗<class_FoxAttributeMap_method_get_rule_summary>`
 
 Every active rule as ``id -> target_key``. Ids are unique per map, so nothing is lost by flattening them, and a :ref:`FoxAttributeRule<class_FoxAttributeRule>` is a :ref:`RefCounted<class_RefCounted>` that would reach the remote inspector as an unreadable object reference.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxAttributeMap_method_get_inherited_rule_ids:
+
+.. rst-class:: classref-method
+
+:ref:`Array<class_Array>`\[:ref:`StringName<class_StringName>`\] **get_inherited_rule_ids**\ (\ ) :ref:`🔗<class_FoxAttributeMap_method_get_inherited_rule_ids>`
+
+The ids of active rules that arrived from a map above this one instead of being added here. 
+
+A rule travels by reference, so the same :ref:`FoxAttributeRule<class_FoxAttributeRule>` sits in every map that received it. Matching on the object rather than on :ref:`FoxAttributeRule.id<class_FoxAttributeRule_property_id>` keeps a rule added here apart from an inherited one even when the two share an id, and leaves nothing to unwind when a rule is removed.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxAttributeMap_method_get_hierarchy_summary:
+
+.. rst-class:: classref-method
+
+:ref:`Dictionary<class_Dictionary>`\[:ref:`String<class_String>`, :ref:`int<class_int>`\] **get_hierarchy_summary**\ (\ ) :ref:`🔗<class_FoxAttributeMap_method_get_hierarchy_summary>`
+
+This map's place in its tree, as ``node path -> depth``. Depth is counted from this map: ``-1`` is the map above it, ``1`` a map below it, and ``0`` this one. Maps above come first, in order from the topmost, then this map, then everything beneath it. 
+
+Walked here instead of in the inspector because a parent map reaches the remote inspector as an id that cannot be followed. A map outside the tree has no path and returns nothing.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

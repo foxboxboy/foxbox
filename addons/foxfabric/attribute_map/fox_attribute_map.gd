@@ -63,11 +63,28 @@ signal flag_changed(flag: StringName, stacks: int)
 ## If [code]true[/code], this map will propagate its active rules down to any registered child maps.
 @export var can_send_rules: bool = true
 
+# Keys to whatever the game stored under them: a number, a resource, a FoxModifiableStat. Nothing
+# here reads inside a value, which is why a rule has to be told the key it acts on.
 var _data: Dictionary[StringName, Variant] = {}
+
+# Group name to the data keys filed under it. Keys rather than values, so overwriting a value
+# leaves its grouping alone.
 var _groups: Dictionary[StringName, Array] = {}
+
+# Rules applied here, including any that came down from a parent. Propagation shares the rule
+# object, so the same instance appears in every map that took it.
 var _active_rules: Array[FoxAttributeRule] = []
+
+# Flag name to the number of stacks standing on it. Two sources of one flag both have to expire
+# before it lifts, which is what a bool could not carry.
 var _flags: Dictionary[StringName, int] = {}
+
+# Found by walking up the scene tree in _enter_tree, and null at the top of a chain. Nothing in a
+# scene file wires this up by hand.
 var _parent_map: FoxAttributeMap
+
+# Maps that registered themselves beneath this one. Rules and flags travel down this list, and
+# nothing is read back up it.
 var _child_maps: Array[FoxAttributeMap] = []
 
 #endregion
@@ -480,11 +497,11 @@ func unregister_child_map(child: FoxAttributeMap) -> void:
 
 ## Publishes the runtime state as read-only inspector properties. The names are written out rather
 ## than kept in constants, because a constant on this class shows up as a row of its own every time
-## anyone inspects a map, and four rows spelling out their own names are not worth reading.
+## anyone inspects a map, and six rows spelling out their own names are not worth reading.
 ## [br][br]
 ## A map holds nothing until the game runs, so these are empty while editing. They exist for the
-## remote inspector: play the scene, pick the node out of the remote tree, and the data, flags and
-## rules update as they change. Nothing here is stored in the scene file.
+## remote inspector: play the scene, pick the node out of the remote tree, and the data, flags,
+## rules and tree position update as they change. Nothing here is stored in the scene file.
 func _get_property_list() -> Array[Dictionary]:
 	return [
 		{
@@ -497,6 +514,8 @@ func _get_property_list() -> Array[Dictionary]:
 		_read_only(&"runtime_groups", TYPE_DICTIONARY),
 		_read_only(&"runtime_flags", TYPE_DICTIONARY),
 		_read_only(&"runtime_rules", TYPE_DICTIONARY),
+		_read_only(&"runtime_inherited_rules", TYPE_ARRAY),
+		_read_only(&"runtime_hierarchy", TYPE_DICTIONARY),
 	]
 
 
@@ -519,6 +538,10 @@ func _get(property: StringName) -> Variant:
 			return _flags
 		&"runtime_rules":
 			return get_rule_summary()
+		&"runtime_inherited_rules":
+			return get_inherited_rule_ids()
+		&"runtime_hierarchy":
+			return get_hierarchy_summary()
 
 	# null means this object does not handle the property, so the engine keeps looking.
 	return null
@@ -544,5 +567,82 @@ func get_rule_summary() -> Dictionary[StringName, StringName]:
 		summary[rule.id] = rule.target_key
 
 	return summary
+
+
+## The ids of active rules that arrived from a map above this one instead of being added here.
+## [br][br]
+## A rule travels by reference, so the same [FoxAttributeRule] sits in every map that received it.
+## Matching on the object rather than on [member FoxAttributeRule.id] keeps a rule added here apart
+## from an inherited one even when the two share an id, and leaves nothing to unwind when a rule is
+## removed.
+func get_inherited_rule_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for rule: FoxAttributeRule in _active_rules:
+		if _came_from_above(rule):
+			ids.append(rule.id)
+
+	return ids
+
+
+# _find_parent_map can pair two sibling maps as each other's parent, so a walk upwards is not
+# guaranteed to end on its own. Every loop here stops on a map it has already passed.
+func _came_from_above(rule: FoxAttributeRule) -> bool:
+	var seen: Array[FoxAttributeMap] = []
+	var walker: FoxAttributeMap = _parent_map
+
+	while is_instance_valid(walker) and walker != self and not seen.has(walker):
+		if walker._active_rules.has(rule):
+			return true
+
+		seen.append(walker)
+		walker = walker._parent_map
+
+	return false
+
+
+## This map's place in its tree, as [code]node path -> depth[/code]. Depth is counted from this map:
+## [code]-1[/code] is the map above it, [code]1[/code] a map below it, and [code]0[/code] this one.
+## Maps above come first, in order from the topmost, then this map, then everything beneath it.
+## [br][br]
+## Walked here instead of in the inspector because a parent map reaches the remote inspector as an
+## id that cannot be followed. A map outside the tree has no path and returns nothing.
+func get_hierarchy_summary() -> Dictionary[String, int]:
+	var summary: Dictionary[String, int] = {}
+	if not is_inside_tree():
+		return summary
+
+	var above: Array[FoxAttributeMap] = []
+	var walker: FoxAttributeMap = _parent_map
+
+	while is_instance_valid(walker) and walker != self and not above.has(walker):
+		above.push_front(walker)
+		walker = walker._parent_map
+
+	var depth: int = -above.size()
+	for map: FoxAttributeMap in above:
+		if map.is_inside_tree():
+			summary[String(map.get_path())] = depth
+
+		depth += 1
+
+	summary[String(get_path())] = 0
+	_collect_maps_below(summary, 1)
+
+	return summary
+
+
+# Depth first, so a child's own children follow it and the read-out can indent straight down the
+# dictionary. A path already present marks a loop and ends that branch.
+func _collect_maps_below(summary: Dictionary[String, int], depth: int) -> void:
+	for child: FoxAttributeMap in _child_maps:
+		if not is_instance_valid(child) or not child.is_inside_tree():
+			continue
+
+		var path: String = String(child.get_path())
+		if summary.has(path):
+			continue
+
+		summary[path] = depth
+		child._collect_maps_below(summary, depth + 1)
 
 #endregion

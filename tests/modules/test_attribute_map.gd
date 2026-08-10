@@ -32,7 +32,9 @@ func run() -> void:
 	_duplicate_rule_ids_are_refused()
 	_read_accessors_do_not_expose_internals()
 	_runtime_state_reaches_the_inspector()
+	_hierarchy_and_inherited_rules_are_published()
 	_inspector_claims_remote_objects_too()
+	_the_read_out_refills_rather_than_rebuilds()
 
 
 ## Reads a float out of the map through a typed local, so callers never pass a Variant into
@@ -44,6 +46,12 @@ func _speed(m: FoxAttributeMap) -> float:
 
 func _new_map() -> FoxAttributeMap:
 	return track(FoxAttributeMap.new()) as FoxAttributeMap
+
+
+## A read-out row, checked field by field. Comparing the four at once reports all of them on a
+## failure rather than stopping at the first.
+func _row_is(row: Variant, depth: int, name: String, value: String, label: String) -> void:
+	eq([row.depth, row.name, row.value], [depth, name, value], label)
 
 
 func _data_storage() -> void:
@@ -399,7 +407,7 @@ func _runtime_state_reaches_the_inspector() -> void:
 		if String(name).begins_with("runtime_"):
 			published[name] = property
 
-	eq(published.size(), 4, "data, groups, flags and rules are all published")
+	eq(published.size(), 6, "data, groups, flags, rules, inherited rules and the tree are all published")
 
 	for name: StringName in published:
 		var usage: int = published[name]["usage"]
@@ -424,6 +432,154 @@ func _runtime_state_reaches_the_inspector() -> void:
 	eq(m.get(&"not_a_real_property"), null, "_get falls through")
 
 
+## Publishes every property the read-out reads, so the panel can be built against something that is
+## not a map. RemoteStandIn covers the claim check and answers only one property.
+class FullStandIn extends Object:
+	var data: Dictionary = {}
+	var groups: Dictionary = {}
+
+	func _get(property: StringName) -> Variant:
+		match property:
+			&"runtime_data":
+				return data
+			&"runtime_groups":
+				return groups
+			&"runtime_inherited_rules":
+				return []
+
+		return {}
+
+
+func _the_read_out_refills_rather_than_rebuilds() -> void:
+	case("the read-out fills its sections instead of rebuilding them")
+	var source: GDScript = load("res://addons/foxfabric/attribute_map/editor/fox_attribute_map_panel.gd") as GDScript
+	check(source != null, "the panel script loads")
+	if source == null:
+		return
+
+	var stand_in: FullStandIn = FullStandIn.new()
+	stand_in.data = {&"a": "1", &"b": "2", &"c": "3"}
+	stand_in.groups = {&"firepower": [&"a", &"b"]}
+
+	# The read-out is the Tree itself. It carries no heading, because the inspector group it goes
+	# inside supplies one.
+	var tree: Tree = track(source.new(stand_in)) as Tree
+	check(tree != null, "the read-out is a Tree")
+	if tree == null:
+		return
+
+	check(tree.hide_root, "whose root is never drawn, since the group heading already names it")
+
+	var root: TreeItem = tree.get_root()
+	var data_section: TreeItem = root.get_first_child()
+	eq(data_section.get_text(0), "Data", "Data is the first section under it")
+	eq(data_section.get_text(1), "3 keys", "counting what it holds, so folding it away loses nothing")
+	eq(data_section.get_child_count(), 3, "holding one row per key")
+	eq(data_section.get_first_child().get_text(1), "1", "with the value in the second column")
+
+	# Deliberate, and asserted so it is not put back by accident. A box on the values alone singles
+	# out whichever row happens to hold one; a box on every cell runs into its neighbours, because a
+	# Tree draws its rows edge to edge and has no separation to give between them.
+	check(data_section.get_first_child().get_custom_stylebox(1) == null, "a value carries no box, only its colour")
+	check(data_section.get_custom_stylebox(1) == null, "and neither does a heading count")
+
+	# A group sits at the same depth as a data key but counts what is under it rather than holding
+	# a value, which is why the row says so instead of the drawing guessing from depth.
+	var group_row: TreeItem = root.get_first_child().get_next().get_first_child()
+	eq(group_row.get_text(0), "firepower", "a group is named under the Groups heading")
+	eq(group_row.get_text(1), "2 keys", "counting the keys filed under it")
+	check(group_row.get_custom_stylebox(1) == null, "and nor does a group count")
+
+	case("a value that moved leaves the rows standing")
+	var first: TreeItem = data_section.get_first_child()
+	stand_in.data = {&"a": "99", &"b": "2", &"c": "3"}
+	tree._refresh()
+	eq(data_section.get_first_child(), first, "the row itself is the one that was already there")
+	eq(first.get_text(1), "99", "and the new value was written into it")
+
+	case("a row carries its text where the dock runs out of room")
+	eq(first.get_tooltip_text(0), "a", "a key hands back its own name")
+	eq(first.get_tooltip_text(1), "99", "and the value beside it")
+	eq(data_section.get_tooltip_text(0), source.HEADING_HELP["Data"], "a heading explains itself instead")
+
+	case("a key appearing rebuilds the tree")
+	stand_in.data = {&"a": "99", &"b": "2", &"c": "3", &"d": "4"}
+	tree._refresh()
+	eq(tree.get_root().get_first_child().get_child_count(), 4, "the extra key gets a row of its own")
+
+	case("folding a branch away gives its space back")
+	var open_height: float = tree.custom_minimum_size.y
+	check(open_height > 0.0, "the tree is given a height to begin with")
+
+	tree.get_root().get_first_child().collapsed = true
+	check(tree.custom_minimum_size.y < open_height, "and a collapsed section leaves it shorter")
+
+	stand_in.free()
+
+
+func _hierarchy_and_inherited_rules_are_published() -> void:
+	case("the tree is reported from whichever map is asked")
+	var entity: Node = track(Node.new())
+	var top: FoxAttributeMap = FoxAttributeMap.new()
+	entity.add_child(top)
+
+	var mid_holder: Node = Node.new()
+	entity.add_child(mid_holder)
+	var mid: FoxAttributeMap = FoxAttributeMap.new()
+	mid_holder.add_child(mid)
+
+	var low_holder: Node = Node.new()
+	mid_holder.add_child(low_holder)
+	var low: FoxAttributeMap = FoxAttributeMap.new()
+	low_holder.add_child(low)
+
+	eq(mid.get_parent_map(), top, "the middle map registered under the top one")
+	eq(low.get_parent_map(), mid, "and the bottom map under the middle one")
+
+	var top_path: String = String(top.get_path())
+	var mid_path: String = String(mid.get_path())
+	var low_path: String = String(low.get_path())
+
+	# Depths are checked one at a time rather than against a whole dictionary. Every tracked node in
+	# the suite is a sibling under /root, and _find_parent_map reads siblings, so maps left behind by
+	# earlier tests turn up above this one.
+	var from_low: Dictionary = low.get_hierarchy_summary()
+	eq(from_low[low_path], 0, "the map asked reports itself as zero")
+	eq(from_low[mid_path], -1, "the map above it as minus one")
+	eq(from_low[top_path], -2, "and the one above that as minus two")
+
+	var order: Array = from_low.keys()
+	check(order.find(top_path) < order.find(mid_path), "the higher map is listed first")
+	check(order.find(mid_path) < order.find(low_path), "and the chain reads downwards")
+
+	var from_top: Dictionary = top.get_hierarchy_summary()
+	eq(from_top[top_path], 0, "asking the top map puts it at zero")
+	eq(from_top[mid_path], 1, "the map below it at one")
+	eq(from_top[low_path], 2, "and the one below that at two")
+
+	# Not through _new_map, which would put it in the tree and give it a path.
+	var loose: FoxAttributeMap = FoxAttributeMap.new()
+	eq(loose.get_hierarchy_summary().size(), 0, "a map outside the tree reports nothing")
+	loose.free()
+
+	case("an inherited rule is told apart from one added here")
+	top.add_rule(FlatRule.new(&"aura", &"speed", 5.0))
+	eq(top.get_inherited_rule_ids().size(), 0, "the map it was added to owns it")
+	eq(mid.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "the map below inherited it")
+	eq(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "and so did the one under that")
+
+	low.add_rule(FlatRule.new(&"local", &"speed", 1.0))
+	eq(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "a rule added on the spot is left out")
+
+	# The case object matching exists for. Adding the id below first makes the parent's copy of it
+	# refused on the way down, so the two maps hold different rules under one id.
+	case("an id already held here is not mistaken for the parent's")
+	low.add_rule(FlatRule.new(&"dupe", &"speed", 1.0))
+	top.add_rule(FlatRule.new(&"dupe", &"speed", 2.0))
+	check(mid.get_inherited_rule_ids().has(&"dupe"), "the map that accepted it reports it as inherited")
+	check(not low.get_inherited_rule_ids().has(&"dupe"), "the map that refused it keeps its own")
+
+
 func _inspector_claims_remote_objects_too() -> void:
 	case("the inspector plugin")
 	var path: String = "res://addons/foxfabric/attribute_map/editor/fox_attribute_map_inspector.gd"
@@ -444,18 +600,68 @@ func _inspector_claims_remote_objects_too() -> void:
 	check(plugin.publishes_runtime_state(remote), "and claims a debugger stand-in that is not a map")
 	remote.free()
 
+	# A property invented in _get_property_list has nothing for the inspector to document, so the
+	# descriptions are written here instead. This fails the day one is published without one.
+	case("every published property carries a description")
+	var described: Dictionary = plugin.PROPERTY_HELP
+	var published: Array[String] = []
+	for property: Dictionary in m.get_property_list():
+		var published_name: String = property["name"]
+		if published_name.begins_with("runtime_"):
+			published.append(published_name)
+
+	for published_name: String in published:
+		check(described.has(published_name), "%s has one" % published_name)
+
+	eq(described.size(), published.size(), "and nothing is described that is not published")
+
+	eq(plugin.Description.summarise({&"a": 1}), "Dictionary (size 1)", "a dictionary reports its size")
+	eq(plugin.Description.summarise([1, 2] as Array), "Array (size 2)", "and an array reports its own")
+
 	case("the read-out formats what it is given")
 	var panel: GDScript = load("res://addons/foxfabric/attribute_map/editor/fox_attribute_map_panel.gd") as GDScript
 	check(panel != null, "the panel script loads")
 	if panel == null:
 		return
 
-	var data_rows: Array = panel._data_rows({&"speed": 5.0}, {&"movement": [&"speed"]})
-	eq(data_rows[0][0], "speed   (movement)", "a data key carries the groups holding it")
-	eq(data_rows[0][1], "5.0", "and its value")
+	# Rows are [depth, name, value]. Depth zero is a section heading, sitting under the root.
+	var rows: Array = panel._rows({&"damage": "3.0"}, {&"firepower": [&"damage"]},
+			{&"swamp": &"speed"}, [&"swamp"], {&"slowed": 2}, {})
 
-	var flag_rows: Array = panel._flag_rows({&"slowed": 2})
-	eq(flag_rows[0][1], "x2", "a flag shows its stack count")
+	_row_is(rows[0], 0, "Data", "1 key", "Data heads the list, saying how much is under it")
+	_row_is(rows[1], 1, "damage", "3.0", "with its keys beneath and no group trailing behind them")
+	_row_is(rows[2], 0, "Groups", "1 group", "then Groups")
+	_row_is(rows[3], 1, "firepower", "1 key", "naming the group and counting it")
+	_row_is(rows[4], 2, "damage", "", "with the keys filed under it hanging off that")
+	_row_is(rows[5], 0, "Active Rules", "1 rule", "then Active Rules")
+	_row_is(rows[6], 1, "swamp   (inherited)", "-> speed", "marking a rule that came from above")
+	_row_is(rows[7], 0, "Flags", "1 flag", "then Flags")
+	_row_is(rows[8], 1, "slowed", "x2", "with its stack count")
+	_row_is(rows[9], 0, "Tree", "none", "and Tree last, empty when the map stands alone")
+	eq(rows.size(), 10, "a map with no relatives adds nothing under it")
 
-	var rule_rows: Array = panel._rule_rows({&"swamp": &"speed"})
-	eq(rule_rows[0][1], "-> speed", "a rule shows what it targets")
+	case("a heading counts what it is holding")
+	eq(panel._counted(0, "key", "keys"), "none", "nothing reads as none rather than zero")
+	eq(panel._counted(1, "key", "keys"), "1 key", "one is singular")
+	eq(panel._counted(4, "map", "maps"), "4 maps", "and more than one is not")
+
+	case("the tree nests by the depths the map reports")
+	var tree_rows: Array = panel._tree_rows({"/root/Tank/Attributes": -1, "/root/Tank/Turret/Attributes": 0})
+	eq(tree_rows.size(), 3, "the heading and both maps")
+	_row_is(tree_rows[0], 0, "Tree", "2 maps", "the section heads its own rows and counts them")
+	_row_is(tree_rows[1], 1, "Tank/Attributes", "", "the map above sits under it")
+	_row_is(tree_rows[2], 2, "Turret/Attributes   (this map)", "", "and this one hangs off that, marked on the name")
+
+	eq(panel._tree_rows({"/root/Tank/Attributes": 0}).size(), 1, "a map with no relatives gets the heading and nothing under it")
+
+	case("a value moving is not a change of shape")
+	var before: Array = panel._rows({&"damage": "3.0"}, {}, {}, [], {}, {})
+	check(panel._same_shape(before, panel._rows({&"damage": "9.0"}, {}, {}, [], {}, {})), "the same keys keep their shape whatever the values read")
+	check(not panel._same_shape(before, panel._rows({&"armour": "3.0"}, {}, {}, [], {}, {})), "a different key does not")
+
+	# Why the shape is compared row by row instead of through one flattened string. A key is
+	# whatever the game called it, so it can carry the separators such a string needs: joining
+	# "depth:name" with "|" turns one key named "a|1:b" into the same text as two keys "a" and "b".
+	var one_key: Array = panel._rows({&"a|1:b": "x"}, {}, {}, [], {}, {})
+	var two_keys: Array = panel._rows({&"a": "x", &"b": "y"}, {}, {}, [], {}, {})
+	check(not panel._same_shape(one_key, two_keys), "a key carrying the separators is not taken for two rows")
