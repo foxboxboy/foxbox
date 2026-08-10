@@ -1,6 +1,6 @@
 @tool
 extends EditorNode3DGizmoPlugin
-## Draws a [FoxSocket3D] in the 3D viewport.
+## A gizmo drawing a [FoxSocket3D] in the 3D viewport.
 ##
 ## Shows where an attachment lands and which way it will face, and colours the socket by whether
 ## something is already seated in it. Lives with the socket module so deleting the module takes

@@ -85,9 +85,10 @@ def main():
         if any(rel.startswith(d) for d in SKIP_DIRS):
             continue
 
+        # Every .gd with a doc comment, not only the ones that publish. The editor scripts carry no
+        # class_name and so reach no generated page, but they are read by whoever maintains them and
+        # the conventions apply the same.
         lines = path.read_text(encoding="utf-8").splitlines()
-        if not any(line.startswith("class_name ") for line in lines):
-            continue
 
         # Banned words anywhere in a ## comment, skipping example code inside [codeblock].
         in_code = False

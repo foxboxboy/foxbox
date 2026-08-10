@@ -1,6 +1,6 @@
 @tool
 extends EditorNode3DGizmoPlugin
-## Draws the clamp range of a [FoxAimGimbal3D] in the 3D viewport.
+## A gizmo drawing the clamp range of a [FoxAimGimbal3D] in the 3D viewport.
 ##
 ## Pitch and yaw limits are numbers in the inspector with nothing to look at, so an inverted or
 ## far too narrow range is invisible until something moves wrong at runtime. Each clamped axis

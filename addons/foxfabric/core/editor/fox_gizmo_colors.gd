@@ -2,8 +2,8 @@
 extends RefCounted
 ## Editor Settings plumbing shared by the FoxFabric gizmos.
 ##
-## Registers one colour per gizmo material under [code]foxfabric/gizmo_colors/[/code], builds the
-## materials from whatever the user has chosen, and keeps them in step afterwards.
+## Each gizmo material gets one colour under [code]foxfabric/gizmo_colors/[/code], built from
+## whatever the user has chosen and kept in step afterwards.
 ## [br][br]
 ## Two limits here are not worth fighting. A custom editor setting cannot carry a description,
 ## and it only appears with Advanced turned on. Both follow from
