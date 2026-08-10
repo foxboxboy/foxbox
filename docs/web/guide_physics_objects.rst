@@ -20,13 +20,28 @@ Setting up the scene
 
 .. code-block:: text
 
-    Player           (player.gd)
-    └─ Camera3D
-       ├─ Aim        (RayCast3D)
-       └─ Dragger    (FoxPhysicsDragger3D)
+    CarryingPhysicsObjects      (Node3D)
+    ├─ WorldEnvironment
+    ├─ DirectionalLight3D
+    ├─ Ground                   (StaticBody3D)
+    │  ├─ CollisionShape3D      (WorldBoundaryShape3D)
+    │  └─ MeshInstance3D        (PlaneMesh)
+    ├─ Crate                    (RigidBody3D, mass 15)
+    │  ├─ CollisionShape3D      (BoxShape3D)
+    │  └─ MeshInstance3D        (BoxMesh)
+    ├─ Plank                    (RigidBody3D, mass 20)
+    │  ├─ CollisionShape3D      (BoxShape3D, 2.5 x 0.2 x 0.6)
+    │  └─ MeshInstance3D        (BoxMesh, same size)
+    ├─ Player                   (Node3D, player.gd)
+    │  └─ Camera3D
+    │     ├─ Aim                (RayCast3D)
+    │     └─ Dragger            (FoxPhysicsDragger3D)
+    └─ Label
 
-``Player`` can be whatever you already use. Nothing here needs a physics body; the two nodes
-sit under the camera and that is the whole arrangement.
+Only the last four matter to this module. The rest is somewhere to stand: a floor to drop things
+on, a light to see them by, and two bodies to pick up.
+
+``Player`` can be whatever you already use. Nothing here needs a physics body.
 
 Point ``Aim`` down its local ``-Z`` and set its length to however far you want to reach. Move
 ``Dragger`` forward from the camera; whatever it grabs is pulled towards wherever the dragger is,
