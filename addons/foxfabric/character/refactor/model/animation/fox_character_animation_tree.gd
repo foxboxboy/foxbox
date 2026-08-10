@@ -27,7 +27,7 @@ func update_movement(blend_amount: float) -> void:
 
 	blend_amount = clampf(blend_amount, -1, 1)
 
-	# Just update BOTH. It's cleaner than checking state.
+	# Both blends are set every time, so nothing has to track which pose is current.
 	animation_tree.set(PATH_LOCOMOTION_CROUCH_BLEND, blend_amount)
 	animation_tree.set(PATH_LOCOMOTION_STAND_BLEND, blend_amount)
 

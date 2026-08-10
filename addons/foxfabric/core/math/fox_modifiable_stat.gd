@@ -229,7 +229,7 @@ func _recalculate() -> void:
 	var old_value = _current_value
 	_current_value = (base_value + total_flat) * total_mult
 
-	# Only emit the signal if the math actually changed the final number!
+	# Emit only when the number moved.
 	if _current_value != old_value:
 		value_changed.emit(_current_value)
 

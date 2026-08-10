@@ -367,7 +367,7 @@ func _apply_rule(rule: FoxAttributeRule, from_parent: bool) -> void:
 	_active_rules.append(rule)
 	rule_added.emit(rule)
 
-	# Apply rule to the map itself!
+	# Applies here as well as to the children below.
 	if _data.has(rule.target_key):
 		rule.apply_to(self)
 
@@ -386,7 +386,7 @@ func remove_rule(id: StringName) -> void:
 	_active_rules.erase(rule_to_remove)
 	rule_removed.emit(rule_to_remove)
 
-	# Remove rule from the map itself!
+	# Removed here as well as from the children below.
 	if _data.has(rule_to_remove.target_key):
 		rule_to_remove.remove_from(self)
 

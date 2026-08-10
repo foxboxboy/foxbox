@@ -49,6 +49,6 @@ func _try_deliver_payload(area: Area2D) -> void:
 	if not hurtbox:
 		return
 
-	# only report a delivery the hurtbox actually accepted
+	# Report only what the hurt area took.
 	if hurtbox.receive_hit(payload):
 		hit_delivered.emit(payload, hurtbox)

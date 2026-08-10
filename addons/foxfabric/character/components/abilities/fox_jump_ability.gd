@@ -42,7 +42,7 @@ var _buffer_timer: float = 0.0
 
 
 func _process(delta: float) -> void:
-	# The manager handles its own buffer countdown!
+	# The countdown lives here, so a caller makes the request once and stops.
 	if _is_request_active:
 		_buffer_timer -= delta
 		if _buffer_timer <= 0.0:

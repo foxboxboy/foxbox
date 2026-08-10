@@ -254,7 +254,7 @@ func has_move_input() -> bool:
 func _update_character_model() -> void:
 	model.update_strafe(input_direction)
 
-	# Ask the camera component for its data!
+	# The camera component owns the pitch.
 	if aim and not aim.is_free_looking:
 		model.pitch = aim.get_pitch()
 
