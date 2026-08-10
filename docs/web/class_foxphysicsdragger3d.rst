@@ -33,6 +33,13 @@ Description
 
 The hit point handed to :ref:`grab()<class_FoxPhysicsDragger3D_method_grab>` is where the body was struck, and the body pivots around that point rather than its centre. Grabbing a plank by one end swings it like a plank. :ref:`max_pull_force<class_FoxPhysicsDragger3D_property_max_pull_force>` caps the whole thing so a stiff profile cannot launch anything.
 
+.. rst-class:: classref-introduction-group
+
+Tutorials
+---------
+
+- `Carrying physics objects <https://foxfabric-godot.readthedocs.io/en/latest/guide_physics_objects.html>`__
+
 .. rst-class:: classref-reftable-group
 
 Properties
