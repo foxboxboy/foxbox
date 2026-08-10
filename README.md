@@ -40,12 +40,10 @@ The rest are listed with what they target.
 | `view_model` | 3D | A SubViewportContainer that keeps its SubViewport the same size as the main one, for drawing first person hands and weapons in a layer of their own. |
 | `world_environments` | 3D | Ready-made WorldEnvironment scenes, including a stylized sky and a cheaper one for mobile. Drop one in rather than dialling in tonemapping and fog by hand. |
 | `character` | 3D | Motors, abilities, and states for driving a CharacterBody3D, plus the mannequin and accessory assets used by the demos. Under heavy refactor and not representative of the rest of the library. |
-| `deprecated` | n/a | Graveyard for old code and retired prototypes. |
 
 Each description above is the same text as that module's own `README.txt`.
 
-Every class ships with full `##` documentation so it renders in Godot's built-in help,
-and every module has an editor icon.
+Every class ships with full `##` documentation, so it renders in Godot's built-in help.
 
 ## Install
 
