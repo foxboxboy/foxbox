@@ -6,6 +6,15 @@ extends ShapeCast2D
 ##
 ## [FoxHitShapeCast2D] acts as a "thick raycast" or swept-shape trigger. Perfect for thick lasers
 ## or high-speed melee sweeps that might tunnel through standard areas.
+## [codeblock]
+## @onready var sweep: FoxHitShapeCast2D = $Weapon/Sweep
+##
+## func _ready() -> void:
+##     sweep.payload = {"amount": 5, "knockback": 200.0}
+##
+## func swing() -> void:
+##     sweep.fire()   # every FoxHurtArea2D in the swept shape receives it
+## [/codeblock]
 
 ## Emitted when this shapecast successfully delivers its [param payload] to a [param target].
 signal hit_delivered(payload: Variant, target: FoxHurtArea2D)

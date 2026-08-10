@@ -19,7 +19,19 @@ A 2D ray that delivers a :ref:`Variant<class_Variant>` payload to the first :ref
 Description
 -----------
 
-**FoxHitRayCast2D** acts as the hitscan trigger for the FoxFabric damage pipeline. 
+**FoxHitRayCast2D** acts as the hitscan trigger for the FoxFabric damage pipeline.
+
+::
+
+    @onready var shot: FoxHitRayCast2D = $Weapon/Shot
+
+    func _ready() -> void:
+        shot.payload = {"amount": 8, "source": self}
+
+    func fire_weapon() -> void:
+        shot.fire()   # the first FoxHurtArea2D on the ray receives it
+
+
 
 \ **Note:** Ensure :ref:`RayCast2D.collide_with_areas<class_RayCast2D_property_collide_with_areas>` is enabled in the inspector.
 

@@ -21,6 +21,17 @@ Description
 
 **FoxHurtArea3D** acts as the receiving end of the FoxFabric damage pipeline. It listens for overlapping :ref:`FoxHitArea3D<class_FoxHitArea3D>` nodes and broadcasts their payload.
 
+::
+
+    func _ready() -> void:
+        $HurtArea.hit_received.connect(_on_hit_received)
+
+    func _on_hit_received(payload: Variant) -> void:
+        health -= payload["amount"]
+
+    func start_invulnerability() -> void:
+        $HurtArea.is_active = false   # receive_hit returns false while this is off
+
 .. rst-class:: classref-introduction-group
 
 Tutorials

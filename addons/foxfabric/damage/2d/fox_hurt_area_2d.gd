@@ -5,6 +5,16 @@ extends Area2D
 ##
 ## [FoxHurtArea2D] acts as the receiving end of the FoxFabric damage pipeline. It listens
 ## for overlapping [FoxHitArea2D] nodes and broadcasts their payload.
+## [codeblock]
+## func _ready() -> void:
+##     $HurtArea.hit_received.connect(_on_hit_received)
+##
+## func _on_hit_received(payload: Variant) -> void:
+##     health -= payload["amount"]
+##
+## func start_invulnerability() -> void:
+##     $HurtArea.is_active = false   # receive_hit returns false while this is off
+## [/codeblock]
 
 
 ## Emitted immediately when a [param payload] is successfully delivered to this area.

@@ -5,6 +5,15 @@ extends RayCast3D
 ## A 3D ray that delivers a [Variant] payload to the first [FoxHurtArea3D] it strikes.
 ##
 ## [FoxHitRayCast3D] acts as the hitscan trigger for the FoxFabric damage pipeline.
+## [codeblock]
+## @onready var shot: FoxHitRayCast3D = $Weapon/Shot
+##
+## func _ready() -> void:
+##     shot.payload = {"amount": 8, "source": self}
+##
+## func fire_weapon() -> void:
+##     shot.fire()   # the first FoxHurtArea3D on the ray receives it
+## [/codeblock]
 ## [br][b]Note:[/b] Ensure [member RayCast3D.collide_with_areas] is enabled in the inspector.
 
 
