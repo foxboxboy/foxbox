@@ -20,25 +20,17 @@ Setting up the scene
 
 .. code-block:: text
 
-    CarryingPhysicsObjects      (Node3D)
-    ├─ WorldEnvironment
-    ├─ DirectionalLight3D
-    ├─ Ground                   (StaticBody3D)
-    │  ├─ CollisionShape3D      (WorldBoundaryShape3D)
-    │  └─ MeshInstance3D        (PlaneMesh)
-    ├─ Crate                    (RigidBody3D, mass 15)
-    │  ├─ CollisionShape3D      (BoxShape3D)
-    │  └─ MeshInstance3D        (BoxMesh)
-    ├─ Plank                    (RigidBody3D, mass 20)
-    │  ├─ CollisionShape3D      (BoxShape3D, 2.5 x 0.2 x 0.6)
-    │  └─ MeshInstance3D        (BoxMesh, same size)
-    ├─ Player                   (Node3D, player.gd)
-    │  └─ Camera3D
-    │     ├─ Aim                (RayCast3D)
-    │     └─ Dragger            (FoxPhysicsDragger3D)
-    └─ Label
+    Player                   (Node3D, player.gd)
+    └─ Camera3D
+       ├─ Aim                (RayCast3D)
+       └─ Dragger            (FoxPhysicsDragger3D)
 
-Only the last four belong to this module.
+    Crate                    (RigidBody3D, mass 15)
+    ├─ CollisionShape3D      (BoxShape3D)
+    └─ MeshInstance3D        (BoxMesh)
+
+The demo adds a floor, a light, a ``WorldEnvironment`` and mouse look. None of them belong to
+this module, and without them the scene runs black and cannot turn.
 
 Point ``Aim`` down its local ``-Z`` and set its length to your reach. Move ``Dragger`` forward
 from the camera. A grabbed body is pulled to the dragger, so that is where it floats.
