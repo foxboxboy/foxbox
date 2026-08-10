@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://foxfabric-godot.readthedocs.io">
-    <img src="icons/full_logo.svg" width="400" alt="FoxFabric logo">
+	<img src="icons/full_logo.svg" width="400" alt="FoxFabric logo">
   </a>
 </p>
 
@@ -56,8 +56,8 @@ Requires Godot 4.7 or newer. The demos assume the Jolt physics engine.
 
 ## Demos
 
-`demos/` has a scene per module. They are the quickest way to see what
-something does before reading it.
+`demos/` has runnable scenes. They are the quickest way to see what something does before
+reading it.
 
 ## Documentation
 
