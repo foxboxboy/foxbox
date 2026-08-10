@@ -16,10 +16,13 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 ## Foxavas Needs
 
-- Diffable JSON wrapper
+- Saving & Loading (Diffable JSON wrapper)
 - Input System
 - Camera Rigs
 - Runtime transform gizmo
+- Runtime model importer
+- Inventory & hotbar
+- Placement system
 
 
 ## Docs
