@@ -28,7 +28,13 @@ Point ``Aim`` down its local ``-Z`` and set its length to however far you want t
 ``Dragger`` forward from the camera; whatever it grabs is pulled towards wherever the dragger is,
 so its position is where the crate ends up floating.
 
-The crate is a plain ``RigidBody3D`` with a collision shape. Nothing on it needs a script.
+The crate is a plain ``RigidBody3D`` with a collision shape. Nothing on it needs a script, but
+give it a believable ``mass``. The dragger's defaults suit something substantial, and a body left
+at the default 1 kg spins hard enough on grab to reach the physics engine's own limit and stay
+there. Fifteen or twenty is fine for a crate.
+
+Size the collision shape rather than scaling the body. Godot does not support scale on a physics
+body, and a scaled one tumbles for reasons that look like a bug in the dragger.
 
 Grabbing and releasing
 ----------------------

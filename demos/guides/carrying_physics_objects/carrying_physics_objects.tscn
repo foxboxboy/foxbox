@@ -22,6 +22,12 @@ size = Vector2(24, 24)
 
 [sub_resource type="BoxMesh" id="Crate_mesh"]
 
+[sub_resource type="BoxShape3D" id="Plank_shape"]
+size = Vector3(2.5, 0.2, 0.6)
+
+[sub_resource type="BoxMesh" id="Plank_mesh"]
+size = Vector3(2.5, 0.2, 0.6)
+
 [node name="CarryingPhysicsObjects" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -41,6 +47,7 @@ mesh = SubResource("Floor_mesh")
 
 [node name="Crate" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3)
+mass = 15.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Crate"]
 shape = SubResource("Crate_shape")
@@ -49,15 +56,16 @@ shape = SubResource("Crate_shape")
 mesh = SubResource("Crate_mesh")
 
 [node name="Plank" type="RigidBody3D" parent="."]
-transform = Transform3D(2.5, 0, 0, 0, 0.2, 0, 0, 0, 0.6, 2.5, 0.2, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.2, -3)
+mass = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Plank"]
-shape = SubResource("Crate_shape")
+shape = SubResource("Plank_shape")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Plank"]
-mesh = SubResource("Crate_mesh")
+mesh = SubResource("Plank_mesh")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 script = ExtResource("1_player")
 

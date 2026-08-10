@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Node3D
 
 # Runnable version of the "Carrying physics objects" guide. Left click grabs whatever the ray is
 # pointing at, left click again drops it.
