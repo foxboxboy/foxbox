@@ -14,6 +14,14 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 - Save/load helpers
 - `character` rewrite: move hardcoded config into resources, add tests
 
+## Foxavas Needs
+
+- Diffable JSON wrapper
+- Input System
+- Camera Rigs
+- Runtime transform gizmo
+
+
 ## Docs
 
 - Guide: interaction and pickup loop
