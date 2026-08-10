@@ -29,8 +29,9 @@ Setting up the scene
     ├─ CollisionShape3D      (BoxShape3D)
     └─ MeshInstance3D        (BoxMesh)
 
-The demo adds a floor, a light, a ``WorldEnvironment`` and mouse look. None of them belong to
-this module, and without them the scene runs black and cannot turn.
+The demo wraps this in a root ``Node3D`` and adds a floor, a light, a ``WorldEnvironment``, a
+plank, a label and mouse look. Without the light and environment the scene renders black, and
+without mouse look it cannot turn.
 
 Point ``Aim`` down its local ``-Z`` and set its length to your reach. Move ``Dragger`` forward
 from the camera. A grabbed body is pulled to the dragger, so that is where it floats.
