@@ -42,7 +42,10 @@ Grabbing and releasing
     @onready var dragger: FoxPhysicsDragger3D = $Camera3D/Dragger
 
     func _unhandled_input(event: InputEvent) -> void:
-        if not event.is_action_pressed(&"interact"):
+        var button: InputEventMouseButton = event as InputEventMouseButton
+        if button == null or not button.pressed:
+            return
+        if button.button_index != MOUSE_BUTTON_LEFT:
             return
 
         if dragger.is_holding():
@@ -53,7 +56,7 @@ Grabbing and releasing
         if body != null:
             dragger.grab(body, aim.get_collision_point())
 
-One key does both, because ``is_holding`` says which case you are in. ``release`` dampens the
+One click does both, because ``is_holding`` says which case you are in. ``release`` dampens the
 body's spin by default, so a crate you let go of does not keep rotating.
 
 Where you grab matters
