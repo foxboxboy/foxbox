@@ -3,16 +3,6 @@
 [ext_resource type="Script" path="res://demos/guides/carrying_physics_objects/carrying_physics_objects.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dsjx2014whcbk" path="res://addons/foxfabric/physics_dragging/3d/fox_physics_dragger_3d.gd" id="2_dragger"]
 
-[sub_resource type="ProceduralSkyMaterial" id="Sky_bg"]
-
-[sub_resource type="Sky" id="Sky_env"]
-sky_material = SubResource("Sky_bg")
-
-[sub_resource type="Environment" id="Environment_demo"]
-background_mode = 2
-sky = SubResource("Sky_env")
-ambient_light_source = 3
-
 [sub_resource type="WorldBoundaryShape3D" id="Floor_shape"]
 
 [sub_resource type="PlaneMesh" id="Floor_mesh"]
@@ -29,9 +19,6 @@ size = Vector3(2.5, 0.2, 0.6)
 size = Vector3(2.5, 0.2, 0.6)
 
 [node name="CarryingPhysicsObjects" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_demo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6, 0.8, 0, -0.8, 0.6, 0, 6, 0)
