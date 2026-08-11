@@ -98,7 +98,8 @@ func _groups() -> void:
 	check_equal(m.get_data_in_group(&"movement").size(), 2, "group returns both values")
 
 	m.add_data_to_group(&"speed", &"movement")
-	check_equal(m.get_data_in_group(&"movement").size(), 2, "adding the same key twice does not duplicate")
+	check_equal(m.get_data_in_group(&"movement").size(), 2,
+		"adding the same key twice does not duplicate")
 
 	m.erase_data_from_group(&"speed", &"movement")
 	check_equal(m.get_data_in_group(&"movement").size(), 1, "removing from a group shrinks it")
@@ -449,18 +450,23 @@ func _runtime_state_reaches_the_inspector() -> void:
 		if String(name).begins_with("runtime_"):
 			published[name] = property
 
-	check_equal(published.size(), 6, "data, groups, flags, rules, inherited rules and the tree are all published")
+	check_equal(published.size(), 6,
+		"data, groups, flags, rules, inherited rules and the tree are all published")
 
 	for name: StringName in published:
 		var usage: int = published[name]["usage"]
 		check(usage & PROPERTY_USAGE_READ_ONLY != 0, "%s is read-only" % name)
 		check(usage & PROPERTY_USAGE_STORAGE == 0, "%s is never written into a .tscn" % name)
 
-	check_equal(m.get(&"runtime_flags"), {&"slowed": 2} as Dictionary, "flags come through with their stacks")
-	check_equal(m.get(&"runtime_rules"), {&"swamp": &"health"} as Dictionary, "rules come through as id to target")
-	check_equal(m.get(&"runtime_groups"), {&"vitals": [&"health"]} as Dictionary, "groups come through with members")
+	check_equal(m.get(&"runtime_flags"), {&"slowed": 2} as Dictionary,
+		"flags come through with their stacks")
+	check_equal(m.get(&"runtime_rules"), {&"swamp": &"health"} as Dictionary,
+		"rules come through as id to target")
+	check_equal(m.get(&"runtime_groups"), {&"vitals": [&"health"]} as Dictionary,
+		"groups come through with members")
 	# "75.0" rather than "75": the rule above read health as a float and wrote it back as one.
-	check_equal(m.get(&"runtime_data"), {&"health": "75.0"} as Dictionary, "data comes through as text")
+	check_equal(m.get(&"runtime_data"), {&"health": "75.0"} as Dictionary,
+		"data comes through as text")
 
 	start_case("a stored object is turned into text before it can reach the debugger")
 	m.set_data(&"power", FoxModifiableStat.new(10.0))
@@ -515,14 +521,16 @@ func _the_read_out_refills_rather_than_rebuilds() -> void:
 	var root: TreeItem = tree.get_root()
 	var data_section: TreeItem = root.get_first_child()
 	check_equal(data_section.get_text(0), "Data", "Data is the first section under it")
-	check_equal(data_section.get_text(1), "3 keys", "counting what it holds, so folding it away loses nothing")
+	check_equal(data_section.get_text(1), "3 keys",
+		"counting what it holds, so folding it away loses nothing")
 	check_equal(data_section.get_child_count(), 3, "holding one row per key")
 	check_equal(data_section.get_first_child().get_text(1), "1", "with the value in the second column")
 
 	# Deliberate, and asserted so it is not put back by accident. A box on the values alone singles
 	# out whichever row happens to hold one; a box on every cell runs into its neighbours, because a
 	# Tree draws its rows edge to edge and has no separation to give between them.
-	check(data_section.get_first_child().get_custom_stylebox(1) == null, "a value carries no box, only its colour")
+	check(data_section.get_first_child().get_custom_stylebox(1) == null,
+		"a value carries no box, only its colour")
 	check(data_section.get_custom_stylebox(1) == null, "and neither does a heading count")
 
 	# A group sits at the same depth as a data key but counts what is under it rather than holding
@@ -536,18 +544,21 @@ func _the_read_out_refills_rather_than_rebuilds() -> void:
 	var first: TreeItem = data_section.get_first_child()
 	stand_in.data = {&"a": "99", &"b": "2", &"c": "3"}
 	tree._refresh()
-	check_equal(data_section.get_first_child(), first, "the row itself is the one that was already there")
+	check_equal(data_section.get_first_child(), first,
+		"the row itself is the one that was already there")
 	check_equal(first.get_text(1), "99", "and the new value was written into it")
 
 	start_case("a row carries its text where the dock runs out of room")
 	check_equal(first.get_tooltip_text(0), "a", "a key hands back its own name")
 	check_equal(first.get_tooltip_text(1), "99", "and the value beside it")
-	check_equal(data_section.get_tooltip_text(0), source.HEADING_HELP["Data"], "a heading explains itself instead")
+	check_equal(data_section.get_tooltip_text(0), source.HEADING_HELP["Data"],
+		"a heading explains itself instead")
 
 	start_case("a key appearing rebuilds the tree")
 	stand_in.data = {&"a": "99", &"b": "2", &"c": "3", &"d": "4"}
 	tree._refresh()
-	check_equal(tree.get_root().get_first_child().get_child_count(), 4, "the extra key gets a row of its own")
+	check_equal(tree.get_root().get_first_child().get_child_count(), 4,
+		"the extra key gets a row of its own")
 
 	start_case("folding a branch away gives its space back")
 	var open_height: float = tree.custom_minimum_size.y
@@ -607,18 +618,22 @@ func _hierarchy_and_inherited_rules_are_published() -> void:
 	start_case("an inherited rule is told apart from one added here")
 	top.add_rule(FlatRule.new(&"aura", &"speed", 5.0))
 	check_equal(top.get_inherited_rule_ids().size(), 0, "the map it was added to owns it")
-	check_equal(mid.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "the map below inherited it")
-	check_equal(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "and so did the one under that")
+	check_equal(mid.get_inherited_rule_ids(), [&"aura"] as Array[StringName],
+		"the map below inherited it")
+	check_equal(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName],
+		"and so did the one under that")
 
 	low.add_rule(FlatRule.new(&"local", &"speed", 1.0))
-	check_equal(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName], "a rule added on the spot is left out")
+	check_equal(low.get_inherited_rule_ids(), [&"aura"] as Array[StringName],
+		"a rule added on the spot is left out")
 
 	# The case object matching exists for. Adding the id below first makes the parent's copy of it
 	# refused on the way down, so the two maps hold different rules under one id.
 	start_case("an id already held here is not mistaken for the parent's")
 	low.add_rule(FlatRule.new(&"dupe", &"speed", 1.0))
 	top.add_rule(FlatRule.new(&"dupe", &"speed", 2.0))
-	check(mid.get_inherited_rule_ids().has(&"dupe"), "the map that accepted it reports it as inherited")
+	check(mid.get_inherited_rule_ids().has(&"dupe"),
+		"the map that accepted it reports it as inherited")
 	check(not low.get_inherited_rule_ids().has(&"dupe"), "the map that refused it keeps its own")
 
 
@@ -657,8 +672,10 @@ func _inspector_claims_remote_objects_too() -> void:
 
 	check_equal(described.size(), published.size(), "and nothing is described that is not published")
 
-	check_equal(plugin.Description.summarise({&"a": 1}), "Dictionary (size 1)", "a dictionary reports its size")
-	check_equal(plugin.Description.summarise([1, 2] as Array), "Array (size 2)", "and an array reports its own")
+	check_equal(plugin.Description.summarise({&"a": 1}), "Dictionary (size 1)",
+		"a dictionary reports its size")
+	check_equal(plugin.Description.summarise([1, 2] as Array), "Array (size 2)",
+		"and an array reports its own")
 
 	start_case("the read-out formats what it is given")
 	var panel: GDScript = load("res://addons/foxfabric/attribute_map/editor/fox_attribute_map_panel.gd") as GDScript
@@ -683,7 +700,8 @@ func _inspector_claims_remote_objects_too() -> void:
 	check_equal(rows.size(), 10, "a map with no relatives adds nothing under it")
 
 	start_case("a heading counts what it is holding")
-	check_equal(panel._describe_count(0, "key", "keys"), "none", "nothing reads as none rather than zero")
+	check_equal(panel._describe_count(0, "key", "keys"), "none",
+		"nothing reads as none rather than zero")
 	check_equal(panel._describe_count(1, "key", "keys"), "1 key", "one is singular")
 	check_equal(panel._describe_count(4, "map", "maps"), "4 maps", "and more than one is not")
 
@@ -692,18 +710,23 @@ func _inspector_claims_remote_objects_too() -> void:
 	check_equal(tree_rows.size(), 3, "the heading and both maps")
 	_row_is(tree_rows[0], 0, "Tree", "2 maps", "the section heads its own rows and counts them")
 	_row_is(tree_rows[1], 1, "Tank/Attributes", "", "the map above sits under it")
-	_row_is(tree_rows[2], 2, "Turret/Attributes   (this map)", "", "and this one hangs off that, marked on the name")
+	_row_is(tree_rows[2], 2, "Turret/Attributes   (this map)", "",
+		"and this one hangs off that, marked on the name")
 
-	check_equal(panel._build_tree_rows({"/root/Tank/Attributes": 0}).size(), 1, "a map with no relatives gets the heading and nothing under it")
+	check_equal(panel._build_tree_rows({"/root/Tank/Attributes": 0}).size(), 1,
+		"a map with no relatives gets the heading and nothing under it")
 
 	start_case("a value moving is not a change of shape")
 	var before: Array = panel._build_rows({&"damage": "3.0"}, {}, {}, [], {}, {})
-	check(panel._has_same_shape(before, panel._build_rows({&"damage": "9.0"}, {}, {}, [], {}, {})), "the same keys keep their shape whatever the values read")
-	check(not panel._has_same_shape(before, panel._build_rows({&"armour": "3.0"}, {}, {}, [], {}, {})), "a different key does not")
+	check(panel._has_same_shape(before, panel._build_rows({&"damage": "9.0"}, {}, {}, [], {}, {})),
+		"the same keys keep their shape whatever the values read")
+	check(not panel._has_same_shape(before, panel._build_rows({&"armour": "3.0"}, {}, {}, [], {}, {})),
+		"a different key does not")
 
 	# Why the shape is compared row by row instead of through one flattened string. A key is
 	# whatever the game called it, so it can carry the separators such a string needs: joining
 	# "depth:name" with "|" turns one key named "a|1:b" into the same text as two keys "a" and "b".
 	var one_key: Array = panel._build_rows({&"a|1:b": "x"}, {}, {}, [], {}, {})
 	var two_keys: Array = panel._build_rows({&"a": "x", &"b": "y"}, {}, {}, [], {}, {})
-	check(not panel._has_same_shape(one_key, two_keys), "a key carrying the separators is not taken for two rows")
+	check(not panel._has_same_shape(one_key, two_keys),
+		"a key carrying the separators is not taken for two rows")

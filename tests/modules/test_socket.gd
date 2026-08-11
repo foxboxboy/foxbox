@@ -213,7 +213,8 @@ func _snapping() -> void:
 	holder.add_child(item2)
 	item2.global_position = Vector3(1, 1, 1)
 	s2.attach(item2)
-	check(item2.global_position.is_equal_approx(Vector3(1, 1, 1)), "position left alone when snapping is off")
+	check(item2.global_position.is_equal_approx(Vector3(1, 1, 1)),
+		"position left alone when snapping is off")
 
 
 func _build_map(socket_names: Array) -> Array:

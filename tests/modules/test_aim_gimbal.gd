@@ -66,7 +66,8 @@ func _gizmo_draws_the_range() -> void:
 	for i: int in 32 * 2:
 		highest = maxf(highest, pitch_arc[i].y)
 		lowest = minf(lowest, pitch_arc[i].y)
-	check_almost_equal(highest, gizmo.RADIUS * sin(deg_to_rad(45.0)), "the arc reaches the upper limit")
+	check_almost_equal(highest, gizmo.RADIUS * sin(deg_to_rad(45.0)),
+		"the arc reaches the upper limit")
 	check_almost_equal(lowest, gizmo.RADIUS * sin(deg_to_rad(-45.0)), "and the lower one")
 
 	start_case("the arc ignores the gimbal's own rotation")
@@ -81,7 +82,8 @@ func _gizmo_draws_the_range() -> void:
 		# Back into the parent's frame, where both should describe the same arc.
 		if (g.transform.basis * aimed[i]).is_equal_approx(resting[i]):
 			matched += 1
-	check_equal(matched, resting.size(), "the arc stays put in the parent's frame while the gimbal aims")
+	check_equal(matched, resting.size(),
+		"the arc stays put in the parent's frame while the gimbal aims")
 
 
 func _pitch_clamps_by_default() -> void:

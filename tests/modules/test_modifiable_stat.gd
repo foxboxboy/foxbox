@@ -102,7 +102,8 @@ func _has_modifier() -> void:
 
 	s.add_flat_modifier(&"x", 1.0)
 	check(s.has_modifier(&"x", FoxModifiableStat.ModifierType.FLAT), "added id is present")
-	check(not s.has_modifier(&"x", FoxModifiableStat.ModifierType.MULTIPLIER), "types are tracked separately")
+	check(not s.has_modifier(&"x", FoxModifiableStat.ModifierType.MULTIPLIER),
+		"types are tracked separately")
 
 	s.pop_modifier(&"x", FoxModifiableStat.ModifierType.FLAT)
 	check(not s.has_modifier(&"x", FoxModifiableStat.ModifierType.FLAT),

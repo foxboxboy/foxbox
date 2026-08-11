@@ -49,7 +49,8 @@ func _percentage() -> void:
 	start_case("percentage with no capacity")
 	var zero: FoxStatPool = FoxStatPool.new()
 	zero.base_max = 0.0
-	check_almost_equal(zero.get_percent(), 0.0, "a zero maximum returns 0.0 rather than dividing by zero")
+	check_almost_equal(zero.get_percent(), 0.0,
+		"a zero maximum returns 0.0 rather than dividing by zero")
 
 
 func _max_modifiers() -> void:

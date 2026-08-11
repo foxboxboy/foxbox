@@ -54,7 +54,8 @@ func _hit_raycast() -> void:
 
 	# fire() calls force_raycast_update(), which the engine documents as ignoring enabled.
 	ray.enabled = false
-	check_equal(ray._get_configuration_warnings().size(), 0, "stays quiet about enabled, since fire() works regardless")
+	check_equal(ray._get_configuration_warnings().size(), 0,
+		"stays quiet about enabled, since fire() works regardless")
 
 
 func _hit_shapecast() -> void:
@@ -189,7 +190,8 @@ func _socket_marker() -> void:
 	var socket: FoxSocket3D = FoxSocket3D.new()
 	holder.add_child(socket)
 
-	check_equal(socket._get_configuration_warnings().size(), 0, "an untouched socket warns about nothing")
+	check_equal(socket._get_configuration_warnings().size(), 0,
+		"an untouched socket warns about nothing")
 
 	var outsider: Node3D = Node3D.new()
 	holder.add_child(outsider)

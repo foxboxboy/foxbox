@@ -81,7 +81,8 @@ func _profile_is_shared_with_3d() -> void:
 
 	start_case("and fall back to their own defaults without one")
 	flat.grab(body_2d, Vector2.ZERO)
-	check_almost_equal(flat._current_stiffness, flat.default_stiffness, "no profile means the node's default")
+	check_almost_equal(flat._current_stiffness, flat.default_stiffness,
+		"no profile means the node's default")
 
 	flat.release()
 	solid.release()
@@ -201,4 +202,5 @@ func _the_command_cannot_outrun_the_body() -> void:
 
 	var held_close: float = angle_difference(prop.global_rotation, tight.global_rotation)
 	check_almost_equal(held_close, deg_to_rad(20.0), "a shorter lead is honoured", 0.001)
-	check_almost_equal(FoxPhysicsDragger2D.DEFAULT_ROTATION_LEAD, PI / 2.0, "and the default is still a quarter turn")
+	check_almost_equal(FoxPhysicsDragger2D.DEFAULT_ROTATION_LEAD, PI / 2.0,
+		"and the default is still a quarter turn")

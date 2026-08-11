@@ -163,7 +163,8 @@ func _the_command_cannot_outrun_the_body() -> void:
 	upright.rotate(Vector3.UP, PI)
 	var before: Basis = upright.global_transform.basis
 	upright._rein_in_rotation()
-	check(upright.global_transform.basis.is_equal_approx(before), "the node is left exactly where it was put")
+	check(upright.global_transform.basis.is_equal_approx(before),
+		"the node is left exactly where it was put")
 
 	start_case("reining the command in does not touch the node's scale")
 	var scaled: FoxPhysicsDragger3D = track(FoxPhysicsDragger3D.new()) as FoxPhysicsDragger3D

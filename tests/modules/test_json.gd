@@ -139,8 +139,10 @@ func _decoding_falls_back_on_anything_it_cannot_read() -> void:
 	check_equal(FoxJson.array_to_vector3(null, fallback), fallback, "a missing field")
 	check_equal(FoxJson.array_to_vector3([1, 2], fallback), fallback, "too few numbers")
 	check_equal(FoxJson.array_to_vector3([1, 2, 3, 4], fallback), fallback, "too many numbers")
-	check_equal(FoxJson.array_to_vector3("(1, 2, 3)", fallback), fallback, "the debug string Godot writes")
-	check_equal(FoxJson.array_to_vector3(["a", "b", "c"], fallback), fallback, "strings where numbers go")
+	check_equal(FoxJson.array_to_vector3("(1, 2, 3)", fallback), fallback,
+		"the debug string Godot writes")
+	check_equal(FoxJson.array_to_vector3(["a", "b", "c"], fallback), fallback,
+		"strings where numbers go")
 	check_equal(FoxJson.array_to_vector3([[1, 0, 0], [0, 1, 0], [0, 0, 1]], fallback), fallback,
 		"nested where flat was expected")
 	check_equal(FoxJson.array_to_basis([1, 2, 3], Basis.IDENTITY), Basis.IDENTITY,
@@ -151,7 +153,8 @@ func _decoding_falls_back_on_anything_it_cannot_read() -> void:
 	# 1e99999 is what Godot writes for INF, and it parses back without complaint
 	var parsed: Dictionary = JSON.parse_string('{"pos": [1e99999, 0, 0]}')
 	check(is_inf(parsed["pos"][0]), "the file really does parse to an infinity")
-	check_equal(FoxJson.array_to_vector3(parsed["pos"], fallback), fallback, "array_to_vector3 refuses it")
+	check_equal(FoxJson.array_to_vector3(parsed["pos"], fallback), fallback,
+		"array_to_vector3 refuses it")
 	check_equal(FoxJson.array_to_basis([[1e99999, 0, 0], [0, 1, 0], [0, 0, 1]], Basis.IDENTITY),
 		Basis.IDENTITY, "and it cannot arrive one axis at a time either")
 
@@ -160,7 +163,8 @@ func _colour_alpha_is_optional() -> void:
 	start_case("a colour written by hand may leave the alpha off")
 
 	check_equal(FoxJson.array_to_color([1, 0, 0], Color.BLACK), Color(1, 0, 0, 1), "three components")
-	check_equal(FoxJson.array_to_color([1, 0, 0, 0.5], Color.BLACK), Color(1, 0, 0, 0.5), "four components")
+	check_equal(FoxJson.array_to_color([1, 0, 0, 0.5], Color.BLACK), Color(1, 0, 0, 0.5),
+		"four components")
 	check_equal(FoxJson.array_to_color([1, 0], Color.BLACK), Color.BLACK, "two is still a fallback")
 
 
@@ -193,7 +197,8 @@ func _writing_then_reading() -> void:
 
 	var path: String = DIR + "/plain.json"
 	var writer: WorldV1 = WorldV1.new()
-	check_equal(writer.write(path, {"objects": [{"kind": "crate"}], "name": "yard"}), OK, "write succeeds")
+	check_equal(writer.write(path, {"objects": [{"kind": "crate"}], "name": "yard"}), OK,
+		"write succeeds")
 	check(FileAccess.file_exists(path), "the file is there")
 
 	var text: String = FileAccess.get_file_as_string(path)

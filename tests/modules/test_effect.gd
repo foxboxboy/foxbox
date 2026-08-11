@@ -342,7 +342,8 @@ func _expiry_sentinel_edge_case() -> void:
 	# 1.0 - 2.0 is exactly -1.0, which is the permanent sentinel
 	var inst: FoxEffectInstance = m.add_effect(e, target)
 	inst.process_time(2.0)
-	check_almost_equal(inst.time_left, 0.0, "the countdown floors at zero instead of running onto the sentinel")
+	check_almost_equal(inst.time_left, 0.0,
+		"the countdown floors at zero instead of running onto the sentinel")
 	check(inst.is_expired, "an elapsed timed effect counts as expired")
 
 	start_case("permanence is still distinguishable")
