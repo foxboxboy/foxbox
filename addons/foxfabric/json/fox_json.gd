@@ -27,46 +27,46 @@ extends FoxRefCounted
 ## [br][br]
 ## There is no [code]decode[/code]. Once a value is [code][2, 0, -3][/code] nothing can say
 ## whether it was a [Vector3] or three numbers, so decoding happens a field at a time through the
-## [code]to_[/code] methods, and the code asking for the field is what records its type.
+## [code]array_to_[/code] methods, and the code asking for the field is what records its type.
 ## [br][br]
-## Every [code]to_[/code] method takes a default and returns it when the value is missing or the
-## wrong shape. These files come from elsewhere, so a malformed one should cost a prop rather
-## than the world holding it.
+## Every [code]array_to_[/code] method takes a default and returns it when the value is missing
+## or the wrong shape. These files come from elsewhere, so a malformed one should cost a prop
+## rather than the world holding it.
 
 
-## Rounding applied by every [code]from_[/code] method.
+## Rounding applied by every [code]_to_array[/code] method.
 const PRECISION: float = 0.001
 
 
 #region Encoding
 
 ## Returns [param value] as [code][x, y][/code].
-static func from_vector2(value: Vector2) -> Array:
+static func vector2_to_array(value: Vector2) -> Array:
 	return [_snap(value.x), _snap(value.y)]
 
 
 ## Returns [param value] as [code][x, y, z][/code].
-static func from_vector3(value: Vector3) -> Array:
+static func vector3_to_array(value: Vector3) -> Array:
 	return [_snap(value.x), _snap(value.y), _snap(value.z)]
 
 
 ## Returns [param value] as [code][r, g, b, a][/code].
-static func from_color(value: Color) -> Array:
+static func color_to_array(value: Color) -> Array:
 	return [_snap(value.r), _snap(value.g), _snap(value.b), _snap(value.a)]
 
 
 ## Returns [param value] as [code][x, y, z, w][/code].
-static func from_quaternion(value: Quaternion) -> Array:
+static func quaternion_to_array(value: Quaternion) -> Array:
 	return [_snap(value.x), _snap(value.y), _snap(value.z), _snap(value.w)]
 
 
 ## Returns [param value] as [code][a, b, c, d][/code].
-static func from_plane(value: Plane) -> Array:
+static func plane_to_array(value: Plane) -> Array:
 	return [_snap(value.x), _snap(value.y), _snap(value.z), _snap(value.d)]
 
 
 ## Returns [param value] as [code][x, y, width, height][/code].
-static func from_rect2(value: Rect2) -> Array:
+static func rect2_to_array(value: Rect2) -> Array:
 	return [
 		_snap(value.position.x),
 		_snap(value.position.y),
@@ -76,27 +76,27 @@ static func from_rect2(value: Rect2) -> Array:
 
 
 ## Returns [param value] as [code][position, size][/code].
-static func from_aabb(value: AABB) -> Array:
-	return [from_vector3(value.position), from_vector3(value.size)]
+static func aabb_to_array(value: AABB) -> Array:
+	return [vector3_to_array(value.position), vector3_to_array(value.size)]
 
 
 ## Returns [param value] as its three axes.
-static func from_basis(value: Basis) -> Array:
-	return [from_vector3(value.x), from_vector3(value.y), from_vector3(value.z)]
+static func basis_to_array(value: Basis) -> Array:
+	return [vector3_to_array(value.x), vector3_to_array(value.y), vector3_to_array(value.z)]
 
 
 ## Returns [param value] as its two axes and its origin.
-static func from_transform_2d(value: Transform2D) -> Array:
-	return [from_vector2(value.x), from_vector2(value.y), from_vector2(value.origin)]
+static func transform_2d_to_array(value: Transform2D) -> Array:
+	return [vector2_to_array(value.x), vector2_to_array(value.y), vector2_to_array(value.origin)]
 
 
 ## Returns [param value] as its three axes and its origin.
-static func from_transform_3d(value: Transform3D) -> Array:
+static func transform_3d_to_array(value: Transform3D) -> Array:
 	return [
-		from_vector3(value.basis.x),
-		from_vector3(value.basis.y),
-		from_vector3(value.basis.z),
-		from_vector3(value.origin),
+		vector3_to_array(value.basis.x),
+		vector3_to_array(value.basis.y),
+		vector3_to_array(value.basis.z),
+		vector3_to_array(value.origin),
 	]
 
 #endregion
@@ -105,77 +105,81 @@ static func from_transform_3d(value: Transform3D) -> Array:
 #region Decoding
 
 ## Returns the [Vector2] in [param value], or [param default].
-static func to_vector2(value: Variant, default: Vector2 = Vector2.ZERO) -> Vector2:
+static func array_to_vector2(value: Variant, default: Vector2 = Vector2.ZERO) -> Vector2:
 	if not _is_number_array(value, 2):
 		return default
 	return Vector2(value[0], value[1])
 
 
 ## Returns the [Vector3] in [param value], or [param default].
-static func to_vector3(value: Variant, default: Vector3 = Vector3.ZERO) -> Vector3:
+static func array_to_vector3(value: Variant, default: Vector3 = Vector3.ZERO) -> Vector3:
 	if not _is_number_array(value, 3):
 		return default
 	return Vector3(value[0], value[1], value[2])
 
 
 ## Returns the [Color] in [param value], or [param default].
-static func to_color(value: Variant, default: Color = Color.WHITE) -> Color:
+static func array_to_color(value: Variant, default: Color = Color.WHITE) -> Color:
 	if not _is_number_array(value, 4):
 		return default
 	return Color(value[0], value[1], value[2], value[3])
 
 
 ## Returns the [Quaternion] in [param value], or [param default].
-static func to_quaternion(value: Variant, default: Quaternion = Quaternion.IDENTITY) -> Quaternion:
+static func array_to_quaternion(value: Variant, default: Quaternion = Quaternion.IDENTITY) -> Quaternion:
 	if not _is_number_array(value, 4):
 		return default
 	return Quaternion(value[0], value[1], value[2], value[3])
 
 
 ## Returns the [Plane] in [param value], or [param default].
-static func to_plane(value: Variant, default: Plane = Plane()) -> Plane:
+static func array_to_plane(value: Variant, default: Plane = Plane()) -> Plane:
 	if not _is_number_array(value, 4):
 		return default
 	return Plane(value[0], value[1], value[2], value[3])
 
 
 ## Returns the [Rect2] in [param value], or [param default].
-static func to_rect2(value: Variant, default: Rect2 = Rect2()) -> Rect2:
+static func array_to_rect2(value: Variant, default: Rect2 = Rect2()) -> Rect2:
 	if not _is_number_array(value, 4):
 		return default
 	return Rect2(value[0], value[1], value[2], value[3])
 
 
 ## Returns the [AABB] in [param value], or [param default].
-static func to_aabb(value: Variant, default: AABB = AABB()) -> AABB:
+static func array_to_aabb(value: Variant, default: AABB = AABB()) -> AABB:
 	if not _is_vector_array(value, 2, 3):
 		return default
-	return AABB(to_vector3(value[0]), to_vector3(value[1]))
+	return AABB(array_to_vector3(value[0]), array_to_vector3(value[1]))
 
 
 ## Returns the [Basis] in [param value], or [param default].
-static func to_basis(value: Variant, default: Basis = Basis.IDENTITY) -> Basis:
+static func array_to_basis(value: Variant, default: Basis = Basis.IDENTITY) -> Basis:
 	if not _is_vector_array(value, 3, 3):
 		return default
-	return Basis(to_vector3(value[0]), to_vector3(value[1]), to_vector3(value[2]))
+	return Basis(array_to_vector3(value[0]), array_to_vector3(value[1]), array_to_vector3(value[2]))
 
 
 ## Returns the [Transform2D] in [param value], or [param default].
-static func to_transform_2d(value: Variant, default: Transform2D = Transform2D.IDENTITY) -> Transform2D:
+static func array_to_transform_2d(value: Variant, default: Transform2D = Transform2D.IDENTITY) -> Transform2D:
 	if not _is_vector_array(value, 3, 2):
 		return default
-	return Transform2D(to_vector2(value[0]), to_vector2(value[1]), to_vector2(value[2]))
+	return Transform2D(
+		array_to_vector2(value[0]),
+		array_to_vector2(value[1]),
+		array_to_vector2(value[2]),
+	)
 
 
 ## Returns the [Transform3D] in [param value], or [param default].
-static func to_transform_3d(value: Variant, default: Transform3D = Transform3D.IDENTITY) -> Transform3D:
+static func array_to_transform_3d(value: Variant, default: Transform3D = Transform3D.IDENTITY) -> Transform3D:
 	if not _is_vector_array(value, 4, 3):
 		return default
 	return Transform3D(
-		to_vector3(value[0]),
-		to_vector3(value[1]),
-		to_vector3(value[2]),
-		to_vector3(value[3]),
+		array_to_vector3(value[0]),
+		array_to_vector3(value[1]),
+		array_to_vector3(value[2]),
+		array_to_vector3(value[3]),
 	)
 
 #endregion

@@ -38,9 +38,9 @@ Every component is a float, so a whole number carries its ``.0`` into the file. 
 
 Floats round to :ref:`PRECISION<class_FoxJson_constant_PRECISION>` on the way out, which is what keeps a file worth opening. 
 
-There is no ``decode``. Once a value is ``[2, 0, -3]`` nothing can say whether it was a :ref:`Vector3<class_Vector3>` or three numbers, so decoding happens a field at a time through the ``to_`` methods, and the code asking for the field is what records its type. 
+There is no ``decode``. Once a value is ``[2, 0, -3]`` nothing can say whether it was a :ref:`Vector3<class_Vector3>` or three numbers, so decoding happens a field at a time through the ``array_to_`` methods, and the code asking for the field is what records its type. 
 
-Every ``to_`` method takes a default and returns it when the value is missing or the wrong shape. These files come from elsewhere, so a malformed one should cost a prop rather than the world holding it.
+Every ``array_to_`` method takes a default and returns it when the value is missing or the wrong shape. These files come from elsewhere, so a malformed one should cost a prop rather than the world holding it.
 
 .. rst-class:: classref-reftable-group
 
@@ -50,47 +50,47 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_vector2<class_FoxJson_method_from_vector2>`\ (\ value\: :ref:`Vector2<class_Vector2>`\ ) |static|                                                                                                          |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_vector3<class_FoxJson_method_from_vector3>`\ (\ value\: :ref:`Vector3<class_Vector3>`\ ) |static|                                                                                                          |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_color<class_FoxJson_method_from_color>`\ (\ value\: :ref:`Color<class_Color>`\ ) |static|                                                                                                                  |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_quaternion<class_FoxJson_method_from_quaternion>`\ (\ value\: :ref:`Quaternion<class_Quaternion>`\ ) |static|                                                                                              |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_plane<class_FoxJson_method_from_plane>`\ (\ value\: :ref:`Plane<class_Plane>`\ ) |static|                                                                                                                  |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_rect2<class_FoxJson_method_from_rect2>`\ (\ value\: :ref:`Rect2<class_Rect2>`\ ) |static|                                                                                                                  |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_aabb<class_FoxJson_method_from_aabb>`\ (\ value\: :ref:`AABB<class_AABB>`\ ) |static|                                                                                                                      |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_basis<class_FoxJson_method_from_basis>`\ (\ value\: :ref:`Basis<class_Basis>`\ ) |static|                                                                                                                  |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_transform_2d<class_FoxJson_method_from_transform_2d>`\ (\ value\: :ref:`Transform2D<class_Transform2D>`\ ) |static|                                                                                        |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Array<class_Array>`             | :ref:`from_transform_3d<class_FoxJson_method_from_transform_3d>`\ (\ value\: :ref:`Transform3D<class_Transform3D>`\ ) |static|                                                                                        |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Vector2<class_Vector2>`         | :ref:`to_vector2<class_FoxJson_method_to_vector2>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector2<class_Vector2>` = Vector2(0, 0)\ ) |static|                                                     |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Vector3<class_Vector3>`         | :ref:`to_vector3<class_FoxJson_method_to_vector3>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector3<class_Vector3>` = Vector3(0, 0, 0)\ ) |static|                                                  |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Color<class_Color>`             | :ref:`to_color<class_FoxJson_method_to_color>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Color<class_Color>` = Color(1, 1, 1, 1)\ ) |static|                                                         |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Quaternion<class_Quaternion>`   | :ref:`to_quaternion<class_FoxJson_method_to_quaternion>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Quaternion<class_Quaternion>` = Quaternion(0, 0, 0, 1)\ ) |static|                                |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Plane<class_Plane>`             | :ref:`to_plane<class_FoxJson_method_to_plane>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Plane<class_Plane>` = Plane(0, 0, 0, 0)\ ) |static|                                                         |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Rect2<class_Rect2>`             | :ref:`to_rect2<class_FoxJson_method_to_rect2>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Rect2<class_Rect2>` = Rect2(0, 0, 0, 0)\ ) |static|                                                         |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`AABB<class_AABB>`               | :ref:`to_aabb<class_FoxJson_method_to_aabb>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`AABB<class_AABB>` = AABB(0, 0, 0, 0, 0, 0)\ ) |static|                                                        |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Basis<class_Basis>`             | :ref:`to_basis<class_FoxJson_method_to_basis>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Basis<class_Basis>` = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)\ ) |static|                                          |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Transform2D<class_Transform2D>` | :ref:`to_transform_2d<class_FoxJson_method_to_transform_2d>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform2D<class_Transform2D>` = Transform2D(1, 0, 0, 1, 0, 0)\ ) |static|                   |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`Transform3D<class_Transform3D>` | :ref:`to_transform_3d<class_FoxJson_method_to_transform_3d>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| |
-   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`vector2_to_array<class_FoxJson_method_vector2_to_array>`\ (\ value\: :ref:`Vector2<class_Vector2>`\ ) |static|                                                                                                              |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`vector3_to_array<class_FoxJson_method_vector3_to_array>`\ (\ value\: :ref:`Vector3<class_Vector3>`\ ) |static|                                                                                                              |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`color_to_array<class_FoxJson_method_color_to_array>`\ (\ value\: :ref:`Color<class_Color>`\ ) |static|                                                                                                                      |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`quaternion_to_array<class_FoxJson_method_quaternion_to_array>`\ (\ value\: :ref:`Quaternion<class_Quaternion>`\ ) |static|                                                                                                  |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`plane_to_array<class_FoxJson_method_plane_to_array>`\ (\ value\: :ref:`Plane<class_Plane>`\ ) |static|                                                                                                                      |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`rect2_to_array<class_FoxJson_method_rect2_to_array>`\ (\ value\: :ref:`Rect2<class_Rect2>`\ ) |static|                                                                                                                      |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`aabb_to_array<class_FoxJson_method_aabb_to_array>`\ (\ value\: :ref:`AABB<class_AABB>`\ ) |static|                                                                                                                          |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`basis_to_array<class_FoxJson_method_basis_to_array>`\ (\ value\: :ref:`Basis<class_Basis>`\ ) |static|                                                                                                                      |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`transform_2d_to_array<class_FoxJson_method_transform_2d_to_array>`\ (\ value\: :ref:`Transform2D<class_Transform2D>`\ ) |static|                                                                                            |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`             | :ref:`transform_3d_to_array<class_FoxJson_method_transform_3d_to_array>`\ (\ value\: :ref:`Transform3D<class_Transform3D>`\ ) |static|                                                                                            |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Vector2<class_Vector2>`         | :ref:`array_to_vector2<class_FoxJson_method_array_to_vector2>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector2<class_Vector2>` = Vector2(0, 0)\ ) |static|                                                     |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Vector3<class_Vector3>`         | :ref:`array_to_vector3<class_FoxJson_method_array_to_vector3>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector3<class_Vector3>` = Vector3(0, 0, 0)\ ) |static|                                                  |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Color<class_Color>`             | :ref:`array_to_color<class_FoxJson_method_array_to_color>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Color<class_Color>` = Color(1, 1, 1, 1)\ ) |static|                                                         |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Quaternion<class_Quaternion>`   | :ref:`array_to_quaternion<class_FoxJson_method_array_to_quaternion>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Quaternion<class_Quaternion>` = Quaternion(0, 0, 0, 1)\ ) |static|                                |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Plane<class_Plane>`             | :ref:`array_to_plane<class_FoxJson_method_array_to_plane>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Plane<class_Plane>` = Plane(0, 0, 0, 0)\ ) |static|                                                         |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Rect2<class_Rect2>`             | :ref:`array_to_rect2<class_FoxJson_method_array_to_rect2>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Rect2<class_Rect2>` = Rect2(0, 0, 0, 0)\ ) |static|                                                         |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`AABB<class_AABB>`               | :ref:`array_to_aabb<class_FoxJson_method_array_to_aabb>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`AABB<class_AABB>` = AABB(0, 0, 0, 0, 0, 0)\ ) |static|                                                        |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Basis<class_Basis>`             | :ref:`array_to_basis<class_FoxJson_method_array_to_basis>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Basis<class_Basis>` = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)\ ) |static|                                          |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Transform2D<class_Transform2D>` | :ref:`array_to_transform_2d<class_FoxJson_method_array_to_transform_2d>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform2D<class_Transform2D>` = Transform2D(1, 0, 0, 1, 0, 0)\ ) |static|                   |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Transform3D<class_Transform3D>` | :ref:`array_to_transform_3d<class_FoxJson_method_array_to_transform_3d>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -107,7 +107,7 @@ Constants
 
 **PRECISION** = ``0.001`` :ref:`🔗<class_FoxJson_constant_PRECISION>`
 
-Rounding applied by every ``from_`` method.
+Rounding applied by every ``_to_array`` method.
 
 .. rst-class:: classref-section-separator
 
@@ -118,11 +118,11 @@ Rounding applied by every ``from_`` method.
 Method Descriptions
 -------------------
 
-.. _class_FoxJson_method_from_vector2:
+.. _class_FoxJson_method_vector2_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_vector2**\ (\ value\: :ref:`Vector2<class_Vector2>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_vector2>`
+:ref:`Array<class_Array>` **vector2_to_array**\ (\ value\: :ref:`Vector2<class_Vector2>`\ ) |static| :ref:`🔗<class_FoxJson_method_vector2_to_array>`
 
 Returns ``value`` as ``[x, y]``.
 
@@ -130,11 +130,11 @@ Returns ``value`` as ``[x, y]``.
 
 ----
 
-.. _class_FoxJson_method_from_vector3:
+.. _class_FoxJson_method_vector3_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_vector3**\ (\ value\: :ref:`Vector3<class_Vector3>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_vector3>`
+:ref:`Array<class_Array>` **vector3_to_array**\ (\ value\: :ref:`Vector3<class_Vector3>`\ ) |static| :ref:`🔗<class_FoxJson_method_vector3_to_array>`
 
 Returns ``value`` as ``[x, y, z]``.
 
@@ -142,11 +142,11 @@ Returns ``value`` as ``[x, y, z]``.
 
 ----
 
-.. _class_FoxJson_method_from_color:
+.. _class_FoxJson_method_color_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_color**\ (\ value\: :ref:`Color<class_Color>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_color>`
+:ref:`Array<class_Array>` **color_to_array**\ (\ value\: :ref:`Color<class_Color>`\ ) |static| :ref:`🔗<class_FoxJson_method_color_to_array>`
 
 Returns ``value`` as ``[r, g, b, a]``.
 
@@ -154,11 +154,11 @@ Returns ``value`` as ``[r, g, b, a]``.
 
 ----
 
-.. _class_FoxJson_method_from_quaternion:
+.. _class_FoxJson_method_quaternion_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_quaternion**\ (\ value\: :ref:`Quaternion<class_Quaternion>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_quaternion>`
+:ref:`Array<class_Array>` **quaternion_to_array**\ (\ value\: :ref:`Quaternion<class_Quaternion>`\ ) |static| :ref:`🔗<class_FoxJson_method_quaternion_to_array>`
 
 Returns ``value`` as ``[x, y, z, w]``.
 
@@ -166,11 +166,11 @@ Returns ``value`` as ``[x, y, z, w]``.
 
 ----
 
-.. _class_FoxJson_method_from_plane:
+.. _class_FoxJson_method_plane_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_plane**\ (\ value\: :ref:`Plane<class_Plane>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_plane>`
+:ref:`Array<class_Array>` **plane_to_array**\ (\ value\: :ref:`Plane<class_Plane>`\ ) |static| :ref:`🔗<class_FoxJson_method_plane_to_array>`
 
 Returns ``value`` as ``[a, b, c, d]``.
 
@@ -178,11 +178,11 @@ Returns ``value`` as ``[a, b, c, d]``.
 
 ----
 
-.. _class_FoxJson_method_from_rect2:
+.. _class_FoxJson_method_rect2_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_rect2**\ (\ value\: :ref:`Rect2<class_Rect2>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_rect2>`
+:ref:`Array<class_Array>` **rect2_to_array**\ (\ value\: :ref:`Rect2<class_Rect2>`\ ) |static| :ref:`🔗<class_FoxJson_method_rect2_to_array>`
 
 Returns ``value`` as ``[x, y, width, height]``.
 
@@ -190,11 +190,11 @@ Returns ``value`` as ``[x, y, width, height]``.
 
 ----
 
-.. _class_FoxJson_method_from_aabb:
+.. _class_FoxJson_method_aabb_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_aabb**\ (\ value\: :ref:`AABB<class_AABB>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_aabb>`
+:ref:`Array<class_Array>` **aabb_to_array**\ (\ value\: :ref:`AABB<class_AABB>`\ ) |static| :ref:`🔗<class_FoxJson_method_aabb_to_array>`
 
 Returns ``value`` as ``[position, size]``.
 
@@ -202,11 +202,11 @@ Returns ``value`` as ``[position, size]``.
 
 ----
 
-.. _class_FoxJson_method_from_basis:
+.. _class_FoxJson_method_basis_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_basis**\ (\ value\: :ref:`Basis<class_Basis>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_basis>`
+:ref:`Array<class_Array>` **basis_to_array**\ (\ value\: :ref:`Basis<class_Basis>`\ ) |static| :ref:`🔗<class_FoxJson_method_basis_to_array>`
 
 Returns ``value`` as its three axes.
 
@@ -214,11 +214,11 @@ Returns ``value`` as its three axes.
 
 ----
 
-.. _class_FoxJson_method_from_transform_2d:
+.. _class_FoxJson_method_transform_2d_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_transform_2d**\ (\ value\: :ref:`Transform2D<class_Transform2D>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_transform_2d>`
+:ref:`Array<class_Array>` **transform_2d_to_array**\ (\ value\: :ref:`Transform2D<class_Transform2D>`\ ) |static| :ref:`🔗<class_FoxJson_method_transform_2d_to_array>`
 
 Returns ``value`` as its two axes and its origin.
 
@@ -226,11 +226,11 @@ Returns ``value`` as its two axes and its origin.
 
 ----
 
-.. _class_FoxJson_method_from_transform_3d:
+.. _class_FoxJson_method_transform_3d_to_array:
 
 .. rst-class:: classref-method
 
-:ref:`Array<class_Array>` **from_transform_3d**\ (\ value\: :ref:`Transform3D<class_Transform3D>`\ ) |static| :ref:`🔗<class_FoxJson_method_from_transform_3d>`
+:ref:`Array<class_Array>` **transform_3d_to_array**\ (\ value\: :ref:`Transform3D<class_Transform3D>`\ ) |static| :ref:`🔗<class_FoxJson_method_transform_3d_to_array>`
 
 Returns ``value`` as its three axes and its origin.
 
@@ -238,11 +238,11 @@ Returns ``value`` as its three axes and its origin.
 
 ----
 
-.. _class_FoxJson_method_to_vector2:
+.. _class_FoxJson_method_array_to_vector2:
 
 .. rst-class:: classref-method
 
-:ref:`Vector2<class_Vector2>` **to_vector2**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector2<class_Vector2>` = Vector2(0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_vector2>`
+:ref:`Vector2<class_Vector2>` **array_to_vector2**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector2<class_Vector2>` = Vector2(0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_vector2>`
 
 Returns the :ref:`Vector2<class_Vector2>` in ``value``, or ``default``.
 
@@ -250,11 +250,11 @@ Returns the :ref:`Vector2<class_Vector2>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_vector3:
+.. _class_FoxJson_method_array_to_vector3:
 
 .. rst-class:: classref-method
 
-:ref:`Vector3<class_Vector3>` **to_vector3**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector3<class_Vector3>` = Vector3(0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_vector3>`
+:ref:`Vector3<class_Vector3>` **array_to_vector3**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Vector3<class_Vector3>` = Vector3(0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_vector3>`
 
 Returns the :ref:`Vector3<class_Vector3>` in ``value``, or ``default``.
 
@@ -262,11 +262,11 @@ Returns the :ref:`Vector3<class_Vector3>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_color:
+.. _class_FoxJson_method_array_to_color:
 
 .. rst-class:: classref-method
 
-:ref:`Color<class_Color>` **to_color**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Color<class_Color>` = Color(1, 1, 1, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_to_color>`
+:ref:`Color<class_Color>` **array_to_color**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Color<class_Color>` = Color(1, 1, 1, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_color>`
 
 Returns the :ref:`Color<class_Color>` in ``value``, or ``default``.
 
@@ -274,11 +274,11 @@ Returns the :ref:`Color<class_Color>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_quaternion:
+.. _class_FoxJson_method_array_to_quaternion:
 
 .. rst-class:: classref-method
 
-:ref:`Quaternion<class_Quaternion>` **to_quaternion**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Quaternion<class_Quaternion>` = Quaternion(0, 0, 0, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_to_quaternion>`
+:ref:`Quaternion<class_Quaternion>` **array_to_quaternion**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Quaternion<class_Quaternion>` = Quaternion(0, 0, 0, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_quaternion>`
 
 Returns the :ref:`Quaternion<class_Quaternion>` in ``value``, or ``default``.
 
@@ -286,11 +286,11 @@ Returns the :ref:`Quaternion<class_Quaternion>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_plane:
+.. _class_FoxJson_method_array_to_plane:
 
 .. rst-class:: classref-method
 
-:ref:`Plane<class_Plane>` **to_plane**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Plane<class_Plane>` = Plane(0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_plane>`
+:ref:`Plane<class_Plane>` **array_to_plane**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Plane<class_Plane>` = Plane(0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_plane>`
 
 Returns the :ref:`Plane<class_Plane>` in ``value``, or ``default``.
 
@@ -298,11 +298,11 @@ Returns the :ref:`Plane<class_Plane>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_rect2:
+.. _class_FoxJson_method_array_to_rect2:
 
 .. rst-class:: classref-method
 
-:ref:`Rect2<class_Rect2>` **to_rect2**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Rect2<class_Rect2>` = Rect2(0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_rect2>`
+:ref:`Rect2<class_Rect2>` **array_to_rect2**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Rect2<class_Rect2>` = Rect2(0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_rect2>`
 
 Returns the :ref:`Rect2<class_Rect2>` in ``value``, or ``default``.
 
@@ -310,11 +310,11 @@ Returns the :ref:`Rect2<class_Rect2>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_aabb:
+.. _class_FoxJson_method_array_to_aabb:
 
 .. rst-class:: classref-method
 
-:ref:`AABB<class_AABB>` **to_aabb**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`AABB<class_AABB>` = AABB(0, 0, 0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_aabb>`
+:ref:`AABB<class_AABB>` **array_to_aabb**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`AABB<class_AABB>` = AABB(0, 0, 0, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_aabb>`
 
 Returns the :ref:`AABB<class_AABB>` in ``value``, or ``default``.
 
@@ -322,11 +322,11 @@ Returns the :ref:`AABB<class_AABB>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_basis:
+.. _class_FoxJson_method_array_to_basis:
 
 .. rst-class:: classref-method
 
-:ref:`Basis<class_Basis>` **to_basis**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Basis<class_Basis>` = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_to_basis>`
+:ref:`Basis<class_Basis>` **array_to_basis**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Basis<class_Basis>` = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_basis>`
 
 Returns the :ref:`Basis<class_Basis>` in ``value``, or ``default``.
 
@@ -334,11 +334,11 @@ Returns the :ref:`Basis<class_Basis>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_transform_2d:
+.. _class_FoxJson_method_array_to_transform_2d:
 
 .. rst-class:: classref-method
 
-:ref:`Transform2D<class_Transform2D>` **to_transform_2d**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform2D<class_Transform2D>` = Transform2D(1, 0, 0, 1, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_transform_2d>`
+:ref:`Transform2D<class_Transform2D>` **array_to_transform_2d**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform2D<class_Transform2D>` = Transform2D(1, 0, 0, 1, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_transform_2d>`
 
 Returns the :ref:`Transform2D<class_Transform2D>` in ``value``, or ``default``.
 
@@ -346,11 +346,11 @@ Returns the :ref:`Transform2D<class_Transform2D>` in ``value``, or ``default``.
 
 ----
 
-.. _class_FoxJson_method_to_transform_3d:
+.. _class_FoxJson_method_array_to_transform_3d:
 
 .. rst-class:: classref-method
 
-:ref:`Transform3D<class_Transform3D>` **to_transform_3d**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_to_transform_3d>`
+:ref:`Transform3D<class_Transform3D>` **array_to_transform_3d**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_transform_3d>`
 
 Returns the :ref:`Transform3D<class_Transform3D>` in ``value``, or ``default``.
 
