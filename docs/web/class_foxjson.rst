@@ -278,7 +278,9 @@ Returns the :ref:`Vector3<class_Vector3>` in ``value``, or ``default``.
 
 :ref:`Color<class_Color>` **array_to_color**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Color<class_Color>` = Color(1, 1, 1, 1)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_color>`
 
-Returns the :ref:`Color<class_Color>` in ``value``, or ``default``.
+Returns the :ref:`Color<class_Color>` in ``value``, or ``default``. 
+
+Takes three components as well as four, so a colour written by hand without an alpha comes back opaque instead of falling back.
 
 .. rst-class:: classref-item-separator
 
@@ -380,7 +382,7 @@ Godot writes an unsupported value as the text it prints in the debugger, so a :r
 
 ::
 
-    var problem := FoxJson.find_unsupported(contents)
+    var problem: String = FoxJson.find_unsupported(contents)
     if not problem.is_empty():
         push_error(problem)
     # props/0/transform holds a Transform3D, which JSON cannot store

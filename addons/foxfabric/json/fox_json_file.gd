@@ -27,12 +27,22 @@ extends FoxRefCounted
 ## with [FoxJson].
 
 
+
+
+#region Signals
+
 ## Emitted when [method read] opened a file from an older version and carried it forward.
 signal migrated(from_version: int)
 
 ## Emitted when [method read] could not use the file and fell back to the backup.
 signal recovered()
 
+#endregion
+
+
+
+
+#region Variables
 
 ## Folder the previous copy is kept in, beside the file itself.
 const BACKUP_FOLDER: String = "backups"
@@ -44,14 +54,12 @@ const VERSION_KEY: String = "version"
 ## Suffix of the file [method write] builds before moving it into place.
 const TEMP_SUFFIX: String = ".tmp"
 
-
 ## The contents of the last successful [method read].
 ## [br][br]
 ## Every number in it is a [float], because JSON has one number type. A count written as
 ## [code]3[/code] reads back as [code]3.0[/code], and a dictionary read back does not compare equal
 ## to the one written. Assigning into a typed [int] converts it.
 var data: Dictionary
-
 
 var _error_code: Error = OK
 var _error_message: String = ""
@@ -61,6 +69,10 @@ var _error_line: int = 0
 # that file into the backup slot: it would overwrite the good copy the read fell back to, and a
 # second crash would leave nothing.
 var _broken_path: String = ""
+
+#endregion
+
+
 
 
 #region Reading and writing
@@ -85,9 +97,9 @@ func read(path: String) -> Error:
 
 	# The backup is a second chance, not a better diagnosis. Whatever went wrong with the file that
 	# was asked for is what the caller needs to hear about.
-	var first_code := _error_code
-	var first_message := _error_message
-	var first_line := _error_line
+	var first_code: Error = _error_code
+	var first_message: String = _error_message
+	var first_line: int = _error_line
 
 	var fallback: Variant = _load(get_backup_path(path))
 	if fallback == null:
@@ -113,32 +125,32 @@ func write(path: String, contents: Dictionary) -> Error:
 		return _fail(ERR_INVALID_DATA, '"%s" is stamped by the file and cannot be written into it'
 			% VERSION_KEY)
 
-	var problem := FoxJson.find_unsupported(contents)
+	var problem: String = FoxJson.find_unsupported(contents)
 	if not problem.is_empty():
 		return _fail(ERR_INVALID_DATA, problem)
 
-	var payload := contents.duplicate()
+	var payload: Dictionary = contents.duplicate()
 	payload[VERSION_KEY] = _get_version()
 
-	var folder := path.get_base_dir()
+	var folder: String = path.get_base_dir()
 	if not folder.is_empty() and not DirAccess.dir_exists_absolute(folder):
-		var made := DirAccess.make_dir_recursive_absolute(folder)
+		var made: Error = DirAccess.make_dir_recursive_absolute(folder)
 		if made != OK:
 			return _fail(made, "%s could not be created" % folder)
 
-	var temp := path + TEMP_SUFFIX
-	var file := FileAccess.open(temp, FileAccess.WRITE)
+	var temp: String = path + TEMP_SUFFIX
+	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
 		return _fail(FileAccess.get_open_error(), "%s could not be opened for writing" % temp)
 	file.store_string(JSON.stringify(payload, "\t"))
 	file.close()
 
-	var rotated := _rotate(path)
+	var rotated: Error = _rotate(path)
 	if rotated != OK:
 		DirAccess.remove_absolute(temp)
 		return rotated
 
-	var moved := DirAccess.rename_absolute(temp, path)
+	var moved: Error = DirAccess.rename_absolute(temp, path)
 	if moved != OK:
 		return _fail(moved, "%s could not be moved into place" % temp)
 
@@ -151,6 +163,8 @@ static func get_backup_path(path: String) -> String:
 	return path.get_base_dir().path_join(BACKUP_FOLDER).path_join(path.get_file())
 
 #endregion
+
+
 
 
 #region Errors
@@ -171,27 +185,9 @@ func get_error_line() -> int:
 #endregion
 
 
-#region Virtual Methods
-
-## Returns the format version this subclass writes. Raise it whenever the shape of the file
-## changes, and carry older files forward from the version below it.
-@abstract
-func _get_version() -> int
 
 
-## Returns [param contents] carried forward from [param from_version] to the version above it.
-## [br][br]
-## Called once per step, so a file at 1 opened by a subclass at 4 reaches
-## [code skip-lint]_migrate[/code] three times, with [param from_version] 1, then 2, then 3. Each
-## case handles one step and the earlier ones never need revisiting.
-## [br][br]
-## The file on disk is untouched. Only what [method read] hands back changes.
-@warning_ignore("unused_parameter")
-func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
-	return contents
-
-#endregion
-
+#region Private
 
 # Returns the parsed object, or null with the error recorded. Null covers every way this fails,
 # because an empty file and a missing one both leave nothing to hand back.
@@ -200,14 +196,14 @@ func _load(path: String) -> Variant:
 		_fail(ERR_FILE_NOT_FOUND, "%s is not there" % path)
 		return null
 
-	var file := FileAccess.open(path, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		_fail(FileAccess.get_open_error(), "%s could not be opened" % path)
 		return null
-	var text := file.get_as_text()
+	var text: String = file.get_as_text()
 	file.close()
 
-	var json := JSON.new()
+	var json: JSON = JSON.new()
 	if json.parse(text) != OK:
 		# JSON counts lines from zero and returns zero when it succeeded, so the first line and no
 		# error are the same number. Counting from one keeps zero free to mean nothing failed.
@@ -235,8 +231,8 @@ func _adopt(contents: Dictionary) -> Error:
 			VERSION_KEY, type_string(typeof(stamp)),
 		])
 
-	var from_version := int(stamp)
-	var current := _get_version()
+	var from_version: int = stamp
+	var current: int = _get_version()
 	if from_version > current:
 		return _fail(ERR_FILE_UNRECOGNIZED, "The file is version %d, and this reads up to %d" % [
 			from_version, current,
@@ -246,7 +242,7 @@ func _adopt(contents: Dictionary) -> Error:
 	contents.erase(VERSION_KEY)
 
 	if from_version < current:
-		for step in range(from_version, current):
+		for step: int in range(from_version, current):
 			contents = _migrate(contents, step)
 
 	data = contents
@@ -262,19 +258,19 @@ func _rotate(path: String) -> Error:
 		return OK
 
 	if path == _broken_path:
-		var removed := DirAccess.remove_absolute(path)
+		var removed: Error = DirAccess.remove_absolute(path)
 		if removed != OK:
 			return _fail(removed, "%s could not be removed" % path)
 		return OK
 
-	var backup := get_backup_path(path)
-	var folder := backup.get_base_dir()
+	var backup: String = get_backup_path(path)
+	var folder: String = backup.get_base_dir()
 	if not DirAccess.dir_exists_absolute(folder):
-		var made := DirAccess.make_dir_recursive_absolute(folder)
+		var made: Error = DirAccess.make_dir_recursive_absolute(folder)
 		if made != OK:
 			return _fail(made, "%s could not be created" % folder)
 
-	var moved := DirAccess.rename_absolute(path, backup)
+	var moved: Error = DirAccess.rename_absolute(path, backup)
 	if moved != OK:
 		return _fail(moved, "%s could not be moved to %s" % [path, backup])
 	return OK
@@ -290,3 +286,29 @@ func _fail(code: Error, message: String) -> Error:
 	_error_code = code
 	_error_message = message
 	return code
+
+#endregion
+
+
+
+
+#region Virtual Methods
+
+## Returns the format version this subclass writes. Raise it whenever the shape of the file
+## changes, and carry older files forward from the version below it.
+@abstract
+func _get_version() -> int
+
+
+## Returns [param contents] carried forward from [param from_version] to the version above it.
+## [br][br]
+## Called once per step, so a file at 1 opened by a subclass at 4 reaches
+## [code skip-lint]_migrate[/code] three times, with [param from_version] 1, then 2, then 3. Each
+## case handles one step and the earlier ones never need revisiting.
+## [br][br]
+## The file on disk is untouched. Only what [method read] hands back changes.
+@warning_ignore("unused_parameter")
+func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
+	return contents
+
+#endregion
