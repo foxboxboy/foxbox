@@ -31,7 +31,7 @@ The rest are listed with what they target.
 | `effect` | any | Buffs and debuffs that stack, expire, and tick on a timer. One resource describes the effect and the manager runs however many are active, so nothing is added to the scene tree per effect. |
 | `state_machine` | any | States as child nodes. The machine forwards process, physics, and input to whichever one is current, and states ask it to change. |
 | `shop` | any | Wallets, prices, and catalogues for buying things. A price decides for itself whether a wallet can pay, so currency can be coins, scrap, or a specific item. |
-| `json` | any | Reads and writes JSON that keeps its Godot types. For files people open: world files, level formats, moddable content. A file carries a version, so an older one still loads after the format moves. |
+| `json` | any | Reads and writes JSON that keeps its Godot types. A file carries a version, so an older one still loads after the format moves. |
 | `socket` | 2D and 3D | Named seats that a node can be attached to, one occupant each. Attaching reparents and snaps to the marker; detaching hands the node back. |
 | `damage` | 2D and 3D | Hit areas, raycasts, and shapecasts that deliver a payload to hurt areas. The payload is whatever you put in it, so the module never learns what damage means in your game. |
 | `interaction` | 2D and 3D | A raycast that tracks what it is pointing at, and areas that answer when you interact with them. Interacting emits a signal carrying whatever context you passed, so what it means is up to the receiver. |
