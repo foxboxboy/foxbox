@@ -10,9 +10,103 @@
 FoxJsonFile
 ===========
 
-**Inherits:** :ref:`FoxResource<class_FoxResource>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
+**Inherits:** :ref:`FoxRefCounted<class_FoxRefCounted>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
 A JSON file on disk, versioned and written whole or not at all.
+
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+**FoxJsonFile** is inherited once per file format. A subclass names the version it writes and says how to carry an older file forward.
+
+::
+
+    class_name FoxavasWorldFile
+    extends FoxJsonFile
+
+    func _get_version() -> int:
+        return 3
+
+Every write moves the previous file into a ``backups`` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. A read falls back to that copy and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>`. 
+
+Values go in as they will be stored. A write refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`.
+
+.. rst-class:: classref-reftable-group
+
+Properties
+----------
+
+.. table::
+   :widths: auto
+
+   +-------------------------------------+----------------------------------------------+
+   | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>` |
+   +-------------------------------------+----------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Signals
+-------
+
+.. _class_FoxJsonFile_signal_migrated:
+
+.. rst-class:: classref-signal
+
+**migrated**\ (\ from_version\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxJsonFile_signal_migrated>`
+
+Emitted when a read opened a file from an older version and carried it forward.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_signal_recovered:
+
+.. rst-class:: classref-signal
+
+**recovered**\ (\ ) :ref:`🔗<class_FoxJsonFile_signal_recovered>`
+
+Emitted when a read could not use the file and fell back to the backup.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Constants
+---------
+
+.. _class_FoxJsonFile_constant_BACKUP_FOLDER:
+
+.. rst-class:: classref-constant
+
+**BACKUP_FOLDER** = ``"backups"`` :ref:`🔗<class_FoxJsonFile_constant_BACKUP_FOLDER>`
+
+Folder the previous copy is kept in, beside the file itself.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Property Descriptions
+---------------------
+
+.. _class_FoxJsonFile_property_data:
+
+.. rst-class:: classref-property
+
+:ref:`Dictionary<class_Dictionary>` **data** :ref:`🔗<class_FoxJsonFile_property_data>`
+
+The contents of the last successful read.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
