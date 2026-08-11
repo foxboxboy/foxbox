@@ -136,21 +136,21 @@ class Row extends RefCounted:
 
 ## Every row of the read-out, in draw order. Each section builds its own heading, so the order of
 ## the sections is the only thing decided here.
-static func _rows(data: Dictionary, groups: Dictionary, rules: Dictionary, inherited: Array,
+static func _build_rows(data: Dictionary, groups: Dictionary, rules: Dictionary, inherited: Array,
 		flags: Dictionary, hierarchy: Dictionary) -> Array[Row]:
 	var rows: Array[Row] = []
-	rows.append_array(_data_rows(data))
-	rows.append_array(_group_rows(groups))
-	rows.append_array(_rule_rows(rules, inherited))
-	rows.append_array(_flag_rows(flags))
-	rows.append_array(_tree_rows(hierarchy))
+	rows.append_array(_build_data_rows(data))
+	rows.append_array(_build_group_rows(groups))
+	rows.append_array(_build_rule_rows(rules, inherited))
+	rows.append_array(_build_flag_rows(flags))
+	rows.append_array(_build_tree_rows(hierarchy))
 
 	return rows
 
 
 ## Each key with its value, already turned into text by the map that published it.
-static func _data_rows(data: Dictionary) -> Array[Row]:
-	var rows: Array[Row] = [Row.new(0, DATA, _counted(data.size(), "key", "keys"))]
+static func _build_data_rows(data: Dictionary) -> Array[Row]:
+	var rows: Array[Row] = [Row.new(0, DATA, _describe_count(data.size(), "key", "keys"))]
 	for key: Variant in data:
 		rows.append(Row.new(1, str(key), str(data[key])))
 
@@ -158,13 +158,13 @@ static func _data_rows(data: Dictionary) -> Array[Row]:
 
 
 ## Each group with the keys filed under it hanging off it.
-static func _group_rows(groups: Dictionary) -> Array[Row]:
-	var rows: Array[Row] = [Row.new(0, GROUPS, _counted(groups.size(), "group", "groups"))]
+static func _build_group_rows(groups: Dictionary) -> Array[Row]:
+	var rows: Array[Row] = [Row.new(0, GROUPS, _describe_count(groups.size(), "group", "groups"))]
 	for group: Variant in groups:
 		var members: Variant = groups[group]
 		var keys: Array = members if members is Array else []
 
-		rows.append(Row.new(1, str(group), _counted(keys.size(), "key", "keys")))
+		rows.append(Row.new(1, str(group), _describe_count(keys.size(), "key", "keys")))
 		for key: Variant in keys:
 			rows.append(Row.new(2, str(key)))
 
@@ -173,8 +173,8 @@ static func _group_rows(groups: Dictionary) -> Array[Row]:
 
 ## Each rule with the key it acts on. One that came down from a map above says so, since removing
 ## it here would not take it off the map it came from.
-static func _rule_rows(rules: Dictionary, inherited: Array) -> Array[Row]:
-	var rows: Array[Row] = [Row.new(0, RULES, _counted(rules.size(), "rule", "rules"))]
+static func _build_rule_rows(rules: Dictionary, inherited: Array) -> Array[Row]:
+	var rows: Array[Row] = [Row.new(0, RULES, _describe_count(rules.size(), "rule", "rules"))]
 	for id: Variant in rules:
 		var label: String = str(id)
 		if inherited.has(id):
@@ -187,8 +187,8 @@ static func _rule_rows(rules: Dictionary, inherited: Array) -> Array[Row]:
 
 ## Each flag with the number of stacks on it. Stacks are the whole point of a flag, so the count is
 ## never hidden, not even at one.
-static func _flag_rows(flags: Dictionary) -> Array[Row]:
-	var rows: Array[Row] = [Row.new(0, FLAGS, _counted(flags.size(), "flag", "flags"))]
+static func _build_flag_rows(flags: Dictionary) -> Array[Row]:
+	var rows: Array[Row] = [Row.new(0, FLAGS, _describe_count(flags.size(), "flag", "flags"))]
 	for flag: Variant in flags:
 		rows.append(Row.new(1, str(flag), "x%s" % flags[flag]))
 
@@ -197,7 +197,7 @@ static func _flag_rows(flags: Dictionary) -> Array[Row]:
 
 ## How much a heading is holding. It sits in the value column so a section folded away still says
 ## what is inside it, which is the reason to fold one in the first place.
-static func _counted(total: int, singular: String, plural: String) -> String:
+static func _describe_count(total: int, singular: String, plural: String) -> String:
 	if total == 0:
 		return "none"
 
@@ -209,11 +209,11 @@ static func _counted(total: int, singular: String, plural: String) -> String:
 
 ## The maps around this one, nested by the depth each reported, with the one being inspected marked.
 ## A map with nothing above or below it gets the heading and nothing under it.
-static func _tree_rows(hierarchy: Dictionary) -> Array[Row]:
+static func _build_tree_rows(hierarchy: Dictionary) -> Array[Row]:
 	# A map on its own reports itself and nothing else, and a chain of one is not a chain.
 	var maps: int = hierarchy.size() if hierarchy.size() > 1 else 0
 
-	var rows: Array[Row] = [Row.new(0, TREE, _counted(maps, "map", "maps"))]
+	var rows: Array[Row] = [Row.new(0, TREE, _describe_count(maps, "map", "maps"))]
 	if maps == 0:
 		return rows
 
@@ -227,7 +227,7 @@ static func _tree_rows(hierarchy: Dictionary) -> Array[Row]:
 
 		# Marked on the name rather than in the value column, where it would be the only thing in
 		# this section and read as a stray label.
-		var label: String = _path_tail(str(path))
+		var label: String = _shorten_path(str(path))
 		if depth == 0:
 			label += "   (this map)"
 
@@ -238,7 +238,7 @@ static func _tree_rows(hierarchy: Dictionary) -> Array[Row]:
 
 ## The last two segments of a node path. A map is often a child node carrying the same name on
 ## every entity, so the name on its own does not say which map is being named.
-static func _path_tail(path: String) -> String:
+static func _shorten_path(path: String) -> String:
 	var parts: PackedStringArray = path.split("/", false)
 	if parts.size() < 2:
 		return path
@@ -252,7 +252,7 @@ static func _path_tail(path: String) -> String:
 ## Compared row by row rather than by flattening each set into one string. Names come from the
 ## data keys a game chose, so any separator picked for that string is a separator a key is allowed
 ## to contain, and two unlike sets could then match.
-static func _same_shape(before: Array[Row], after: Array[Row]) -> bool:
+static func _has_same_shape(before: Array[Row], after: Array[Row]) -> bool:
 	if before.size() != after.size():
 		return false
 
@@ -274,12 +274,12 @@ static func _same_shape(before: Array[Row], after: Array[Row]) -> bool:
 func _read_theme() -> void:
 	var plain: Color = get_theme_color(&"font_color")
 
-	_heading_color = _theme_color(&"highlighted_font_color", &"Editor", plain)
-	_name_color = _theme_color(&"property_color", &"EditorProperty", plain)
-	_value_color = _theme_color(&"readonly_color", &"EditorProperty", plain)
+	_heading_color = _read_theme_color(&"highlighted_font_color", &"Editor", plain)
+	_name_color = _read_theme_color(&"property_color", &"EditorProperty", plain)
+	_value_color = _read_theme_color(&"readonly_color", &"EditorProperty", plain)
 
 
-func _theme_color(entry: StringName, type: StringName, fallback: Color) -> Color:
+func _read_theme_color(entry: StringName, type: StringName, fallback: Color) -> Color:
 	if has_theme_color(entry, type):
 		return get_theme_color(entry, type)
 
@@ -297,9 +297,9 @@ func _refresh() -> void:
 	var hierarchy: Dictionary = _read_dictionary(&"runtime_hierarchy")
 	var inherited: Array = _read_array(&"runtime_inherited_rules")
 
-	var rows: Array[Row] = _rows(data, groups, rules, inherited, flags, hierarchy)
+	var rows: Array[Row] = _build_rows(data, groups, rules, inherited, flags, hierarchy)
 
-	if _same_shape(_drawn, rows):
+	if _has_same_shape(_drawn, rows):
 		_write_values(rows)
 		return
 
@@ -375,13 +375,13 @@ func _resize_to_fit() -> void:
 	if row_height <= 0.0:
 		row_height = float(get_theme_font_size(&"font_size")) + 10.0
 
-	custom_minimum_size.y = _showing_below(root) * row_height + _vertical_padding()
+	custom_minimum_size.y = _count_visible_under(root) * row_height + _get_vertical_padding()
 
 
 # The theme spaces a Tree off its own edges, and those are content margins, so the rows need that
 # room on top of their own height or the last one ends up behind a scrollbar. Read rather than
 # written down, so retuning the theme carries this with it.
-func _vertical_padding() -> float:
+func _get_vertical_padding() -> float:
 	var box: StyleBox = get_theme_stylebox(&"panel")
 	if box == null:
 		return 0.0
@@ -390,14 +390,14 @@ func _vertical_padding() -> float:
 
 
 # Rows drawn under [param item], skipping anything folded away inside it.
-func _showing_below(item: TreeItem) -> int:
+func _count_visible_under(item: TreeItem) -> int:
 	var count: int = 0
 	var child: TreeItem = item.get_first_child()
 
 	while child != null:
 		count += 1
 		if not child.collapsed:
-			count += _showing_below(child)
+			count += _count_visible_under(child)
 
 		child = child.get_next()
 

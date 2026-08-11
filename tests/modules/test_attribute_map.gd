@@ -667,7 +667,7 @@ func _inspector_claims_remote_objects_too() -> void:
 		return
 
 	# Rows are [depth, name, value]. Depth zero is a section heading, sitting under the root.
-	var rows: Array = panel._rows({&"damage": "3.0"}, {&"firepower": [&"damage"]},
+	var rows: Array = panel._build_rows({&"damage": "3.0"}, {&"firepower": [&"damage"]},
 			{&"swamp": &"speed"}, [&"swamp"], {&"slowed": 2}, {})
 
 	_row_is(rows[0], 0, "Data", "1 key", "Data heads the list, saying how much is under it")
@@ -683,27 +683,27 @@ func _inspector_claims_remote_objects_too() -> void:
 	eq(rows.size(), 10, "a map with no relatives adds nothing under it")
 
 	case("a heading counts what it is holding")
-	eq(panel._counted(0, "key", "keys"), "none", "nothing reads as none rather than zero")
-	eq(panel._counted(1, "key", "keys"), "1 key", "one is singular")
-	eq(panel._counted(4, "map", "maps"), "4 maps", "and more than one is not")
+	eq(panel._describe_count(0, "key", "keys"), "none", "nothing reads as none rather than zero")
+	eq(panel._describe_count(1, "key", "keys"), "1 key", "one is singular")
+	eq(panel._describe_count(4, "map", "maps"), "4 maps", "and more than one is not")
 
 	case("the tree nests by the depths the map reports")
-	var tree_rows: Array = panel._tree_rows({"/root/Tank/Attributes": -1, "/root/Tank/Turret/Attributes": 0})
+	var tree_rows: Array = panel._build_tree_rows({"/root/Tank/Attributes": -1, "/root/Tank/Turret/Attributes": 0})
 	eq(tree_rows.size(), 3, "the heading and both maps")
 	_row_is(tree_rows[0], 0, "Tree", "2 maps", "the section heads its own rows and counts them")
 	_row_is(tree_rows[1], 1, "Tank/Attributes", "", "the map above sits under it")
 	_row_is(tree_rows[2], 2, "Turret/Attributes   (this map)", "", "and this one hangs off that, marked on the name")
 
-	eq(panel._tree_rows({"/root/Tank/Attributes": 0}).size(), 1, "a map with no relatives gets the heading and nothing under it")
+	eq(panel._build_tree_rows({"/root/Tank/Attributes": 0}).size(), 1, "a map with no relatives gets the heading and nothing under it")
 
 	case("a value moving is not a change of shape")
-	var before: Array = panel._rows({&"damage": "3.0"}, {}, {}, [], {}, {})
-	check(panel._same_shape(before, panel._rows({&"damage": "9.0"}, {}, {}, [], {}, {})), "the same keys keep their shape whatever the values read")
-	check(not panel._same_shape(before, panel._rows({&"armour": "3.0"}, {}, {}, [], {}, {})), "a different key does not")
+	var before: Array = panel._build_rows({&"damage": "3.0"}, {}, {}, [], {}, {})
+	check(panel._has_same_shape(before, panel._build_rows({&"damage": "9.0"}, {}, {}, [], {}, {})), "the same keys keep their shape whatever the values read")
+	check(not panel._has_same_shape(before, panel._build_rows({&"armour": "3.0"}, {}, {}, [], {}, {})), "a different key does not")
 
 	# Why the shape is compared row by row instead of through one flattened string. A key is
 	# whatever the game called it, so it can carry the separators such a string needs: joining
 	# "depth:name" with "|" turns one key named "a|1:b" into the same text as two keys "a" and "b".
-	var one_key: Array = panel._rows({&"a|1:b": "x"}, {}, {}, [], {}, {})
-	var two_keys: Array = panel._rows({&"a": "x", &"b": "y"}, {}, {}, [], {}, {})
-	check(not panel._same_shape(one_key, two_keys), "a key carrying the separators is not taken for two rows")
+	var one_key: Array = panel._build_rows({&"a|1:b": "x"}, {}, {}, [], {}, {})
+	var two_keys: Array = panel._build_rows({&"a": "x", &"b": "y"}, {}, {}, [], {}, {})
+	check(not panel._has_same_shape(one_key, two_keys), "a key carrying the separators is not taken for two rows")
