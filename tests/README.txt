@@ -72,10 +72,14 @@ are not problems:
     FoxSocket3D: Attempted to attach '...' but socket '...' already has an attachment!
     FoxStateMachine transition failed: The target state 'DoesNotExist' does not exist.
     FoxStateMachine get_state failed: The target state 'DoesNotExist' does not exist.
+    Exponent too high                              (1e99999, which is what Godot writes for INF)
     Capture not registered: 'signal_debugger'      (the SignalVisualizer autoload shutting down)
     ObjectDB instances were leaked at exit         (objects still referenced when the process ends)
 
 Read the PASS/FAIL report at the bottom, not the warnings above it.
+
+The json suite writes real files under user://foxfabric_test_json and clears them at the start of
+each run rather than the end, so whatever a failing run left behind is still there to look at.
 
 
 WHAT IS NOT COVERED
