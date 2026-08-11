@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## The 2D half of the socket module.
 ##
 ## Mirrors test_socket.gd. This code predates the 2D ports and had never been covered at all,
@@ -29,17 +29,17 @@ func _socket(parent: Node) -> FoxSocket2D:
 
 
 func _empty_socket() -> void:
-	case("empty socket")
+	start_case("empty socket")
 	var holder: Node2D = track(Node2D.new()) as Node2D
 	var s: FoxSocket2D = _socket(holder)
 
 	check(s.is_empty(), "a new socket is empty")
-	eq(s.get_attachment(), null, "and has no attachment")
-	eq(s.marker, s, "marker defaults to the socket itself")
+	check_equal(s.get_attachment(), null, "and has no attachment")
+	check_equal(s.marker, s, "marker defaults to the socket itself")
 
 
 func _attaching_reparents() -> void:
-	case("attaching")
+	start_case("attaching")
 	var holder: Node2D = track(Node2D.new()) as Node2D
 	var s: FoxSocket2D = _socket(holder)
 	var item: Node2D = Node2D.new()
@@ -50,15 +50,15 @@ func _attaching_reparents() -> void:
 
 	s.attach(item)
 	check(not s.is_empty(), "the socket is no longer empty")
-	eq(s.get_attachment(), item, "the attachment is recorded")
-	eq(item.get_parent(), s, "the item was reparented under the socket")
-	eq(got.size(), 1, "the attached signal fired")
-	eq(got[0], item, "carrying the attachment")
+	check_equal(s.get_attachment(), item, "the attachment is recorded")
+	check_equal(item.get_parent(), s, "the item was reparented under the socket")
+	check_equal(got.size(), 1, "the attached signal fired")
+	check_equal(got[0], item, "carrying the attachment")
 
 
 ## The docs promise detach() unplugs without moving the node anywhere.
 func _detach_does_not_reparent() -> void:
-	case("detaching")
+	start_case("detaching")
 	var holder: Node2D = track(Node2D.new()) as Node2D
 	var s: FoxSocket2D = _socket(holder)
 	var item: Node2D = Node2D.new()
@@ -69,17 +69,17 @@ func _detach_does_not_reparent() -> void:
 	s.detached.connect(func(a: Node2D, _sock: FoxSocket2D) -> void: got.append(a))
 
 	var out: Node2D = s.detach()
-	eq(out, item, "detach returns the node it released")
+	check_equal(out, item, "detach returns the node it released")
 	check(s.is_empty(), "the socket is empty again")
-	eq(item.get_parent(), s, "the node is deliberately left parented to the socket")
-	eq(got.size(), 1, "the detached signal fired")
+	check_equal(item.get_parent(), s, "the node is deliberately left parented to the socket")
+	check_equal(got.size(), 1, "the detached signal fired")
 
-	eq(s.detach(), null, "detaching an empty socket returns null")
-	eq(got.size(), 1, "and emits nothing")
+	check_equal(s.detach(), null, "detaching an empty socket returns null")
+	check_equal(got.size(), 1, "and emits nothing")
 
 
 func _occupied_sockets_refuse() -> void:
-	case("occupied socket")
+	start_case("occupied socket")
 	var holder: Node2D = track(Node2D.new()) as Node2D
 	var s: FoxSocket2D = _socket(holder)
 	var first: Node2D = Node2D.new()
@@ -90,12 +90,12 @@ func _occupied_sockets_refuse() -> void:
 	s.attach(first)
 	# emits an error by design
 	s.attach(second)
-	eq(s.get_attachment(), first, "the original attachment is kept")
-	eq(second.get_parent(), holder, "the rejected node was not reparented")
+	check_equal(s.get_attachment(), first, "the original attachment is kept")
+	check_equal(second.get_parent(), holder, "the rejected node was not reparented")
 
 
 func _snapping() -> void:
-	case("snap settings")
+	start_case("snap settings")
 	var holder: Node2D = track(Node2D.new()) as Node2D
 	var s: FoxSocket2D = _socket(holder)
 	s.global_position = Vector2(10, 5)
@@ -107,7 +107,7 @@ func _snapping() -> void:
 	s.attach(item)
 	check(item.global_position.is_equal_approx(Vector2(10, 5)), "position snapped to the socket")
 
-	case("snapping disabled")
+	start_case("snapping disabled")
 	var s2: FoxSocket2D = _socket(holder)
 	s2.global_position = Vector2(20, 0)
 	s2.snap_position = false
@@ -132,20 +132,20 @@ func _build_map(socket_names: Array) -> Array:
 
 
 func _map_attaches_by_name() -> void:
-	case("map attach by name")
+	start_case("map attach by name")
 	var built: Array = _build_map(["DriverSeat", "PassengerSeat"])
 	var map: FoxSocketMap2D = built[0]
 	var sockets: Array[FoxSocket2D] = built[1]
 
-	eq(map.sockets.size(), 2, "both sockets were collected")
-	eq(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
-	eq(map.get_socket(&"Nope"), null, "unknown name returns null")
+	check_equal(map.sockets.size(), 2, "both sockets were collected")
+	check_equal(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
+	check_equal(map.get_socket(&"Nope"), null, "unknown name returns null")
 
 	var rider: Node2D = Node2D.new()
 	map.add_child(rider)
 
 	check(map.attach(rider, &"DriverSeat"), "attaching to a named socket succeeds")
-	eq(sockets[0].get_attachment(), rider, "the named socket holds the rider")
+	check_equal(sockets[0].get_attachment(), rider, "the named socket holds the rider")
 	check(sockets[1].is_empty(), "the other socket is untouched")
 
 	var second: Node2D = Node2D.new()
@@ -155,7 +155,7 @@ func _map_attaches_by_name() -> void:
 
 
 func _map_auto_attaches() -> void:
-	case("map auto attach")
+	start_case("map auto attach")
 	var built: Array = _build_map(["A", "B"])
 	var map: FoxSocketMap2D = built[0]
 	var sockets: Array[FoxSocket2D] = built[1]
@@ -173,27 +173,27 @@ func _map_auto_attaches() -> void:
 
 	check(not sockets[0].is_empty(), "socket A filled")
 	check(not sockets[1].is_empty(), "socket B filled")
-	eq(three.get_parent(), map, "the rejected node stayed put")
+	check_equal(three.get_parent(), map, "the rejected node stayed put")
 
 
 func _map_reports_availability() -> void:
-	case("availability")
+	start_case("availability")
 	var built: Array = _build_map(["A", "B", "C"])
 	var map: FoxSocketMap2D = built[0]
 
-	eq(map.get_available_socket_count(), 3, "all sockets start free")
+	check_equal(map.get_available_socket_count(), 3, "all sockets start free")
 
 	var item: Node2D = Node2D.new()
 	map.add_child(item)
 	map.attach(item)
-	eq(map.get_available_socket_count(), 2, "attaching consumes one")
+	check_equal(map.get_available_socket_count(), 2, "attaching consumes one")
 
 	map.get_socket(&"A").detach()
-	eq(map.get_available_socket_count(), 3, "detaching frees it again")
+	check_equal(map.get_available_socket_count(), 3, "detaching frees it again")
 
 
 func _map_forwards_signals() -> void:
-	case("signal forwarding")
+	start_case("signal forwarding")
 	var built: Array = _build_map(["A"])
 	var map: FoxSocketMap2D = built[0]
 
@@ -205,7 +205,7 @@ func _map_forwards_signals() -> void:
 	var item: Node2D = Node2D.new()
 	map.add_child(item)
 	map.attach(item)
-	eq(attached.size(), 1, "the map re-emitted the socket's attached signal")
+	check_equal(attached.size(), 1, "the map re-emitted the socket's attached signal")
 
 	map.get_socket(&"A").detach()
-	eq(detached.size(), 1, "and the detached signal")
+	check_equal(detached.size(), 1, "and the detached signal")

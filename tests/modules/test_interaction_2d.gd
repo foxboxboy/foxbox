@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## The 2D half of the interaction pipeline.
 ##
 ## Mirrors test_interaction.gd. Kept as its own suite so the report shows at a glance whether 2D
@@ -32,25 +32,25 @@ func run() -> void:
 
 
 func _interact_routes_the_context() -> void:
-	case("interact")
+	start_case("interact")
 	var area: ProbeInteractable = track(ProbeInteractable.new()) as ProbeInteractable
 	var seen: Array[Variant] = []
 	area.interacted.connect(func(c: Variant) -> void: seen.append(c))
 
 	area.interact({"who": "player", "hand": &"right"})
 
-	eq(seen.size(), 1, "interacting emits once")
-	eq(seen[0]["who"], "player", "the context arrives untouched")
-	eq(area.interacts.size(), 1, "the virtual hook runs as well")
+	check_equal(seen.size(), 1, "interacting emits once")
+	check_equal(seen[0]["who"], "player", "the context arrives untouched")
+	check_equal(area.interacts.size(), 1, "the virtual hook runs as well")
 	check(area.interacts[0] == seen[0], "signal and hook get the same context")
 
-	case("no context")
+	start_case("no context")
 	area.interact()
-	eq(seen[1], null, "context defaults to null")
+	check_equal(seen[1], null, "context defaults to null")
 
 
 func _focus_and_unfocus() -> void:
-	case("focus")
+	start_case("focus")
 	var area: ProbeInteractable = track(ProbeInteractable.new()) as ProbeInteractable
 	var sensor: Node2D = track(Node2D.new()) as Node2D
 	var focused: Array[Node] = []
@@ -59,18 +59,18 @@ func _focus_and_unfocus() -> void:
 	area.unfocused.connect(func(s: Node) -> void: unfocused.append(s))
 
 	area.focus(sensor)
-	eq(focused.size(), 1, "focusing emits")
+	check_equal(focused.size(), 1, "focusing emits")
 	check(focused[0] == sensor, "the sensor is passed along")
-	eq(area.focuses.size(), 1, "the virtual hook runs")
+	check_equal(area.focuses.size(), 1, "the virtual hook runs")
 
 	area.unfocus(sensor)
-	eq(unfocused.size(), 1, "unfocusing emits")
+	check_equal(unfocused.size(), 1, "unfocusing emits")
 	check(unfocused[0] == sensor, "the sensor is passed along again")
-	eq(area.unfocuses.size(), 1, "the virtual hook runs")
+	check_equal(area.unfocuses.size(), 1, "the virtual hook runs")
 
 
 func _interaction_range() -> void:
-	case("interaction range")
+	start_case("interaction range")
 	var ray: FoxInteractionRayCast2D = track(FoxInteractionRayCast2D.new()) as FoxInteractionRayCast2D
 	var reported: Array[float] = []
 	ray.interaction_range_changed.connect(func(r: float) -> void: reported.append(r))
@@ -80,18 +80,18 @@ func _interaction_range() -> void:
 	# casts along -Z for the same reason, and the difference is the engine's, not this class's.
 	check(ray.target_position.is_equal_approx(Vector2(5.0, 0.0)),
 		"the range casts along local +X")
-	eq(reported.size(), 1, "changing the range emits")
+	check_equal(reported.size(), 1, "changing the range emits")
 
-	case("the sentinel leaves target_position alone")
+	start_case("the sentinel leaves target_position alone")
 	ray.target_position = Vector2(12.0, 0.0)
 	ray.interaction_range = -1.0
 	check(ray.target_position.is_equal_approx(Vector2(12.0, 0.0)),
 		"-1.0 means the target_position set in the inspector wins")
-	eq(reported.size(), 2, "the sentinel still reports the change")
+	check_equal(reported.size(), 2, "the sentinel still reports the change")
 
 
 func _no_target_is_harmless() -> void:
-	case("nothing focused")
+	start_case("nothing focused")
 	var ray: FoxInteractionRayCast2D = track(FoxInteractionRayCast2D.new()) as FoxInteractionRayCast2D
 
 	check(ray.get_current_target() == null, "nothing is focused to begin with")
@@ -105,7 +105,7 @@ func _no_target_is_harmless() -> void:
 ## asked the sensor what it was pointing at was told the node it had just lost. A readout built
 ## that way claimed to be aimed at a prop while the ray pointed at nothing.
 func _unfocus_reports_settled_state() -> void:
-	case("unfocus ordering")
+	start_case("unfocus ordering")
 	var ray: FoxInteractionRayCast2D = track(FoxInteractionRayCast2D.new()) as FoxInteractionRayCast2D
 	var area: FoxInteractableArea2D = track(FoxInteractableArea2D.new()) as FoxInteractableArea2D
 	ray._current_target = area
@@ -119,6 +119,6 @@ func _unfocus_reports_settled_state() -> void:
 
 	ray._clear_target()
 
-	eq(during.size(), 1, "unfocused fired once")
-	eq(during[0], null, "the sensor already reports no target while the signal is handled")
-	eq(passed[0], area, "and the signal still says which one was lost")
+	check_equal(during.size(), 1, "unfocused fired once")
+	check_equal(during[0], null, "the sensor already reports no target while the signal is handled")
+	check_equal(passed[0], area, "and the signal still says which one was lost")

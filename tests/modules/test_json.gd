@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 
 
 ## A format that has never changed, for the plain reading and writing cases.
@@ -44,7 +44,7 @@ func run() -> void:
 
 
 func _every_type_survives_the_file() -> void:
-	case("every type comes back out of real JSON text unchanged")
+	start_case("every type comes back out of real JSON text unchanged")
 
 	# rotated and scaled unevenly, so a swapped or transposed axis cannot pass unnoticed
 	var basis: Basis = Basis.from_euler(Vector3(0.3, -1.1, 0.7)).scaled(Vector3(2.0, 0.5, 1.5))
@@ -73,10 +73,10 @@ func _every_type_survives_the_file() -> void:
 
 
 func _floats_round_on_the_way_out() -> void:
-	case("floats round to PRECISION so the file stays readable")
+	start_case("floats round to PRECISION so the file stays readable")
 
 	# a Vector3 holds float32, so 0.1 + 0.2 reaches the file as 0.300000011920929 unrounded
-	eq(JSON.stringify(FoxJson.vector3_to_array(Vector3(0.1 + 0.2, 1.0 / 3.0, 2.0))),
+	check_equal(JSON.stringify(FoxJson.vector3_to_array(Vector3(0.1 + 0.2, 1.0 / 3.0, 2.0))),
 		"[0.3,0.333,2.0]", "components land on three places")
 
 	var moved: float = 0.0
@@ -93,45 +93,45 @@ func _floats_round_on_the_way_out() -> void:
 
 
 func _decoding_falls_back_on_anything_it_cannot_read() -> void:
-	case("a malformed value costs a field rather than the file")
+	start_case("a malformed value costs a field rather than the file")
 
 	var fallback: Vector3 = Vector3(9, 9, 9)
-	eq(FoxJson.array_to_vector3(null, fallback), fallback, "a missing field")
-	eq(FoxJson.array_to_vector3([1, 2], fallback), fallback, "too few numbers")
-	eq(FoxJson.array_to_vector3([1, 2, 3, 4], fallback), fallback, "too many numbers")
-	eq(FoxJson.array_to_vector3("(1, 2, 3)", fallback), fallback, "the debug string Godot writes")
-	eq(FoxJson.array_to_vector3(["a", "b", "c"], fallback), fallback, "strings where numbers go")
-	eq(FoxJson.array_to_vector3([[1, 0, 0], [0, 1, 0], [0, 0, 1]], fallback), fallback,
+	check_equal(FoxJson.array_to_vector3(null, fallback), fallback, "a missing field")
+	check_equal(FoxJson.array_to_vector3([1, 2], fallback), fallback, "too few numbers")
+	check_equal(FoxJson.array_to_vector3([1, 2, 3, 4], fallback), fallback, "too many numbers")
+	check_equal(FoxJson.array_to_vector3("(1, 2, 3)", fallback), fallback, "the debug string Godot writes")
+	check_equal(FoxJson.array_to_vector3(["a", "b", "c"], fallback), fallback, "strings where numbers go")
+	check_equal(FoxJson.array_to_vector3([[1, 0, 0], [0, 1, 0], [0, 0, 1]], fallback), fallback,
 		"nested where flat was expected")
-	eq(FoxJson.array_to_basis([1, 2, 3], Basis.IDENTITY), Basis.IDENTITY,
+	check_equal(FoxJson.array_to_basis([1, 2, 3], Basis.IDENTITY), Basis.IDENTITY,
 		"flat where nested was expected")
 
-	case("an infinity in the file never reaches a value")
+	start_case("an infinity in the file never reaches a value")
 
 	# 1e99999 is what Godot writes for INF, and it parses back without complaint
 	var parsed: Dictionary = JSON.parse_string('{"pos": [1e99999, 0, 0]}')
 	check(is_inf(parsed["pos"][0]), "the file really does parse to an infinity")
-	eq(FoxJson.array_to_vector3(parsed["pos"], fallback), fallback, "array_to_vector3 refuses it")
-	eq(FoxJson.array_to_basis([[1e99999, 0, 0], [0, 1, 0], [0, 0, 1]], Basis.IDENTITY),
+	check_equal(FoxJson.array_to_vector3(parsed["pos"], fallback), fallback, "array_to_vector3 refuses it")
+	check_equal(FoxJson.array_to_basis([[1e99999, 0, 0], [0, 1, 0], [0, 0, 1]], Basis.IDENTITY),
 		Basis.IDENTITY, "and it cannot arrive one axis at a time either")
 
 
 func _colour_alpha_is_optional() -> void:
-	case("a colour written by hand may leave the alpha off")
+	start_case("a colour written by hand may leave the alpha off")
 
-	eq(FoxJson.array_to_color([1, 0, 0], Color.BLACK), Color(1, 0, 0, 1), "three components")
-	eq(FoxJson.array_to_color([1, 0, 0, 0.5], Color.BLACK), Color(1, 0, 0, 0.5), "four components")
-	eq(FoxJson.array_to_color([1, 0], Color.BLACK), Color.BLACK, "two is still a fallback")
+	check_equal(FoxJson.array_to_color([1, 0, 0], Color.BLACK), Color(1, 0, 0, 1), "three components")
+	check_equal(FoxJson.array_to_color([1, 0, 0, 0.5], Color.BLACK), Color(1, 0, 0, 0.5), "four components")
+	check_equal(FoxJson.array_to_color([1, 0], Color.BLACK), Color.BLACK, "two is still a fallback")
 
 
 func _unsupported_values_are_named_by_path() -> void:
-	case("find_unsupported names what JSON would mangle")
+	start_case("find_unsupported names what JSON would mangle")
 
-	eq(FoxJson.find_unsupported({"a": 1, "b": "two", "c": [1, 2], "d": null}), "",
+	check_equal(FoxJson.find_unsupported({"a": 1, "b": "two", "c": [1, 2], "d": null}), "",
 		"a dictionary JSON can hold reports nothing")
-	eq(FoxJson.find_unsupported({"k": &"crate", "p": NodePath("Player")}), "",
+	check_equal(FoxJson.find_unsupported({"k": &"crate", "p": NodePath("Player")}), "",
 		"StringName and NodePath pass, and come back as strings")
-	eq(FoxJson.find_unsupported({"ids": PackedInt32Array([1, 2])}), "",
+	check_equal(FoxJson.find_unsupported({"ids": PackedInt32Array([1, 2])}), "",
 		"a packed int array really does become a JSON array")
 
 	check(FoxJson.find_unsupported({"pos": Vector3.ONE}).begins_with("pos"),
@@ -149,36 +149,36 @@ func _unsupported_values_are_named_by_path() -> void:
 
 
 func _writing_then_reading() -> void:
-	case("a file written by one instance reads back in another")
+	start_case("a file written by one instance reads back in another")
 
 	var path: String = DIR + "/plain.json"
 	var writer: WorldV1 = WorldV1.new()
-	eq(writer.write(path, {"objects": [{"kind": "crate"}], "name": "yard"}), OK, "write succeeds")
+	check_equal(writer.write(path, {"objects": [{"kind": "crate"}], "name": "yard"}), OK, "write succeeds")
 	check(FileAccess.file_exists(path), "the file is there")
 
 	var text: String = FileAccess.get_file_as_string(path)
 	check(text.contains('"version"'), "the version is stamped into the file")
 
 	var reader: WorldV1 = WorldV1.new()
-	eq(reader.read(path), OK, "read succeeds")
-	eq(reader.data["name"], "yard", "the contents survive")
+	check_equal(reader.read(path), OK, "read succeeds")
+	check_equal(reader.data["name"], "yard", "the contents survive")
 	check(not reader.data.has("version"), "the version is taken back out of data")
-	eq(reader.get_error_message(), "", "a successful read leaves no error behind")
-	eq(reader.get_error_line(), 0, "and no line")
+	check_equal(reader.get_error_message(), "", "a successful read leaves no error behind")
+	check_equal(reader.get_error_line(), 0, "and no line")
 
-	case("the backup only appears once there is something to keep")
+	start_case("the backup only appears once there is something to keep")
 	var backup: String = FoxJsonFile.get_backup_path(path)
-	eq(backup, DIR + "/backups/plain.json", "it sits in a folder beside the file")
+	check_equal(backup, DIR + "/backups/plain.json", "it sits in a folder beside the file")
 	writer.write(path, {"objects": [], "name": "yard two"})
 	check(FileAccess.file_exists(backup), "the second write keeps the first")
 
 	var kept: WorldV1 = WorldV1.new()
-	eq(kept.read(backup), OK, "and what it keeps is whole")
-	eq(kept.data["name"], "yard", "holding the save before this one")
+	check_equal(kept.read(backup), OK, "and what it keeps is whole")
+	check_equal(kept.data["name"], "yard", "holding the save before this one")
 
 
 func _migration_runs_once_per_step() -> void:
-	case("an older file is carried forward a version at a time")
+	start_case("an older file is carried forward a version at a time")
 
 	var path: String = DIR + "/old.json"
 	var old: WorldV1 = WorldV1.new()
@@ -188,69 +188,69 @@ func _migration_runs_once_per_step() -> void:
 	var announced: Array[int] = []
 	current.migrated.connect(func(from: int) -> void: announced.append(from))
 
-	eq(current.read(path), OK, "the older file still opens")
+	check_equal(current.read(path), OK, "the older file still opens")
 	check(current.data.has("props"), "step 1 renamed objects to props")
 	check(not current.data.has("objects"), "and took the old key away")
-	eq(current.data.get("era"), "modern", "step 2 ran as well, so it was not one jump")
-	eq(announced, [1] as Array[int], "migrated reported the version it started from")
+	check_equal(current.data.get("era"), "modern", "step 2 ran as well, so it was not one jump")
+	check_equal(announced, [1] as Array[int], "migrated reported the version it started from")
 
-	case("a file already at the current version is left alone")
+	start_case("a file already at the current version is left alone")
 	var same: WorldV3 = WorldV3.new()
 	same.write(DIR + "/new.json", {"props": []})
 	var seen: Array[int] = []
 	var reader: WorldV3 = WorldV3.new()
 	reader.migrated.connect(func(from: int) -> void: seen.append(from))
-	eq(reader.read(DIR + "/new.json"), OK, "it opens")
-	eq(seen.size(), 0, "and nothing was migrated")
+	check_equal(reader.read(DIR + "/new.json"), OK, "it opens")
+	check_equal(seen.size(), 0, "and nothing was migrated")
 
-	case("a file from a newer build is refused rather than guessed at")
+	start_case("a file from a newer build is refused rather than guessed at")
 	var behind: WorldV1 = WorldV1.new()
-	eq(behind.read(DIR + "/new.json"), ERR_FILE_UNRECOGNIZED, "reading it fails")
+	check_equal(behind.read(DIR + "/new.json"), ERR_FILE_UNRECOGNIZED, "reading it fails")
 	check(behind.get_error_message().contains("version 3"), "and says which version it was")
 
 
 func _reading_says_why_it_failed() -> void:
-	case("a read that fails says what went wrong")
+	start_case("a read that fails says what went wrong")
 
 	var missing: WorldV1 = WorldV1.new()
-	eq(missing.read(DIR + "/nothing.json"), ERR_FILE_NOT_FOUND, "a file that is not there")
+	check_equal(missing.read(DIR + "/nothing.json"), ERR_FILE_NOT_FOUND, "a file that is not there")
 
 	_write_text(DIR + "/broken.json", "{\n\t\"a\": 1,\n\t\"b\": 2,\n\t\"c\" 3\n}")
 	var broken: WorldV1 = WorldV1.new()
-	eq(broken.read(DIR + "/broken.json"), ERR_PARSE_ERROR, "text that is not JSON")
-	eq(broken.get_error_line(), 4, "the line counts from 1, unlike JSON.get_error_line")
+	check_equal(broken.read(DIR + "/broken.json"), ERR_PARSE_ERROR, "text that is not JSON")
+	check_equal(broken.get_error_line(), 4, "the line counts from 1, unlike JSON.get_error_line")
 	check(not broken.get_error_message().is_empty(), "and there is a message with it")
 
 	_write_text(DIR + "/list.json", "[1, 2, 3]")
 	var list: WorldV1 = WorldV1.new()
-	eq(list.read(DIR + "/list.json"), ERR_INVALID_DATA, "an array at the top level")
+	check_equal(list.read(DIR + "/list.json"), ERR_INVALID_DATA, "an array at the top level")
 
 	_write_text(DIR + "/unstamped.json", '{"a": 1}')
 	var unstamped: WorldV1 = WorldV1.new()
-	eq(unstamped.read(DIR + "/unstamped.json"), ERR_INVALID_DATA, "no version at all")
+	check_equal(unstamped.read(DIR + "/unstamped.json"), ERR_INVALID_DATA, "no version at all")
 	check(unstamped.get_error_message().contains("version"), "and it says so")
 
 
 func _writing_refuses_before_touching_the_file() -> void:
-	case("a write that cannot succeed leaves the previous file alone")
+	start_case("a write that cannot succeed leaves the previous file alone")
 
 	var path: String = DIR + "/guarded.json"
 	var writer: WorldV1 = WorldV1.new()
 	writer.write(path, {"keep": "me"})
 
-	eq(writer.write(path, {"pos": Vector3.ONE}), ERR_INVALID_DATA, "a Vector3 is refused")
+	check_equal(writer.write(path, {"pos": Vector3.ONE}), ERR_INVALID_DATA, "a Vector3 is refused")
 	check(writer.get_error_message().begins_with("pos"), "and the key is named")
-	eq(writer.write(path, {"version": 2}), ERR_INVALID_DATA, "so is the reserved version key")
-	eq(writer.write(path, {"m": NAN}), ERR_INVALID_DATA, "so is NaN")
+	check_equal(writer.write(path, {"version": 2}), ERR_INVALID_DATA, "so is the reserved version key")
+	check_equal(writer.write(path, {"m": NAN}), ERR_INVALID_DATA, "so is NaN")
 
 	var after: WorldV1 = WorldV1.new()
-	eq(after.read(path), OK, "the file that was already there still opens")
-	eq(after.data["keep"], "me", "holding what it held before the refusals")
+	check_equal(after.read(path), OK, "the file that was already there still opens")
+	check_equal(after.data["keep"], "me", "holding what it held before the refusals")
 	check(not FileAccess.file_exists(path + FoxJsonFile.TEMP_SUFFIX), "and no half-written file")
 
 
 func _a_broken_file_falls_back_to_the_backup() -> void:
-	case("a file broken partway through a write costs one save, not the world")
+	start_case("a file broken partway through a write costs one save, not the world")
 
 	var path: String = DIR + "/crash.json"
 	var writer: WorldV1 = WorldV1.new()
@@ -262,24 +262,24 @@ func _a_broken_file_falls_back_to_the_backup() -> void:
 	var recovered: Array[bool] = []
 	reader.recovered.connect(func() -> void: recovered.append(true))
 
-	eq(reader.read(path), OK, "the read still succeeds")
-	eq(recovered.size(), 1, "recovered was emitted once")
+	check_equal(reader.read(path), OK, "the read still succeeds")
+	check_equal(recovered.size(), 1, "recovered was emitted once")
 	# the backup holds the previous file, so recovering costs the save the crash interrupted
-	eq(reader.data["take"], 1, "and it holds the save before the one that was lost")
-	eq(reader.get_error_message(), "", "the failed attempt leaves no error on a read that worked")
-	eq(reader.get_error_line(), 0, "nor a line")
+	check_equal(reader.data["take"], 1, "and it holds the save before the one that was lost")
+	check_equal(reader.get_error_message(), "", "the failed attempt leaves no error on a read that worked")
+	check_equal(reader.get_error_line(), 0, "nor a line")
 
-	case("both copies broken is an honest failure")
+	start_case("both copies broken is an honest failure")
 	_write_text(path, "{oops")
 	_write_text(FoxJsonFile.get_backup_path(path), "{oops")
 	var doomed: WorldV1 = WorldV1.new()
-	eq(doomed.read(path), ERR_PARSE_ERROR, "the error is reported")
+	check_equal(doomed.read(path), ERR_PARSE_ERROR, "the error is reported")
 	check(doomed.get_error_message().contains("crash.json"),
 		"naming the file that was asked for, not the backup")
 
 
 func _a_broken_file_never_becomes_the_backup() -> void:
-	case("writing after a recovery does not push the broken file over the good copy")
+	start_case("writing after a recovery does not push the broken file over the good copy")
 
 	var path: String = DIR + "/rotate.json"
 	var writer: WorldV1 = WorldV1.new()
@@ -292,10 +292,10 @@ func _a_broken_file_never_becomes_the_backup() -> void:
 	session.write(path, {"take": 4})
 
 	var backup: WorldV1 = WorldV1.new()
-	eq(backup.read(FoxJsonFile.get_backup_path(path)), OK, "the backup is still whole")
-	eq(backup.data["take"], 1, "still holding the good save rather than the broken file")
+	check_equal(backup.read(FoxJsonFile.get_backup_path(path)), OK, "the backup is still whole")
+	check_equal(backup.data["take"], 1, "still holding the good save rather than the broken file")
 
-	case("and saving something else in between does not make it forget")
+	start_case("and saving something else in between does not make it forget")
 
 	var other: String = DIR + "/rotate_b.json"
 	var second: String = DIR + "/rotate_two.json"
@@ -310,9 +310,9 @@ func _a_broken_file_never_becomes_the_backup() -> void:
 	session2.write(second, {"take": 4})
 
 	var backup2: WorldV1 = WorldV1.new()
-	eq(backup2.read(FoxJsonFile.get_backup_path(second)), OK,
+	check_equal(backup2.read(FoxJsonFile.get_backup_path(second)), OK,
 		"a save to a different file in between changes nothing")
-	eq(backup2.data["take"], 1, "the good copy is still the good copy")
+	check_equal(backup2.data["take"], 1, "the good copy is still the good copy")
 
 
 func _survives(label: String, encoded: Array, decode: Callable, encode: Callable) -> void:
@@ -320,7 +320,7 @@ func _survives(label: String, encoded: Array, decode: Callable, encode: Callable
 	# so any difference between them is a mapping error rather than lost precision.
 	var parsed: Dictionary = JSON.parse_string(JSON.stringify({"v": encoded}))
 	var again: Array = encode.call(decode.call(parsed["v"]))
-	eq(JSON.stringify(again), JSON.stringify(encoded), label)
+	check_equal(JSON.stringify(again), JSON.stringify(encoded), label)
 
 
 func _write_text(path: String, text: String) -> void:

@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## Checks the editor configuration warnings.
 ##
 ## These call _get_configuration_warnings() directly rather than going through the editor, so
@@ -40,7 +40,7 @@ func _has(warnings: PackedStringArray, fragment: String) -> bool:
 
 
 func _hit_raycast() -> void:
-	case("FoxHitRayCast3D")
+	start_case("FoxHitRayCast3D")
 	var ray: FoxHitRayCast3D = track(FoxHitRayCast3D.new()) as FoxHitRayCast3D
 
 	ray.collide_with_areas = false
@@ -54,11 +54,11 @@ func _hit_raycast() -> void:
 
 	# fire() calls force_raycast_update(), which the engine documents as ignoring enabled.
 	ray.enabled = false
-	eq(ray._get_configuration_warnings().size(), 0, "stays quiet about enabled, since fire() works regardless")
+	check_equal(ray._get_configuration_warnings().size(), 0, "stays quiet about enabled, since fire() works regardless")
 
 
 func _hit_shapecast() -> void:
-	case("FoxHitShapeCast3D")
+	start_case("FoxHitShapeCast3D")
 	var cast: FoxHitShapeCast3D = track(FoxHitShapeCast3D.new()) as FoxHitShapeCast3D
 
 	cast.collide_with_areas = false
@@ -66,11 +66,11 @@ func _hit_shapecast() -> void:
 		"warns when it cannot see areas")
 
 	cast.collide_with_areas = true
-	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+	check_equal(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 
 func _hit_casts_2d() -> void:
-	case("FoxHitRayCast2D")
+	start_case("FoxHitRayCast2D")
 	var ray: FoxHitRayCast2D = track(FoxHitRayCast2D.new()) as FoxHitRayCast2D
 
 	ray.collide_with_areas = false
@@ -80,9 +80,9 @@ func _hit_casts_2d() -> void:
 		"and names the 2D hurtbox, not the 3D one")
 
 	ray.collide_with_areas = true
-	eq(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+	check_equal(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
-	case("FoxHitShapeCast2D")
+	start_case("FoxHitShapeCast2D")
 	var cast: FoxHitShapeCast2D = track(FoxHitShapeCast2D.new()) as FoxHitShapeCast2D
 
 	cast.collide_with_areas = false
@@ -91,11 +91,11 @@ func _hit_casts_2d() -> void:
 
 	cast.collide_with_areas = true
 	# ShapeCast2D reports a missing shape itself, so there is nothing left to say.
-	eq(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+	check_equal(cast._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 
 func _interaction_raycasts() -> void:
-	case("FoxInteractionRayCast3D")
+	start_case("FoxInteractionRayCast3D")
 	var ray: FoxInteractionRayCast3D = track(FoxInteractionRayCast3D.new()) as FoxInteractionRayCast3D
 
 	ray.collide_with_areas = false
@@ -105,9 +105,9 @@ func _interaction_raycasts() -> void:
 		"and names what it is looking for")
 
 	ray.collide_with_areas = true
-	eq(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+	check_equal(ray._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
-	case("FoxInteractionRayCast2D")
+	start_case("FoxInteractionRayCast2D")
 	var flat: FoxInteractionRayCast2D = track(FoxInteractionRayCast2D.new()) as FoxInteractionRayCast2D
 
 	flat.collide_with_areas = false
@@ -117,11 +117,11 @@ func _interaction_raycasts() -> void:
 		"and names the 2D interactable, not the 3D one")
 
 	flat.collide_with_areas = true
-	eq(flat._get_configuration_warnings().size(), 0, "silent once areas are enabled")
+	check_equal(flat._get_configuration_warnings().size(), 0, "silent once areas are enabled")
 
 
 func _state_machine() -> void:
-	case("FoxStateMachine")
+	start_case("FoxStateMachine")
 	var empty: FoxStateMachine = track(FoxStateMachine.new()) as FoxStateMachine
 	check(_has(empty._get_configuration_warnings(), "No FoxState children"),
 		"warns with no states")
@@ -136,9 +136,9 @@ func _state_machine() -> void:
 		"warns when no initial state is set")
 
 	sm.initial_state = idle
-	eq(sm._get_configuration_warnings().size(), 0, "silent once configured")
+	check_equal(sm._get_configuration_warnings().size(), 0, "silent once configured")
 
-	case("initial state from another machine")
+	start_case("initial state from another machine")
 	var other: FoxStateMachine = FoxStateMachine.new()
 	var stray: ProbeState = ProbeState.new()
 	stray.name = "Stray"
@@ -149,7 +149,7 @@ func _state_machine() -> void:
 	check(_has(sm._get_configuration_warnings(), "not a child"),
 		"warns when the initial state belongs elsewhere")
 
-	case("colliding state keys")
+	start_case("colliding state keys")
 	# Godot renames duplicate sibling node names, so a collision can only come from state_id.
 	var dupes: FoxStateMachine = FoxStateMachine.new()
 	var a: ProbeState = ProbeState.new()
@@ -168,7 +168,7 @@ func _state_machine() -> void:
 
 
 func _effect_slot_policy() -> void:
-	case("FoxEffectSlotPolicy")
+	start_case("FoxEffectSlotPolicy")
 	var orphan: FoxEffectSlotPolicy = track(FoxEffectSlotPolicy.new()) as FoxEffectSlotPolicy
 	check(_has(orphan._get_configuration_warnings(), "not a FoxEffectManager"),
 		"warns when the parent is not a manager")
@@ -176,7 +176,7 @@ func _effect_slot_policy() -> void:
 	var manager: FoxEffectManager = track(FoxEffectManager.new()) as FoxEffectManager
 	var policy: FoxEffectSlotPolicy = FoxEffectSlotPolicy.new()
 	manager.add_child(policy)
-	eq(policy._get_configuration_warnings().size(), 0, "silent under a manager")
+	check_equal(policy._get_configuration_warnings().size(), 0, "silent under a manager")
 
 	policy.max_slots = 0
 	check(_has(policy._get_configuration_warnings(), "no effect can ever be admitted"),
@@ -184,12 +184,12 @@ func _effect_slot_policy() -> void:
 
 
 func _socket_marker() -> void:
-	case("FoxSocket3D")
+	start_case("FoxSocket3D")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var socket: FoxSocket3D = FoxSocket3D.new()
 	holder.add_child(socket)
 
-	eq(socket._get_configuration_warnings().size(), 0, "an untouched socket warns about nothing")
+	check_equal(socket._get_configuration_warnings().size(), 0, "an untouched socket warns about nothing")
 
 	var outsider: Node3D = Node3D.new()
 	holder.add_child(outsider)
@@ -200,11 +200,11 @@ func _socket_marker() -> void:
 	var inner: Node3D = Node3D.new()
 	socket.add_child(inner)
 	socket.marker = inner
-	eq(socket._get_configuration_warnings().size(), 0, "a descendant marker is fine")
+	check_equal(socket._get_configuration_warnings().size(), 0, "a descendant marker is fine")
 
 
 func _socket_map() -> void:
-	case("FoxSocketMap3D")
+	start_case("FoxSocketMap3D")
 	var empty: FoxSocketMap3D = track(FoxSocketMap3D.new()) as FoxSocketMap3D
 	check(_has(empty._get_configuration_warnings(), "manages nothing"),
 		"warns when it holds no sockets")
@@ -214,9 +214,9 @@ func _socket_map() -> void:
 	one.name = "Driver"
 	map.add_child(one)
 	track(map)
-	eq(map._get_configuration_warnings().size(), 0, "silent with one socket")
+	check_equal(map._get_configuration_warnings().size(), 0, "silent with one socket")
 
-	case("colliding socket names")
+	start_case("colliding socket names")
 	# Siblings get auto renamed, so a collision needs sockets under different parents.
 	var branch: Node3D = Node3D.new()
 	var two: FoxSocket3D = FoxSocket3D.new()
@@ -229,9 +229,9 @@ func _socket_map() -> void:
 
 
 func _aim_gimbal() -> void:
-	case("FoxAimGimbal3D")
+	start_case("FoxAimGimbal3D")
 	var g: FoxAimGimbal3D = track(FoxAimGimbal3D.new()) as FoxAimGimbal3D
-	eq(g._get_configuration_warnings().size(), 0, "defaults warn about nothing")
+	check_equal(g._get_configuration_warnings().size(), 0, "defaults warn about nothing")
 
 	g.min_pitch_deg = 40.0
 	g.max_pitch_deg = -40.0
@@ -248,9 +248,9 @@ func _aim_gimbal() -> void:
 
 
 func _zoom_spring_arm() -> void:
-	case("FoxZoomSpringArm3D")
+	start_case("FoxZoomSpringArm3D")
 	var arm: FoxZoomSpringArm3D = track(FoxZoomSpringArm3D.new()) as FoxZoomSpringArm3D
-	eq(arm._get_configuration_warnings().size(), 0, "defaults warn about nothing")
+	check_equal(arm._get_configuration_warnings().size(), 0, "defaults warn about nothing")
 
 	arm.max_length = 0.0
 	check(_has(arm._get_configuration_warnings(), "never extend"), "warns on a zero max length")
@@ -261,7 +261,7 @@ func _zoom_spring_arm() -> void:
 
 
 func _shop_menu() -> void:
-	case("FoxShopMenu")
+	start_case("FoxShopMenu")
 	var menu: FoxShopMenu = track(FoxShopMenu.new()) as FoxShopMenu
 	var warnings: PackedStringArray = menu._get_configuration_warnings()
 

@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## Checks the zoom arithmetic and its bounds.
 ##
 ## The interpolation itself runs in _process and needs frames, so what is covered here is the
@@ -24,64 +24,64 @@ func _arm() -> FoxZoomSpringArm3D:
 
 
 func _stepping() -> void:
-	case("stepping")
+	start_case("stepping")
 	var arm: FoxZoomSpringArm3D = _arm()
 
 	arm.zoom_out()
-	almost(arm.target_length, 6.0, "zooming out adds a step")
+	check_almost_equal(arm.target_length, 6.0, "zooming out adds a step")
 
 	arm.zoom_in()
-	almost(arm.target_length, 5.0, "zooming in takes it back")
+	check_almost_equal(arm.target_length, 5.0, "zooming in takes it back")
 
 
 func _clamping() -> void:
-	case("bounds")
+	start_case("bounds")
 	var arm: FoxZoomSpringArm3D = _arm()
 
 	arm.change_zoom(9999.0)
-	almost(arm.target_length, 10.0, "cannot go past max_length")
+	check_almost_equal(arm.target_length, 10.0, "cannot go past max_length")
 
 	arm.change_zoom(-9999.0)
-	almost(arm.target_length, 0.0, "cannot go below zero")
+	check_almost_equal(arm.target_length, 0.0, "cannot go below zero")
 
 
 func _zoom_enabled_gate() -> void:
-	case("zoom_enabled")
+	start_case("zoom_enabled")
 	var arm: FoxZoomSpringArm3D = _arm()
 	arm.zoom_enabled = false
 
 	arm.zoom_out()
 	arm.zoom_in()
-	almost(arm.target_length, 5.0, "stepping is ignored while disabled")
+	check_almost_equal(arm.target_length, 5.0, "stepping is ignored while disabled")
 
-	case("change_zoom is not gated")
+	start_case("change_zoom is not gated")
 	# zoom_in and zoom_out are the input facing calls. change_zoom is the direct one, so
 	# disabling input does not lock out a script driving the arm itself.
 	arm.change_zoom(2.0)
-	almost(arm.target_length, 7.0, "setting the zoom directly still works")
+	check_almost_equal(arm.target_length, 7.0, "setting the zoom directly still works")
 
 
 func _percentage() -> void:
-	case("percentage")
+	start_case("percentage")
 	var arm: FoxZoomSpringArm3D = _arm()
 
 	arm.spring_length = 5.0
-	almost(arm.get_zoom_percentage(), 0.5, "halfway out is 0.5")
+	check_almost_equal(arm.get_zoom_percentage(), 0.5, "halfway out is 0.5")
 
 	arm.spring_length = 10.0
-	almost(arm.get_zoom_percentage(), 1.0, "fully out is 1.0")
+	check_almost_equal(arm.get_zoom_percentage(), 1.0, "fully out is 1.0")
 
 	arm.spring_length = 0.0
-	almost(arm.get_zoom_percentage(), 0.0, "fully in is 0.0")
+	check_almost_equal(arm.get_zoom_percentage(), 0.0, "fully in is 0.0")
 
-	case("no capacity")
+	start_case("no capacity")
 	arm.max_length = 0.0
-	almost(arm.get_zoom_percentage(), 0.0,
+	check_almost_equal(arm.get_zoom_percentage(), 0.0,
 		"a zero maximum returns 0.0 rather than dividing by zero")
 
 
 func _random_zooming_stays_in_range() -> void:
-	case("invariant under random zooming")
+	start_case("invariant under random zooming")
 	var breaches: int = 0
 
 	for i: int in 200:
@@ -98,4 +98,4 @@ func _random_zooming_stays_in_range() -> void:
 
 		arm.free()
 
-	eq(breaches, 0, "target_length stayed between zero and max across 5000 changes")
+	check_equal(breaches, 0, "target_length stayed between zero and max across 5000 changes")

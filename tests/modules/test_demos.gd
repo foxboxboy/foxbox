@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## Checks that every demo scene still opens.
 ##
 ## The demos are the first thing anyone looks at and nothing else in the suite touches them, so
@@ -20,7 +20,7 @@ func run() -> void:
 
 
 func _every_scene_opens() -> void:
-	case("scenes open")
+	start_case("scenes open")
 	var scenes: Array[String] = []
 	_collect(DEMOS_DIR, scenes)
 	scenes.sort()

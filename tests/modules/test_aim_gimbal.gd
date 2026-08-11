@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 
 ## The editor gizmo. Only its static side is reachable: the engine refuses to instantiate an
 ## EditorNode3DGizmoPlugin outside the editor.
@@ -24,7 +24,7 @@ func _gimbal() -> FoxAimGimbal3D:
 
 
 func _gizmo_draws_the_range() -> void:
-	case("gizmo")
+	start_case("gizmo")
 	var gizmo: GDScript = load(GIZMO_PATH) as GDScript
 	check(gizmo != null, "the gizmo script loads")
 	if gizmo == null:
@@ -35,41 +35,41 @@ func _gizmo_draws_the_range() -> void:
 	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
 	check(FoxFabric.GIZMOS.has(GIZMO_PATH), "the plugin lists it")
 
-	case("the arc spans the clamp range")
+	start_case("the arc spans the clamp range")
 	g.min_yaw_deg = -60.0
 	g.max_yaw_deg = 60.0
 	var yaw_arc: PackedVector3Array = gizmo.build_yaw_arc(g)
-	eq(yaw_arc.size(), ARC_POINTS, "the sweep is segments plus two spokes")
+	check_equal(yaw_arc.size(), ARC_POINTS, "the sweep is segments plus two spokes")
 
 	# Every arc point sits on the radius. The spokes start at the origin, so they are skipped.
 	var off_radius: int = 0
 	for i: int in 32 * 2:
 		if not is_equal_approx(yaw_arc[i].length(), gizmo.RADIUS):
 			off_radius += 1
-	eq(off_radius, 0, "every arc point sits on the radius")
+	check_equal(off_radius, 0, "every arc point sits on the radius")
 
 	# Yaw sweeps the horizontal plane, so nothing in it should leave that plane.
 	var lifted: int = 0
 	for i: int in 32 * 2:
 		if absf(yaw_arc[i].y) > 0.0001:
 			lifted += 1
-	eq(lifted, 0, "the yaw arc stays flat")
+	check_equal(lifted, 0, "the yaw arc stays flat")
 
-	case("the pitch arc leaves the horizontal plane")
+	start_case("the pitch arc leaves the horizontal plane")
 	g.min_pitch_deg = -45.0
 	g.max_pitch_deg = 45.0
 	var pitch_arc: PackedVector3Array = gizmo.build_pitch_arc(g)
-	eq(pitch_arc.size(), ARC_POINTS, "the sweep is segments plus two spokes")
+	check_equal(pitch_arc.size(), ARC_POINTS, "the sweep is segments plus two spokes")
 
 	var highest: float = -999.0
 	var lowest: float = 999.0
 	for i: int in 32 * 2:
 		highest = maxf(highest, pitch_arc[i].y)
 		lowest = minf(lowest, pitch_arc[i].y)
-	almost(highest, gizmo.RADIUS * sin(deg_to_rad(45.0)), "the arc reaches the upper limit")
-	almost(lowest, gizmo.RADIUS * sin(deg_to_rad(-45.0)), "and the lower one")
+	check_almost_equal(highest, gizmo.RADIUS * sin(deg_to_rad(45.0)), "the arc reaches the upper limit")
+	check_almost_equal(lowest, gizmo.RADIUS * sin(deg_to_rad(-45.0)), "and the lower one")
 
-	case("the arc ignores the gimbal's own rotation")
+	start_case("the arc ignores the gimbal's own rotation")
 	# The range is measured against the parent, so aiming the gimbal must not drag the arc with
 	# it. Undoing the rotation is the one part of this easy to get subtly wrong.
 	var resting: PackedVector3Array = gizmo.build_yaw_arc(g)
@@ -81,26 +81,26 @@ func _gizmo_draws_the_range() -> void:
 		# Back into the parent's frame, where both should describe the same arc.
 		if (g.transform.basis * aimed[i]).is_equal_approx(resting[i]):
 			matched += 1
-	eq(matched, resting.size(), "the arc stays put in the parent's frame while the gimbal aims")
+	check_equal(matched, resting.size(), "the arc stays put in the parent's frame while the gimbal aims")
 
 
 func _pitch_clamps_by_default() -> void:
-	case("pitch clamping")
+	start_case("pitch clamping")
 	var g: FoxAimGimbal3D = _gimbal()
 	check(g.clamp_pitch, "pitch is clamped by default")
 
 	g.pitch = deg_to_rad(45.0)
-	almost(rad_to_deg(g.pitch), 45.0, "a value inside the range is kept", 0.001)
+	check_almost_equal(rad_to_deg(g.pitch), 45.0, "a value inside the range is kept", 0.001)
 
 	g.pitch = deg_to_rad(500.0)
-	almost(rad_to_deg(g.pitch), g.max_pitch_deg, "above the range clamps to max", 0.001)
+	check_almost_equal(rad_to_deg(g.pitch), g.max_pitch_deg, "above the range clamps to max", 0.001)
 
 	g.pitch = deg_to_rad(-500.0)
-	almost(rad_to_deg(g.pitch), g.min_pitch_deg, "below the range clamps to min", 0.001)
+	check_almost_equal(rad_to_deg(g.pitch), g.min_pitch_deg, "below the range clamps to min", 0.001)
 
 
 func _pitch_wraps_when_unclamped() -> void:
-	case("pitch wrapping")
+	start_case("pitch wrapping")
 	var g: FoxAimGimbal3D = _gimbal()
 	g.clamp_pitch = false
 
@@ -109,7 +109,7 @@ func _pitch_wraps_when_unclamped() -> void:
 
 
 func _yaw_wraps_by_default() -> void:
-	case("yaw wrapping")
+	start_case("yaw wrapping")
 	var g: FoxAimGimbal3D = _gimbal()
 	check(not g.clamp_yaw, "yaw wraps rather than clamps by default")
 
@@ -120,35 +120,35 @@ func _yaw_wraps_by_default() -> void:
 	var h: FoxAimGimbal3D = _gimbal()
 	h.yaw = 0.0
 	h.yaw = TAU
-	almost(h.yaw, 0.0, "a full turn wraps back to zero", 0.0001)
+	check_almost_equal(h.yaw, 0.0, "a full turn wraps back to zero", 0.0001)
 
 
 func _yaw_clamps_when_enabled() -> void:
-	case("yaw clamping")
+	start_case("yaw clamping")
 	var g: FoxAimGimbal3D = _gimbal()
 	g.clamp_yaw = true
 	g.min_yaw_deg = -30.0
 	g.max_yaw_deg = 30.0
 
 	g.yaw = deg_to_rad(90.0)
-	almost(rad_to_deg(g.yaw), 30.0, "above the range clamps to max", 0.001)
+	check_almost_equal(rad_to_deg(g.yaw), 30.0, "above the range clamps to max", 0.001)
 
 	g.yaw = deg_to_rad(-90.0)
-	almost(rad_to_deg(g.yaw), -30.0, "below the range clamps to min", 0.001)
+	check_almost_equal(rad_to_deg(g.yaw), -30.0, "below the range clamps to min", 0.001)
 
 
 func _rotation_follows_the_values() -> void:
-	case("node rotation")
+	start_case("node rotation")
 	var g: FoxAimGimbal3D = _gimbal()
 	g.pitch = deg_to_rad(30.0)
 	g.yaw = deg_to_rad(45.0)
 
-	almost(g.rotation.x, g.pitch, "rotation.x tracks pitch")
-	almost(g.rotation.y, g.yaw, "rotation.y tracks yaw")
+	check_almost_equal(g.rotation.x, g.pitch, "rotation.x tracks pitch")
+	check_almost_equal(g.rotation.y, g.yaw, "rotation.y tracks yaw")
 
 
 func _random_input_never_escapes_the_clamp() -> void:
-	case("invariant under random input")
+	start_case("invariant under random input")
 	var breaches: int = 0
 
 	for i: int in 200:
@@ -163,4 +163,4 @@ func _random_input_never_escapes_the_clamp() -> void:
 			if deg < g.min_pitch_deg - 0.001 or deg > g.max_pitch_deg + 0.001:
 				breaches += 1
 
-	eq(breaches, 0, "pitch stayed inside its limits across 5000 random movements")
+	check_equal(breaches, 0, "pitch stayed inside its limits across 5000 random movements")

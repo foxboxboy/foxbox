@@ -1,3 +1,4 @@
+class_name FoxTest
 extends RefCounted
 ## Base class for every FoxFabric test file.
 ##
@@ -25,7 +26,7 @@ func run() -> void:
 
 
 ## Groups the checks that follow under a readable label.
-func case(label: String) -> void:
+func start_case(label: String) -> void:
 	_current = label
 
 
@@ -38,15 +39,15 @@ func check(condition: bool, label: String) -> void:
 
 
 ## Passes when [param actual] equals [param expected].
-func eq(actual: Variant, expected: Variant, label: String) -> void:
+func check_equal(actual: Variant, expected: Variant, label: String) -> void:
 	if actual == expected:
 		_passed += 1
 	else:
-		_fail(label, "expected %s, got %s" % [_show(expected), _show(actual)])
+		_fail(label, "expected %s, got %s" % [_format_value(expected), _format_value(actual)])
 
 
 ## Passes when two floats are within [param epsilon].
-func almost(actual: float, expected: float, label: String, epsilon: float = 0.00001) -> void:
+func check_almost_equal(actual: float, expected: float, label: String, epsilon: float = 0.00001) -> void:
 	if absf(actual - expected) <= epsilon:
 		_passed += 1
 	else:
@@ -62,18 +63,20 @@ func track(node: Node) -> Node:
 
 
 ## Frees everything created through [method track]. The runner calls this automatically.
-func cleanup() -> void:
+func free_tracked() -> void:
 	for n: Node in _nodes:
 		if is_instance_valid(n):
 			n.free()
 	_nodes.clear()
 
 
-func passed_count() -> int:
+## Returns how many checks in this suite passed. Read by the runner to build the report.
+func get_passed_count() -> int:
 	return _passed
 
 
-func failures() -> Array[String]:
+## Returns one line per failed check, each already carrying its case label.
+func get_failures() -> Array[String]:
 	return _failures
 
 
@@ -82,7 +85,8 @@ func _fail(label: String, detail: String) -> void:
 	_failures.append("%s%s  ->  %s" % [where, label, detail])
 
 
-func _show(v: Variant) -> String:
-	if v is float:
-		return "%.6f" % v
-	return str(v)
+# Floats print at full width so a near miss reads as a near miss rather than the same number twice.
+func _format_value(value: Variant) -> String:
+	if value is float:
+		return "%.6f" % value
+	return str(value)

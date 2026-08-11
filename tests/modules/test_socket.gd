@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 
 ## The editor gizmo, loaded rather than preloaded. It extends an editor only class, so on a
 ## build without one this stays null and the gizmo cases are skipped instead of failing.
@@ -20,7 +20,7 @@ func run() -> void:
 
 
 func _gizmo_reads_occupancy() -> void:
-	case("gizmo")
+	start_case("gizmo")
 	# Only the static side is reachable. The engine refuses to instantiate an
 	# EditorNode3DGizmoPlugin outside the editor, so nothing here touches an instance.
 	var gizmo: GDScript = load(GIZMO_PATH) as GDScript
@@ -41,7 +41,7 @@ func _gizmo_reads_occupancy() -> void:
 	socket.add_child(seated)
 	check(gizmo.is_occupied(socket), "a second child reads as occupied")
 
-	case("gizmo marker transform")
+	start_case("gizmo marker transform")
 	var bare: FoxSocket3D = _socket(holder)
 	check(gizmo.get_marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
 		"no marker draws at the socket itself")
@@ -68,7 +68,7 @@ func _gizmo_reads_occupancy() -> void:
 ## The plugin cannot be instantiated here. The engine only allows that inside the editor, so
 ## whether the editor actually renders the result is not something this run can prove.
 func _gizmo_registers(gizmo: GDScript, holder: Node3D) -> void:
-	case("gizmo registration")
+	start_case("gizmo registration")
 	check(gizmo.handles(_socket(holder)), "it claims FoxSocket3D nodes")
 	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
 
@@ -78,22 +78,22 @@ func _gizmo_registers(gizmo: GDScript, holder: Node3D) -> void:
 
 
 func _gizmo_draws(gizmo: GDScript, holder: Node3D) -> void:
-	case("gizmo geometry")
+	start_case("gizmo geometry")
 	var socket: FoxSocket3D = _socket(holder)
 	var lines: PackedVector3Array = gizmo.build_lines(socket)
 
 	# Twelve octahedron edges plus a shaft and four barbs, two points each.
-	eq(lines.size(), 34, "every segment is a pair of points")
+	check_equal(lines.size(), 34, "every segment is a pair of points")
 	check(lines.size() % 2 == 0, "no dangling half segment")
 
-	case("occupancy reads without colour")
+	start_case("occupancy reads without colour")
 	# Colour alone would exclude anyone who cannot separate the two hues, so an occupied socket
 	# has to differ in shape as well.
 	var seated: Node3D = Node3D.new()
 	socket.add_child(seated)
 	var filled: PackedVector3Array = gizmo.build_lines(socket)
 
-	eq(filled.size(), 34 + 24, "an occupied socket nests a second diamond inside")
+	check_equal(filled.size(), 34 + 24, "an occupied socket nests a second diamond inside")
 	check(filled.size() != lines.size(), "so the two states differ in shape, not only colour")
 	socket.remove_child(seated)
 	seated.free()
@@ -104,20 +104,20 @@ func _gizmo_draws(gizmo: GDScript, holder: Node3D) -> void:
 	check(reach > 0.0, "the gizmo is not drawn at a single point")
 	check(reach < 1.0, "and stays small enough to sit on a socket")
 
-	case("geometry follows the marker")
+	start_case("geometry follows the marker")
 	var offset: Node3D = Node3D.new()
 	socket.add_child(offset)
 	offset.position = Vector3(0.0, 2.0, 0.0)
 	socket.marker = offset
 
 	var moved: PackedVector3Array = gizmo.build_lines(socket)
-	eq(moved.size(), lines.size(), "the same shape is drawn")
+	check_equal(moved.size(), lines.size(), "the same shape is drawn")
 
 	var lifted: int = 0
 	for i: int in moved.size():
 		if is_equal_approx(moved[i].y - lines[i].y, 2.0):
 			lifted += 1
-	eq(lifted, moved.size(), "every point moved with the marker")
+	check_equal(lifted, moved.size(), "every point moved with the marker")
 
 
 func _socket(parent: Node) -> FoxSocket3D:
@@ -127,17 +127,17 @@ func _socket(parent: Node) -> FoxSocket3D:
 
 
 func _empty_socket() -> void:
-	case("empty socket")
+	start_case("empty socket")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var s: FoxSocket3D = _socket(holder)
 
 	check(s.is_empty(), "a new socket is empty")
-	eq(s.get_attachment(), null, "and has no attachment")
-	eq(s.marker, s, "marker defaults to the socket itself")
+	check_equal(s.get_attachment(), null, "and has no attachment")
+	check_equal(s.marker, s, "marker defaults to the socket itself")
 
 
 func _attaching_reparents() -> void:
-	case("attaching")
+	start_case("attaching")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var s: FoxSocket3D = _socket(holder)
 	var item: Node3D = Node3D.new()
@@ -148,15 +148,15 @@ func _attaching_reparents() -> void:
 
 	s.attach(item)
 	check(not s.is_empty(), "the socket is no longer empty")
-	eq(s.get_attachment(), item, "the attachment is recorded")
-	eq(item.get_parent(), s, "the item was reparented under the socket")
-	eq(got.size(), 1, "the attached signal fired")
-	eq(got[0], item, "carrying the attachment")
+	check_equal(s.get_attachment(), item, "the attachment is recorded")
+	check_equal(item.get_parent(), s, "the item was reparented under the socket")
+	check_equal(got.size(), 1, "the attached signal fired")
+	check_equal(got[0], item, "carrying the attachment")
 
 
 ## The docs promise detach() unplugs without moving the node anywhere.
 func _detach_does_not_reparent() -> void:
-	case("detaching")
+	start_case("detaching")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var s: FoxSocket3D = _socket(holder)
 	var item: Node3D = Node3D.new()
@@ -167,17 +167,17 @@ func _detach_does_not_reparent() -> void:
 	s.detached.connect(func(a: Node3D, _sock: FoxSocket3D) -> void: got.append(a))
 
 	var out: Node3D = s.detach()
-	eq(out, item, "detach returns the node it released")
+	check_equal(out, item, "detach returns the node it released")
 	check(s.is_empty(), "the socket is empty again")
-	eq(item.get_parent(), s, "the node is deliberately left parented to the socket")
-	eq(got.size(), 1, "the detached signal fired")
+	check_equal(item.get_parent(), s, "the node is deliberately left parented to the socket")
+	check_equal(got.size(), 1, "the detached signal fired")
 
-	eq(s.detach(), null, "detaching an empty socket returns null")
-	eq(got.size(), 1, "and emits nothing")
+	check_equal(s.detach(), null, "detaching an empty socket returns null")
+	check_equal(got.size(), 1, "and emits nothing")
 
 
 func _occupied_sockets_refuse() -> void:
-	case("occupied socket")
+	start_case("occupied socket")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var s: FoxSocket3D = _socket(holder)
 	var first: Node3D = Node3D.new()
@@ -188,12 +188,12 @@ func _occupied_sockets_refuse() -> void:
 	s.attach(first)
 	# emits an error by design
 	s.attach(second)
-	eq(s.get_attachment(), first, "the original attachment is kept")
-	eq(second.get_parent(), holder, "the rejected node was not reparented")
+	check_equal(s.get_attachment(), first, "the original attachment is kept")
+	check_equal(second.get_parent(), holder, "the rejected node was not reparented")
 
 
 func _snapping() -> void:
-	case("snap settings")
+	start_case("snap settings")
 	var holder: Node3D = track(Node3D.new()) as Node3D
 	var s: FoxSocket3D = _socket(holder)
 	s.global_position = Vector3(10, 5, 0)
@@ -205,7 +205,7 @@ func _snapping() -> void:
 	s.attach(item)
 	check(item.global_position.is_equal_approx(Vector3(10, 5, 0)), "position snapped to the socket")
 
-	case("snapping disabled")
+	start_case("snapping disabled")
 	var s2: FoxSocket3D = _socket(holder)
 	s2.global_position = Vector3(20, 0, 0)
 	s2.snap_position = false
@@ -229,20 +229,20 @@ func _build_map(socket_names: Array) -> Array:
 
 
 func _map_attaches_by_name() -> void:
-	case("map attach by name")
+	start_case("map attach by name")
 	var built: Array = _build_map(["DriverSeat", "PassengerSeat"])
 	var map: FoxSocketMap3D = built[0]
 	var sockets: Array[FoxSocket3D] = built[1]
 
-	eq(map.sockets.size(), 2, "both sockets were collected")
-	eq(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
-	eq(map.get_socket(&"Nope"), null, "unknown name returns null")
+	check_equal(map.sockets.size(), 2, "both sockets were collected")
+	check_equal(map.get_socket(&"DriverSeat"), sockets[0], "lookup by name works")
+	check_equal(map.get_socket(&"Nope"), null, "unknown name returns null")
 
 	var rider: Node3D = Node3D.new()
 	map.add_child(rider)
 
 	check(map.attach(rider, &"DriverSeat"), "attaching to a named socket succeeds")
-	eq(sockets[0].get_attachment(), rider, "the named socket holds the rider")
+	check_equal(sockets[0].get_attachment(), rider, "the named socket holds the rider")
 	check(sockets[1].is_empty(), "the other socket is untouched")
 
 	var second: Node3D = Node3D.new()
@@ -252,7 +252,7 @@ func _map_attaches_by_name() -> void:
 
 
 func _map_auto_attaches() -> void:
-	case("map auto attach")
+	start_case("map auto attach")
 	var built: Array = _build_map(["A", "B"])
 	var map: FoxSocketMap3D = built[0]
 	var sockets: Array[FoxSocket3D] = built[1]
@@ -270,27 +270,27 @@ func _map_auto_attaches() -> void:
 
 	check(not sockets[0].is_empty(), "socket A filled")
 	check(not sockets[1].is_empty(), "socket B filled")
-	eq(three.get_parent(), map, "the rejected node stayed put")
+	check_equal(three.get_parent(), map, "the rejected node stayed put")
 
 
 func _map_reports_availability() -> void:
-	case("availability")
+	start_case("availability")
 	var built: Array = _build_map(["A", "B", "C"])
 	var map: FoxSocketMap3D = built[0]
 
-	eq(map.get_available_socket_count(), 3, "all sockets start free")
+	check_equal(map.get_available_socket_count(), 3, "all sockets start free")
 
 	var item: Node3D = Node3D.new()
 	map.add_child(item)
 	map.attach(item)
-	eq(map.get_available_socket_count(), 2, "attaching consumes one")
+	check_equal(map.get_available_socket_count(), 2, "attaching consumes one")
 
 	map.get_socket(&"A").detach()
-	eq(map.get_available_socket_count(), 3, "detaching frees it again")
+	check_equal(map.get_available_socket_count(), 3, "detaching frees it again")
 
 
 func _map_forwards_signals() -> void:
-	case("signal forwarding")
+	start_case("signal forwarding")
 	var built: Array = _build_map(["A"])
 	var map: FoxSocketMap3D = built[0]
 
@@ -302,7 +302,7 @@ func _map_forwards_signals() -> void:
 	var item: Node3D = Node3D.new()
 	map.add_child(item)
 	map.attach(item)
-	eq(attached.size(), 1, "the map re-emitted the socket's attached signal")
+	check_equal(attached.size(), 1, "the map re-emitted the socket's attached signal")
 
 	map.get_socket(&"A").detach()
-	eq(detached.size(), 1, "and the detached signal")
+	check_equal(detached.size(), 1, "and the detached signal")

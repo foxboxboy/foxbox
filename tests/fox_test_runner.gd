@@ -8,10 +8,6 @@ extends RefCounted
 ## Suites are found by scanning res://tests/ recursively for test_*.gd, so they can be
 ## organised into any folder layout.
 
-## Suites are typed against their base class rather than duck typed, so calling into them does
-## not produce unsafe access warnings.
-const FoxTest = preload("res://tests/fox_test.gd")
-
 const TESTS_DIR: String = "res://tests/"
 
 ## Passing this as the seed picks a fresh one each run, so repeated runs cover different random
@@ -80,9 +76,9 @@ func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> RunR
 
 		var entry: SuiteResult = SuiteResult.new()
 		entry.name = suite.suite
-		entry.passed = suite.passed_count()
-		entry.failures = suite.failures().duplicate()
-		suite.cleanup()
+		entry.passed = suite.get_passed_count()
+		entry.failures = suite.get_failures().duplicate()
+		suite.free_tracked()
 
 		results.total_passed += entry.passed
 		results.total_failed += entry.failures.size()

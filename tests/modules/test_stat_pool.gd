@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 
 
 func run() -> void:
@@ -14,86 +14,86 @@ func run() -> void:
 
 
 func _defaults() -> void:
-	case("defaults")
+	start_case("defaults")
 	var p: FoxStatPool = FoxStatPool.new()
-	almost(p.max_value, 100.0, "max comes from base_max")
-	almost(p.current, 100.0, "the pool starts full")
+	check_almost_equal(p.max_value, 100.0, "max comes from base_max")
+	check_almost_equal(p.current, 100.0, "the pool starts full")
 
 
 func _spending_and_refilling() -> void:
-	case("spending")
+	start_case("spending")
 	var p: FoxStatPool = FoxStatPool.new()
 	p.subtract(30.0)
-	almost(p.current, 70.0, "subtract lowers current")
+	check_almost_equal(p.current, 70.0, "subtract lowers current")
 	p.add(10.0)
-	almost(p.current, 80.0, "add raises current")
+	check_almost_equal(p.current, 80.0, "add raises current")
 
 	p.add(9999.0)
-	almost(p.current, 100.0, "current cannot exceed the max")
+	check_almost_equal(p.current, 100.0, "current cannot exceed the max")
 
 	p.subtract(9999.0)
-	almost(p.current, 0.0, "current cannot go below zero")
+	check_almost_equal(p.current, 0.0, "current cannot go below zero")
 
 
 func _percentage() -> void:
-	case("percentage")
+	start_case("percentage")
 	var p: FoxStatPool = FoxStatPool.new()
-	almost(p.get_percent(), 1.0, "a full pool is 1.0")
+	check_almost_equal(p.get_percent(), 1.0, "a full pool is 1.0")
 
 	p.subtract(75.0)
-	almost(p.get_percent(), 0.25, "a quarter full is 0.25")
+	check_almost_equal(p.get_percent(), 0.25, "a quarter full is 0.25")
 
 	p.subtract(25.0)
-	almost(p.get_percent(), 0.0, "an empty pool is 0.0")
+	check_almost_equal(p.get_percent(), 0.0, "an empty pool is 0.0")
 
-	case("percentage with no capacity")
+	start_case("percentage with no capacity")
 	var zero: FoxStatPool = FoxStatPool.new()
 	zero.base_max = 0.0
-	almost(zero.get_percent(), 0.0, "a zero maximum returns 0.0 rather than dividing by zero")
+	check_almost_equal(zero.get_percent(), 0.0, "a zero maximum returns 0.0 rather than dividing by zero")
 
 
 func _max_modifiers() -> void:
-	case("max modifiers")
+	start_case("max modifiers")
 	var p: FoxStatPool = FoxStatPool.new()
 	p.add_flat_max_modifier(&"vitality", 50.0)
-	almost(p.max_value, 150.0, "a flat modifier raises the max")
+	check_almost_equal(p.max_value, 150.0, "a flat modifier raises the max")
 
 	p.add_multiplier_max_modifier(&"blessing", 1.0)
-	almost(p.max_value, 300.0, "a multiplier doubles the modified max")
+	check_almost_equal(p.max_value, 300.0, "a multiplier doubles the modified max")
 
 	check(p.pop_flat_max_modifier(&"vitality"), "popping a present modifier reports success")
-	almost(p.max_value, 200.0, "the max dropped accordingly")
+	check_almost_equal(p.max_value, 200.0, "the max dropped accordingly")
 
 	check(not p.pop_flat_max_modifier(&"vitality"), "popping again reports failure")
 
 	p.clear_all_max_modifiers()
-	almost(p.max_value, 100.0, "clearing returns the max to base_max")
+	check_almost_equal(p.max_value, 100.0, "clearing returns the max to base_max")
 
-	case("clearing one id")
+	start_case("clearing one id")
 	var q: FoxStatPool = FoxStatPool.new()
 	q.add_flat_max_modifier(&"a", 10.0)
 	q.add_flat_max_modifier(&"b", 20.0)
 	q.clear_flat_max_modifier(&"a")
-	almost(q.max_value, 120.0, "only the named modifier was cleared")
+	check_almost_equal(q.max_value, 120.0, "only the named modifier was cleared")
 
 
 func _lowering_the_max_clamps_current() -> void:
-	case("lowering the max")
+	start_case("lowering the max")
 	var p: FoxStatPool = FoxStatPool.new()
-	almost(p.current, 100.0, "pool starts full")
+	check_almost_equal(p.current, 100.0, "pool starts full")
 
 	p.base_max = 40.0
-	almost(p.max_value, 40.0, "max followed base_max down")
-	almost(p.current, 40.0, "current was clamped down with it")
+	check_almost_equal(p.max_value, 40.0, "max followed base_max down")
+	check_almost_equal(p.current, 40.0, "current was clamped down with it")
 
-	case("raising the max does not refill")
+	start_case("raising the max does not refill")
 	p.base_max = 200.0
-	almost(p.max_value, 200.0, "max went up")
-	almost(p.current, 40.0, "current stayed where it was")
+	check_almost_equal(p.max_value, 200.0, "max went up")
+	check_almost_equal(p.current, 40.0, "current stayed where it was")
 
 
 func _signals() -> void:
-	case("signals")
+	start_case("signals")
 	var p: FoxStatPool = FoxStatPool.new()
 	var updates: Array[int] = [0]
 	var depleted: Array[int] = [0]
@@ -104,11 +104,11 @@ func _signals() -> void:
 	check(updates[0] > 0, "spending emits updated")
 
 	p.subtract(9999.0)
-	eq(depleted[0], 1, "emptying the pool emits depleted once")
+	check_equal(depleted[0], 1, "emptying the pool emits depleted once")
 
 
 func _frees_itself() -> void:
-	case("no reference cycle")
+	start_case("no reference cycle")
 	# The pool connects to signals on resources it owns. Connecting with a lambda instead of a
 	# method would capture self, and the cycle would keep every pool alive for the whole session.
 	var pool: FoxStatPool = FoxStatPool.new()
@@ -119,7 +119,7 @@ func _frees_itself() -> void:
 
 
 func _random_spending_stays_in_range() -> void:
-	case("invariant under random spending")
+	start_case("invariant under random spending")
 	var breaches: int = 0
 
 	for i: int in 200:
@@ -135,4 +135,4 @@ func _random_spending_stays_in_range() -> void:
 			if p.current < -0.0001 or p.current > p.max_value + 0.0001:
 				breaches += 1
 
-	eq(breaches, 0, "current stayed between zero and max across 5000 random operations")
+	check_equal(breaches, 0, "current stayed between zero and max across 5000 random operations")

@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## Checks that the container keeps its viewport matched to the main one.
 ##
 ## The module is shelved and marked experimental. It has one behaviour, so this covers that one
@@ -11,7 +11,7 @@ func run() -> void:
 
 
 func _matches_the_main_viewport() -> void:
-	case("resizing")
+	start_case("resizing")
 	var container: FoxViewModelContainer = FoxViewModelContainer.new()
 	var inner: SubViewport = SubViewport.new()
 
@@ -27,5 +27,5 @@ func _matches_the_main_viewport() -> void:
 	container._on_viewport_size_changed()
 
 	var expected: Vector2i = Vector2i(container.get_viewport_rect().size)
-	eq(inner.size, expected, "the sub viewport takes the main viewport's size")
+	check_equal(inner.size, expected, "the sub viewport takes the main viewport's size")
 	check(expected.x > 1 and expected.y > 1, "and that size is a real one, not the stub")

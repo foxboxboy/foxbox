@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 
 
 func run() -> void:
@@ -16,63 +16,63 @@ func run() -> void:
 
 
 func _base_value() -> void:
-	case("base value")
+	start_case("base value")
 	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
-	almost(s.value, 10.0, "value starts at base")
+	check_almost_equal(s.value, 10.0, "value starts at base")
 	s.base_value = 25.0
-	almost(s.value, 25.0, "changing base recalculates")
+	check_almost_equal(s.value, 25.0, "changing base recalculates")
 
 
 func _flat_modifiers() -> void:
-	case("flat modifiers")
+	start_case("flat modifiers")
 	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	s.add_flat_modifier(&"boots", 5.0)
-	almost(s.value, 15.0, "one flat modifier adds")
+	check_almost_equal(s.value, 15.0, "one flat modifier adds")
 	s.add_flat_modifier(&"ring", 2.0)
-	almost(s.value, 17.0, "flat modifiers accumulate across ids")
+	check_almost_equal(s.value, 17.0, "flat modifiers accumulate across ids")
 	s.add_flat_modifier(&"boots", 3.0)
-	almost(s.value, 20.0, "the same id stacks rather than replacing")
+	check_almost_equal(s.value, 20.0, "the same id stacks rather than replacing")
 
 
 ## The class doc used to say the total was multiplied by the SUM of the multipliers.
 ## It is multiplied by 1.0 plus that sum, so 0.5 means +50%, not half.
 func _multiplier_is_one_plus_sum() -> void:
-	case("multiplier semantics")
+	start_case("multiplier semantics")
 	var s: FoxModifiableStat = FoxModifiableStat.new(100.0)
 	s.add_multiplier_modifier(&"rage", 0.5)
-	almost(s.value, 150.0, "a 0.5 multiplier means +50 percent")
+	check_almost_equal(s.value, 150.0, "a 0.5 multiplier means +50 percent")
 
 	s.clear_all_modifiers()
 	s.add_multiplier_modifier(&"a", 0.5)
 	s.add_multiplier_modifier(&"b", 0.5)
-	almost(s.value, 200.0, "two 0.5 multipliers stack additively to +100 percent")
+	check_almost_equal(s.value, 200.0, "two 0.5 multipliers stack additively to +100 percent")
 
 	s.clear_all_modifiers()
 	s.add_multiplier_modifier(&"debuff", -0.25)
-	almost(s.value, 75.0, "a negative multiplier reduces the total")
+	check_almost_equal(s.value, 75.0, "a negative multiplier reduces the total")
 
 
 func _combined_order_of_operations() -> void:
-	case("flat applies before multiplier")
+	start_case("flat applies before multiplier")
 	var s: FoxModifiableStat = FoxModifiableStat.new(100.0)
 	s.add_flat_modifier(&"gear", 50.0)
 	s.add_multiplier_modifier(&"buff", 1.0)
-	almost(s.value, 300.0, "(100 + 50) * 2.0 rather than 100 + (50 * 2.0)")
+	check_almost_equal(s.value, 300.0, "(100 + 50) * 2.0 rather than 100 + (50 * 2.0)")
 
 
 func _popping() -> void:
-	case("popping")
+	start_case("popping")
 	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	s.add_flat_modifier(&"stack", 1.0)
 	s.add_flat_modifier(&"stack", 10.0)
-	almost(s.value, 11.0, "two entries under one id")
+	check_almost_equal(s.value, 11.0, "two entries under one id")
 
 	var popped: bool = s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
 	check(popped, "pop reports success")
-	almost(s.value, 1.0, "pop removes the most recent entry, not the first")
+	check_almost_equal(s.value, 1.0, "pop removes the most recent entry, not the first")
 
 	s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
-	almost(s.value, 0.0, "popping the last entry empties the stack")
+	check_almost_equal(s.value, 0.0, "popping the last entry empties the stack")
 
 	var missing: bool = s.pop_modifier(&"stack", FoxModifiableStat.ModifierType.FLAT)
 	check(not missing, "popping an empty stack reports failure")
@@ -82,21 +82,21 @@ func _popping() -> void:
 
 
 func _clearing() -> void:
-	case("clearing")
+	start_case("clearing")
 	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	s.add_flat_modifier(&"poison", 1.0)
 	s.add_flat_modifier(&"poison", 1.0)
 	s.add_flat_modifier(&"keep", 5.0)
 
 	s.clear_modifier(&"poison", FoxModifiableStat.ModifierType.FLAT)
-	almost(s.value, 15.0, "clear removes every entry under that id only")
+	check_almost_equal(s.value, 15.0, "clear removes every entry under that id only")
 
 	s.clear_all_modifiers()
-	almost(s.value, 10.0, "clear_all returns the stat to its base value")
+	check_almost_equal(s.value, 10.0, "clear_all returns the stat to its base value")
 
 
 func _has_modifier() -> void:
-	case("has_modifier")
+	start_case("has_modifier")
 	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	check(not s.has_modifier(&"x", FoxModifiableStat.ModifierType.FLAT), "unknown id is absent")
 
@@ -110,7 +110,7 @@ func _has_modifier() -> void:
 
 
 func _remove_specific() -> void:
-	case("remove_specific_modifier")
+	start_case("remove_specific_modifier")
 	var s: FoxModifiableStat = FoxModifiableStat.new(0.0)
 	s.add_flat_modifier(&"mix", 1.0)
 	s.add_flat_modifier(&"mix", 7.0)
@@ -118,28 +118,28 @@ func _remove_specific() -> void:
 
 	var hit: bool = s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 7.0)
 	check(hit, "removing an existing amount reports success")
-	almost(s.value, 4.0, "only the matching amount was removed")
+	check_almost_equal(s.value, 4.0, "only the matching amount was removed")
 
 	var miss: bool = s.remove_specific_modifier(&"mix", FoxModifiableStat.ModifierType.FLAT, 99.0)
 	check(not miss, "removing an absent amount reports failure")
-	almost(s.value, 4.0, "a failed removal changes nothing")
+	check_almost_equal(s.value, 4.0, "a failed removal changes nothing")
 
 
 func _change_signal_only_fires_on_change() -> void:
-	case("value_changed")
+	start_case("value_changed")
 	var s: FoxModifiableStat = FoxModifiableStat.new(10.0)
 	var count: Array[int] = [0]
 	s.value_changed.connect(func(_v: float) -> void: count[0] += 1)
 
 	s.add_flat_modifier(&"a", 5.0)
-	eq(count[0], 1, "a real change emits once")
+	check_equal(count[0], 1, "a real change emits once")
 
 	s.add_flat_modifier(&"b", 0.0)
-	eq(count[0], 1, "a modifier that does not move the number stays silent")
+	check_equal(count[0], 1, "a modifier that does not move the number stays silent")
 
 
 func _random_stacks_match_the_formula() -> void:
-	case("invariant against the documented formula")
+	start_case("invariant against the documented formula")
 	var mismatches: int = 0
 
 	for i: int in 200:
@@ -161,4 +161,4 @@ func _random_stacks_match_the_formula() -> void:
 		if absf(s.value - expected) > 0.001:
 			mismatches += 1
 
-	eq(mismatches, 0, "(base + flats) * (1 + mults) held for 200 random stacks")
+	check_equal(mismatches, 0, "(base + flats) * (1 + mults) held for 200 random stacks")

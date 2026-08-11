@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## The 2D half of physics dragging.
 ##
 ## Only the target rotation is covered here, same as the 3D suite: everything else applies forces
@@ -21,7 +21,7 @@ func run() -> void:
 
 
 func _defaults_leave_rotation_free() -> void:
-	case("defaults")
+	start_case("defaults")
 	var profile: FoxPhysicsDragProfile = FoxPhysicsDragProfile.new()
 	check(not profile.keep_upright, "a fresh profile leaves rotation free")
 
@@ -30,32 +30,32 @@ func _defaults_leave_rotation_free() -> void:
 
 
 func _off_copies_the_dragger() -> void:
-	case("keep upright off")
+	start_case("keep upright off")
 	for degrees: float in [0.0, 35.0, -120.0, 179.0]:
 		var radians: float = deg_to_rad(degrees)
-		almost(Dragger.target_rotation_for(radians, false), radians,
+		check_almost_equal(Dragger.target_rotation_for(radians, false), radians,
 			"at %d degrees the body copies the dragger" % int(degrees))
 
 
 func _on_holds_it_level() -> void:
-	case("keep upright on")
+	start_case("keep upright on")
 	for degrees: float in [0.0, 35.0, -120.0, 179.0]:
-		almost(Dragger.target_rotation_for(deg_to_rad(degrees), true), 0.0,
+		check_almost_equal(Dragger.target_rotation_for(deg_to_rad(degrees), true), 0.0,
 			"at %d degrees the body is still held level" % int(degrees))
 
-	case("invariant across random angles")
+	start_case("invariant across random angles")
 	var tilted: int = 0
 	for i: int in 200:
 		var angle: float = rng.randf_range(-TAU, TAU)
 		if not is_equal_approx(Dragger.target_rotation_for(angle, true), 0.0):
 			tilted += 1
 
-	eq(tilted, 0, "no angle produced a tilted target across 200 tries")
+	check_equal(tilted, 0, "no angle produced a tilted target across 200 tries")
 
 
 ## The profile is deliberately not duplicated per dimension, so it has to keep working for both.
 func _profile_is_shared_with_3d() -> void:
-	case("one profile, both dimensions")
+	start_case("one profile, both dimensions")
 	var profile: FoxPhysicsDragProfile = FoxPhysicsDragProfile.new()
 	profile.stiffness = 123.0
 	profile.damping = 4.0
@@ -72,16 +72,16 @@ func _profile_is_shared_with_3d() -> void:
 	flat.grab(body_2d, Vector2.ZERO, profile)
 	solid.grab(body_3d, Vector3.ZERO, profile)
 
-	almost(flat._current_stiffness, 123.0, "the 2D dragger took the profile's stiffness")
-	almost(solid._current_stiffness, 123.0, "and so did the 3D one")
-	almost(flat._current_damping, 4.0, "the 2D dragger took the profile's damping")
-	almost(solid._current_damping, 4.0, "and so did the 3D one")
+	check_almost_equal(flat._current_stiffness, 123.0, "the 2D dragger took the profile's stiffness")
+	check_almost_equal(solid._current_stiffness, 123.0, "and so did the 3D one")
+	check_almost_equal(flat._current_damping, 4.0, "the 2D dragger took the profile's damping")
+	check_almost_equal(solid._current_damping, 4.0, "and so did the 3D one")
 	check(flat._current_keep_upright, "the 2D dragger took keep_upright")
 	check(solid._current_keep_upright, "and so did the 3D one")
 
-	case("and fall back to their own defaults without one")
+	start_case("and fall back to their own defaults without one")
 	flat.grab(body_2d, Vector2.ZERO)
-	almost(flat._current_stiffness, flat.default_stiffness, "no profile means the node's default")
+	check_almost_equal(flat._current_stiffness, flat.default_stiffness, "no profile means the node's default")
 
 	flat.release()
 	solid.release()
@@ -92,21 +92,21 @@ func _profile_is_shared_with_3d() -> void:
 ## from the physics server, which has nothing to report until a body has been through a physics
 ## step, and this harness never runs one.
 func _torque_scale_guards_bad_input() -> void:
-	case("torque scale guards")
-	almost(Dragger.torque_scale_for(null), 1.0, "a null body scales by one")
+	start_case("torque scale guards")
+	check_almost_equal(Dragger.torque_scale_for(null), 1.0, "a null body scales by one")
 
 	# There is no massless case to cover. RigidBody2D refuses a mass of zero, so the guard against
 	# it is unreachable from outside and testing it would only prove the engine clamps.
 
 	# No shape means no rotational inertia for the server to report.
 	var shapeless: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
-	almost(Dragger.torque_scale_for(shapeless), 1.0, "a body with no shape scales by one")
+	check_almost_equal(Dragger.torque_scale_for(shapeless), 1.0, "a body with no shape scales by one")
 
-	case("the rotation gains are matched")
+	start_case("the rotation gains are matched")
 	# They were briefly not. Rotation was damped harder to make up for demo profiles whose
 	# damping sat far below critical; fixing those removed the reason. A mismatch now would mean
 	# the same two numbers describe a different response for turning than for pulling.
-	almost(Dragger.TORQUE_DAMPING_GAIN, Dragger.TORQUE_SPRING_GAIN,
+	check_almost_equal(Dragger.TORQUE_DAMPING_GAIN, Dragger.TORQUE_SPRING_GAIN,
 		"turning uses the same gain as pulling, so one profile describes both")
 
 
@@ -115,7 +115,7 @@ func _torque_scale_guards_bad_input() -> void:
 ## the orientation spring could remove, so a flicked plank span one way, was dragged back the
 ## other, and never settled. Measured six seconds after a flick it was still turning.
 func _swing_cannot_outrun_the_spring() -> void:
-	case("swing response")
+	start_case("swing response")
 	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
 
 	check(dragger.swing_response > 0.0,
@@ -127,7 +127,7 @@ func _swing_cannot_outrun_the_spring() -> void:
 ## Where a body is being held, for drawing a marker or spawning something there. It is a fixed
 ## spot on the body, so it has to travel with it rather than stay put in the world.
 func _grab_point_rides_the_body() -> void:
-	case("grab point")
+	start_case("grab point")
 	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
 	dragger.global_position = Vector2(10, 20)
 
@@ -143,7 +143,7 @@ func _grab_point_rides_the_body() -> void:
 	check(dragger.get_grab_point().is_equal_approx(Vector2(140, 100)),
 		"the point is where the body was taken hold of, not its centre")
 
-	case("and travels with the body")
+	start_case("and travels with the body")
 	body.global_position = Vector2(300, 100)
 	check(dragger.get_grab_point().is_equal_approx(Vector2(340, 100)),
 		"moving the body carries the grab point along")
@@ -155,7 +155,7 @@ func _grab_point_rides_the_body() -> void:
 ## Regression: the torque takes the shortest way to its target, so a command more than half a turn
 ## ahead of the body pointed backwards and the body unwound against the drag instead of following.
 func _the_command_cannot_outrun_the_body() -> void:
-	case("the command cannot get more than a quarter turn ahead")
+	start_case("the command cannot get more than a quarter turn ahead")
 	var dragger: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
 	var body: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
 	dragger.grab(body, Vector2.ZERO)
@@ -170,7 +170,7 @@ func _the_command_cannot_outrun_the_body() -> void:
 		"twenty 45 degree turns leave the command within the lead, not wrapped around behind")
 	check(lead > 0.0, "and ahead of the body, which is the way it was turned")
 
-	case("winding the other way is just as bounded")
+	start_case("winding the other way is just as bounded")
 	for i: int in 20:
 		dragger.rotate(deg_to_rad(-45.0))
 		dragger._rein_in_rotation()
@@ -179,7 +179,7 @@ func _the_command_cannot_outrun_the_body() -> void:
 	check(absf(back) <= dragger.max_rotation_lead + 0.001, "still within the lead")
 	check(back < 0.0, "and behind the body now")
 
-	case("keep_upright has no command to outrun")
+	start_case("keep_upright has no command to outrun")
 	var upright: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
 	var held: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
 	upright.default_keep_upright = true
@@ -187,9 +187,9 @@ func _the_command_cannot_outrun_the_body() -> void:
 	# Not PI, which sits exactly on the wrap boundary and reads back as -PI.
 	upright.global_rotation = 2.0
 	upright._rein_in_rotation()
-	almost(upright.global_rotation, 2.0, "the node is left exactly where it was put")
+	check_almost_equal(upright.global_rotation, 2.0, "the node is left exactly where it was put")
 
-	case("the lead is tunable")
+	start_case("the lead is tunable")
 	var tight: FoxPhysicsDragger2D = track(FoxPhysicsDragger2D.new()) as FoxPhysicsDragger2D
 	var prop: RigidBody2D = track(RigidBody2D.new()) as RigidBody2D
 	tight.max_rotation_lead = deg_to_rad(20.0)
@@ -200,5 +200,5 @@ func _the_command_cannot_outrun_the_body() -> void:
 		tight._rein_in_rotation()
 
 	var held_close: float = angle_difference(prop.global_rotation, tight.global_rotation)
-	almost(held_close, deg_to_rad(20.0), "a shorter lead is honoured", 0.001)
-	almost(FoxPhysicsDragger2D.DEFAULT_ROTATION_LEAD, PI / 2.0, "and the default is still a quarter turn")
+	check_almost_equal(held_close, deg_to_rad(20.0), "a shorter lead is honoured", 0.001)
+	check_almost_equal(FoxPhysicsDragger2D.DEFAULT_ROTATION_LEAD, PI / 2.0, "and the default is still a quarter turn")

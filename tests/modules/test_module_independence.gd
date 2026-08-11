@@ -1,4 +1,4 @@
-extends "res://tests/fox_test.gd"
+extends FoxTest
 ## Checks that modules do not reach into each other.
 ##
 ## A module may reference [code]core[/code] and itself, and nothing else. That rule is what lets
@@ -28,7 +28,7 @@ func run() -> void:
 
 
 func _modules_only_reach_core() -> void:
-	case("cross module references")
+	start_case("cross module references")
 
 	var files: Array[String] = []
 	_collect(ADDON, files)
@@ -52,7 +52,7 @@ func _modules_only_reach_core() -> void:
 				continue
 			strays.append("%s references %s from %s" % [path.trim_prefix(ADDON), name, home])
 
-	eq(strays.size(), 0, "no module reaches outside core: %s" % ", ".join(strays))
+	check_equal(strays.size(), 0, "no module reaches outside core: %s" % ", ".join(strays))
 
 
 ## Every .gd file under [param dir], skipping the exempt folders.
@@ -135,7 +135,7 @@ func _code_of(line: String) -> String:
 ## the editor logged "Unrecognized UID" and drew no icon. Nothing else notices, because a class
 ## with a missing icon simply falls back to its base type's.
 func _icons_point_at_something() -> void:
-	case("icons resolve")
+	start_case("icons resolve")
 	var files: Array[String] = []
 	_collect(ADDON, files)
 
@@ -159,7 +159,7 @@ func _icons_point_at_something() -> void:
 				broken.append("%s -> %s" % [path.trim_prefix(ADDON), target])
 
 	check(checked > 10, "found icons to check")
-	eq(broken.size(), 0, "every @icon resolves: %s" % ", ".join(broken))
+	check_equal(broken.size(), 0, "every @icon resolves: %s" % ", ".join(broken))
 
 
 ## No file carries a byte order mark.
@@ -168,7 +168,7 @@ func _icons_point_at_something() -> void:
 ## picked one up during an edit. Godot parses them anyway, so nothing complains and the stray
 ## bytes just sit at the top of the file forever.
 func _no_byte_order_marks() -> void:
-	case("no byte order marks")
+	start_case("no byte order marks")
 	var files: Array[String] = []
 	_collect(ADDON, files)
 
@@ -180,4 +180,4 @@ func _no_byte_order_marks() -> void:
 		if f.get_8() == 0xEF and f.get_8() == 0xBB and f.get_8() == 0xBF:
 			marked.append(path.trim_prefix(ADDON))
 
-	eq(marked.size(), 0, "no file starts with a BOM: %s" % ", ".join(marked))
+	check_equal(marked.size(), 0, "no file starts with a BOM: %s" % ", ".join(marked))
