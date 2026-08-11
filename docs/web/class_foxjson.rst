@@ -23,18 +23,18 @@ Description
 
 ::
 
-    Vector2(x, y)                                 [1, 2]
-    Vector3(x, y, z)                              [1, 2, 3]
-    Color(r, g, b, a)                             [0.8, 0.7, 0.5, 1]
-    Quaternion(x, y, z, w)                        [0, 0.38, 0, 0.92]
-    Plane(a, b, c, d)                             [0, 1, 0, 5]
-    Rect2(x, y, width, height)                    [0, 0, 64, 32]
-    AABB(position, size)                          [[0, 0, 0], [2, 1, 2]]
-    Basis(x_axis, y_axis, z_axis)                 [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-    Transform2D(x_axis, y_axis, origin)           [[1, 0], [0, 1], [4, 2]]
-    Transform3D(x_axis, y_axis, z_axis, origin)   [[1, 0, 0], [0, 1, 0], [0, 0, 1], [2, 0, -3]]
+    Vector2(x, y)                                 [1.0, 2.0]
+    Vector3(x, y, z)                              [1.0, 2.0, 3.0]
+    Color(r, g, b, a)                             [0.8, 0.7, 0.5, 1.0]
+    Quaternion(x, y, z, w)                        [0.0, 0.38, 0.0, 0.92]
+    Plane(a, b, c, d)                             [0.0, 1.0, 0.0, 5.0]
+    Rect2(x, y, width, height)                    [0.0, 0.0, 64.0, 32.0]
+    AABB(position, size)                          [[0.0, 0.0, 0.0], [2.0, 1.0, 2.0]]
+    Basis(x_axis, y_axis, z_axis)                 [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    Transform2D(x_axis, y_axis, origin)           [[1.0, 0.0], [0.0, 1.0], [4.0, 2.0]]
+    Transform3D(x_axis, y_axis, z_axis, origin)   [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [2.0, 0.0, -3.0]]
 
-Transforms keep their axes rather than a position, rotation and scale. Decomposing reads better in a file, and it does not survive the trip: a body that is both rotated and scaled unevenly comes back wrong, and a mirrored one comes back with the wrong axis flipped. 
+Every component is a float, so a whole number carries its ``.0`` into the file. Transforms keep their axes rather than a position, rotation and scale. Decomposing reads better in a file, and it does not survive the trip: a body that is both rotated and scaled unevenly comes back wrong, and a mirrored one comes back with the wrong axis flipped. 
 
 Floats round to :ref:`PRECISION<class_FoxJson_constant_PRECISION>` on the way out, which is what keeps a file worth opening. 
 
