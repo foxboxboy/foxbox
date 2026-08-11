@@ -112,7 +112,52 @@ func read(path: String) -> Error:
 ## Returns [constant ERR_INVALID_DATA] without touching the file when [param contents] already uses
 ## [constant VERSION_KEY], or holds a value JSON cannot store. [method get_error_message] names the
 ## key in both cases.
+## [br][br]
+## A failure is also pushed to the debugger, the way [method ResourceSaver.save] reports one. A save
+## that does not happen is never a normal outcome, and a caller that drops the returned
+## [enum Error] would otherwise see nothing at all. [method read] stays quiet by comparison, because
+## a missing file on a first run is ordinary.
 func write(path: String, contents: Dictionary) -> Error:
+	var result: Error = _write(path, contents)
+	if result != OK:
+		push_error("FoxJsonFile: %s" % _error_message)
+	return result
+
+
+## Returns the path [method write] keeps the previous copy of [param path] at.
+static func get_backup_path(path: String) -> String:
+	return path.get_base_dir().path_join(BACKUP_FOLDER).path_join(path.get_file())
+
+#endregion
+
+
+
+
+#region Errors
+
+## Returns why the last [method read] or [method write] failed, or an empty string.
+func get_error_message() -> String:
+	return _error_message
+
+
+## Returns the line the last [method read] failed to parse, counting from 1. Returns 0 when nothing
+## failed and after every [method write], neither of which has a line to point at.
+## [br][br]
+## [method JSON.get_error_line] counts from 0 and returns 0 on success, so its first line and its
+## no-error answer are the same number. This one is shifted by one to tell them apart.
+func get_error_line() -> int:
+	return _error_line
+
+#endregion
+
+
+
+
+#region Private
+
+# Everything write does. Split out so one place decides whether a failure is pushed, rather than
+# every early return remembering to.
+func _write(path: String, contents: Dictionary) -> Error:
 	_clear_error()
 
 	if contents.has(VERSION_KEY):
@@ -153,37 +198,6 @@ func write(path: String, contents: Dictionary) -> Error:
 
 	return OK
 
-
-## Returns the path [method write] keeps the previous copy of [param path] at.
-static func get_backup_path(path: String) -> String:
-	return path.get_base_dir().path_join(BACKUP_FOLDER).path_join(path.get_file())
-
-#endregion
-
-
-
-
-#region Errors
-
-## Returns why the last [method read] or [method write] failed, or an empty string.
-func get_error_message() -> String:
-	return _error_message
-
-
-## Returns the line the last [method read] failed to parse, counting from 1. Returns 0 when nothing
-## failed and after every [method write], neither of which has a line to point at.
-## [br][br]
-## [method JSON.get_error_line] counts from 0 and returns 0 on success, so its first line and its
-## no-error answer are the same number. This one is shifted by one to tell them apart.
-func get_error_line() -> int:
-	return _error_line
-
-#endregion
-
-
-
-
-#region Private
 
 # Returns the parsed object, or null with the error recorded. Null covers every way this fails,
 # because an empty file and a missing one both leave nothing to hand back.

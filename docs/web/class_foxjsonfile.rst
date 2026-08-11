@@ -193,7 +193,9 @@ Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FI
 
 Writes ``contents`` to ``path``, replacing what was there, and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases.
+Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases. 
+
+A failure is also pushed to the debugger, the way :ref:`ResourceSaver.save()<class_ResourceSaver_method_save>` reports one. A save that does not happen is never a normal outcome, and a caller that drops the returned :ref:`Error<enum_@GlobalScope_Error>` would otherwise see nothing at all. :ref:`read()<class_FoxJsonFile_method_read>` stays quiet by comparison, because a missing file on a first run is ordinary.
 
 .. rst-class:: classref-item-separator
 
