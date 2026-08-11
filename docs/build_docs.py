@@ -33,6 +33,7 @@ MODULE_ORDER = [
     "effect",
     "state_machine",
     "shop",
+    "json",
     "socket",
     "damage",
     "interaction",

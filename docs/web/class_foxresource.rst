@@ -12,7 +12,7 @@ FoxResource
 
 **Inherits:** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-**Inherited By:** :ref:`FoxBoundedValue<class_FoxBoundedValue>`, :ref:`FoxEffect<class_FoxEffect>`, :ref:`FoxModifiableStat<class_FoxModifiableStat>`, :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>`, :ref:`FoxPrice<class_FoxPrice>`, :ref:`FoxShopCatalog<class_FoxShopCatalog>`, :ref:`FoxShopItem<class_FoxShopItem>`, :ref:`FoxStatPool<class_FoxStatPool>`, :ref:`FoxWallet<class_FoxWallet>`
+**Inherited By:** :ref:`FoxBoundedValue<class_FoxBoundedValue>`, :ref:`FoxEffect<class_FoxEffect>`, :ref:`FoxJsonFile<class_FoxJsonFile>`, :ref:`FoxModifiableStat<class_FoxModifiableStat>`, :ref:`FoxPhysicsDragProfile<class_FoxPhysicsDragProfile>`, :ref:`FoxPrice<class_FoxPrice>`, :ref:`FoxShopCatalog<class_FoxShopCatalog>`, :ref:`FoxShopItem<class_FoxShopItem>`, :ref:`FoxStatPool<class_FoxStatPool>`, :ref:`FoxWallet<class_FoxWallet>`
 
 Base resource, inherited by FoxFabric's resources.
 
