@@ -12,7 +12,7 @@ FoxRefCounted
 
 **Inherits:** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-**Inherited By:** :ref:`FoxAttributeRule<class_FoxAttributeRule>`, :ref:`FoxEffectInstance<class_FoxEffectInstance>`, :ref:`FoxJson<class_FoxJson>`
+**Inherited By:** :ref:`FoxAttributeRule<class_FoxAttributeRule>`, :ref:`FoxEffectInstance<class_FoxEffectInstance>`, :ref:`FoxJson<class_FoxJson>`, :ref:`FoxJsonFile<class_FoxJsonFile>`
 
 Base class, inherited by FoxFabric's reference-counted types.
 
