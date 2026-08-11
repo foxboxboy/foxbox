@@ -108,9 +108,16 @@ func read(path: String) -> Error:
 		_error_line = first_line
 		return _error_code
 
+	# The failed attempt on the file that was asked for is not this call's outcome, so its message
+	# does not survive into a read that went on to succeed.
+	_clear_error()
+	var result: Error = _adopt(fallback)
+	if result != OK:
+		return result
+
 	_broken_path = path
 	recovered.emit()
-	return _adopt(fallback)
+	return OK
 
 
 ## Writes [param contents] to [param path], replacing what was there, and returns [constant OK].
@@ -152,9 +159,14 @@ func write(path: String, contents: Dictionary) -> Error:
 
 	var moved: Error = DirAccess.rename_absolute(temp, path)
 	if moved != OK:
+		# The previous file is already in the backup folder by now, which is where a later read
+		# falls back to on its own. Leaving the half-written one behind would serve nobody.
+		DirAccess.remove_absolute(temp)
 		return _fail(moved, "%s could not be moved into place" % temp)
 
-	_broken_path = ""
+	# Only this path stops being the broken one. Writing somewhere else says nothing about it.
+	if path == _broken_path:
+		_broken_path = ""
 	return OK
 
 
