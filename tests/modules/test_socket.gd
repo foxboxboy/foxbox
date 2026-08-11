@@ -43,20 +43,20 @@ func _gizmo_reads_occupancy() -> void:
 
 	case("gizmo marker transform")
 	var bare: FoxSocket3D = _socket(holder)
-	check(gizmo.marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
+	check(gizmo.get_marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
 		"no marker draws at the socket itself")
 
 	var offset: Node3D = Node3D.new()
 	bare.add_child(offset)
 	offset.position = Vector3(0.0, 1.5, 0.0)
 	bare.marker = offset
-	check(gizmo.marker_transform(bare).origin.is_equal_approx(Vector3(0.0, 1.5, 0.0)),
+	check(gizmo.get_marker_transform(bare).origin.is_equal_approx(Vector3(0.0, 1.5, 0.0)),
 		"a marker draws at its own offset")
 
 	var outsider: Node3D = Node3D.new()
 	holder.add_child(outsider)
 	bare.marker = outsider
-	check(gizmo.marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
+	check(gizmo.get_marker_transform(bare).is_equal_approx(Transform3D.IDENTITY),
 		"a marker outside the socket is ignored, since the warning already covers it")
 
 	_gizmo_registers(gizmo, holder)

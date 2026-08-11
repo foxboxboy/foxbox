@@ -18,17 +18,17 @@ extends Node3D
 @export var clamp_pitch: bool = true:
 	set(value):
 		clamp_pitch = value
-		_limits_changed()
+		_refresh_editor_hints()
 ## The minimum allowed pitch in degrees. Evaluated only if [member clamp_pitch] is [code]true[/code].
 @export var min_pitch_deg: float = -89.0:
 	set(value):
 		min_pitch_deg = value
-		_limits_changed()
+		_refresh_editor_hints()
 ## The maximum allowed pitch in degrees. Evaluated only if [member clamp_pitch] is [code]true[/code].
 @export var max_pitch_deg: float = 89.0:
 	set(value):
 		max_pitch_deg = value
-		_limits_changed()
+		_refresh_editor_hints()
 
 @export_group("Yaw")
 ## If [code]true[/code], restricts the Y-axis rotation between [member min_yaw_deg] and [member max_yaw_deg].
@@ -39,17 +39,17 @@ extends Node3D
 @export var clamp_yaw: bool = false:
 	set(value):
 		clamp_yaw = value
-		_limits_changed()
+		_refresh_editor_hints()
 ## The minimum allowed yaw in degrees. Evaluated only if [member clamp_yaw] is [code]true[/code].
 @export var min_yaw_deg: float = -90.0:
 	set(value):
 		min_yaw_deg = value
-		_limits_changed()
+		_refresh_editor_hints()
 ## The maximum allowed yaw in degrees. Evaluated only if [member clamp_yaw] is [code]true[/code].
 @export var max_yaw_deg: float = 90.0:
 	set(value):
 		max_yaw_deg = value
-		_limits_changed()
+		_refresh_editor_hints()
 
 ## The current pitch (X-axis rotation) in radians. Modifying this safely updates the node's rotation.
 var pitch: float = 0.0 :
@@ -112,7 +112,7 @@ func aim_at_position(target_global_pos: Vector3) -> void:
 
 ## The configuration warning and the clamp gizmo are both read off the limits, and neither
 ## refreshes on its own when one changes in the inspector.
-func _limits_changed() -> void:
+func _refresh_editor_hints() -> void:
 	update_configuration_warnings()
 	update_gizmos()
 

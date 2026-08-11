@@ -122,13 +122,13 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 
-	child_order_changed.connect(_attachment_changed)
+	child_order_changed.connect(_on_attachment_changed)
 
 	if marker == null:
 		marker = self
 
 
-func _attachment_changed() -> void:
+func _on_attachment_changed() -> void:
 	attachment_changed.emit(attachment, self)
 
 	if not is_instance_valid(attachment) or attachment.get_parent() != self:

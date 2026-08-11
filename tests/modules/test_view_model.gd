@@ -24,7 +24,7 @@ func _matches_the_main_viewport() -> void:
 	check(container.sub_viewport == inner, "the expected child is picked up")
 
 	inner.size = Vector2i(1, 1)
-	container._viewport_size_changed()
+	container._on_viewport_size_changed()
 
 	var expected: Vector2i = Vector2i(container.get_viewport_rect().size)
 	eq(inner.size, expected, "the sub viewport takes the main viewport's size")

@@ -164,7 +164,7 @@ func load_state(save_data: Array, target: Object, blueprint_lookup: Callable) ->
 
 		instance.setup(blueprint, target)
 		instance.load_state(data)
-		instance.request_destruction.connect(_on_instance_request_destruction)
+		instance.destruction_requested.connect(_on_instance_destruction_requested)
 
 		effects.append(instance)
 
@@ -190,7 +190,7 @@ func _get_instance_by_id(target_id: StringName) -> FoxEffectInstance:
 func _remove_instance_at(index: int) -> void:
 	var instance = effects[index]
 
-	instance.request_destruction.disconnect(_on_instance_request_destruction)
+	instance.destruction_requested.disconnect(_on_instance_destruction_requested)
 	instance.cleanup()
 
 	effects.remove_at(index)
@@ -199,7 +199,7 @@ func _remove_instance_at(index: int) -> void:
 	effect_removed.emit(instance)
 
 
-func _on_instance_request_destruction(instance: FoxEffectInstance) -> void:
+func _on_instance_destruction_requested(instance: FoxEffectInstance) -> void:
 	remove_instance(instance)
 
 
@@ -207,7 +207,7 @@ func _create_new_instance(effect: FoxEffect, target: Object) -> FoxEffectInstanc
 	var new_instance := FoxEffectInstance.new()
 
 	new_instance.setup(effect, target)
-	new_instance.request_destruction.connect(_on_instance_request_destruction)
+	new_instance.destruction_requested.connect(_on_instance_destruction_requested)
 
 	effect.execute(target)
 

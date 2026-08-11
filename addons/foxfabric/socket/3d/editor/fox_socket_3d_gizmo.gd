@@ -36,11 +36,11 @@ const RETIRED_SETTINGS: Array[String] = [
 func _init() -> void:
 	Colors.install(self, COLORS)
 	Colors.retire(RETIRED_SETTINGS)
-	Colors.watch(_settings_changed)
+	Colors.watch(_on_settings_changed)
 
 
 ## Picks up a recoloured gizmo without an editor restart.
-func _settings_changed() -> void:
+func _on_settings_changed() -> void:
 	Colors.refresh(self, COLORS)
 
 
@@ -79,16 +79,16 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 ## Split out from [code skip-lint]_redraw[/code] so the geometry can be checked without an editor gizmo to
 ## hand it to. Points come in pairs, one segment per pair.
 static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
-	var at: Transform3D = marker_transform(socket)
+	var at: Transform3D = get_marker_transform(socket)
 	var lines: PackedVector3Array = PackedVector3Array()
 
-	for point: Vector3 in _diamond(SIZE):
+	for point: Vector3 in _build_diamond(SIZE):
 		lines.append(at * point)
-	for point: Vector3 in _arrow():
+	for point: Vector3 in _build_arrow():
 		lines.append(at * point)
 
 	if is_occupied(socket):
-		for point: Vector3 in _diamond(SIZE * 0.45):
+		for point: Vector3 in _build_diamond(SIZE * 0.45):
 			lines.append(at * point)
 
 	return lines
@@ -100,7 +100,7 @@ static func build_lines(socket: FoxSocket3D) -> PackedVector3Array:
 ## which returns early in the editor, so at edit time it is usually still null. A marker outside
 ## the socket is reported by the socket's own configuration warning, so it is ignored here rather
 ## than drawn somewhere misleading.
-static func marker_transform(socket: FoxSocket3D) -> Transform3D:
+static func get_marker_transform(socket: FoxSocket3D) -> Transform3D:
 	var marker: Node3D = socket.marker
 	if marker == null or marker == socket or not socket.is_ancestor_of(marker):
 		return Transform3D.IDENTITY
@@ -127,7 +127,7 @@ static func is_occupied(socket: FoxSocket3D) -> bool:
 
 
 ## The twelve edges of an octahedron of half width [param size], as line pairs.
-static func _diamond(size: float) -> Array[Vector3]:
+static func _build_diamond(size: float) -> Array[Vector3]:
 	var x: Vector3 = Vector3(size, 0.0, 0.0)
 	var y: Vector3 = Vector3(0.0, size, 0.0)
 	var z: Vector3 = Vector3(0.0, 0.0, size)
@@ -147,7 +147,7 @@ static func _diamond(size: float) -> Array[Vector3]:
 
 
 ## A shaft down local -Z with four barbs, so the facing reads from any angle.
-static func _arrow() -> Array[Vector3]:
+static func _build_arrow() -> Array[Vector3]:
 	var tip: Vector3 = Vector3(0.0, 0.0, -ARROW)
 	var barb: float = SIZE * 0.6
 	var points: Array[Vector3] = [Vector3.ZERO, tip]

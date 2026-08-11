@@ -31,7 +31,8 @@ VERBS = (
     "Acts", "Adds", "Applies", "Builds", "Calculates", "Calls", "Carries", "Checks", "Connects",
     "Contains", "Controls", "Converts", "Creates", "Delivers", "Draws", "Emits", "Handles",
     "Holds", "Keeps", "Loads", "Locks", "Maintains", "Makes", "Manages", "Manipulates", "Moves",
-    "Places", "Positions", "Provides", "Reads", "Receives", "Registers", "Removes", "Renders",
+    "Places", "Positions", "Provides", "Puts", "Reads", "Receives", "Registers", "Removes",
+    "Renders",
     "Reports", "Returns", "Rotates", "Routes", "Sends", "Sets", "Stores", "Tracks", "Updates",
     "Wraps", "Writes",
 )

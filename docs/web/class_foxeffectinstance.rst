@@ -97,11 +97,11 @@ Emitted when the :ref:`stack<class_FoxEffectInstance_property_stack>` count chan
 
 ----
 
-.. _class_FoxEffectInstance_signal_request_destruction:
+.. _class_FoxEffectInstance_signal_destruction_requested:
 
 .. rst-class:: classref-signal
 
-**request_destruction**\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ ) :ref:`🔗<class_FoxEffectInstance_signal_request_destruction>`
+**destruction_requested**\ (\ instance\: :ref:`FoxEffectInstance<class_FoxEffectInstance>`\ ) :ref:`🔗<class_FoxEffectInstance_signal_destruction_requested>`
 
 Emitted when this ``instance`` should be destroyed, either because external logic forced it to expire early or because :ref:`decrease_stack()<class_FoxEffectInstance_method_decrease_stack>` dropped the stack to ``0``.
 
@@ -235,7 +235,7 @@ If the stack successfully increases, this automatically triggers the effect's :r
 
 Decreases the :ref:`stack<class_FoxEffectInstance_property_stack>` count. 
 
-If the stack reaches ``0``, it immediately emits :ref:`request_destruction<class_FoxEffectInstance_signal_request_destruction>` so the manager can purge it. Otherwise, it triggers :ref:`FoxEffect.reapply()<class_FoxEffect_method_reapply>` to scale down the math.
+If the stack reaches ``0``, it immediately emits :ref:`destruction_requested<class_FoxEffectInstance_signal_destruction_requested>` so the manager can purge it. Otherwise, it triggers :ref:`FoxEffect.reapply()<class_FoxEffect_method_reapply>` to scale down the math.
 
 .. rst-class:: classref-item-separator
 

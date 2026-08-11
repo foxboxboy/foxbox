@@ -22,7 +22,7 @@ signal stack_changed(previous_stack: int, new_stack: int)
 
 ## Emitted when this [param instance] should be destroyed, either because external logic forced
 ## it to expire early or because [method decrease_stack] dropped the stack to [code]0[/code].
-signal request_destruction(instance: FoxEffectInstance)
+signal destruction_requested(instance: FoxEffectInstance)
 
 #endregion
 
@@ -107,7 +107,7 @@ func increase_stack(amount: int = 1) -> void:
 
 ## Decreases the [member stack] count.
 ## [br][br]
-## If the stack reaches [code]0[/code], it immediately emits [signal request_destruction]
+## If the stack reaches [code]0[/code], it immediately emits [signal destruction_requested]
 ## so the manager can purge it. Otherwise, it triggers [method FoxEffect.reapply]
 ## to scale down the math.
 func decrease_stack(amount: int = 1) -> void:
@@ -115,7 +115,7 @@ func decrease_stack(amount: int = 1) -> void:
 	_stack -= amount
 
 	if _stack <= 0:
-		request_destruction.emit(self)
+		destruction_requested.emit(self)
 	else:
 		if effect:
 			effect.reapply(target, _stack)

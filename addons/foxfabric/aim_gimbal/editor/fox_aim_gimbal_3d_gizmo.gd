@@ -31,10 +31,10 @@ const COLORS: Dictionary[String, Color] = {
 
 func _init() -> void:
 	Colors.install(self, COLORS)
-	Colors.watch(_settings_changed)
+	Colors.watch(_on_settings_changed)
 
 
-func _settings_changed() -> void:
+func _on_settings_changed() -> void:
 	Colors.refresh(self, COLORS)
 
 
@@ -77,7 +77,7 @@ static func build_pitch_arc(gimbal: FoxAimGimbal3D) -> PackedVector3Array:
 		var angle: float = lerpf(
 			deg_to_rad(gimbal.min_pitch_deg), deg_to_rad(gimbal.max_pitch_deg),
 			float(i) / float(SEGMENTS))
-		points.append(_pitch_point(angle, facing))
+		points.append(_get_pitch_point(angle, facing))
 
 	return _sweep(points, undo_rotation(gimbal))
 
@@ -90,7 +90,7 @@ static func build_yaw_arc(gimbal: FoxAimGimbal3D) -> PackedVector3Array:
 		var angle: float = lerpf(
 			deg_to_rad(gimbal.min_yaw_deg), deg_to_rad(gimbal.max_yaw_deg),
 			float(i) / float(SEGMENTS))
-		points.append(_yaw_point(angle))
+		points.append(_get_yaw_point(angle))
 
 	return _sweep(points, undo_rotation(gimbal))
 
@@ -105,13 +105,13 @@ static func undo_rotation(gimbal: FoxAimGimbal3D) -> Basis:
 
 
 ## A point on the yaw sweep. Yaw zero faces local -Z, matching [method FoxAimGimbal3D.aim_at_position].
-static func _yaw_point(angle: float) -> Vector3:
+static func _get_yaw_point(angle: float) -> Vector3:
 	return Vector3(-sin(angle), 0.0, -cos(angle)) * RADIUS
 
 
 ## A point on the pitch sweep, lifted out of the horizontal plane at [param facing].
 ## Positive pitch aims up.
-static func _pitch_point(angle: float, facing: float) -> Vector3:
+static func _get_pitch_point(angle: float, facing: float) -> Vector3:
 	var flat: Vector3 = Vector3(-sin(facing), 0.0, -cos(facing))
 	return (flat * cos(angle) + Vector3.UP * sin(angle)) * RADIUS
 
