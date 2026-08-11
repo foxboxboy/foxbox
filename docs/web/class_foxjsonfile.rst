@@ -29,9 +29,15 @@ Description
     func _get_version() -> int:
         return 3
 
-Every write moves the previous file into a ``backups`` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. A read falls back to that copy and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>`. 
+    func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
+        if from_version == 2:
+            contents["props"] = contents["objects"]
+            contents.erase("objects")
+        return contents
 
-Values go in as they will be stored. A write refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`.
+Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file into a :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. :ref:`read()<class_FoxJsonFile_method_read>` falls back to that copy on its own and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>`. 
+
+Values go in as they will be stored. :ref:`write()<class_FoxJsonFile_method_write>` refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`.
 
 .. rst-class:: classref-reftable-group
 
@@ -44,6 +50,26 @@ Properties
    +-------------------------------------+----------------------------------------------+
    | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>` |
    +-------------------------------------+----------------------------------------------+
+
+.. rst-class:: classref-reftable-group
+
+Methods
+-------
+
+.. table::
+   :widths: auto
+
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Error<enum_@GlobalScope_Error>` | :ref:`read<class_FoxJsonFile_method_read>`\ (\ path\: :ref:`String<class_String>`\ )                                                   |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Error<enum_@GlobalScope_Error>` | :ref:`write<class_FoxJsonFile_method_write>`\ (\ path\: :ref:`String<class_String>`, contents\: :ref:`Dictionary<class_Dictionary>`\ ) |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`           | :ref:`get_backup_path<class_FoxJsonFile_method_get_backup_path>`\ (\ path\: :ref:`String<class_String>`\ ) |static|                    |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`           | :ref:`get_error_message<class_FoxJsonFile_method_get_error_message>`\ (\ )                                                             |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                 | :ref:`get_error_line<class_FoxJsonFile_method_get_error_line>`\ (\ )                                                                   |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -60,7 +86,7 @@ Signals
 
 **migrated**\ (\ from_version\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxJsonFile_signal_migrated>`
 
-Emitted when a read opened a file from an older version and carried it forward.
+Emitted when :ref:`read()<class_FoxJsonFile_method_read>` opened a file from an older version and carried it forward.
 
 .. rst-class:: classref-item-separator
 
@@ -72,7 +98,7 @@ Emitted when a read opened a file from an older version and carried it forward.
 
 **recovered**\ (\ ) :ref:`🔗<class_FoxJsonFile_signal_recovered>`
 
-Emitted when a read could not use the file and fell back to the backup.
+Emitted when :ref:`read()<class_FoxJsonFile_method_read>` could not use the file and fell back to the backup.
 
 .. rst-class:: classref-section-separator
 
@@ -91,6 +117,22 @@ Constants
 
 Folder the previous copy is kept in, beside the file itself.
 
+.. _class_FoxJsonFile_constant_VERSION_KEY:
+
+.. rst-class:: classref-constant
+
+**VERSION_KEY** = ``"version"`` :ref:`🔗<class_FoxJsonFile_constant_VERSION_KEY>`
+
+Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the version under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it.
+
+.. _class_FoxJsonFile_constant_TEMP_SUFFIX:
+
+.. rst-class:: classref-constant
+
+**TEMP_SUFFIX** = ``".tmp"`` :ref:`🔗<class_FoxJsonFile_constant_TEMP_SUFFIX>`
+
+Suffix of the file :ref:`write()<class_FoxJsonFile_method_write>` builds before moving it into place.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -106,7 +148,82 @@ Property Descriptions
 
 :ref:`Dictionary<class_Dictionary>` **data** :ref:`🔗<class_FoxJsonFile_property_data>`
 
-The contents of the last successful read.
+The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. 
+
+Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
+
+Method Descriptions
+-------------------
+
+.. _class_FoxJsonFile_method_read:
+
+.. rst-class:: classref-method
+
+:ref:`Error<enum_@GlobalScope_Error>` **read**\ (\ path\: :ref:`String<class_String>`\ ) :ref:`🔗<class_FoxJsonFile_method_read>`
+
+Reads ``path`` into :ref:`data<class_FoxJsonFile_property_data>` and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
+
+Falls back to the copy under :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` when the file is missing or unreadable, and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>` when it does. Runs ``_migrate`` once per version when the file is older than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
+
+Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when neither copy is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_method_write:
+
+.. rst-class:: classref-method
+
+:ref:`Error<enum_@GlobalScope_Error>` **write**\ (\ path\: :ref:`String<class_String>`, contents\: :ref:`Dictionary<class_Dictionary>`\ ) :ref:`🔗<class_FoxJsonFile_method_write>`
+
+Writes ``contents`` to ``path``, replacing what was there, and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
+
+Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_method_get_backup_path:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **get_backup_path**\ (\ path\: :ref:`String<class_String>`\ ) |static| :ref:`🔗<class_FoxJsonFile_method_get_backup_path>`
+
+Returns the path :ref:`write()<class_FoxJsonFile_method_write>` keeps the previous copy of ``path`` at.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_method_get_error_message:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **get_error_message**\ (\ ) :ref:`🔗<class_FoxJsonFile_method_get_error_message>`
+
+Returns why the last :ref:`read()<class_FoxJsonFile_method_read>` or :ref:`write()<class_FoxJsonFile_method_write>` failed, or an empty string.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_method_get_error_line:
+
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **get_error_line**\ (\ ) :ref:`🔗<class_FoxJsonFile_method_get_error_line>`
+
+Returns the line the last :ref:`read()<class_FoxJsonFile_method_read>` failed to parse, counting from 1. Returns 0 when nothing failed and after every :ref:`write()<class_FoxJsonFile_method_write>`, neither of which has a line to point at. 
+
+\ :ref:`JSON.get_error_line()<class_JSON_method_get_error_line>` counts from 0 and returns 0 on success, so its first line and its no-error answer are the same number. This one is shifted by one to tell them apart.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

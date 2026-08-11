@@ -37,6 +37,10 @@ extends FoxRefCounted
 ## Rounding applied by every [code]_to_array[/code] method.
 const PRECISION: float = 0.001
 
+## The largest whole number a JSON reader gives back unchanged. Above this, 9007199254740993
+## returns as 9007199254740992.
+const MAX_EXACT_INT: int = 9007199254740992
+
 
 #region Encoding
 
@@ -183,6 +187,93 @@ static func array_to_transform_3d(value: Variant, default: Transform3D = Transfo
 	)
 
 #endregion
+
+
+#region Checking
+
+## Returns a description of the first value in [param value] that JSON cannot store, or an empty
+## string when all of them can be.
+## [br][br]
+## Godot writes an unsupported value as the text it prints in the debugger, so a [Vector3] saves as
+## [code]"(1.0, 2.0, 3.0)"[/code] and loads back a [String]. Nothing reports this, which is what
+## this exists to catch.
+## [codeblock]
+## var problem := FoxJson.find_unsupported(contents)
+## if not problem.is_empty():
+##     push_error(problem)
+## # props/0/transform holds a Transform3D, which JSON cannot store
+## [/codeblock]
+## [StringName] and [NodePath] pass, and come back as a [String].
+static func find_unsupported(value: Variant) -> String:
+	return _find_unsupported(value, "")
+
+#endregion
+
+
+# Types JSON stores without losing anything worth keeping. The packed float arrays are absent
+# because their entries still need checking for NaN.
+const _SAFE_TYPES: Array[int] = [
+	TYPE_NIL,
+	TYPE_BOOL,
+	TYPE_STRING,
+	TYPE_STRING_NAME,
+	TYPE_NODE_PATH,
+	TYPE_PACKED_INT32_ARRAY,
+	TYPE_PACKED_INT64_ARRAY,
+	TYPE_PACKED_STRING_ARRAY,
+]
+
+
+# Walks depth first and stops at the first problem. Returning one is enough to refuse the write,
+# and listing every one of them buries the first.
+static func _find_unsupported(value: Variant, path: String) -> String:
+	var type := typeof(value)
+
+	if type == TYPE_ARRAY or type == TYPE_PACKED_FLOAT32_ARRAY or type == TYPE_PACKED_FLOAT64_ARRAY:
+		for i in value.size():
+			var problem := _find_unsupported(value[i], _join(path, str(i)))
+			if not problem.is_empty():
+				return problem
+		return ""
+
+	if type == TYPE_DICTIONARY:
+		for key: Variant in value:
+			if typeof(key) != TYPE_STRING and typeof(key) != TYPE_STRING_NAME:
+				# Two keys that print the same collide into one entry, and the file keeps whichever
+				# was written last.
+				return "%s is keyed by a %s, and JSON keys are strings" % [
+					_where(path), type_string(typeof(key)),
+				]
+			var problem := _find_unsupported(value[key], _join(path, str(key)))
+			if not problem.is_empty():
+				return problem
+		return ""
+
+	if type == TYPE_INT:
+		if absi(value) > MAX_EXACT_INT:
+			return "%s is past %d, which JSON cannot hold exactly" % [_where(path), MAX_EXACT_INT]
+		return ""
+
+	if type == TYPE_FLOAT:
+		if is_nan(value):
+			return "%s is NaN, which JSON writes as null" % _where(path)
+		if is_inf(value):
+			return "%s is INF, which JSON has no number for" % _where(path)
+		return ""
+
+	if type in _SAFE_TYPES:
+		return ""
+
+	return "%s holds a %s, which JSON cannot store" % [_where(path), type_string(type)]
+
+
+# Names the offending spot. The top level has no path of its own.
+static func _where(path: String) -> String:
+	return "the value" if path.is_empty() else path
+
+
+static func _join(path: String, key: String) -> String:
+	return key if path.is_empty() else "%s/%s" % [path, key]
 
 
 # Rounds one component. A Vector3 holds float32, so an unrounded component reaches the file as

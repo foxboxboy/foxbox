@@ -91,6 +91,8 @@ Methods
    +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Transform3D<class_Transform3D>` | :ref:`array_to_transform_3d<class_FoxJson_method_array_to_transform_3d>`\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| |
    +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`           | :ref:`find_unsupported<class_FoxJson_method_find_unsupported>`\ (\ value\: :ref:`Variant<class_Variant>`\ ) |static|                                                                                                              |
+   +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -108,6 +110,14 @@ Constants
 **PRECISION** = ``0.001`` :ref:`🔗<class_FoxJson_constant_PRECISION>`
 
 Rounding applied by every ``_to_array`` method.
+
+.. _class_FoxJson_constant_MAX_EXACT_INT:
+
+.. rst-class:: classref-constant
+
+**MAX_EXACT_INT** = ``9007199254740992`` :ref:`🔗<class_FoxJson_constant_MAX_EXACT_INT>`
+
+The largest whole number a JSON reader gives back unchanged. Above this, 9007199254740993 returns as 9007199254740992.
 
 .. rst-class:: classref-section-separator
 
@@ -353,6 +363,29 @@ Returns the :ref:`Transform2D<class_Transform2D>` in ``value``, or ``default``.
 :ref:`Transform3D<class_Transform3D>` **array_to_transform_3d**\ (\ value\: :ref:`Variant<class_Variant>`, default\: :ref:`Transform3D<class_Transform3D>` = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)\ ) |static| :ref:`🔗<class_FoxJson_method_array_to_transform_3d>`
 
 Returns the :ref:`Transform3D<class_Transform3D>` in ``value``, or ``default``.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJson_method_find_unsupported:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **find_unsupported**\ (\ value\: :ref:`Variant<class_Variant>`\ ) |static| :ref:`🔗<class_FoxJson_method_find_unsupported>`
+
+Returns a description of the first value in ``value`` that JSON cannot store, or an empty string when all of them can be. 
+
+Godot writes an unsupported value as the text it prints in the debugger, so a :ref:`Vector3<class_Vector3>` saves as ``"(1.0, 2.0, 3.0)"`` and loads back a :ref:`String<class_String>`. Nothing reports this, which is what this exists to catch.
+
+::
+
+    var problem := FoxJson.find_unsupported(contents)
+    if not problem.is_empty():
+        push_error(problem)
+    # props/0/transform holds a Transform3D, which JSON cannot store
+
+\ :ref:`StringName<class_StringName>` and :ref:`NodePath<class_NodePath>` pass, and come back as a :ref:`String<class_String>`.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
