@@ -31,6 +31,7 @@ func run() -> void:
 	DirAccess.make_dir_recursive_absolute(DIR)
 
 	_every_type_survives_the_file()
+	_the_file_holds_what_the_class_doc_says()
 	_floats_round_on_the_way_out()
 	_decoding_falls_back_on_anything_it_cannot_read()
 	_colour_alpha_is_optional()
@@ -70,6 +71,45 @@ func _every_type_survives_the_file() -> void:
 		FoxJson.array_to_transform_2d, FoxJson.transform_2d_to_array)
 	_survives("Transform3D", FoxJson.transform_3d_to_array(Transform3D(basis, Vector3(2, -1, -3))),
 		FoxJson.array_to_transform_3d, FoxJson.transform_3d_to_array)
+
+
+func _the_file_holds_what_the_class_doc_says() -> void:
+	# A round trip only proves the two halves agree with each other. Transposing a Basis on both
+	# sides survives every check above, while the file quietly stops matching its own reference,
+	# so the shape is pinned here against the table in the FoxJson class comment.
+	start_case("the encoding matches the table in the class reference")
+
+	_encodes(FoxJson.vector2_to_array(Vector2(1, 2)), "[1.0,2.0]", "Vector2(x, y)")
+	_encodes(FoxJson.vector3_to_array(Vector3(1, 2, 3)), "[1.0,2.0,3.0]", "Vector3(x, y, z)")
+	_encodes(FoxJson.color_to_array(Color(0.8, 0.7, 0.5, 1)), "[0.8,0.7,0.5,1.0]",
+		"Color(r, g, b, a)")
+	_encodes(FoxJson.quaternion_to_array(Quaternion(0, 0.38, 0, 0.92)), "[0.0,0.38,0.0,0.92]",
+		"Quaternion(x, y, z, w)")
+	_encodes(FoxJson.plane_to_array(Plane(0, 1, 0, 5)), "[0.0,1.0,0.0,5.0]", "Plane(a, b, c, d)")
+	_encodes(FoxJson.rect2_to_array(Rect2(0, 0, 64, 32)), "[0.0,0.0,64.0,32.0]",
+		"Rect2(x, y, width, height)")
+	_encodes(FoxJson.aabb_to_array(AABB(Vector3(0, 0, 0), Vector3(2, 1, 2))),
+		"[[0.0,0.0,0.0],[2.0,1.0,2.0]]", "AABB(position, size)")
+	_encodes(FoxJson.basis_to_array(Basis.IDENTITY), "[[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]]",
+		"Basis(x_axis, y_axis, z_axis)")
+	_encodes(FoxJson.transform_2d_to_array(Transform2D(Vector2(1, 0), Vector2(0, 1), Vector2(4, 2))),
+		"[[1.0,0.0],[0.0,1.0],[4.0,2.0]]", "Transform2D(x_axis, y_axis, origin)")
+	_encodes(FoxJson.transform_3d_to_array(Transform3D(Basis.IDENTITY, Vector3(2, 0, -3))),
+		"[[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0],[2.0,0.0,-3.0]]",
+		"Transform3D(x_axis, y_axis, z_axis, origin)")
+
+	start_case("a matrix is written as its axes rather than its rows")
+
+	# every row of the doc table above is its own transpose, so none of them can catch this
+	_encodes(FoxJson.basis_to_array(Basis(Vector3(1, 2, 3), Vector3(4, 5, 6), Vector3(7, 8, 9))),
+		"[[1.0,2.0,3.0],[4.0,5.0,6.0],[7.0,8.0,9.0]]", "Basis keeps x, then y, then z")
+	_encodes(FoxJson.transform_2d_to_array(Transform2D(Vector2(1, 2), Vector2(3, 4), Vector2(5, 6))),
+		"[[1.0,2.0],[3.0,4.0],[5.0,6.0]]", "Transform2D keeps x, then y, then origin")
+	_encodes(FoxJson.transform_3d_to_array(
+			Transform3D(Basis(Vector3(1, 2, 3), Vector3(4, 5, 6), Vector3(7, 8, 9)),
+			Vector3(10, 11, 12))),
+		"[[1.0,2.0,3.0],[4.0,5.0,6.0],[7.0,8.0,9.0],[10.0,11.0,12.0]]",
+		"Transform3D keeps its three axes, then the origin")
 
 
 func _floats_round_on_the_way_out() -> void:
@@ -250,7 +290,7 @@ func _writing_refuses_before_touching_the_file() -> void:
 
 
 func _a_broken_file_falls_back_to_the_backup() -> void:
-	start_case("a file broken partway through a write costs one save, not the world")
+	start_case("a broken file is reported rather than quietly swapped for the backup")
 
 	var path: String = DIR + "/crash.json"
 	var writer: WorldV1 = WorldV1.new()
@@ -259,60 +299,51 @@ func _a_broken_file_falls_back_to_the_backup() -> void:
 	_write_text(path, '{"take": 3, "props": [')
 
 	var reader: WorldV1 = WorldV1.new()
-	var recovered: Array[bool] = []
-	reader.recovered.connect(func() -> void: recovered.append(true))
+	check_equal(reader.read(path), ERR_PARSE_ERROR, "the read fails, so the game can ask first")
+	check(reader.get_error_message().contains("crash.json"), "naming the file that was asked for")
+	check(reader.get_error_line() > 0, "and the line to look at")
 
-	check_equal(reader.read(path), OK, "the read still succeeds")
-	check_equal(recovered.size(), 1, "recovered was emitted once")
-	# the backup holds the previous file, so recovering costs the save the crash interrupted
-	check_equal(reader.data["take"], 1, "and it holds the save before the one that was lost")
-	check_equal(reader.get_error_message(), "", "the failed attempt leaves no error on a read that worked")
-	check_equal(reader.get_error_line(), 0, "nor a line")
+	start_case("the backup is there for the game to reach for")
 
-	start_case("both copies broken is an honest failure")
-	_write_text(path, "{oops")
-	_write_text(FoxJsonFile.get_backup_path(path), "{oops")
-	var doomed: WorldV1 = WorldV1.new()
-	check_equal(doomed.read(path), ERR_PARSE_ERROR, "the error is reported")
-	check(doomed.get_error_message().contains("crash.json"),
-		"naming the file that was asked for, not the backup")
+	# the backup holds the previous file, so taking it costs the save the crash interrupted
+	check_equal(reader.read(FoxJsonFile.get_backup_path(path)), OK, "it opens")
+	check_equal(reader.data["take"], 1, "holding the save before the one that was lost")
+	check_equal(reader.get_error_message(), "", "and the earlier failure is not still reported")
+	check_equal(reader.get_error_line(), 0, "nor its line")
+
+	start_case("data keeps the last successful read when a later one fails")
+
+	check_equal(reader.read(DIR + "/gone.json"), ERR_FILE_NOT_FOUND, "a read that cannot work")
+	check_equal(reader.data["take"], 1, "leaves what was already loaded alone")
 
 
 func _a_broken_file_never_becomes_the_backup() -> void:
-	start_case("writing after a recovery does not push the broken file over the good copy")
+	start_case("saving over a broken file puts it aside instead of over the good copy")
 
 	var path: String = DIR + "/rotate.json"
 	var writer: WorldV1 = WorldV1.new()
 	writer.write(path, {"take": 1})
 	writer.write(path, {"take": 2})
-	_write_text(path, '{"take": 3, "props": [')
+	_write_text(path, '{"take": 3, "MY EDIT": [')
 
+	# a fresh instance that never read the broken file, which is the case remembering it would miss
 	var session: WorldV1 = WorldV1.new()
-	session.read(path)
 	session.write(path, {"take": 4})
 
 	var backup: WorldV1 = WorldV1.new()
 	check_equal(backup.read(FoxJsonFile.get_backup_path(path)), OK, "the backup is still whole")
 	check_equal(backup.data["take"], 1, "still holding the good save rather than the broken file")
 
-	start_case("and saving something else in between does not make it forget")
+	start_case("and the broken text is kept, not thrown away")
 
-	var other: String = DIR + "/rotate_b.json"
-	var second: String = DIR + "/rotate_two.json"
-	var w2: WorldV1 = WorldV1.new()
-	w2.write(second, {"take": 1})
-	w2.write(second, {"take": 2})
-	_write_text(second, '{"take": 3, "props": [')
+	var aside: String = FoxJsonFile.get_backup_path(path) + FoxJsonFile.BROKEN_SUFFIX
+	check(FileAccess.file_exists(aside), "it is put aside under BROKEN_SUFFIX")
+	check(FileAccess.get_file_as_string(aside).contains("MY EDIT"),
+		"with whatever was hand written into it still there")
 
-	var session2: WorldV1 = WorldV1.new()
-	session2.read(second)
-	session2.write(other, {"unrelated": true})
-	session2.write(second, {"take": 4})
 
-	var backup2: WorldV1 = WorldV1.new()
-	check_equal(backup2.read(FoxJsonFile.get_backup_path(second)), OK,
-		"a save to a different file in between changes nothing")
-	check_equal(backup2.data["take"], 1, "the good copy is still the good copy")
+func _encodes(encoded: Array, expected: String, label: String) -> void:
+	check_equal(JSON.stringify(encoded), expected, label)
 
 
 func _survives(label: String, encoded: Array, decode: Callable, encode: Callable) -> void:

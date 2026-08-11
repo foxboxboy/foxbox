@@ -35,7 +35,9 @@ Description
             contents.erase("objects")
         return contents
 
-Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file into a :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. :ref:`read()<class_FoxJsonFile_method_read>` falls back to that copy on its own and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>`. 
+Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file into a :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. A previous file that will not parse is kept under :ref:`BROKEN_SUFFIX<class_FoxJsonFile_constant_BROKEN_SUFFIX>` instead of taking the backup slot from a whole one, which is what makes a bad hand edit recoverable. 
+
+Nothing reaches for the backup on its own. See :ref:`read()<class_FoxJsonFile_method_read>`. 
 
 Values go in as they will be stored. :ref:`write()<class_FoxJsonFile_method_write>` refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`.
 
@@ -88,18 +90,6 @@ Signals
 
 Emitted when :ref:`read()<class_FoxJsonFile_method_read>` opened a file from an older version and carried it forward.
 
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJsonFile_signal_recovered:
-
-.. rst-class:: classref-signal
-
-**recovered**\ (\ ) :ref:`🔗<class_FoxJsonFile_signal_recovered>`
-
-Emitted when :ref:`read()<class_FoxJsonFile_method_read>` could not use the file and fell back to the backup.
-
 .. rst-class:: classref-section-separator
 
 ----
@@ -116,6 +106,14 @@ Constants
 **BACKUP_FOLDER** = ``"backups"`` :ref:`🔗<class_FoxJsonFile_constant_BACKUP_FOLDER>`
 
 Folder the previous copy is kept in, beside the file itself.
+
+.. _class_FoxJsonFile_constant_BROKEN_SUFFIX:
+
+.. rst-class:: classref-constant
+
+**BROKEN_SUFFIX** = ``".broken"`` :ref:`🔗<class_FoxJsonFile_constant_BROKEN_SUFFIX>`
+
+Added to the name of a previous copy that could not be parsed, so it is kept apart from the whole one.
 
 .. _class_FoxJsonFile_constant_VERSION_KEY:
 
@@ -148,7 +146,7 @@ Property Descriptions
 
 :ref:`Dictionary<class_Dictionary>` **data** :ref:`🔗<class_FoxJsonFile_property_data>`
 
-The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. 
+The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. A read that fails leaves whatever was there before it, so the returned :ref:`Error<enum_@GlobalScope_Error>` is what says whether this is current. 
 
 Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it.
 
@@ -169,9 +167,19 @@ Method Descriptions
 
 Reads ``path`` into :ref:`data<class_FoxJsonFile_property_data>` and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-Falls back to the copy under :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` when the file is missing or unreadable, and emits :ref:`recovered<class_FoxJsonFile_signal_recovered>` when it does. Runs ``_migrate`` once per version when the file is older than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
+The backup is never reached for on its own. A file that will not load is reported and nothing else happens, because what to do about it belongs to the game: a world editor wants to say which line is wrong and offer the older copy, and only the game knows whether there is a screen to say it on.
 
-Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when neither copy is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
+::
+
+    if file.read(path) != OK:
+        var answer: bool = await ask("%s could not be read.\nLine %d: %s\n\nLoad the backup?"
+            % [path, file.get_error_line(), file.get_error_message()])
+        if answer:
+            file.read(FoxJsonFile.get_backup_path(path))
+
+Runs ``_migrate`` once per version when the file is older than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
+
+Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
 
 .. rst-class:: classref-item-separator
 

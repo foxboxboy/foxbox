@@ -19,8 +19,11 @@ extends FoxRefCounted
 ##     return contents
 ## [/codeblock]
 ## Every [method write] moves the previous file into a [constant BACKUP_FOLDER] folder beside it
-## before the new one lands, so a crash partway through leaves one whole file either way.
-## [method read] falls back to that copy on its own and emits [signal recovered].
+## before the new one lands, so a crash partway through leaves one whole file either way. A
+## previous file that will not parse is kept under [constant BROKEN_SUFFIX] instead of taking the
+## backup slot from a whole one, which is what makes a bad hand edit recoverable.
+## [br][br]
+## Nothing reaches for the backup on its own. See [method read].
 ## [br][br]
 ## Values go in as they will be stored. [method write] refuses anything JSON cannot hold, because
 ## Godot turns a [Vector3] into a debug string that reads back as text. Convert the composite types
@@ -34,9 +37,6 @@ extends FoxRefCounted
 ## Emitted when [method read] opened a file from an older version and carried it forward.
 signal migrated(from_version: int)
 
-## Emitted when [method read] could not use the file and fell back to the backup.
-signal recovered()
-
 #endregion
 
 
@@ -47,6 +47,10 @@ signal recovered()
 ## Folder the previous copy is kept in, beside the file itself.
 const BACKUP_FOLDER: String = "backups"
 
+## Added to the name of a previous copy that could not be parsed, so it is kept apart from the
+## whole one.
+const BROKEN_SUFFIX: String = ".broken"
+
 ## Key [method write] stamps the version under. A dictionary handed to [method write] may not
 ## already use it.
 const VERSION_KEY: String = "version"
@@ -54,7 +58,8 @@ const VERSION_KEY: String = "version"
 ## Suffix of the file [method write] builds before moving it into place.
 const TEMP_SUFFIX: String = ".tmp"
 
-## The contents of the last successful [method read].
+## The contents of the last successful [method read]. A read that fails leaves whatever was there
+## before it, so the returned [enum Error] is what says whether this is current.
 ## [br][br]
 ## Every number in it is a [float], because JSON has one number type. A count written as
 ## [code]3[/code] reads back as [code]3.0[/code], and a dictionary read back does not compare equal
@@ -65,11 +70,6 @@ var _error_code: Error = OK
 var _error_message: String = ""
 var _error_line: int = 0
 
-# The path whose file was unreadable when it was last read. Writing there again must not rotate
-# that file into the backup slot: it would overwrite the good copy the read fell back to, and a
-# second crash would leave nothing.
-var _broken_path: String = ""
-
 #endregion
 
 
@@ -79,45 +79,32 @@ var _broken_path: String = ""
 
 ## Reads [param path] into [member data] and returns [constant OK].
 ## [br][br]
-## Falls back to the copy under [constant BACKUP_FOLDER] when the file is missing or unreadable,
-## and emits [signal recovered] when it does. Runs [code skip-lint]_migrate[/code] once per
-## version when the file is older than this subclass writes, and emits [signal migrated] after.
+## The backup is never reached for on its own. A file that will not load is reported and nothing
+## else happens, because what to do about it belongs to the game: a world editor wants to say which
+## line is wrong and offer the older copy, and only the game knows whether there is a screen to say
+## it on.
+## [codeblock]
+## if file.read(path) != OK:
+##     var answer: bool = await ask("%s could not be read.\nLine %d: %s\n\nLoad the backup?"
+##         % [path, file.get_error_line(), file.get_error_message()])
+##     if answer:
+##         file.read(FoxJsonFile.get_backup_path(path))
+## [/codeblock]
+## Runs [code skip-lint]_migrate[/code] once per version when the file is older than this subclass
+## writes, and emits [signal migrated] after.
 ## [br][br]
-## Returns [constant ERR_FILE_NOT_FOUND] when neither copy is there, [constant ERR_PARSE_ERROR]
-## when the text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
+## Returns [constant ERR_FILE_NOT_FOUND] when nothing is there, [constant ERR_PARSE_ERROR] when the
+## text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
 ## [constant VERSION_KEY], and [constant ERR_FILE_UNRECOGNIZED] when it was written by a newer
 ## version than this one reads. [method get_error_message] says which.
 func read(path: String) -> Error:
 	_clear_error()
-	_broken_path = ""
 
 	var contents: Variant = _load(path)
-	if contents != null:
-		return _adopt(contents)
-
-	# The backup is a second chance, not a better diagnosis. Whatever went wrong with the file that
-	# was asked for is what the caller needs to hear about.
-	var first_code: Error = _error_code
-	var first_message: String = _error_message
-	var first_line: int = _error_line
-
-	var fallback: Variant = _load(get_backup_path(path))
-	if fallback == null:
-		_error_code = first_code
-		_error_message = first_message
-		_error_line = first_line
+	if contents == null:
 		return _error_code
 
-	# The failed attempt on the file that was asked for is not this call's outcome, so its message
-	# does not survive into a read that went on to succeed.
-	_clear_error()
-	var result: Error = _adopt(fallback)
-	if result != OK:
-		return result
-
-	_broken_path = path
-	recovered.emit()
-	return OK
+	return _adopt(contents)
 
 
 ## Writes [param contents] to [param path], replacing what was there, and returns [constant OK].
@@ -159,14 +146,11 @@ func write(path: String, contents: Dictionary) -> Error:
 
 	var moved: Error = DirAccess.rename_absolute(temp, path)
 	if moved != OK:
-		# The previous file is already in the backup folder by now, which is where a later read
-		# falls back to on its own. Leaving the half-written one behind would serve nobody.
+		# The previous file is already in the backup folder by now, which is where a caller can
+		# reach for it. Leaving the half-written one behind would serve nobody.
 		DirAccess.remove_absolute(temp)
 		return _fail(moved, "%s could not be moved into place" % temp)
 
-	# Only this path stops being the broken one. Writing somewhere else says nothing about it.
-	if path == _broken_path:
-		_broken_path = ""
 	return OK
 
 
@@ -239,7 +223,7 @@ func _adopt(contents: Dictionary) -> Error:
 
 	var stamp: Variant = contents[VERSION_KEY]
 	if typeof(stamp) != TYPE_FLOAT and typeof(stamp) != TYPE_INT:
-		return _fail(ERR_INVALID_DATA, '"%s" is a %s, and a version is a number' % [
+		return _fail(ERR_INVALID_DATA, '"%s" is a %s, and a version is a whole number' % [
 			VERSION_KEY, type_string(typeof(stamp)),
 		])
 
@@ -263,19 +247,18 @@ func _adopt(contents: Dictionary) -> Error:
 	return OK
 
 
-# Moves the file already at path into the backup folder. A file that failed to load is deleted
-# instead: promoting it would overwrite the good copy that the read fell back to.
+# Moves the file already at path into the backup folder. One that cannot be parsed is put aside
+# under BROKEN_SUFFIX rather than taking the slot from a whole copy, which is checked here rather
+# than remembered from an earlier read: the file may have been broken by something other than this
+# object, or by nothing that ran this session at all.
 func _rotate(path: String) -> Error:
 	if not FileAccess.file_exists(path):
 		return OK
 
-	if path == _broken_path:
-		var removed: Error = DirAccess.remove_absolute(path)
-		if removed != OK:
-			return _fail(removed, "%s could not be removed" % path)
-		return OK
-
 	var backup: String = get_backup_path(path)
+	if not _is_readable(path):
+		backup += BROKEN_SUFFIX
+
 	var folder: String = backup.get_base_dir()
 	if not DirAccess.dir_exists_absolute(folder):
 		var made: Error = DirAccess.make_dir_recursive_absolute(folder)
@@ -286,6 +269,19 @@ func _rotate(path: String) -> Error:
 	if moved != OK:
 		return _fail(moved, "%s could not be moved to %s" % [path, backup])
 	return OK
+
+
+# Whether the file at path is JSON this class could read back. Uses its own parser so a check made
+# during a write leaves the error from that write alone.
+func _is_readable(path: String) -> bool:
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return false
+	var text: String = file.get_as_text()
+	file.close()
+
+	var json: JSON = JSON.new()
+	return json.parse(text) == OK and typeof(json.data) == TYPE_DICTIONARY
 
 
 func _clear_error() -> void:
