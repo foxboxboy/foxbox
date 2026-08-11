@@ -60,9 +60,15 @@ func run(root: Node, filter: String = "", seed_value: int = RANDOM_SEED) -> RunR
 			results.broken.append("%s could not be loaded" % path)
 			continue
 
-		var suite: FoxTest = script.new()
+		# Taken as Object and cast, because assigning a wrong type straight into a FoxTest variable
+		# raises instead of leaving null, and the raise aborts this whole function.
+		var instance: Object = script.new()
+		var suite: FoxTest = instance as FoxTest
 		if suite == null:
 			results.broken.append("%s does not extend fox_test.gd" % path)
+			# A script extending Node is not reference counted, so dropping it here would leak.
+			if instance != null and not (instance is RefCounted):
+				instance.free()
 			continue
 
 		suite.root = root

@@ -22,6 +22,11 @@ func _ready() -> void:
 
 	var runner: Runner = Runner.new()
 	var results: Runner.RunResult = runner.run(self, suite_filter, random_seed)
+	if results == null:
+		_output.text = "[color=red]The run did not finish. See the Output panel.[/color]"
+		printerr("The test run did not finish.")
+		return
+
 	var report: String = runner.format(results)
 
 	_output.text = report

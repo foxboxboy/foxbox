@@ -12,11 +12,22 @@ extends SceneTree
 
 const Runner = preload("res://tests/fox_test_runner.gd")
 
+var _attempted: bool = false
+
 
 ## Nodes added to root during _initialize() never fire _enter_tree, because the tree is not
 ## live yet. Anything relying on tree callbacks would silently do nothing, so the run waits
 ## for the first real frame instead.
 func _process(_delta: float) -> bool:
+	# Returning false asks for another frame, and an error anywhere below aborts this function
+	# before quit() is reached. Without this, that error repeats every frame and the process never
+	# ends: a broken suite once produced 18000 rounds of it. One attempt is all a run gets.
+	if _attempted:
+		printerr("The test run did not finish. See the errors above.")
+		quit(1)
+		return true
+	_attempted = true
+
 	var runner: Runner = Runner.new()
 	var results: Runner.RunResult = runner.run(
 		root,
