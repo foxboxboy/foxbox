@@ -9,16 +9,16 @@ how to carry an older file forward when that version changes.
     class_name WorldFile
     extends FoxJsonFile
 
-    func _get_version() -> int:
+    func _get_format() -> int:
         return 2
 
-    func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
-        if from_version == 1:
+    func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
+        if from_format == 1:
             contents["props"] = contents["objects"]
             contents.erase("objects")
         return contents
 
-``_get_version`` counts changes to the shape of the file, not releases of the project. The two move
+``_get_format`` counts changes to the shape of the file, not releases of the project. The two move
 at different rates, so it is stamped under ``format`` and leaves ``version`` free for a release
 string of your own.
 

@@ -1,19 +1,19 @@
 @abstract
 class_name FoxJsonFile
 extends FoxRefCounted
-## A JSON file on disk, versioned and written whole or not at all.
+## A JSON file on disk, stamped with its format and written whole or not at all.
 ##
-## [FoxJsonFile] is inherited once per file format. A subclass names the version it writes and
+## [FoxJsonFile] is inherited once per file format. A subclass names the format it writes and
 ## says how to carry an older file forward.
 ## [codeblock]
 ## class_name FoxavasWorldFile
 ## extends FoxJsonFile
 ##
-## func _get_version() -> int:
+## func _get_format() -> int:
 ##     return 3
 ##
-## func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
-##     if from_version == 2:
+## func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
+##     if from_format == 2:
 ##         contents["props"] = contents["objects"]
 ##         contents.erase("objects")
 ##     return contents
@@ -34,8 +34,8 @@ extends FoxRefCounted
 
 #region Signals
 
-## Emitted when [method read] opened a file from an older version and carried it forward.
-signal migrated(from_version: int)
+## Emitted when [method read] opened a file in an older format and carried it forward.
+signal migrated(from_format: int)
 
 #endregion
 
@@ -51,8 +51,8 @@ const BACKUP_FOLDER: String = "backups"
 ## whole one.
 const BROKEN_SUFFIX: String = ".broken"
 
-## Key [method write] stamps the format version under. A dictionary handed to [method write] may
-## not already use it.
+## Key [method write] stamps the format under. A dictionary handed to [method write] may not
+## already use it.
 ## [br][br]
 ## This counts changes to the shape of the file, not releases of the project. The two move at
 ## different rates, and a release string is ordinary data that can sit in the contents under any
@@ -94,13 +94,13 @@ var _error_line: int = 0
 ##     if answer:
 ##         file.read(FoxJsonFile.get_backup_path(path))
 ## [/codeblock]
-## Runs [code skip-lint]_migrate[/code] once per version when the file is older than this subclass
-## writes, and emits [signal migrated] after.
+## Runs [code skip-lint]_migrate[/code] once per step when the file is in an older format than this
+## subclass writes, and emits [signal migrated] after.
 ## [br][br]
 ## Returns [constant ERR_FILE_NOT_FOUND] when nothing is there, [constant ERR_PARSE_ERROR] when the
 ## text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
 ## [constant FORMAT_KEY], and [constant ERR_FILE_UNRECOGNIZED] when it was written by a newer
-## version than this one reads. [method get_error_message] says which.
+## format than this one reads. [method get_error_message] says which.
 func read(path: String) -> Error:
 	_clear_error()
 
@@ -173,7 +173,7 @@ func _write(path: String, contents: Dictionary) -> Error:
 		return _fail(ERR_INVALID_DATA, problem)
 
 	var payload: Dictionary = contents.duplicate()
-	payload[FORMAT_KEY] = _get_version()
+	payload[FORMAT_KEY] = _get_format()
 
 	var folder: String = path.get_base_dir()
 	if not folder.is_empty() and not DirAccess.dir_exists_absolute(folder):
@@ -234,34 +234,42 @@ func _load(path: String) -> Variant:
 	return json.data
 
 
-# Pulls the version out, migrates, and takes the result as data.
+# Pulls the format out, migrates, and takes the result as data.
 func _adopt(contents: Dictionary) -> Error:
 	if not contents.has(FORMAT_KEY):
 		return _fail(ERR_INVALID_DATA, 'The file carries no "%s"' % FORMAT_KEY)
 
 	var stamp: Variant = contents[FORMAT_KEY]
 	if typeof(stamp) != TYPE_FLOAT and typeof(stamp) != TYPE_INT:
-		return _fail(ERR_INVALID_DATA, '"%s" is a %s, and a version is a whole number' % [
+		return _fail(ERR_INVALID_DATA, '"%s" is a %s, and a format is a whole number' % [
 			FORMAT_KEY, type_string(typeof(stamp)),
 		])
 
-	var from_version: int = stamp
-	var current: int = _get_version()
-	if from_version > current:
-		return _fail(ERR_FILE_UNRECOGNIZED, "The file is version %d, and this reads up to %d" % [
-			from_version, current,
+	# Checked before the assignment below, which would otherwise take 1.5 as 1 and migrate the file
+	# as though it were the format before the one it claims.
+	var number: float = stamp
+	if number != floorf(number):
+		return _fail(ERR_INVALID_DATA, '"%s" is %s, and a format is a whole number' % [
+			FORMAT_KEY, number,
+		])
+
+	var from_format: int = number
+	var current: int = _get_format()
+	if from_format > current:
+		return _fail(ERR_FILE_UNRECOGNIZED, "The file is format %d, and this reads up to %d" % [
+			from_format, current,
 		])
 
 	# Stripped before _migrate runs, so a subclass never has to work around a key it did not write.
 	contents.erase(FORMAT_KEY)
 
-	if from_version < current:
-		for step: int in range(from_version, current):
+	if from_format < current:
+		for step: int in range(from_format, current):
 			contents = _migrate(contents, step)
 
 	data = contents
-	if from_version < current:
-		migrated.emit(from_version)
+	if from_format < current:
+		migrated.emit(from_format)
 	return OK
 
 
@@ -320,21 +328,21 @@ func _fail(code: Error, message: String) -> Error:
 
 #region Virtual Methods
 
-## Returns the format version this subclass writes. Raise it whenever the shape of the file
-## changes, and carry older files forward from the version below it.
+## Returns the format this subclass writes. Raise it whenever the shape of the file
+## changes, and carry older files forward from the one below it.
 @abstract
-func _get_version() -> int
+func _get_format() -> int
 
 
-## Returns [param contents] carried forward from [param from_version] to the version above it.
+## Returns [param contents] carried forward from [param from_format] to the format above it.
 ## [br][br]
 ## Called once per step, so a file at 1 opened by a subclass at 4 reaches
-## [code skip-lint]_migrate[/code] three times, with [param from_version] 1, then 2, then 3. Each
+## [code skip-lint]_migrate[/code] three times, with [param from_format] 1, then 2, then 3. Each
 ## case handles one step and the earlier ones never need revisiting.
 ## [br][br]
 ## The file on disk is untouched. Only what [method read] hands back changes.
 @warning_ignore("unused_parameter")
-func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
+func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
 	return contents
 
 #endregion

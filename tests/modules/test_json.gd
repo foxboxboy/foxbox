@@ -3,21 +3,21 @@ extends FoxTest
 
 ## A format that has never changed, for the plain reading and writing cases.
 class WorldV1 extends FoxJsonFile:
-	func _get_version() -> int:
+	func _get_format() -> int:
 		return 1
 
 
 ## A format three versions on. Version 1 renamed a key and version 2 added one, so a file saved
 ## at 1 only arrives intact when both steps run in order.
 class WorldV3 extends FoxJsonFile:
-	func _get_version() -> int:
+	func _get_format() -> int:
 		return 3
 
-	func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
-		if from_version == 1:
+	func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
+		if from_format == 1:
 			contents["props"] = contents["objects"]
 			contents.erase("objects")
-		if from_version == 2:
+		if from_format == 2:
 			contents["era"] = "modern"
 		return contents
 
@@ -251,7 +251,7 @@ func _migration_runs_once_per_step() -> void:
 	start_case("a file from a newer build is refused rather than guessed at")
 	var behind: WorldV1 = WorldV1.new()
 	check_equal(behind.read(DIR + "/new.json"), ERR_FILE_UNRECOGNIZED, "reading it fails")
-	check(behind.get_error_message().contains("version 3"), "and says which version it was")
+	check(behind.get_error_message().contains("format 3"), "and says which format it was")
 
 
 func _reading_says_why_it_failed() -> void:

@@ -12,25 +12,25 @@ FoxJsonFile
 
 **Inherits:** :ref:`FoxRefCounted<class_FoxRefCounted>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-A JSON file on disk, versioned and written whole or not at all.
+A JSON file on disk, stamped with its format and written whole or not at all.
 
 .. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-**FoxJsonFile** is inherited once per file format. A subclass names the version it writes and says how to carry an older file forward.
+**FoxJsonFile** is inherited once per file format. A subclass names the format it writes and says how to carry an older file forward.
 
 ::
 
     class_name FoxavasWorldFile
     extends FoxJsonFile
 
-    func _get_version() -> int:
+    func _get_format() -> int:
         return 3
 
-    func _migrate(contents: Dictionary, from_version: int) -> Dictionary:
-        if from_version == 2:
+    func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
+        if from_format == 2:
             contents["props"] = contents["objects"]
             contents.erase("objects")
         return contents
@@ -86,9 +86,9 @@ Signals
 
 .. rst-class:: classref-signal
 
-**migrated**\ (\ from_version\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxJsonFile_signal_migrated>`
+**migrated**\ (\ from_format\: :ref:`int<class_int>`\ ) :ref:`🔗<class_FoxJsonFile_signal_migrated>`
 
-Emitted when :ref:`read()<class_FoxJsonFile_method_read>` opened a file from an older version and carried it forward.
+Emitted when :ref:`read()<class_FoxJsonFile_method_read>` opened a file in an older format and carried it forward.
 
 .. rst-class:: classref-section-separator
 
@@ -121,7 +121,7 @@ Added to the name of a previous copy that could not be parsed, so it is kept apa
 
 **FORMAT_KEY** = ``"format"`` :ref:`🔗<class_FoxJsonFile_constant_FORMAT_KEY>`
 
-Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format version under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it. 
+Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it. 
 
 This counts changes to the shape of the file, not releases of the project. The two move at different rates, and a release string is ordinary data that can sit in the contents under any name you like.
 
@@ -179,9 +179,9 @@ The backup is never reached for on its own. A file that will not load is reporte
         if answer:
             file.read(FoxJsonFile.get_backup_path(path))
 
-Runs ``_migrate`` once per version when the file is older than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
+Runs ``_migrate`` once per step when the file is in an older format than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
 
-Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
+Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer format than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
 
 .. rst-class:: classref-item-separator
 
