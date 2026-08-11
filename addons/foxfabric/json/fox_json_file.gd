@@ -51,9 +51,13 @@ const BACKUP_FOLDER: String = "backups"
 ## whole one.
 const BROKEN_SUFFIX: String = ".broken"
 
-## Key [method write] stamps the version under. A dictionary handed to [method write] may not
-## already use it.
-const VERSION_KEY: String = "version"
+## Key [method write] stamps the format version under. A dictionary handed to [method write] may
+## not already use it.
+## [br][br]
+## This counts changes to the shape of the file, not releases of the project. The two move at
+## different rates, and a release string is ordinary data that can sit in the contents under any
+## name you like.
+const FORMAT_KEY: String = "format"
 
 ## Suffix of the file [method write] builds before moving it into place.
 const TEMP_SUFFIX: String = ".tmp"
@@ -95,7 +99,7 @@ var _error_line: int = 0
 ## [br][br]
 ## Returns [constant ERR_FILE_NOT_FOUND] when nothing is there, [constant ERR_PARSE_ERROR] when the
 ## text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
-## [constant VERSION_KEY], and [constant ERR_FILE_UNRECOGNIZED] when it was written by a newer
+## [constant FORMAT_KEY], and [constant ERR_FILE_UNRECOGNIZED] when it was written by a newer
 ## version than this one reads. [method get_error_message] says which.
 func read(path: String) -> Error:
 	_clear_error()
@@ -110,7 +114,7 @@ func read(path: String) -> Error:
 ## Writes [param contents] to [param path], replacing what was there, and returns [constant OK].
 ## [br][br]
 ## Returns [constant ERR_INVALID_DATA] without touching the file when [param contents] already uses
-## [constant VERSION_KEY], or holds a value JSON cannot store. [method get_error_message] names the
+## [constant FORMAT_KEY], or holds a value JSON cannot store. [method get_error_message] names the
 ## key in both cases.
 ## [br][br]
 ## A failure is also pushed to the debugger, the way [method ResourceSaver.save] reports one. A save
@@ -160,16 +164,16 @@ func get_error_line() -> int:
 func _write(path: String, contents: Dictionary) -> Error:
 	_clear_error()
 
-	if contents.has(VERSION_KEY):
+	if contents.has(FORMAT_KEY):
 		return _fail(ERR_INVALID_DATA, '"%s" is stamped by the file and cannot be written into it'
-			% VERSION_KEY)
+			% FORMAT_KEY)
 
 	var problem: String = FoxJson.find_unsupported(contents)
 	if not problem.is_empty():
 		return _fail(ERR_INVALID_DATA, problem)
 
 	var payload: Dictionary = contents.duplicate()
-	payload[VERSION_KEY] = _get_version()
+	payload[FORMAT_KEY] = _get_version()
 
 	var folder: String = path.get_base_dir()
 	if not folder.is_empty() and not DirAccess.dir_exists_absolute(folder):
@@ -232,13 +236,13 @@ func _load(path: String) -> Variant:
 
 # Pulls the version out, migrates, and takes the result as data.
 func _adopt(contents: Dictionary) -> Error:
-	if not contents.has(VERSION_KEY):
-		return _fail(ERR_INVALID_DATA, 'The file carries no "%s"' % VERSION_KEY)
+	if not contents.has(FORMAT_KEY):
+		return _fail(ERR_INVALID_DATA, 'The file carries no "%s"' % FORMAT_KEY)
 
-	var stamp: Variant = contents[VERSION_KEY]
+	var stamp: Variant = contents[FORMAT_KEY]
 	if typeof(stamp) != TYPE_FLOAT and typeof(stamp) != TYPE_INT:
 		return _fail(ERR_INVALID_DATA, '"%s" is a %s, and a version is a whole number' % [
-			VERSION_KEY, type_string(typeof(stamp)),
+			FORMAT_KEY, type_string(typeof(stamp)),
 		])
 
 	var from_version: int = stamp
@@ -249,7 +253,7 @@ func _adopt(contents: Dictionary) -> Error:
 		])
 
 	# Stripped before _migrate runs, so a subclass never has to work around a key it did not write.
-	contents.erase(VERSION_KEY)
+	contents.erase(FORMAT_KEY)
 
 	if from_version < current:
 		for step: int in range(from_version, current):

@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://cq7h140cr2n3j"]
+
+[ext_resource type="Script" uid="uid://dvd0qpi3w8k6y" path="res://demos/json/json_demo.gd" id="1_eniw4"]
+[ext_resource type="Texture2D" uid="uid://c3ntasv61n17c" path="res://icon.png" id="1_tjwld"]
+[ext_resource type="Script" uid="uid://dsae2y6wj1u7i" path="res://demos/json/player.gd" id="2_fi6l6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r1gke"]
+radius = 33.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1gke"]
+size = Vector2(20, 1200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvwxj"]
+size = Vector2(1300, 20)
+
+[node name="JsonDemo" type="Node2D" unique_id=2029181541]
+script = ExtResource("1_eniw4")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2127452123]
+position = Vector2(407, 182)
+script = ExtResource("2_fi6l6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=684526644]
+shape = SubResource("CircleShape2D_r1gke")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1150589271]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_tjwld")
+
+[node name="Bounds" type="Node2D" parent="." unique_id=359137246]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bounds" unique_id=90406095]
+position = Vector2(-10, 376)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D" unique_id=1698323334]
+shape = SubResource("RectangleShape2D_r1gke")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Bounds" unique_id=1770069893]
+position = Vector2(1162, 317)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D2" unique_id=1774384067]
+shape = SubResource("RectangleShape2D_r1gke")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Bounds" unique_id=383591128]
+position = Vector2(579, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D3" unique_id=1849828920]
+shape = SubResource("RectangleShape2D_lvwxj")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Bounds" unique_id=475708157]
+position = Vector2(598, 658)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D4" unique_id=1166845393]
+shape = SubResource("RectangleShape2D_lvwxj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=222102866]
+offset_left = 33.0
+offset_top = 25.0
+offset_right = 125.0
+offset_bottom = 91.0
+
+[node name="SaveButton" type="Button" parent="VBoxContainer" unique_id=2101419318]
+layout_mode = 2
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer" unique_id=611111372]
+layout_mode = 2
+text = "Load"
+
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]

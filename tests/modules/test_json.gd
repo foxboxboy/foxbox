@@ -202,12 +202,12 @@ func _writing_then_reading() -> void:
 	check(FileAccess.file_exists(path), "the file is there")
 
 	var text: String = FileAccess.get_file_as_string(path)
-	check(text.contains('"version"'), "the version is stamped into the file")
+	check(text.contains('"format"'), "the format version is stamped into the file")
 
 	var reader: WorldV1 = WorldV1.new()
 	check_equal(reader.read(path), OK, "read succeeds")
 	check_equal(reader.data["name"], "yard", "the contents survive")
-	check(not reader.data.has("version"), "the version is taken back out of data")
+	check(not reader.data.has("format"), "the format key is taken back out of data")
 	check_equal(reader.get_error_message(), "", "a successful read leaves no error behind")
 	check_equal(reader.get_error_line(), 0, "and no line")
 
@@ -273,7 +273,7 @@ func _reading_says_why_it_failed() -> void:
 	_write_text(DIR + "/unstamped.json", '{"a": 1}')
 	var unstamped: WorldV1 = WorldV1.new()
 	check_equal(unstamped.read(DIR + "/unstamped.json"), ERR_INVALID_DATA, "no version at all")
-	check(unstamped.get_error_message().contains("version"), "and it says so")
+	check(unstamped.get_error_message().contains("format"), "and it says so")
 
 
 func _writing_refuses_before_touching_the_file() -> void:
@@ -285,7 +285,7 @@ func _writing_refuses_before_touching_the_file() -> void:
 
 	check_equal(writer.write(path, {"pos": Vector3.ONE}), ERR_INVALID_DATA, "a Vector3 is refused")
 	check(writer.get_error_message().begins_with("pos"), "and the key is named")
-	check_equal(writer.write(path, {"version": 2}), ERR_INVALID_DATA, "so is the reserved version key")
+	check_equal(writer.write(path, {"format": 2}), ERR_INVALID_DATA, "so is the reserved format key")
 	check_equal(writer.write(path, {"m": NAN}), ERR_INVALID_DATA, "so is NaN")
 
 	var after: WorldV1 = WorldV1.new()

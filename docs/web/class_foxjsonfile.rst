@@ -115,13 +115,15 @@ Folder the previous copy is kept in, beside the file itself.
 
 Added to the name of a previous copy that could not be parsed, so it is kept apart from the whole one.
 
-.. _class_FoxJsonFile_constant_VERSION_KEY:
+.. _class_FoxJsonFile_constant_FORMAT_KEY:
 
 .. rst-class:: classref-constant
 
-**VERSION_KEY** = ``"version"`` :ref:`🔗<class_FoxJsonFile_constant_VERSION_KEY>`
+**FORMAT_KEY** = ``"format"`` :ref:`🔗<class_FoxJsonFile_constant_FORMAT_KEY>`
 
-Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the version under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it.
+Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format version under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it. 
+
+This counts changes to the shape of the file, not releases of the project. The two move at different rates, and a release string is ordinary data that can sit in the contents under any name you like.
 
 .. _class_FoxJsonFile_constant_TEMP_SUFFIX:
 
@@ -179,7 +181,7 @@ The backup is never reached for on its own. A file that will not load is reporte
 
 Runs ``_migrate`` once per version when the file is older than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
 
-Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
+Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer version than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
 
 .. rst-class:: classref-item-separator
 
@@ -193,7 +195,7 @@ Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FI
 
 Writes ``contents`` to ``path``, replacing what was there, and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`VERSION_KEY<class_FoxJsonFile_constant_VERSION_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases. 
+Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases. 
 
 A failure is also pushed to the debugger, the way :ref:`ResourceSaver.save()<class_ResourceSaver_method_save>` reports one. A save that does not happen is never a normal outcome, and a caller that drops the returned :ref:`Error<enum_@GlobalScope_Error>` would otherwise see nothing at all. :ref:`read()<class_FoxJsonFile_method_read>` stays quiet by comparison, because a missing file on a first run is ordinary.
 

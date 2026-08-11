@@ -25,6 +25,10 @@ how to carry an older file forward when that version changes.
             contents.erase("objects")
         return contents
 
+``_get_version`` counts changes to the shape of the file, not releases of the project. The two move
+at different rates, so it is stamped under ``format`` and leaves ``version`` free for a release
+string of your own.
+
 Values are converted a field at a time, in both directions. Nothing in ``[2.0, 0.0, -3.0]`` records
 that it was a ``Vector3``, so the code asking for a field is what decides its type.
 
