@@ -1,10 +1,3 @@
-:github_url: hide
-
-Json
-====
-
-Reads and writes JSON that keeps its Godot types. A file carries a version, so an older one still loads after the format moves.
-
 Two classes that do not depend on each other. :ref:`class_FoxJson` converts Godot values to and
 from the six types JSON can hold. :ref:`class_FoxJsonFile` reads and writes a versioned file.
 
@@ -59,9 +52,3 @@ under ``.broken`` rather than taking that slot, which is what makes a bad hand e
     nothing else happens, so a game can say which line is wrong and offer the older copy.
 
 For a save nobody opens, ``FileAccess.store_var`` is two lines and keeps every Godot type exactly.
-
-.. toctree::
-   :maxdepth: 1
-
-   class_foxjson
-   class_foxjsonfile

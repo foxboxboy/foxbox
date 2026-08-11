@@ -52,6 +52,7 @@ no shared state and no autoload.
    module_effect
    module_state_machine
    module_shop
+   module_json
    module_socket
    module_damage
    module_interaction
