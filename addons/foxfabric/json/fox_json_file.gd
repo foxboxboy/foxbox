@@ -20,8 +20,8 @@ extends FoxRefCounted
 ## [/codeblock]
 ## Every [method write] moves the previous file into a [constant BACKUP_FOLDER] folder beside it
 ## before the new one lands, so a crash partway through leaves one whole file either way. A
-## previous file that will not parse is kept under [constant BROKEN_SUFFIX] instead of taking the
-## backup slot from a whole one, which is what makes a bad hand edit recoverable.
+## previous file that will not parse goes under [constant BROKEN_SUFFIX] rather than taking the
+## backup slot from a whole one, which keeps a bad hand edit recoverable.
 ## [br][br]
 ## Nothing reaches for the backup on its own. See [method read].
 ## [br][br]
@@ -49,16 +49,20 @@ signal migrated(from_format: int)
 
 #region Variables
 
-## Folder the previous copy is kept in, beside the file itself.
+## Folder [method write] keeps the previous copy in, beside the file itself.
 const BACKUP_FOLDER: String = "backups"
 
-## Added to the name of a previous copy that could not be parsed, so it is kept apart from the
-## whole one.
+## [method write] adds this to a previous copy it could not parse, keeping it apart from the whole
+## one.
 const BROKEN_SUFFIX: String = ".broken"
 
 ## Key [method write] stamps the format under, replacing one already in the contents. It stays in
-## [member data] on the way back, so nothing about the file is hidden from a reader.
-## [br][br]
+## [member data] as an [int], holding the format the file was saved at rather than the one its
+## contents have moved on to.
+## [codeblock]
+## if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
+##     file.write(path, file.data)
+## [/codeblock]
 ## This counts changes to the shape of the file, not releases of the project. The two move at
 ## different rates, and a release string is ordinary data that can sit in the contents under any
 ## name you like.
@@ -68,20 +72,12 @@ const FORMAT_KEY: String = "format"
 const TEMP_SUFFIX: String = ".tmp"
 
 ## The contents of the last successful [method read]. A read that fails leaves whatever was there
-## before it, so the returned [enum Error] is what says whether this is current.
+## before it, so the returned [enum Error] says whether this is current.
 ## [br][br]
 ## Every number in it is a [float], because JSON has one number type. A count written as
 ## [code]3[/code] reads back as [code]3.0[/code], and a dictionary read back does not compare equal
-## to the one written. Assigning into a typed [int] converts it.
-## [br][br]
-## [constant FORMAT_KEY] holds the format the file was saved at, as an [int], so a file carried
-## forward keeps the number it came from beside contents that have already moved on. It is the one
-## number here that is not a [float]. Comparing it against what the subclass writes is what decides
-## whether to write the upgrade back.
-## [codeblock]
-## if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
-##     file.write(path, file.data)
-## [/codeblock]
+## to the one written. Assigning into a typed [int] converts it. [constant FORMAT_KEY] alone stays
+## an [int].
 var data: Dictionary
 
 var _error_code: Error = OK
@@ -97,24 +93,24 @@ var _error_line: int = 0
 
 ## Reads [param path] into [member data] and returns [constant OK].
 ## [br][br]
-## The backup is never reached for on its own. A file that will not load is reported and nothing
-## else happens, because what to do about it belongs to the game: a world editor wants to say which
-## line is wrong and offer the older copy, and only the game knows whether there is a screen to say
-## it on.
+## This never reaches for the backup on its own. It reports a file that will not load and does
+## nothing else, because what to do about it belongs to the game: a world editor names the line and
+## offers the older copy, and only the game knows whether there is a screen to say it on.
 ## [codeblock]
 ## if file.read(path) != OK:
-##     var answer: bool = await ask("%s could not be read.\nLine %d: %s\n\nLoad the backup?"
-##         % [path, file.get_error_line(), file.get_error_message()])
-##     if answer:
-##         file.read(FoxJsonFile.get_backup_path(path))
+##     $LoadFailedDialog.dialog_text = "%s\nLine %d" % [
+##         file.get_error_message(), file.get_error_line()]
+##     $LoadFailedDialog.popup_centered()
+##     await $LoadFailedDialog.confirmed
+##     file.read(FoxJsonFile.get_backup_path(path))
 ## [/codeblock]
 ## Runs [code skip-lint]_migrate[/code] once per step when the file is in an older format than this
 ## subclass writes, and emits [signal migrated] after.
 ## [br][br]
 ## Returns [constant ERR_FILE_NOT_FOUND] when nothing is there, [constant ERR_PARSE_ERROR] when the
 ## text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
-## [constant FORMAT_KEY], and [constant ERR_FILE_UNRECOGNIZED] when it was written by a newer
-## format than this one reads. [method get_error_message] says which.
+## [constant FORMAT_KEY], and [constant ERR_FILE_UNRECOGNIZED] when its format is newer than this
+## one reads. [method get_error_message] says which.
 func read(path: String) -> Error:
 	_clear_error()
 
@@ -127,16 +123,15 @@ func read(path: String) -> Error:
 
 ## Writes [param contents] to [param path], replacing what was there, and returns [constant OK].
 ## [br][br]
-## [constant FORMAT_KEY] is set to what this subclass writes, replacing one already in
-## [param contents], so a dictionary that came from [method read] can be handed straight back.
+## Sets [constant FORMAT_KEY] to what this subclass writes, replacing one already in
+## [param contents], so a dictionary that came from [method read] goes straight back.
 ## [br][br]
 ## Returns [constant ERR_INVALID_DATA] without touching the file when [param contents] holds a
 ## value JSON cannot store. [method get_error_message] names the key.
 ## [br][br]
-## A failure is also pushed to the debugger, the way [method ResourceSaver.save] reports one. A save
-## that does not happen is never a normal outcome, and a caller that drops the returned
-## [enum Error] would otherwise see nothing at all. [method read] stays quiet by comparison, because
-## a missing file on a first run is ordinary.
+## Also pushes a failure to the debugger, the way [method ResourceSaver.save] does, so a caller who
+## drops the returned [enum Error] still sees it. [method read] stays quiet, because a missing file
+## on a first run is ordinary.
 func write(path: String, contents: Dictionary) -> Error:
 	var result: Error = _write(path, contents)
 	if result != OK:
@@ -164,7 +159,7 @@ func get_error_message() -> String:
 ## failed and after every [method write], neither of which has a line to point at.
 ## [br][br]
 ## [method JSON.get_error_line] counts from 0 and returns 0 on success, so its first line and its
-## no-error answer are the same number. This one is shifted by one to tell them apart.
+## no-error answer are the same number. This one counts from 1 to tell them apart.
 func get_error_line() -> int:
 	return _error_line
 

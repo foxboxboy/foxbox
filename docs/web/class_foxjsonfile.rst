@@ -35,7 +35,7 @@ Extend **FoxJsonFile** once per file format. The subclass names the format it wr
             contents.erase("objects")
         return contents
 
-Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file into a :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. A previous file that will not parse is kept under :ref:`BROKEN_SUFFIX<class_FoxJsonFile_constant_BROKEN_SUFFIX>` instead of taking the backup slot from a whole one, which is what makes a bad hand edit recoverable. 
+Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file into a :ref:`BACKUP_FOLDER<class_FoxJsonFile_constant_BACKUP_FOLDER>` folder beside it before the new one lands, so a crash partway through leaves one whole file either way. A previous file that will not parse goes under :ref:`BROKEN_SUFFIX<class_FoxJsonFile_constant_BROKEN_SUFFIX>` rather than taking the backup slot from a whole one, which keeps a bad hand edit recoverable. 
 
 Nothing reaches for the backup on its own. See :ref:`read()<class_FoxJsonFile_method_read>`. 
 
@@ -107,7 +107,7 @@ Constants
 
 **BACKUP_FOLDER** = ``"backups"`` :ref:`🔗<class_FoxJsonFile_constant_BACKUP_FOLDER>`
 
-Folder the previous copy is kept in, beside the file itself.
+Folder :ref:`write()<class_FoxJsonFile_method_write>` keeps the previous copy in, beside the file itself.
 
 .. _class_FoxJsonFile_constant_BROKEN_SUFFIX:
 
@@ -115,7 +115,7 @@ Folder the previous copy is kept in, beside the file itself.
 
 **BROKEN_SUFFIX** = ``".broken"`` :ref:`🔗<class_FoxJsonFile_constant_BROKEN_SUFFIX>`
 
-Added to the name of a previous copy that could not be parsed, so it is kept apart from the whole one.
+:ref:`write()<class_FoxJsonFile_method_write>` adds this to a previous copy it could not parse, keeping it apart from the whole one.
 
 .. _class_FoxJsonFile_constant_FORMAT_KEY:
 
@@ -123,7 +123,12 @@ Added to the name of a previous copy that could not be parsed, so it is kept apa
 
 **FORMAT_KEY** = ``"format"`` :ref:`🔗<class_FoxJsonFile_constant_FORMAT_KEY>`
 
-Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format under, replacing one already in the contents. It stays in :ref:`data<class_FoxJsonFile_property_data>` on the way back, so nothing about the file is hidden from a reader. 
+Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format under, replacing one already in the contents. It stays in :ref:`data<class_FoxJsonFile_property_data>` as an :ref:`int<class_int>`, holding the format the file was saved at rather than the one its contents have moved on to.
+
+::
+
+    if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
+        file.write(path, file.data)
 
 This counts changes to the shape of the file, not releases of the project. The two move at different rates, and a release string is ordinary data that can sit in the contents under any name you like.
 
@@ -150,16 +155,9 @@ Property Descriptions
 
 :ref:`Dictionary<class_Dictionary>` **data** :ref:`🔗<class_FoxJsonFile_property_data>`
 
-The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. A read that fails leaves whatever was there before it, so the returned :ref:`Error<enum_@GlobalScope_Error>` is what says whether this is current. 
+The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. A read that fails leaves whatever was there before it, so the returned :ref:`Error<enum_@GlobalScope_Error>` says whether this is current. 
 
-Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it. 
-
-\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` holds the format the file was saved at, as an :ref:`int<class_int>`, so a file carried forward keeps the number it came from beside contents that have already moved on. It is the one number here that is not a :ref:`float<class_float>`. Comparing it against what the subclass writes is what decides whether to write the upgrade back.
-
-::
-
-    if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
-        file.write(path, file.data)
+Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it. :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` alone stays an :ref:`int<class_int>`.
 
 .. rst-class:: classref-section-separator
 
@@ -178,19 +176,20 @@ Method Descriptions
 
 Reads ``path`` into :ref:`data<class_FoxJsonFile_property_data>` and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-The backup is never reached for on its own. A file that will not load is reported and nothing else happens, because what to do about it belongs to the game: a world editor wants to say which line is wrong and offer the older copy, and only the game knows whether there is a screen to say it on.
+This never reaches for the backup on its own. It reports a file that will not load and does nothing else, because what to do about it belongs to the game: a world editor names the line and offers the older copy, and only the game knows whether there is a screen to say it on.
 
 ::
 
     if file.read(path) != OK:
-        var answer: bool = await ask("%s could not be read.\nLine %d: %s\n\nLoad the backup?"
-            % [path, file.get_error_line(), file.get_error_message()])
-        if answer:
-            file.read(FoxJsonFile.get_backup_path(path))
+        $LoadFailedDialog.dialog_text = "%s\nLine %d" % [
+            file.get_error_message(), file.get_error_line()]
+        $LoadFailedDialog.popup_centered()
+        await $LoadFailedDialog.confirmed
+        file.read(FoxJsonFile.get_backup_path(path))
 
 Runs ``_migrate`` once per step when the file is in an older format than this subclass writes, and emits :ref:`migrated<class_FoxJsonFile_signal_migrated>` after. 
 
-Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when it was written by a newer format than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
+Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when its format is newer than this one reads. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` says which.
 
 .. rst-class:: classref-item-separator
 
@@ -204,11 +203,11 @@ Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FI
 
 Writes ``contents`` to ``path``, replacing what was there, and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` is set to what this subclass writes, replacing one already in ``contents``, so a dictionary that came from :ref:`read()<class_FoxJsonFile_method_read>` can be handed straight back. 
+Sets :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` to what this subclass writes, replacing one already in ``contents``, so a dictionary that came from :ref:`read()<class_FoxJsonFile_method_read>` goes straight back. 
 
 Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key. 
 
-A failure is also pushed to the debugger, the way :ref:`ResourceSaver.save()<class_ResourceSaver_method_save>` reports one. A save that does not happen is never a normal outcome, and a caller that drops the returned :ref:`Error<enum_@GlobalScope_Error>` would otherwise see nothing at all. :ref:`read()<class_FoxJsonFile_method_read>` stays quiet by comparison, because a missing file on a first run is ordinary.
+Also pushes a failure to the debugger, the way :ref:`ResourceSaver.save()<class_ResourceSaver_method_save>` does, so a caller who drops the returned :ref:`Error<enum_@GlobalScope_Error>` still sees it. :ref:`read()<class_FoxJsonFile_method_read>` stays quiet, because a missing file on a first run is ordinary.
 
 .. rst-class:: classref-item-separator
 
@@ -246,7 +245,7 @@ Returns why the last :ref:`read()<class_FoxJsonFile_method_read>` or :ref:`write
 
 Returns the line the last :ref:`read()<class_FoxJsonFile_method_read>` failed to parse, counting from 1. Returns 0 when nothing failed and after every :ref:`write()<class_FoxJsonFile_method_write>`, neither of which has a line to point at. 
 
-\ :ref:`JSON.get_error_line()<class_JSON_method_get_error_line>` counts from 0 and returns 0 on success, so its first line and its no-error answer are the same number. This one is shifted by one to tell them apart.
+\ :ref:`JSON.get_error_line()<class_JSON_method_get_error_line>` counts from 0 and returns 0 on success, so its first line and its no-error answer are the same number. This one counts from 1 to tell them apart.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

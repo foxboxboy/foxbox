@@ -19,7 +19,7 @@ extends FoxRefCounted
 ## Transform3D(x_axis, y_axis, z_axis, origin)   [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [2.0, 0.0, -3.0]]
 ## [/codeblock]
 ## Every component is a float, so a whole number carries its [code].0[/code] into the file.
-## Transforms keep their axes rather than a position, rotation and scale. Decomposing reads
+## Transforms keep their axes rather than a position, rotation, and scale. Decomposing reads
 ## better in a file, and it does not survive the trip: a body that is both rotated and scaled
 ## unevenly comes back wrong, and a mirrored one comes back with the wrong axis flipped.
 ## [br][br]

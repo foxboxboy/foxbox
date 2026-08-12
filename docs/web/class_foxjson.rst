@@ -34,7 +34,7 @@ Description
     Transform2D(x_axis, y_axis, origin)           [[1.0, 0.0], [0.0, 1.0], [4.0, 2.0]]
     Transform3D(x_axis, y_axis, z_axis, origin)   [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [2.0, 0.0, -3.0]]
 
-Every component is a float, so a whole number carries its ``.0`` into the file. Transforms keep their axes rather than a position, rotation and scale. Decomposing reads better in a file, and it does not survive the trip: a body that is both rotated and scaled unevenly comes back wrong, and a mirrored one comes back with the wrong axis flipped. 
+Every component is a float, so a whole number carries its ``.0`` into the file. Transforms keep their axes rather than a position, rotation, and scale. Decomposing reads better in a file, and it does not survive the trip: a body that is both rotated and scaled unevenly comes back wrong, and a mirrored one comes back with the wrong axis flipped. 
 
 Floats round to :ref:`PRECISION<class_FoxJson_constant_PRECISION>` on the way out, which is what keeps a file worth opening. 
 
