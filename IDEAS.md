@@ -10,19 +10,33 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 ## Modules
 
 - Projectiles
-- Custom `WorldEnvironment` presets
-- Save/load helpers
+- More `WorldEnvironment` presets, beyond the stylized and mobile ones already in the module
 - `character` rewrite: move hardcoded config into resources, add tests
 
 ## Foxavas Needs
 
-- Saving & Loading (Diffable JSON wrapper)
 - Input System
 - Camera Rigs
 - Runtime transform gizmo
 - Runtime model importer
 - Inventory & hotbar
 - Placement system
+
+## Mini Vehicle Sim projects
+
+Might want helpers for these:
+- Plane
+- Helicopter
+- Zeppelin
+- Tank
+- Car
+- Motorcycle
+- Bike w/sidecar
+- Boat
+- Submarine
+- Half track
+
+## RTS project
 
 
 ## Docs
@@ -32,5 +46,5 @@ Things worth doing, not scheduled. Near-term work lives in `TODO.txt`.
 
 ## Project
 
-- Tag `v0.1.0`, write a changelog
+- Tag `v0.1.0`
 - Asset Library listing with a GIF
