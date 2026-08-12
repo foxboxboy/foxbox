@@ -1,4 +1,5 @@
 @abstract
+@icon("uid://dcri01urs5lv8")
 class_name FoxJSONFile
 extends FoxRefCounted
 ## A JSON file on disk, stamped with its format and written whole or not at all.

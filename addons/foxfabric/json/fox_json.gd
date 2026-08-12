@@ -1,4 +1,5 @@
 @abstract
+@icon("uid://dojvscvju6yv8")
 class_name FoxJSON
 extends FoxRefCounted
 ## A converter between Godot values and the six types JSON can hold.
