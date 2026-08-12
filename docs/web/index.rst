@@ -1,9 +1,7 @@
 FoxFabric
 =========
 
-A lightweight, general purpose library for Godot 4. Entity stats, status effects, state
-machines, hit detection, interaction, sockets, shops and cameras, as self contained modules with
-no shared state and no autoload.
+A lightweight, general purpose library for Godot 4. Built from independent minimalistic modules.
 
 .. raw:: html
 
