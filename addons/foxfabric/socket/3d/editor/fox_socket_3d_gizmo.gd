@@ -49,14 +49,14 @@ func _get_gizmo_name() -> String:
 
 
 func _has_gizmo(node: Node3D) -> bool:
-	return handles(node)
+	return has_gizmo_for(node)
 
 
 ## Whether this gizmo draws for [param node].
 ## [br][br]
 ## Split out because the engine refuses to instantiate an [EditorNode3DGizmoPlugin] outside the
 ## editor, so the instance methods cannot be reached from a headless test.
-static func handles(node: Node3D) -> bool:
+static func has_gizmo_for(node: Node3D) -> bool:
 	return node is FoxSocket3D
 
 

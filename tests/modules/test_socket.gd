@@ -69,8 +69,8 @@ func _gizmo_reads_occupancy() -> void:
 ## whether the editor actually renders the result is not something this run can prove.
 func _gizmo_registers(gizmo: GDScript, holder: Node3D) -> void:
 	start_case("gizmo registration")
-	check(gizmo.handles(_socket(holder)), "it claims FoxSocket3D nodes")
-	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
+	check(gizmo.has_gizmo_for(_socket(holder)), "it claims FoxSocket3D nodes")
+	check(not gizmo.has_gizmo_for(track(Node3D.new()) as Node3D), "and nothing else")
 
 	var listed: String = "res://addons/foxfabric/socket/3d/editor/fox_socket_3d_gizmo.gd"
 	check(FoxFabric.GIZMOS.has(listed), "the plugin lists this gizmo")
