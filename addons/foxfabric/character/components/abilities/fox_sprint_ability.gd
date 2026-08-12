@@ -41,8 +41,9 @@ func has_request() -> bool:
 	return _is_requested
 
 
-## Evaluates a given velocity against the dropoff threshold.
-## Used by the state machine to force-cancel a sprint if the character hits a wall.
+## Returns [code]true[/code] if [param current_velocity] has dropped under the sprint's
+## dropoff threshold. The state machine uses it to cancel a sprint when the character hits a
+## wall.
 func is_below_dropoff(current_velocity: float) -> bool:
 	var minimum_required_speed: float = speed * dropoff_threshold
 	return current_velocity < minimum_required_speed

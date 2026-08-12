@@ -107,11 +107,13 @@ func add_flat_max_modifier(id: StringName, amount: float) -> void:
 func add_multiplier_max_modifier(id: StringName, amount: float) -> void:
 	add_max_modifier(id, FoxModifiableStat.ModifierType.MULTIPLIER, amount)
 
-## Helper to quickly pop the top flat modifier from the max capacity stack.
+## Helper to quickly pop the top flat modifier from the max capacity stack. Returns
+## [code]true[/code] if there was one to remove.
 func pop_flat_max_modifier(id: StringName) -> bool:
 	return pop_max_modifier(id, FoxModifiableStat.ModifierType.FLAT)
 
-## Helper to quickly pop the top multiplier modifier from the max capacity stack.
+## Helper to quickly pop the top multiplier modifier from the max capacity stack. Returns
+## [code]true[/code] if there was one to remove.
 func pop_multiplier_max_modifier(id: StringName) -> bool:
 	return pop_max_modifier(id, FoxModifiableStat.ModifierType.MULTIPLIER)
 

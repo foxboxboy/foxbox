@@ -86,6 +86,8 @@ func _can_handle(object: Object) -> bool:
 	return publishes_runtime_state(object)
 
 
+## Returns [code]true[/code] if [param object] publishes the runtime state this panel draws.
+## [br][br]
 ## Checked by property rather than by type on purpose. Inspecting a node in a running game hands
 ## over a debugger stand-in, not the node, so [code]object is FoxAttributeMap[/code] would be false
 ## in exactly the case this panel exists for.

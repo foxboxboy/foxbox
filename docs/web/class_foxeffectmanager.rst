@@ -205,7 +205,7 @@ Returns an array of every unique :ref:`FoxEffect.id<class_FoxEffect_property_id>
 
 :ref:`bool<class_bool>` **has_effect**\ (\ target_id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxEffectManager_method_has_effect>`
 
-A quick helper to check if a specific effect is currently active.
+Returns ``true`` if an effect with ``target_id`` is currently active.
 
 .. rst-class:: classref-item-separator
 

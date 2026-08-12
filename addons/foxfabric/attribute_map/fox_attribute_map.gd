@@ -589,6 +589,8 @@ func get_inherited_rule_ids() -> Array[StringName]:
 	return ids
 
 
+## Returns [code]true[/code] if [param rule] is already active on a map above this one.
+## [br][br]
 ## _find_parent_map can pair two sibling maps as each other's parent, so a walk upwards is not
 ## guaranteed to end on its own. Every loop here stops on a map it has already passed.
 func _came_from_above(rule: FoxAttributeRule) -> bool:

@@ -35,8 +35,9 @@ func can_be_paid_by(wallet: FoxWallet) -> bool:
 
 ## Deducts the [member cost] from the provided [param wallet].
 ## [br][br]
-## Returns [code]false[/code] without touching the wallet when the funds are insufficient or an
-## incompatible [FoxWallet] type is provided.
+## Returns [code]true[/code] when the payment goes through, and [code]false[/code] without
+## touching the wallet when the funds are insufficient or an incompatible [FoxWallet] type is
+## provided.
 func pay(wallet: FoxWallet) -> bool:
 	# can_be_paid_by already reports an incompatible wallet type
 	if not can_be_paid_by(wallet):

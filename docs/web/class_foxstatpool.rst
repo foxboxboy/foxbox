@@ -300,7 +300,7 @@ Helper to quickly add a multiplier modifier to the max capacity.
 
 :ref:`bool<class_bool>` **pop_flat_max_modifier**\ (\ id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxStatPool_method_pop_flat_max_modifier>`
 
-Helper to quickly pop the top flat modifier from the max capacity stack.
+Helper to quickly pop the top flat modifier from the max capacity stack. Returns ``true`` if there was one to remove.
 
 .. rst-class:: classref-item-separator
 
@@ -312,7 +312,7 @@ Helper to quickly pop the top flat modifier from the max capacity stack.
 
 :ref:`bool<class_bool>` **pop_multiplier_max_modifier**\ (\ id\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_FoxStatPool_method_pop_multiplier_max_modifier>`
 
-Helper to quickly pop the top multiplier modifier from the max capacity stack.
+Helper to quickly pop the top multiplier modifier from the max capacity stack. Returns ``true`` if there was one to remove.
 
 .. rst-class:: classref-item-separator
 

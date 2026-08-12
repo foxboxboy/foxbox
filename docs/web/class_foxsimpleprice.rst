@@ -120,7 +120,7 @@ Returns ``true`` if the provided ``wallet`` (must be a :ref:`FoxSimpleWallet<cla
 
 Deducts the :ref:`cost<class_FoxSimplePrice_property_cost>` from the provided ``wallet``. 
 
-Returns ``false`` without touching the wallet when the funds are insufficient or an incompatible :ref:`FoxWallet<class_FoxWallet>` type is provided.
+Returns ``true`` when the payment goes through, and ``false`` without touching the wallet when the funds are insufficient or an incompatible :ref:`FoxWallet<class_FoxWallet>` type is provided.
 
 .. rst-class:: classref-item-separator
 

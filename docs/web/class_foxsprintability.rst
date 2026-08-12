@@ -162,7 +162,7 @@ Returns ``true`` if a sprint is currently being requested.
 
 :ref:`bool<class_bool>` **is_below_dropoff**\ (\ current_velocity\: :ref:`float<class_float>`\ ) :ref:`🔗<class_FoxSprintAbility_method_is_below_dropoff>`
 
-Evaluates a given velocity against the dropoff threshold. Used by the state machine to force-cancel a sprint if the character hits a wall.
+Returns ``true`` if ``current_velocity`` has dropped under the sprint's dropoff threshold. The state machine uses it to cancel a sprint when the character hits a wall.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

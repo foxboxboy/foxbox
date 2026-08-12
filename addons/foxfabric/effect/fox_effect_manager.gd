@@ -128,7 +128,7 @@ func get_all_effect_ids() -> Array[StringName]:
 	return ids
 
 
-## A quick helper to check if a specific effect is currently active.
+## Returns [code]true[/code] if an effect with [param target_id] is currently active.
 func has_effect(target_id: StringName) -> bool:
 	return _get_instance_by_id(target_id) != null
 

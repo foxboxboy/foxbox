@@ -338,6 +338,8 @@ static func _snap(value: float) -> float:
 	return snappedf(value, PRECISION)
 
 
+## Returns [code]true[/code] if [param value] is an array of exactly [param size] finite numbers.
+## [br][br]
 ## JSON parses every number as a float, so TYPE_INT only turns up in a dictionary built in code and
 ## never written out. INF is rejected here as well as on the way in: a file holding 1e99999 parses
 ## without complaint and would otherwise put an infinity inside a transform.
@@ -358,7 +360,8 @@ static func _is_number_array(value: Variant, size: int) -> bool:
 	return true
 
 
-## The nested shape the transforms and AABB use: count arrays, each of width numbers.
+## Returns [code]true[/code] if [param value] holds [param count] arrays of [param width]
+## numbers each, which is the nested shape the transforms and AABB use.
 static func _is_vector_array(value: Variant, count: int, width: int) -> bool:
 	if typeof(value) != TYPE_ARRAY:
 		return false
