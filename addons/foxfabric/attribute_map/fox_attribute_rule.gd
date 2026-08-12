@@ -1,4 +1,5 @@
 @abstract
+@icon("uid://cgnijevks1w7x")
 class_name FoxAttributeRule
 extends FoxRefCounted
 ## An abstract base class for defining mathematical or logical modifiers applied to data.
