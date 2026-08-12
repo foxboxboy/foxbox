@@ -51,8 +51,8 @@ const BACKUP_FOLDER: String = "backups"
 ## whole one.
 const BROKEN_SUFFIX: String = ".broken"
 
-## Key [method write] stamps the format under. A dictionary handed to [method write] may not
-## already use it.
+## Key [method write] stamps the format under, replacing one already in the contents. It stays in
+## [member data] on the way back, so nothing about the file is hidden from a reader.
 ## [br][br]
 ## This counts changes to the shape of the file, not releases of the project. The two move at
 ## different rates, and a release string is ordinary data that can sit in the contents under any
@@ -68,19 +68,15 @@ const TEMP_SUFFIX: String = ".tmp"
 ## Every number in it is a [float], because JSON has one number type. A count written as
 ## [code]3[/code] reads back as [code]3.0[/code], and a dictionary read back does not compare equal
 ## to the one written. Assigning into a typed [int] converts it.
-var data: Dictionary
-
-## The format the last successful [method read] found in the file, before any migration ran. Zero
-## until the first one succeeds.
 ## [br][br]
-## [method read] takes [constant FORMAT_KEY] back out of [member data], so this is where the number
-## goes. Compare it against what the subclass writes to see whether the file was carried forward,
-## which is what decides whether to write the upgrade back.
+## [constant FORMAT_KEY] is left in it exactly as the file had it, so a file carried forward holds
+## the format it came from beside contents that have already moved on. Comparing it against what
+## the subclass writes is what decides whether to write the upgrade back.
 ## [codeblock]
-## if file.read(path) == OK and file.read_format < 2:
+## if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
 ##     file.write(path, file.data)
 ## [/codeblock]
-var read_format: int = 0
+var data: Dictionary
 
 var _error_code: Error = OK
 var _error_message: String = ""
@@ -125,9 +121,11 @@ func read(path: String) -> Error:
 
 ## Writes [param contents] to [param path], replacing what was there, and returns [constant OK].
 ## [br][br]
-## Returns [constant ERR_INVALID_DATA] without touching the file when [param contents] already uses
-## [constant FORMAT_KEY], or holds a value JSON cannot store. [method get_error_message] names the
-## key in both cases.
+## [constant FORMAT_KEY] is set to what this subclass writes, replacing one already in
+## [param contents], so a dictionary that came from [method read] can be handed straight back.
+## [br][br]
+## Returns [constant ERR_INVALID_DATA] without touching the file when [param contents] holds a
+## value JSON cannot store. [method get_error_message] names the key.
 ## [br][br]
 ## A failure is also pushed to the debugger, the way [method ResourceSaver.save] reports one. A save
 ## that does not happen is never a normal outcome, and a caller that drops the returned
@@ -175,10 +173,6 @@ func get_error_line() -> int:
 # every early return remembering to.
 func _write(path: String, contents: Dictionary) -> Error:
 	_clear_error()
-
-	if contents.has(FORMAT_KEY):
-		return _fail(ERR_INVALID_DATA, '"%s" is stamped by the file and cannot be written into it'
-			% FORMAT_KEY)
 
 	var problem: String = FoxJson.find_unsupported(contents)
 	if not problem.is_empty():
@@ -283,15 +277,13 @@ func _adopt(contents: Dictionary) -> Error:
 			from_format, current,
 		])
 
-	# Stripped before _migrate runs, so a subclass never has to work around a key it did not write.
-	contents.erase(FORMAT_KEY)
-
+	# FORMAT_KEY is left where the file had it. It says what the contents came from, and the next
+	# write replaces it with what they went out as.
 	if from_format < current:
 		for step: int in range(from_format, current):
 			contents = _migrate(contents, step)
 
 	data = contents
-	read_format = from_format
 	if from_format < current:
 		migrated.emit(from_format)
 	return OK
@@ -358,6 +350,9 @@ func _get_format() -> int
 ## Called once per step, so a file at 1 opened by a subclass at 4 reaches
 ## [code skip-lint]_migrate[/code] three times, with [param from_format] 1, then 2, then 3. Each
 ## case handles one step and the earlier ones never need revisiting.
+## [br][br]
+## [param contents] arrives with [constant FORMAT_KEY] still in it, holding the format the file was
+## saved at. Leave it alone: the next [method write] replaces it.
 ## [br][br]
 ## The file on disk is untouched. Only what [method read] hands back changes.
 @warning_ignore("unused_parameter")

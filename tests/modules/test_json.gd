@@ -207,7 +207,7 @@ func _writing_then_reading() -> void:
 	var reader: WorldV1 = WorldV1.new()
 	check_equal(reader.read(path), OK, "read succeeds")
 	check_equal(reader.data["name"], "yard", "the contents survive")
-	check(not reader.data.has("format"), "the format key is taken back out of data")
+	check_equal(reader.data["format"], 1, "and the format key stays where the file had it")
 	check_equal(reader.get_error_message(), "", "a successful read leaves no error behind")
 	check_equal(reader.get_error_line(), 0, "and no line")
 
@@ -238,7 +238,20 @@ func _migration_runs_once_per_step() -> void:
 	check(not current.data.has("objects"), "and took the old key away")
 	check_equal(current.data.get("era"), "modern", "step 2 ran as well, so it was not one jump")
 	check_equal(announced, [1] as Array[int], "migrated reported the format it started from")
-	check_equal(current.read_format, 1, "and read_format says the same without connecting first")
+	check_equal(current.data["format"], 1,
+		"data still says 1, because that is the format the contents came from")
+
+	start_case("writing back what was read is what upgrades the file on disk")
+
+	check_equal(current.write(path, current.data), OK, "the migrated contents go straight back out")
+	var upgraded: WorldV3 = WorldV3.new()
+	check_equal(upgraded.read(path), OK, "and the file opens")
+	check_equal(upgraded.data["format"], 3, "stamped at 3 now, replacing the 1 it was carrying")
+	check(upgraded.data.has("props"), "holding the migrated shape")
+	var seen_again: Array[int] = []
+	upgraded.migrated.connect(func(from: int) -> void: seen_again.append(from))
+	upgraded.read(path)
+	check_equal(seen_again.size(), 0, "so opening it again migrates nothing")
 
 	start_case("a file already at the current version is left alone")
 	var same: WorldV3 = WorldV3.new()
@@ -248,7 +261,7 @@ func _migration_runs_once_per_step() -> void:
 	reader.migrated.connect(func(from: int) -> void: seen.append(from))
 	check_equal(reader.read(DIR + "/new.json"), OK, "it opens")
 	check_equal(seen.size(), 0, "and nothing was migrated")
-	check_equal(reader.read_format, 3, "read_format matches when there was nothing to do")
+	check_equal(reader.data["format"], 3, "and data says 3 when there was nothing to do")
 
 	start_case("a file from a newer build is refused rather than guessed at")
 	var behind: WorldV1 = WorldV1.new()
@@ -287,7 +300,6 @@ func _writing_refuses_before_touching_the_file() -> void:
 
 	check_equal(writer.write(path, {"pos": Vector3.ONE}), ERR_INVALID_DATA, "a Vector3 is refused")
 	check(writer.get_error_message().begins_with("pos"), "and the key is named")
-	check_equal(writer.write(path, {"format": 2}), ERR_INVALID_DATA, "so is the reserved format key")
 	check_equal(writer.write(path, {"m": NAN}), ERR_INVALID_DATA, "so is NaN")
 
 	var after: WorldV1 = WorldV1.new()

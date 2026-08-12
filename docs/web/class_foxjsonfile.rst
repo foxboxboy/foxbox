@@ -49,11 +49,9 @@ Properties
 .. table::
    :widths: auto
 
-   +-------------------------------------+------------------------------------------------------------+-------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>`               |       |
-   +-------------------------------------+------------------------------------------------------------+-------+
-   | :ref:`int<class_int>`               | :ref:`read_format<class_FoxJsonFile_property_read_format>` | ``0`` |
-   +-------------------------------------+------------------------------------------------------------+-------+
+   +-------------------------------------+----------------------------------------------+
+   | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>` |
+   +-------------------------------------+----------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -123,7 +121,7 @@ Added to the name of a previous copy that could not be parsed, so it is kept apa
 
 **FORMAT_KEY** = ``"format"`` :ref:`🔗<class_FoxJsonFile_constant_FORMAT_KEY>`
 
-Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format under. A dictionary handed to :ref:`write()<class_FoxJsonFile_method_write>` may not already use it. 
+Key :ref:`write()<class_FoxJsonFile_method_write>` stamps the format under, replacing one already in the contents. It stays in :ref:`data<class_FoxJsonFile_property_data>` on the way back, so nothing about the file is hidden from a reader. 
 
 This counts changes to the shape of the file, not releases of the project. The two move at different rates, and a release string is ordinary data that can sit in the contents under any name you like.
 
@@ -152,25 +150,13 @@ Property Descriptions
 
 The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. A read that fails leaves whatever was there before it, so the returned :ref:`Error<enum_@GlobalScope_Error>` is what says whether this is current. 
 
-Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it.
+Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it. 
 
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FoxJsonFile_property_read_format:
-
-.. rst-class:: classref-property
-
-:ref:`int<class_int>` **read_format** = ``0`` :ref:`🔗<class_FoxJsonFile_property_read_format>`
-
-The format the last successful :ref:`read()<class_FoxJsonFile_method_read>` found in the file, before any migration ran. Zero until the first one succeeds. 
-
-\ :ref:`read()<class_FoxJsonFile_method_read>` takes :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` back out of :ref:`data<class_FoxJsonFile_property_data>`, so this is where the number goes. Compare it against what the subclass writes to see whether the file was carried forward, which is what decides whether to write the upgrade back.
+\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` is left in it exactly as the file had it, so a file carried forward holds the format it came from beside contents that have already moved on. Comparing it against what the subclass writes is what decides whether to write the upgrade back.
 
 ::
 
-    if file.read(path) == OK and file.read_format < 2:
+    if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
         file.write(path, file.data)
 
 .. rst-class:: classref-section-separator
@@ -216,7 +202,9 @@ Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FI
 
 Writes ``contents`` to ``path``, replacing what was there, and returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>`. 
 
-Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` already uses :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>`, or holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key in both cases. 
+\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` is set to what this subclass writes, replacing one already in ``contents``, so a dictionary that came from :ref:`read()<class_FoxJsonFile_method_read>` can be handed straight back. 
+
+Returns :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` without touching the file when ``contents`` holds a value JSON cannot store. :ref:`get_error_message()<class_FoxJsonFile_method_get_error_message>` names the key. 
 
 A failure is also pushed to the debugger, the way :ref:`ResourceSaver.save()<class_ResourceSaver_method_save>` reports one. A save that does not happen is never a normal outcome, and a caller that drops the returned :ref:`Error<enum_@GlobalScope_Error>` would otherwise see nothing at all. :ref:`read()<class_FoxJsonFile_method_read>` stays quiet by comparison, because a missing file on a first run is ordinary.
 
