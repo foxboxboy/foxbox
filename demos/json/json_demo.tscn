@@ -61,11 +61,46 @@ offset_bottom = 91.0
 
 [node name="SaveButton" type="Button" parent="VBoxContainer" unique_id=2101419318]
 layout_mode = 2
-text = "Save"
+text = "Save (format 1)"
 
 [node name="LoadButton" type="Button" parent="VBoxContainer" unique_id=611111372]
 layout_mode = 2
-text = "Load"
+text = "Load (format 1)"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=987875100]
+offset_left = 237.0
+offset_top = 26.0
+offset_right = 364.0
+offset_bottom = 92.0
+
+[node name="SaveButton2" type="Button" parent="VBoxContainer2" unique_id=1745944435]
+layout_mode = 2
+text = "Save (format 2)"
+
+[node name="LoadButton2" type="Button" parent="VBoxContainer2" unique_id=667139415]
+layout_mode = 2
+text = "Load (format 2)"
+
+[node name="Label" type="Label" parent="." unique_id=1623541140]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 897.0
+offset_top = 21.0
+offset_right = 1129.0
+offset_bottom = 44.0
+grow_horizontal = 0
+text = "arrow keys and enter to move"
+
+[node name="BackupButton" type="Button" parent="." unique_id=921911423]
+offset_left = 466.0
+offset_top = 31.0
+offset_right = 573.0
+offset_bottom = 62.0
+text = "Load Backup"
 
 [connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/SaveButton2" to="." method="_on_save_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer2/LoadButton2" to="." method="_on_load_button_2_pressed"]
+[connection signal="pressed" from="BackupButton" to="." method="_on_backup_button_pressed"]
