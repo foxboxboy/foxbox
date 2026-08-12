@@ -46,7 +46,7 @@ func _has_gizmo(node: Node3D) -> bool:
 	return has_gizmo_for(node)
 
 
-## Whether this gizmo draws for [param node].
+## Returns [code]true[/code] if this gizmo draws for [param node].
 ## [br][br]
 ## Split out because the engine refuses to instantiate an [EditorNode3DGizmoPlugin] outside the
 ## editor, so the instance methods cannot be reached from a headless test.

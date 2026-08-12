@@ -242,7 +242,7 @@ Returns ``true`` if a jump is currently buffered.
 
 :ref:`bool<class_bool>` **is_available**\ (\ is_grounded\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_FoxJumpAbility_method_is_available>`
 
-Returns true if a jump is legally allowed (grounded, coyote, or multi-jump).
+Returns ``true`` if a jump is legally allowed (grounded, coyote, or multi-jump).
 
 .. rst-class:: classref-item-separator
 

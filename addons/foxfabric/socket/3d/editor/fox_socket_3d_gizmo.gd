@@ -52,7 +52,7 @@ func _has_gizmo(node: Node3D) -> bool:
 	return has_gizmo_for(node)
 
 
-## Whether this gizmo draws for [param node].
+## Returns [code]true[/code] if this gizmo draws for [param node].
 ## [br][br]
 ## Split out because the engine refuses to instantiate an [EditorNode3DGizmoPlugin] outside the
 ## editor, so the instance methods cannot be reached from a headless test.
@@ -108,7 +108,7 @@ static func get_marker_transform(socket: FoxSocket3D) -> Transform3D:
 	return socket.global_transform.affine_inverse() * marker.global_transform
 
 
-## Whether something is already seated in [param socket].
+## Returns [code]true[/code] if something is already seated in [param socket].
 ## [br][br]
 ## [member FoxSocket3D.attachment] is only filled in at runtime and gizmos draw at edit time, so
 ## this goes by the children instead. The marker is not an attachment, and neither is whatever

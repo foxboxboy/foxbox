@@ -171,7 +171,7 @@ How quickly the camera interpolates to the target zoom. Higher values mean faste
 
 :ref:`bool<class_bool>` **zoom_enabled** = ``true`` :ref:`🔗<class_FoxZoomSpringArm3D_property_zoom_enabled>`
 
-Determines if the node currently accepts zoom inputs.
+If ``true``, the node accepts zoom inputs.
 
 .. rst-class:: classref-item-separator
 

@@ -246,7 +246,7 @@ static func _shorten_path(path: String) -> String:
 	return "%s/%s" % [parts[parts.size() - 2], parts[parts.size() - 1]]
 
 
-## Whether two row sets have the same names in the same nesting. When they do, the rows standing
+## Returns [code]true[/code] if two row sets have the same names in the same nesting. When they do, the
 ## can be written into instead of built again.
 ## [br][br]
 ## Compared row by row rather than by flattening each set into one string. Names come from the

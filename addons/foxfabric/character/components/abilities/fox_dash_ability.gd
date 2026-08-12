@@ -59,7 +59,7 @@ func consume() -> void:
 	consumed.emit()
 
 
-## Returns true if the dash duration has not yet expired.
+## Returns [code]true[/code] if the dash duration has not yet expired.
 func is_dashing() -> bool:
 	var time_since: float = (Time.get_ticks_msec() - _last_dash_time) / 1000.0
 	return time_since < duration

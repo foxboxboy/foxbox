@@ -29,7 +29,7 @@ func empty_right_hand() -> void:
 		child.queue_free()
 
 
-## Returns true if a node was replaced.
+## Returns [code]true[/code] if a node was replaced.
 func hold_node(node : Node, left_handed := false) -> bool:
 	var cleared := false
 

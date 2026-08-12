@@ -150,7 +150,7 @@ Cancels a pending sprint intent.
 
 :ref:`bool<class_bool>` **has_request**\ (\ ) :ref:`🔗<class_FoxSprintAbility_method_has_request>`
 
-Returns true if a sprint is currently being requested.
+Returns ``true`` if a sprint is currently being requested.
 
 .. rst-class:: classref-item-separator
 

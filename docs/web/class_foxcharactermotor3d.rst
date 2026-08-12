@@ -131,7 +131,7 @@ How strong the input is, useful for joysticks.
 
 - |void| **@active_setter**\ (\ value\: :ref:`bool<class_bool>`\ )
 
-Whether or not this motor will process.
+If ``true``, this motor runs each frame.
 
 .. rst-class:: classref-section-separator
 

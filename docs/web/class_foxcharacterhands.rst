@@ -188,7 +188,7 @@ Method Descriptions
 
 :ref:`bool<class_bool>` **hold_node**\ (\ node\: :ref:`Node<class_Node>`, left_handed\: :ref:`bool<class_bool>` = false\ ) :ref:`🔗<class_FoxCharacterHands_method_hold_node>`
 
-Returns true if a node was replaced.
+Returns ``true`` if a node was replaced.
 
 .. rst-class:: classref-item-separator
 

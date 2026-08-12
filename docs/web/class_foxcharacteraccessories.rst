@@ -155,7 +155,7 @@ Attaches a rigid item to any bone by its string name.
 
 :ref:`bool<class_bool>` **has_rigid_accessory_in_slot**\ (\ bone_name\: :ref:`String<class_String>`\ ) :ref:`🔗<class_FoxCharacterAccessories_method_has_rigid_accessory_in_slot>`
 
-Returns true if a rigid accessory could be found under a bone.
+Returns ``true`` if a rigid accessory could be found under a bone.
 
 .. rst-class:: classref-item-separator
 
@@ -217,7 +217,7 @@ Keeps track of the skinned accessory by the slot_name provided so that it can be
 
 :ref:`bool<class_bool>` **has_skinned_accessory_slot**\ (\ slot_name\: :ref:`String<class_String>`\ ) :ref:`🔗<class_FoxCharacterAccessories_method_has_skinned_accessory_slot>`
 
-Returns true if we have a value for that skinned slot.
+Returns ``true`` if we have a value for that skinned slot.
 
 .. rst-class:: classref-item-separator
 

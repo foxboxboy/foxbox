@@ -165,7 +165,7 @@ The default control of the pull if no profile is provided.
 
 :ref:`bool<class_bool>` **default_keep_upright** = ``false`` :ref:`🔗<class_FoxPhysicsDragger2D_property_default_keep_upright>`
 
-The default upright behaviour if no profile is provided. See :ref:`FoxPhysicsDragProfile.keep_upright<class_FoxPhysicsDragProfile_property_keep_upright>`.
+If ``true``, a body grabbed without a profile is kept upright. See :ref:`FoxPhysicsDragProfile.keep_upright<class_FoxPhysicsDragProfile_property_keep_upright>`.
 
 .. rst-class:: classref-item-separator
 
@@ -243,7 +243,7 @@ Returns the dragger's own position when nothing is held, so a marker parked on i
 
 :ref:`bool<class_bool>` **is_holding**\ (\ ) :ref:`🔗<class_FoxPhysicsDragger2D_method_is_holding>`
 
-Whether a body is currently being dragged.
+Returns ``true`` if a body is currently being dragged.
 
 .. rst-class:: classref-item-separator
 

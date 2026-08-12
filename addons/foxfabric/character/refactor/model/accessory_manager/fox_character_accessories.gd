@@ -73,7 +73,7 @@ func equip_rigid_accessory(accessory: Node3D, bone_name: String, reset_transform
 	rigid_equipped.emit(accessory, bone_name)
 
 
-## Returns true if a rigid accessory could be found under a bone.
+## Returns [code]true[/code] if a rigid accessory could be found under a bone.
 func has_rigid_accessory_in_slot(bone_name: String) -> bool:
 	return get_rigid_accessories_in_slot(bone_name).size() != 0
 
@@ -146,7 +146,7 @@ func equip_skinned_accessory(accessory_root: Node3D, slot_name: String) -> void:
 	skinned_equipped.emit(accessory_root, slot_name)
 
 
-## Returns true if we have a value for that skinned slot.
+## Returns [code]true[/code] if we have a value for that skinned slot.
 func has_skinned_accessory_slot(slot_name: String) -> bool:
 	return _skinned_slots.has(slot_name)
 

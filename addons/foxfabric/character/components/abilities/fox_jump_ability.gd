@@ -69,7 +69,7 @@ func has_request() -> bool:
 	return _is_request_active
 
 
-## Returns true if a jump is legally allowed (grounded, coyote, or multi-jump).
+## Returns [code]true[/code] if a jump is legally allowed (grounded, coyote, or multi-jump).
 func is_available(is_grounded: bool) -> bool:
 	var elapsed: float = (Time.get_ticks_msec() - _last_jump_time) / 1000.0
 	if elapsed <= 0.15:

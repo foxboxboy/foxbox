@@ -36,7 +36,7 @@ func cancel() -> void:
 		cancelled.emit()
 
 
-## Returns true if a sprint is currently being requested.
+## Returns [code]true[/code] if a sprint is currently being requested.
 func has_request() -> bool:
 	return _is_requested
 

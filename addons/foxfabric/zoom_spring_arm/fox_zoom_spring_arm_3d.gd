@@ -36,7 +36,7 @@ signal zoom_finished
 		zoom_speed = value
 		update_configuration_warnings()
 
-## Determines if the node currently accepts zoom inputs.
+## If [code]true[/code], the node accepts zoom inputs.
 @export var zoom_enabled: bool = true
 
 ## The desired length the arm is currently interpolating towards.

@@ -15,7 +15,7 @@ class_name FoxCharacterMotor3D
 var input_direction := Vector2.ZERO
 ## How strong the input is, useful for joysticks.
 var input_strength := 1.0
-## Whether or not this motor will process.
+## If [code]true[/code], this motor runs each frame.
 var active := true:
 	set(new_value):
 		active = new_value

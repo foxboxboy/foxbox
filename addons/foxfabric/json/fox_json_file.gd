@@ -326,7 +326,7 @@ func _rotate(path: String, destination: String) -> Error:
 	return OK
 
 
-## Whether the file at path is JSON this class could read back. Uses its own parser so a check made
+## Returns [code]true[/code] if the file at path is JSON this class could read back. Uses its own
 ## during a write leaves the error from that write alone.
 func _is_readable(path: String) -> bool:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)

@@ -216,7 +216,7 @@ Clears the current dash request, records the time, and alerts external systems.
 
 :ref:`bool<class_bool>` **is_dashing**\ (\ ) :ref:`🔗<class_FoxDashAbility_method_is_dashing>`
 
-Returns true if the dash duration has not yet expired.
+Returns ``true`` if the dash duration has not yet expired.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

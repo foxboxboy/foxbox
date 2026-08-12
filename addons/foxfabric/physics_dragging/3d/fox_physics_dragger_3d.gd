@@ -42,7 +42,7 @@ const DEFAULT_ROTATION_LEAD: float = PI / 2.0
 ## The default control of the pull if no profile is provided.
 @export var default_damping: float = 25.0
 
-## The default upright behaviour if no profile is provided.
+## If [code]true[/code], a body grabbed without a profile is kept upright.
 ## See [member FoxPhysicsDragProfile.keep_upright].
 @export var default_keep_upright: bool = false
 
@@ -104,7 +104,7 @@ func get_grab_point() -> Vector3:
 	return _current_body.to_global(_grab_offset_local)
 
 
-## Whether a body is currently being dragged.
+## Returns [code]true[/code] if a body is currently being dragged.
 func is_holding() -> bool:
 	return is_instance_valid(_current_body)
 
