@@ -4,8 +4,8 @@ class_name FoxJSONFile
 extends FoxRefCounted
 ## A JSON file on disk, stamped with its format and written whole or not at all.
 ##
-## Extend [FoxJSONFile] once per file format. The subclass names the format it writes and says how
-## to carry an older file forward.
+## Extend [FoxJSONFile] once per file format. The subclass names the format it writes, and says how
+## to carry an older file forward once that format has moved.
 ## [codeblock]
 ## class_name WorldFile
 ## extends FoxJSONFile
@@ -106,7 +106,8 @@ var _error_line: int = 0
 ##     file.read(FoxJSONFile.get_backup_path(path))
 ## [/codeblock]
 ## Runs [code skip-lint]_migrate[/code] once per step when the file is in an older format than this
-## subclass writes, and emits [signal migrated] after.
+## subclass writes, and emits [signal migrated] after. The file on disk keeps the format it was
+## saved at, so every read of an older file migrates again until a [method write] settles it.
 ## [br][br]
 ## Returns [constant ERR_FILE_NOT_FOUND] when nothing is there, [constant ERR_PARSE_ERROR] when the
 ## text is not JSON, [constant ERR_INVALID_DATA] when it carries no usable
@@ -363,6 +364,9 @@ func _get_format() -> int
 
 
 ## Returns [param contents] carried forward from [param from_format] to the format above it.
+## [br][br]
+## Override this only once the format has moved. A subclass still on its first format has nothing
+## to carry forward, and the default hands [param contents] straight back.
 ## [br][br]
 ## Called once per step, so a file at 1 opened by a subclass at 4 reaches
 ## [code skip-lint]_migrate[/code] three times, with [param from_format] 1, then 2, then 3. Each

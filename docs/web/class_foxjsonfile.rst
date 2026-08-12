@@ -19,7 +19,7 @@ A JSON file on disk, stamped with its format and written whole or not at all.
 Description
 -----------
 
-Extend **FoxJSONFile** once per file format. The subclass names the format it writes and says how to carry an older file forward.
+Extend **FoxJSONFile** once per file format. The subclass names the format it writes, and says how to carry an older file forward once that format has moved.
 
 ::
 
@@ -187,7 +187,7 @@ This never reaches for the backup on its own. It reports a file that will not lo
         await $LoadFailedDialog.confirmed
         file.read(FoxJSONFile.get_backup_path(path))
 
-Runs ``_migrate`` once per step when the file is in an older format than this subclass writes, and emits :ref:`migrated<class_FoxJSONFile_signal_migrated>` after. 
+Runs ``_migrate`` once per step when the file is in an older format than this subclass writes, and emits :ref:`migrated<class_FoxJSONFile_signal_migrated>` after. The file on disk keeps the format it was saved at, so every read of an older file migrates again until a :ref:`write()<class_FoxJSONFile_method_write>` settles it. 
 
 Returns :ref:`@GlobalScope.ERR_FILE_NOT_FOUND<class_@GlobalScope_constant_ERR_FILE_NOT_FOUND>` when nothing is there, :ref:`@GlobalScope.ERR_PARSE_ERROR<class_@GlobalScope_constant_ERR_PARSE_ERROR>` when the text is not JSON, :ref:`@GlobalScope.ERR_INVALID_DATA<class_@GlobalScope_constant_ERR_INVALID_DATA>` when it carries no usable :ref:`FORMAT_KEY<class_FoxJSONFile_constant_FORMAT_KEY>`, and :ref:`@GlobalScope.ERR_FILE_UNRECOGNIZED<class_@GlobalScope_constant_ERR_FILE_UNRECOGNIZED>` when its format is newer than this one reads. :ref:`get_error_message()<class_FoxJSONFile_method_get_error_message>` says which.
 
