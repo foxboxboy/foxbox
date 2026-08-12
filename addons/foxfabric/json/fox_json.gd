@@ -46,8 +46,8 @@ const PRECISION: float = 0.001
 ## returns as 9007199254740992.
 const MAX_EXACT_INT: int = 9007199254740992
 
-# Types JSON stores without losing anything worth keeping. The packed float arrays are absent
-# because their entries still need checking for NaN.
+## Types JSON stores without losing anything worth keeping. The packed float arrays are absent
+## because their entries still need checking for NaN.
 const _SAFE_TYPES: Array[int] = [
 	TYPE_NIL,
 	TYPE_BOOL,
@@ -260,8 +260,8 @@ static func find_unsupported(value: Variant) -> String:
 
 #region Private
 
-# Walks depth first and stops at the first problem. Returning one is enough to refuse the write,
-# and listing every one of them buries the first.
+## Walks depth first and stops at the first problem. Returning one is enough to refuse the write,
+## and listing every one of them buries the first.
 static func _find_unsupported(value: Variant, path: String) -> String:
 	var type: int = typeof(value)
 
@@ -323,7 +323,7 @@ static func _find_unsupported(value: Variant, path: String) -> String:
 	return "%s holds a %s, which JSON cannot store" % [_where(path), type_string(type)]
 
 
-# Names the offending spot. The top level has no path of its own.
+## Names the offending spot. The top level has no path of its own.
 static func _where(path: String) -> String:
 	return "the value" if path.is_empty() else path
 
@@ -332,15 +332,15 @@ static func _join(path: String, key: String) -> String:
 	return key if path.is_empty() else "%s/%s" % [path, key]
 
 
-# Rounds one component. A Vector3 holds float32, so an unrounded component reaches the file as
-# 0.300000011920929 rather than 0.3.
+## Rounds one component. A Vector3 holds float32, so an unrounded component reaches the file as
+## 0.300000011920929 rather than 0.3.
 static func _snap(value: float) -> float:
 	return snappedf(value, PRECISION)
 
 
-# JSON parses every number as a float, so TYPE_INT only turns up in a dictionary built in code and
-# never written out. INF is rejected here as well as on the way in: a file holding 1e99999 parses
-# without complaint and would otherwise put an infinity inside a transform.
+## JSON parses every number as a float, so TYPE_INT only turns up in a dictionary built in code and
+## never written out. INF is rejected here as well as on the way in: a file holding 1e99999 parses
+## without complaint and would otherwise put an infinity inside a transform.
 static func _is_number_array(value: Variant, size: int) -> bool:
 	if typeof(value) != TYPE_ARRAY:
 		return false
@@ -358,7 +358,7 @@ static func _is_number_array(value: Variant, size: int) -> bool:
 	return true
 
 
-# The nested shape the transforms and AABB use: count arrays, each of width numbers.
+## The nested shape the transforms and AABB use: count arrays, each of width numbers.
 static func _is_vector_array(value: Variant, count: int, width: int) -> bool:
 	if typeof(value) != TYPE_ARRAY:
 		return false

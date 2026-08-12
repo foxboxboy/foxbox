@@ -110,8 +110,8 @@ func _parse_group(object: Object, group: String) -> void:
 	add_custom_control(ReadOut.new(object))
 
 
-# Every parameter is typed int rather than by its enum. The engine matches this by name and arity,
-# and an annotation it does not resolve the same way leaves the override silently unused.
+## Every parameter is typed int rather than by its enum. The engine matches this by name and arity,
+## and an annotation it does not resolve the same way leaves the override silently unused.
 func _parse_property(_object: Object, _type: int, name: String, _hint_type: int,
 		_hint_string: String, _usage_flags: int, _wide: bool) -> bool:
 	if not PROPERTY_HELP.has(name):

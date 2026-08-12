@@ -172,8 +172,8 @@ func get_error_line() -> int:
 
 #region Private
 
-# Everything write does. Split out so one place decides whether a failure is pushed, rather than
-# every early return remembering to.
+## Everything write does. Split out so one place decides whether a failure is pushed, rather than
+## every early return remembering to.
 func _write(path: String, contents: Dictionary) -> Error:
 	_clear_error()
 
@@ -235,8 +235,8 @@ func _write(path: String, contents: Dictionary) -> Error:
 	return OK
 
 
-# Returns the parsed object, or null with the error recorded. Null covers every way this fails,
-# because an empty file and a missing one both leave nothing to hand back.
+## Returns the parsed object, or null with the error recorded. Null covers every way this fails,
+## because an empty file and a missing one both leave nothing to hand back.
 func _load(path: String) -> Variant:
 	if not FileAccess.file_exists(path):
 		_fail(ERR_FILE_NOT_FOUND, "%s is not there" % path)
@@ -266,7 +266,7 @@ func _load(path: String) -> Variant:
 	return json.data
 
 
-# Pulls the format out, migrates, and takes the result as data.
+## Pulls the format out, migrates, and takes the result as data.
 func _adopt(contents: Dictionary) -> Error:
 	if not contents.has(FORMAT_KEY):
 		return _fail(ERR_INVALID_DATA, 'The file carries no "%s"' % FORMAT_KEY)
@@ -307,9 +307,9 @@ func _adopt(contents: Dictionary) -> Error:
 	return OK
 
 
-# Moves the file already at path to destination, which is empty when there is nothing there to
-# move. The caller works destination out rather than this deciding, so the same answer is available
-# afterwards if the write fails and the move has to be undone.
+## Moves the file already at path to destination, which is empty when there is nothing there to
+## move. The caller works destination out rather than this deciding, so the same answer is available
+## afterwards if the write fails and the move has to be undone.
 func _rotate(path: String, destination: String) -> Error:
 	if destination.is_empty():
 		return OK
@@ -326,8 +326,8 @@ func _rotate(path: String, destination: String) -> Error:
 	return OK
 
 
-# Whether the file at path is JSON this class could read back. Uses its own parser so a check made
-# during a write leaves the error from that write alone.
+## Whether the file at path is JSON this class could read back. Uses its own parser so a check made
+## during a write leaves the error from that write alone.
 func _is_readable(path: String) -> bool:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:

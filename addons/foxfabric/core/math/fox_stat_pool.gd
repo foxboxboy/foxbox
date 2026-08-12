@@ -145,8 +145,8 @@ func _init() -> void:
 	updated.emit(_pool.value, _max_stat.value)
 
 
-# See FoxModifiableStat._to_string. An object crossing the debugger arrives as an encoded id, so
-# this is the only chance to say something useful about it.
+## See FoxModifiableStat._to_string. An object crossing the debugger arrives as an encoded id, so
+## this is the only chance to say something useful about it.
 func _to_string() -> String:
 	return "%s / %s" % [current, max_value]
 

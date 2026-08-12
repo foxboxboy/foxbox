@@ -28,7 +28,7 @@ signal saturated(overflow: float)
 
 #region Variables
 
-# Suppresses the inverted-bounds warning while _init assigns both bounds.
+## Suppresses the inverted-bounds warning while _init assigns both bounds.
 var _constructing: bool = false
 
 ## The maximum allowed value. Modifying this automatically clamps [member value].
@@ -110,8 +110,8 @@ func _init(starting_value: float = 1.0, p_max: float = 1.0, p_min: float = 0.0) 
 	value = starting_value
 
 
-# See FoxModifiableStat._to_string. An object crossing the debugger arrives as an encoded id, so
-# this is the only chance to say something useful about it.
+## See FoxModifiableStat._to_string. An object crossing the debugger arrives as an encoded id, so
+## this is the only chance to say something useful about it.
 func _to_string() -> String:
 	return "%s (%s to %s)" % [value, min_value, max_value]
 

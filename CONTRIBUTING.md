@@ -42,7 +42,9 @@ Six names for structural sections, in this order:
 ## Documentation
 
 * Every public member gets a `##` comment: classes, signals, exported and public variables, enums
-  and their constants, public methods. Private `_members` get `#`
+  and their constants, public methods. Private `_members` get one too: the underscore already says
+  private, and `docs/build_docs.py` strips every underscore member from the published pages
+  regardless. `#` is for notes inside a function body
 * Use crosslink tags, not plain text: `[param x]`, `[member x]`, `[method x]`, `[signal x]`,
   `[constant X]`, `[ClassName]`. There is no `[class X]` tag
 * An inherited member needs its owner: `[member RayCast3D.collide_with_areas]`

@@ -61,8 +61,8 @@ func _update_movement(delta):
 
 
 
-# From Majikayo Games, released CC0. https://www.youtube.com/watch?v=Uh9PSOORMmA
-# Call directly before move_and_slide() on the CharacterBody3D.
+## From Majikayo Games, released CC0. https://www.youtube.com/watch?v=Uh9PSOORMmA
+## Call directly before move_and_slide() on the CharacterBody3D.
 func _push_away_rigid_bodies():
 	for i in body.get_slide_collision_count():
 		var c := body.get_slide_collision(i)

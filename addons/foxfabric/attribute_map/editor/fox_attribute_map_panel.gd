@@ -40,14 +40,14 @@ const HEADING_HELP: Dictionary[String, String] = {
 var _target: Object
 var _elapsed: float = 0.0
 
-# Every row in draw order, so a value that moved can be written straight into its item.
+## Every row in draw order, so a value that moved can be written straight into its item.
 var _items: Array[TreeItem] = []
 
 ## The rows last drawn. Values change constantly and names hardly ever, so a value on its own is
 ## written into the row it belongs to and the tree is left standing.
 var _drawn: Array[Row] = []
 
-# Read from the theme rather than written down, so a different editor theme carries them along.
+## Read from the theme rather than written down, so a different editor theme carries them along.
 var _heading_color: Color = Color.WHITE
 var _name_color: Color = Color.WHITE
 var _value_color: Color = Color.WHITE
@@ -269,8 +269,8 @@ static func _has_same_shape(before: Array[Row], after: Array[Row]) -> bool:
 
 #region Drawing
 
-# Asked for by name, so switching editor theme carries them along. A name the running editor does
-# not have falls back to the tree's own colour, which reads plainly rather than failing.
+## Asked for by name, so switching editor theme carries them along. A name the running editor does
+## not have falls back to the tree's own colour, which reads plainly rather than failing.
 func _read_theme() -> void:
 	var plain: Color = get_theme_color(&"font_color")
 
@@ -307,8 +307,8 @@ func _refresh() -> void:
 	_rebuild(rows)
 
 
-# Rebuilding throws away whatever the reader had collapsed, so it only happens when a name appears
-# or disappears. A value that moved goes through _write_values instead.
+## Rebuilding throws away whatever the reader had collapsed, so it only happens when a name appears
+## or disappears. A value that moved goes through _write_values instead.
 func _rebuild(rows: Array[Row]) -> void:
 	clear()
 	_items.clear()
@@ -354,13 +354,13 @@ func _write_values(rows: Array[Row]) -> void:
 		_items[i].set_tooltip_text(1, value)
 
 
-# Folding a branch away has to give the space back, and the Tree will not do that on its own.
+## Folding a branch away has to give the space back, and the Tree will not do that on its own.
 func _on_item_collapsed(_item: TreeItem) -> void:
 	_resize_to_fit()
 
 
-# A Tree does not grow or shrink to fit its rows, so the height is set from the rows on show. Rows
-# inside something collapsed are counted out, which is what makes folding worth doing.
+## A Tree does not grow or shrink to fit its rows, so the height is set from the rows on show. Rows
+## inside something collapsed are counted out, which is what makes folding worth doing.
 func _resize_to_fit() -> void:
 	var root: TreeItem = get_root()
 	if root == null:
@@ -378,9 +378,9 @@ func _resize_to_fit() -> void:
 	custom_minimum_size.y = _count_visible_under(root) * row_height + _get_vertical_padding()
 
 
-# The theme spaces a Tree off its own edges, and those are content margins, so the rows need that
-# room on top of their own height or the last one ends up behind a scrollbar. Read rather than
-# written down, so retuning the theme carries this with it.
+## The theme spaces a Tree off its own edges, and those are content margins, so the rows need that
+## room on top of their own height or the last one ends up behind a scrollbar. Read rather than
+## written down, so retuning the theme carries this with it.
 func _get_vertical_padding() -> float:
 	var box: StyleBox = get_theme_stylebox(&"panel")
 	if box == null:
@@ -389,7 +389,7 @@ func _get_vertical_padding() -> float:
 	return box.get_content_margin(SIDE_TOP) + box.get_content_margin(SIDE_BOTTOM)
 
 
-# Rows drawn under [param item], skipping anything folded away inside it.
+## Rows drawn under [param item], skipping anything folded away inside it.
 func _count_visible_under(item: TreeItem) -> int:
 	var count: int = 0
 	var child: TreeItem = item.get_first_child()

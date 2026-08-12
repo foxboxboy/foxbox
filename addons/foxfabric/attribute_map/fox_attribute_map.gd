@@ -63,28 +63,28 @@ signal flag_changed(flag: StringName, stacks: int)
 ## If [code]true[/code], this map will propagate its active rules down to any registered child maps.
 @export var can_send_rules: bool = true
 
-# Keys to whatever the game stored under them: a number, a resource, a FoxModifiableStat. Nothing
-# here reads inside a value, which is why a rule has to be told the key it acts on.
+## Keys to whatever the game stored under them: a number, a resource, a FoxModifiableStat. Nothing
+## here reads inside a value, which is why a rule has to be told the key it acts on.
 var _data: Dictionary[StringName, Variant] = {}
 
-# Group name to the data keys filed under it. Keys rather than values, so overwriting a value
-# leaves its grouping alone.
+## Group name to the data keys filed under it. Keys rather than values, so overwriting a value
+## leaves its grouping alone.
 var _groups: Dictionary[StringName, Array] = {}
 
-# Rules applied here, including any that came down from a parent. Propagation shares the rule
-# object, so the same instance appears in every map that took it.
+## Rules applied here, including any that came down from a parent. Propagation shares the rule
+## object, so the same instance appears in every map that took it.
 var _active_rules: Array[FoxAttributeRule] = []
 
-# Flag name to the number of stacks standing on it. Two sources of one flag both have to expire
-# before it lifts, which is what a bool could not carry.
+## Flag name to the number of stacks standing on it. Two sources of one flag both have to expire
+## before it lifts, which is what a bool could not carry.
 var _flags: Dictionary[StringName, int] = {}
 
-# Found by walking up the scene tree in _enter_tree, and null at the top of a chain. Nothing in a
-# scene file wires this up by hand.
+## Found by walking up the scene tree in _enter_tree, and null at the top of a chain. Nothing in a
+## scene file wires this up by hand.
 var _parent_map: FoxAttributeMap
 
-# Maps that registered themselves beneath this one. Rules and flags travel down this list, and
-# nothing is read back up it.
+## Maps that registered themselves beneath this one. Rules and flags travel down this list, and
+## nothing is read back up it.
 var _child_maps: Array[FoxAttributeMap] = []
 
 #endregion
@@ -589,8 +589,8 @@ func get_inherited_rule_ids() -> Array[StringName]:
 	return ids
 
 
-# _find_parent_map can pair two sibling maps as each other's parent, so a walk upwards is not
-# guaranteed to end on its own. Every loop here stops on a map it has already passed.
+## _find_parent_map can pair two sibling maps as each other's parent, so a walk upwards is not
+## guaranteed to end on its own. Every loop here stops on a map it has already passed.
 func _came_from_above(rule: FoxAttributeRule) -> bool:
 	var seen: Array[FoxAttributeMap] = []
 	var walker: FoxAttributeMap = _parent_map
@@ -636,8 +636,8 @@ func get_hierarchy_summary() -> Dictionary[String, int]:
 	return summary
 
 
-# Depth first, so a child's own children follow it and the read-out can indent straight down the
-# dictionary. A path already present marks a loop and ends that branch.
+## Depth first, so a child's own children follow it and the read-out can indent straight down the
+## dictionary. A path already present marks a loop and ends that branch.
 func _collect_maps_below(summary: Dictionary[String, int], depth: int) -> void:
 	for child: FoxAttributeMap in _child_maps:
 		if not is_instance_valid(child) or not child.is_inside_tree():

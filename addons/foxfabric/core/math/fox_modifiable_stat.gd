@@ -68,7 +68,7 @@ signal all_modifiers_cleared()
 		base_value = v
 		_recalculate()
 
-# Internal dictionaries. Structure: { StringName : Array[float] }
+## Internal dictionaries. Structure: { StringName : Array[float] }
 var _flat_modifiers: Dictionary = {}
 var _multiplier_modifiers: Dictionary = {}
 
@@ -203,9 +203,9 @@ func _init(p_base: float = 0.0) -> void:
 	_current_value = base_value
 
 
-# Without this an object reaches the remote inspector as an encoded id and nothing else, because
-# the debugger cannot send the object itself. Whatever this returns is what a reader sees when a
-# stat is stored in a FoxAttributeMap.
+## Without this an object reaches the remote inspector as an encoded id and nothing else, because
+## the debugger cannot send the object itself. Whatever this returns is what a reader sees when a
+## stat is stored in a FoxAttributeMap.
 func _to_string() -> String:
 	var count: int = _flat_modifiers.size() + _multiplier_modifiers.size()
 	return "%s (base %s, %d modifiers)" % [value, base_value, count]

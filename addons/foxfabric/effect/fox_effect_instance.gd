@@ -58,13 +58,13 @@ var stack: int:
 var is_expired: bool:
 	get: return _time_left != -1.0 and _time_left <= 0.0
 
-# [Private] The actual memory holding the time.
+## Backs [member time_left], which is read-only.
 var _time_left: float
 
-# [Private] The actual memory holding the stack count.
+## Backs [member stack], which is read-only.
 var _stack: int = 1
 
-# [Private] Tracks the countdown til the next time [method FoxEffect.tick] is called.
+## Counts down to the next [method FoxEffect.tick].
 var _tick_timer: float = 0.0
 
 #endregion
