@@ -39,7 +39,9 @@ Every :ref:`write()<class_FoxJsonFile_method_write>` moves the previous file int
 
 Nothing reaches for the backup on its own. See :ref:`read()<class_FoxJsonFile_method_read>`. 
 
-Values go in as they will be stored. :ref:`write()<class_FoxJsonFile_method_write>` refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`.
+Values go in as they will be stored. :ref:`write()<class_FoxJsonFile_method_write>` refuses anything JSON cannot hold, because Godot turns a :ref:`Vector3<class_Vector3>` into a debug string that reads back as text. Convert the composite types with :ref:`FoxJson<class_FoxJson>`. 
+
+One of these belongs to one thread. :ref:`data<class_FoxJsonFile_property_data>` and the last error live on the object, so two threads sharing an instance overwrite each other's answers. Two instances are free to write the same path from different threads: each builds a scratch file named after itself before moving it into place, so neither can land in the other's.
 
 .. rst-class:: classref-reftable-group
 

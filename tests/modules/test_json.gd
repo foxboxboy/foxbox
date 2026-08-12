@@ -334,6 +334,22 @@ func _writing_refuses_before_touching_the_file() -> void:
 		"and leaves a file already sitting at the old fixed name alone")
 	DirAccess.remove_absolute(squatter)
 
+	start_case("a format key the caller owns is refused rather than written over")
+
+	var owned: String = DIR + "/owned.json"
+	var level: WorldV1 = WorldV1.new()
+	check_equal(level.write(owned, {"format": "grid", "tiles": [1, 2]}), ERR_INVALID_DATA,
+		"a format that is not a number belongs to whoever put it there")
+	check(level.get_error_message().contains("format"), "and the message names it")
+	check(not FileAccess.file_exists(owned), "nothing was written")
+
+	# the number a read hands back is the module's own, and replacing it is the point
+	level.write(owned, {"tiles": [1, 2]})
+	var round_trip: WorldV1 = WorldV1.new()
+	round_trip.read(owned)
+	check_equal(round_trip.write(owned, round_trip.data), OK,
+		"but a number under it still goes straight back")
+
 
 func _a_broken_file_falls_back_to_the_backup() -> void:
 	start_case("a broken file is reported rather than quietly swapped for the backup")

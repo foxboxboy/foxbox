@@ -28,6 +28,11 @@ extends FoxRefCounted
 ## Values go in as they will be stored. [method write] refuses anything JSON cannot hold, because
 ## Godot turns a [Vector3] into a debug string that reads back as text. Convert the composite types
 ## with [FoxJson].
+## [br][br]
+## One of these belongs to one thread. [member data] and the last error live on the object, so two
+## threads sharing an instance overwrite each other's answers. Two instances are free to write the
+## same path from different threads: each builds a scratch file named after itself before moving it
+## into place, so neither can land in the other's.
 
 
 
@@ -174,6 +179,15 @@ func get_error_line() -> int:
 func _write(path: String, contents: Dictionary) -> Error:
 	_clear_error()
 
+	# A number under this key is the one a read handed back, and replacing it is the point. Anything
+	# else is the caller's own field, and quietly writing over it would lose it without a word.
+	if contents.has(FORMAT_KEY):
+		var existing: Variant = contents[FORMAT_KEY]
+		if typeof(existing) != TYPE_INT and typeof(existing) != TYPE_FLOAT:
+			return _fail(ERR_INVALID_DATA, '"%s" holds a %s, and the file needs that key' % [
+				FORMAT_KEY, type_string(typeof(existing)),
+			])
+
 	var problem: String = FoxJson.find_unsupported(contents)
 	if not problem.is_empty():
 		return _fail(ERR_INVALID_DATA, problem)
@@ -188,8 +202,11 @@ func _write(path: String, contents: Dictionary) -> Error:
 			return _fail(made, "%s could not be created" % folder)
 
 	# Named for this write alone. Two saves running at once would otherwise stream into one file
-	# and rename the mixture into place, which is what stops saving being moved to a thread.
-	var temp: String = "%s.%d%s" % [path, Time.get_ticks_usec(), TEMP_SUFFIX]
+	# and rename the mixture into place, which is what stops saving being moved to a thread. The
+	# instance id carries the uniqueness; the clock only separates two writes from one object.
+	var temp: String = "%s.%d.%d%s" % [
+		path, get_instance_id(), Time.get_ticks_usec(), TEMP_SUFFIX,
+	]
 	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
 		return _fail(FileAccess.get_open_error(), "%s could not be opened for writing" % temp)
