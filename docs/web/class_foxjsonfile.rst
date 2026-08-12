@@ -154,7 +154,7 @@ The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`
 
 Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it. 
 
-\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` is left in it exactly as the file had it, so a file carried forward holds the format it came from beside contents that have already moved on. Comparing it against what the subclass writes is what decides whether to write the upgrade back.
+\ :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` holds the format the file was saved at, as an :ref:`int<class_int>`, so a file carried forward keeps the number it came from beside contents that have already moved on. It is the one number here that is not a :ref:`float<class_float>`. Comparing it against what the subclass writes is what decides whether to write the upgrade back.
 
 ::
 

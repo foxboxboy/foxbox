@@ -22,6 +22,18 @@ class WorldV3 extends FoxJsonFile:
 		return contents
 
 
+## A format two on, whose migration returns a new dictionary rather than editing the one it was
+## given. Nothing the migration does not name survives, which is what the base has to allow for.
+class Rebuilder extends FoxJsonFile:
+	func _get_format() -> int:
+		return 2
+
+	func _migrate(contents: Dictionary, from_format: int) -> Dictionary:
+		if from_format == 1:
+			return {"props": contents["objects"]}
+		return contents
+
+
 const DIR: String = "user://foxfabric_test_json"
 
 
@@ -240,6 +252,16 @@ func _migration_runs_once_per_step() -> void:
 	check_equal(announced, [1] as Array[int], "migrated reported the format it started from")
 	check_equal(current.data["format"], 1,
 		"data still says 1, because that is the format the contents came from")
+
+	start_case("the format survives a migration that builds a new dictionary")
+
+	# returning a fresh dictionary rather than editing the one passed in is a normal way to write
+	# a migration, and it drops every key the new one does not name
+	var rebuilt: Rebuilder = Rebuilder.new()
+	check_equal(rebuilt.read(path), OK, "the file opens")
+	check(rebuilt.data.has("format"), "the key is still there")
+	check_equal(rebuilt.data["format"], 1, "holding the format the file was saved at")
+	check_equal(typeof(rebuilt.data["format"]), TYPE_INT, "as an int, not the float JSON parses")
 
 	start_case("writing back what was read is what upgrades the file on disk")
 

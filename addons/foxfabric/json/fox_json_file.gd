@@ -74,9 +74,10 @@ const TEMP_SUFFIX: String = ".tmp"
 ## [code]3[/code] reads back as [code]3.0[/code], and a dictionary read back does not compare equal
 ## to the one written. Assigning into a typed [int] converts it.
 ## [br][br]
-## [constant FORMAT_KEY] is left in it exactly as the file had it, so a file carried forward holds
-## the format it came from beside contents that have already moved on. Comparing it against what
-## the subclass writes is what decides whether to write the upgrade back.
+## [constant FORMAT_KEY] holds the format the file was saved at, as an [int], so a file carried
+## forward keeps the number it came from beside contents that have already moved on. It is the one
+## number here that is not a [float]. Comparing it against what the subclass writes is what decides
+## whether to write the upgrade back.
 ## [codeblock]
 ## if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
 ##     file.write(path, file.data)
@@ -294,11 +295,14 @@ func _adopt(contents: Dictionary) -> Error:
 			from_format, current,
 		])
 
-	# FORMAT_KEY is left where the file had it. It says what the contents came from, and the next
-	# write replaces it with what they went out as.
 	if from_format < current:
 		for step: int in range(from_format, current):
 			contents = _migrate(contents, step)
+
+	# Set rather than left alone, because a migration that builds a new dictionary instead of
+	# editing this one drops the key, and reading has to hand back the format either way. Writing
+	# it as an int also spares the caller the float every other number in here comes back as.
+	contents[FORMAT_KEY] = from_format
 
 	data = contents
 	if from_format < current:
