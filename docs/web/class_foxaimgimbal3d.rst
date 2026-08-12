@@ -215,7 +215,18 @@ Method Descriptions
 
 |void| **apply_rotation_input**\ (\ input_delta\: :ref:`Vector2<class_Vector2>`\ ) :ref:`🔗<class_FoxAimGimbal3D_method_apply_rotation_input>`
 
-Accumulates a 2D input delta (e.g., from a mouse or joystick) and applies it to the node's rotation. The Y component affects pitch (X-axis) and the X component affects yaw (Y-axis).
+Adds ``input_delta`` to the current rotation, in radians. Its Y component moves pitch and its X component moves yaw. 
+
+This takes movement that has already happened, so a mouse or a touch drag goes straight in. A source that reports a rate instead, like a stick or :ref:`Input.get_gyroscope()<class_Input_method_get_gyroscope>`, needs the frame time to turn that rate into movement first.
+
+::
+
+    # a mouse reports how far it moved, so it arrives ready
+    aim.apply_rotation_input(event.relative * sensitivity)
+
+    # a stick reports how far it is held, so the frame time makes it a movement
+    var look: Vector2 = Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+    aim.apply_rotation_input(look * sensitivity * delta)
 
 .. rst-class:: classref-item-separator
 

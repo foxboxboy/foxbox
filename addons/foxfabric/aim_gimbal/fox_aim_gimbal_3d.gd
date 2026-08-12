@@ -70,8 +70,20 @@ var yaw: float = 0.0 :
 		rotation.y = yaw
 
 
-## Accumulates a 2D input delta (e.g., from a mouse or joystick) and applies it to the node's rotation.
-## The Y component affects pitch (X-axis) and the X component affects yaw (Y-axis).
+## Adds [param input_delta] to the current rotation, in radians. Its Y component moves pitch and
+## its X component moves yaw.
+## [br][br]
+## This takes movement that has already happened, so a mouse or a touch drag goes straight in. A
+## source that reports a rate instead, like a stick or [method Input.get_gyroscope], needs the
+## frame time to turn that rate into movement first.
+## [codeblock]
+## # a mouse reports how far it moved, so it arrives ready
+## aim.apply_rotation_input(event.relative * sensitivity)
+##
+## # a stick reports how far it is held, so the frame time makes it a movement
+## var look: Vector2 = Input.get_vector(&"look_left", &"look_right", &"look_up", &"look_down")
+## aim.apply_rotation_input(look * sensitivity * delta)
+## [/codeblock]
 func apply_rotation_input(input_delta: Vector2) -> void:
 	pitch -= input_delta.y
 	yaw -= input_delta.x
