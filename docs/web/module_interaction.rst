@@ -3,7 +3,7 @@
 Interaction
 ===========
 
-A raycast that tracks what it is pointing at, and areas that answer when you interact with them. Interacting emits a signal carrying whatever context you passed, so what it means is up to the receiver.
+A raycast that tracks what it is pointing at, and areas that answer when you interact with them.
 
 :ref:`class_FoxInteractionRayCast3D` tracks the :ref:`class_FoxInteractableArea3D` it currently
 points at, emitting focus and unfocus as that changes. Calling ``interact`` on the area emits

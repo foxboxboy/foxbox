@@ -3,7 +3,7 @@
 Damage
 ======
 
-Hit areas, raycasts, and shapecasts that deliver a payload to hurt areas. The payload is whatever you put in it, so the module never learns what damage means in your game.
+Hit areas, raycasts, and shapecasts that deliver a payload to hurt areas.
 
 Carries a ``Variant`` payload between nodes. Nothing here reads the payload, so the module
 contains no concept of health, teams or damage types.

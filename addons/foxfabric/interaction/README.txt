@@ -1,1 +1,1 @@
-Interaction: A raycast that tracks what it is pointing at, and areas that answer when you interact with them. Interacting emits a signal carrying whatever context you passed, so what it means is up to the receiver.
+Interaction: A raycast that tracks what it is pointing at, and areas that answer when you interact with them.

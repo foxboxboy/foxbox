@@ -3,7 +3,7 @@
 Physics Dragging
 ================
 
-Pulls a RigidBody towards a target node with forces and torque, so it still collides with the world on the way. Stiffness and damping live in a resource you can swap.
+Pulls a RigidBody towards a target node with forces and torque. Stiffness and damping live in a resource.
 
 Moves a ``RigidBody3D`` by applying forces and torques toward a target transform rather than
 setting its position, so the body keeps colliding and keeps its mass.

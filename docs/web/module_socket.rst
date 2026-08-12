@@ -3,7 +3,7 @@
 Socket
 ======
 
-Named seats that a node can be attached to, one occupant each. Attaching reparents and snaps to the marker; detaching hands the node back.
+Named seats a node attaches to, one occupant each. Attaching reparents and snaps to the marker.
 
 A slot that holds one node, reparenting it and optionally snapping its transform.
 :ref:`class_FoxSocket2D` and :ref:`class_FoxSocketMap2D` mirror the 3D classes, and live in the

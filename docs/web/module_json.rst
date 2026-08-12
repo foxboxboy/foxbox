@@ -3,7 +3,7 @@
 Json
 ====
 
-Reads and writes JSON that keeps its Godot types. A file carries a version, so an older one still loads after the format moves.
+Reads and writes JSON that keeps its Godot types. A file carries its format, and an older one migrates forward on read.
 
 Two classes that do not depend on each other. :ref:`class_FoxJSON` converts Godot values to and
 from the six types JSON can hold. :ref:`class_FoxJSONFile` reads and writes a versioned file.

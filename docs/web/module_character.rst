@@ -3,7 +3,7 @@
 Character
 =========
 
-Motors, abilities, and states for driving a CharacterBody3D, plus the mannequin and accessory assets used by the demos. Under heavy refactor and not representative of the rest of the library.
+Motors, abilities, and states for driving a CharacterBody3D, plus the mannequin and accessory assets the demos use. Under heavy refactor.
 
 .. warning::
 
