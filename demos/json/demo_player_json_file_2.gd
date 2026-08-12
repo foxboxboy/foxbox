@@ -1,5 +1,5 @@
-class_name DemoPlayerJsonFile2
-extends FoxJsonFile
+class_name DemoPlayerJSONFile2
+extends FoxJSONFile
 
 
 func _get_format() -> int:

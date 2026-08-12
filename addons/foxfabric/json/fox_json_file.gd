@@ -1,13 +1,13 @@
 @abstract
-class_name FoxJsonFile
+class_name FoxJSONFile
 extends FoxRefCounted
 ## A JSON file on disk, stamped with its format and written whole or not at all.
 ##
-## Extend [FoxJsonFile] once per file format. The subclass names the format it writes and says how
+## Extend [FoxJSONFile] once per file format. The subclass names the format it writes and says how
 ## to carry an older file forward.
 ## [codeblock]
 ## class_name WorldFile
-## extends FoxJsonFile
+## extends FoxJSONFile
 ##
 ## func _get_format() -> int:
 ##     return 3
@@ -27,7 +27,7 @@ extends FoxRefCounted
 ## [br][br]
 ## Values go in as they will be stored. [method write] refuses anything JSON cannot hold, because
 ## Godot turns a [Vector3] into a debug string that reads back as text. Convert the composite types
-## with [FoxJson].
+## with [FoxJSON].
 ## [br][br]
 ## One of these belongs to one thread. [member data] and the last error live on the object, so two
 ## threads sharing an instance overwrite each other's answers. Two instances are free to write the
@@ -60,7 +60,7 @@ const BROKEN_SUFFIX: String = ".broken"
 ## [member data] as an [int], holding the format the file was saved at rather than the one its
 ## contents have moved on to.
 ## [codeblock]
-## if file.read(path) == OK and file.data[FoxJsonFile.FORMAT_KEY] < 2:
+## if file.read(path) == OK and file.data[FoxJSONFile.FORMAT_KEY] < 2:
 ##     file.write(path, file.data)
 ## [/codeblock]
 ## This counts changes to the shape of the file, not releases of the project. The two move at
@@ -102,7 +102,7 @@ var _error_line: int = 0
 ##         file.get_error_message(), file.get_error_line()]
 ##     $LoadFailedDialog.popup_centered()
 ##     await $LoadFailedDialog.confirmed
-##     file.read(FoxJsonFile.get_backup_path(path))
+##     file.read(FoxJSONFile.get_backup_path(path))
 ## [/codeblock]
 ## Runs [code skip-lint]_migrate[/code] once per step when the file is in an older format than this
 ## subclass writes, and emits [signal migrated] after.
@@ -135,7 +135,7 @@ func read(path: String) -> Error:
 func write(path: String, contents: Dictionary) -> Error:
 	var result: Error = _write(path, contents)
 	if result != OK:
-		push_error("FoxJsonFile: %s" % _error_message)
+		push_error("FoxJSONFile: %s" % _error_message)
 	return result
 
 
@@ -184,7 +184,7 @@ func _write(path: String, contents: Dictionary) -> Error:
 				FORMAT_KEY, type_string(typeof(existing)),
 			])
 
-	var problem: String = FoxJson.find_unsupported(contents)
+	var problem: String = FoxJSON.find_unsupported(contents)
 	if not problem.is_empty():
 		return _fail(ERR_INVALID_DATA, problem)
 

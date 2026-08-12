@@ -5,16 +5,16 @@ Json
 
 Reads and writes JSON that keeps its Godot types. A file carries a version, so an older one still loads after the format moves.
 
-Two classes that do not depend on each other. :ref:`class_FoxJson` converts Godot values to and
-from the six types JSON can hold. :ref:`class_FoxJsonFile` reads and writes a versioned file.
+Two classes that do not depend on each other. :ref:`class_FoxJSON` converts Godot values to and
+from the six types JSON can hold. :ref:`class_FoxJSONFile` reads and writes a versioned file.
 
-Extend :ref:`class_FoxJsonFile` once per format. The subclass names the version it writes and says
+Extend :ref:`class_FoxJSONFile` once per format. The subclass names the version it writes and says
 how to carry an older file forward when that version changes.
 
 .. code-block:: gdscript
 
     class_name WorldFile
-    extends FoxJsonFile
+    extends FoxJSONFile
 
     func _get_format() -> int:
         return 2
@@ -38,7 +38,7 @@ that it was a ``Vector3``, so the code asking for a field is what decides its ty
     file.write("user://world.json", {
         "props": [{
             "kind": "crate",
-            "transform": FoxJson.transform_3d_to_array(crate.global_transform),
+            "transform": FoxJSON.transform_3d_to_array(crate.global_transform),
         }],
     })
 
@@ -47,7 +47,7 @@ that it was a ``Vector3``, so the code asking for a field is what decides its ty
     if file.read("user://world.json") == OK:
         var props: Array = file.data["props"]
         for prop: Dictionary in props:
-            crate.global_transform = FoxJson.array_to_transform_3d(
+            crate.global_transform = FoxJSON.array_to_transform_3d(
                 prop["transform"], Transform3D.IDENTITY)
 
 ``write`` refuses a value JSON cannot store rather than letting Godot save a ``Vector3`` as the

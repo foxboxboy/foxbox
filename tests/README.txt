@@ -69,7 +69,7 @@ Some tests deliberately drive failure paths, so the following appear during a pa
 are not problems:
 
     FoxEffectManager: Could not load blueprint for ID 'saved'
-    FoxJsonFile: pos holds a Vector3, which JSON cannot store   (write reports every refusal)
+    FoxJSONFile: pos holds a Vector3, which JSON cannot store   (write reports every refusal)
     FoxSocket3D: Attempted to attach '...' but socket '...' already has an attachment!
     FoxStateMachine transition failed: The target state 'DoesNotExist' does not exist.
     FoxStateMachine get_state failed: The target state 'DoesNotExist' does not exist.

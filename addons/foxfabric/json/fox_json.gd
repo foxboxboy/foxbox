@@ -1,9 +1,9 @@
 @abstract
-class_name FoxJson
+class_name FoxJSON
 extends FoxRefCounted
 ## A converter between Godot values and the six types JSON can hold.
 ##
-## [FoxJson] writes a value as the arguments its constructor takes, so the array in the file
+## [FoxJSON] writes a value as the arguments its constructor takes, so the array in the file
 ## matches the call that rebuilds it and a reader who knows Godot can follow the format without
 ## being told it.
 ## [codeblock]
@@ -243,7 +243,7 @@ static func array_to_transform_3d(value: Variant, default: Transform3D = Transfo
 ## [code]"(1.0, 2.0, 3.0)"[/code] and loads back a [String]. Nothing reports this, which is what
 ## this exists to catch.
 ## [codeblock]
-## var problem: String = FoxJson.find_unsupported(contents)
+## var problem: String = FoxJSON.find_unsupported(contents)
 ## if not problem.is_empty():
 ##     push_error(problem)
 ## # props/0/transform holds a Transform3D, which JSON cannot store
