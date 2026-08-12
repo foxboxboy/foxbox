@@ -3,10 +3,10 @@ class_name FoxJsonFile
 extends FoxRefCounted
 ## A JSON file on disk, stamped with its format and written whole or not at all.
 ##
-## [FoxJsonFile] is inherited once per file format. A subclass names the format it writes and
-## says how to carry an older file forward.
+## Extend [FoxJsonFile] once per file format. The subclass names the format it writes and says how
+## to carry an older file forward.
 ## [codeblock]
-## class_name FoxavasWorldFile
+## class_name WorldFile
 ## extends FoxJsonFile
 ##
 ## func _get_format() -> int:
