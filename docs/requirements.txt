@@ -1,4 +1,8 @@
 # Needed for the Sphinx step of docs/build_docs.py, and by Read the Docs.
 # Godot handles the earlier steps and is not a python package.
-sphinx>=7.0
-sphinx-rtd-theme>=2.0
+#
+# The ceilings are what stop a major release breaking a build that changed nothing. Read the Docs
+# installs these fresh every time, so it would be the first place to fail. Raise them deliberately,
+# after a local build passes on the new version.
+sphinx>=7.0,<10
+sphinx-rtd-theme>=2.0,<4
