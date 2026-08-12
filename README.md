@@ -11,12 +11,6 @@
 **FoxFabric is a lightweight, general purpose library for Godot 4.** Built from independent
 minimalistic modules.
 
-## Nothing assumes what your game means
-
-Most modules route arbitrary `Variant` payloads rather than hardcoding what your project means
-by any given concept, so a module never has to know anything about the game or tool it ends up
-in.
-
 ## Modules
 
 The data and logic modules have no spatial dependency and work in 2D, 3D, or plain UI.
