@@ -56,12 +56,16 @@ Six names for structural sections, in this order:
   `## @tutorial(Title): https://…`
 
 Read the Docs cannot run Godot, so the pages under `docs/web/` are committed. Change a `##`
-comment and regenerate them in the same commit. Both of these run in CI:
+comment and regenerate them in the same commit. All three of these run in CI:
 
 ```
 python docs/build_docs.py --skip-html
 python docs/check_doc_style.py
+python docs/check_module_blurbs.py
 ```
+
+The last one holds the module table in `README.md` to each module's own `README.txt`, which is
+where `build_docs.py` reads the description on the generated module page from.
 
 ## Naming
 

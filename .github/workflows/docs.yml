@@ -68,6 +68,9 @@ jobs:
         # Needs no Godot and no Sphinx, so it runs before either is installed.
         run: python docs/check_doc_style.py
 
+      - name: Check the module blurbs
+        run: python docs/check_module_blurbs.py
+
       - name: Install Sphinx
         run: pip install -r docs/requirements.txt
 
