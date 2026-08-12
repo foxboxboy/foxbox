@@ -43,14 +43,14 @@ func _get_gizmo_name() -> String:
 
 
 func _has_gizmo(node: Node3D) -> bool:
-	return handles(node)
+	return has_gizmo_for(node)
 
 
 ## Whether this gizmo draws for [param node].
 ## [br][br]
 ## Split out because the engine refuses to instantiate an [EditorNode3DGizmoPlugin] outside the
 ## editor, so the instance methods cannot be reached from a headless test.
-static func handles(node: Node3D) -> bool:
+static func has_gizmo_for(node: Node3D) -> bool:
 	return node is FoxAimGimbal3D
 
 
@@ -79,7 +79,7 @@ static func build_pitch_arc(gimbal: FoxAimGimbal3D) -> PackedVector3Array:
 			float(i) / float(SEGMENTS))
 		points.append(_get_pitch_point(angle, facing))
 
-	return _sweep(points, undo_rotation(gimbal))
+	return _build_sweep(points, undo_rotation(gimbal))
 
 
 ## The sweep between the yaw limits, in the parent's horizontal plane.
@@ -92,7 +92,7 @@ static func build_yaw_arc(gimbal: FoxAimGimbal3D) -> PackedVector3Array:
 			float(i) / float(SEGMENTS))
 		points.append(_get_yaw_point(angle))
 
-	return _sweep(points, undo_rotation(gimbal))
+	return _build_sweep(points, undo_rotation(gimbal))
 
 
 ## The gimbal's own rotation, inverted.
@@ -118,7 +118,7 @@ static func _get_pitch_point(angle: float, facing: float) -> Vector3:
 
 ## Joins [param points] into line segments and adds a spoke to each end, so the limits read as
 ## limits rather than as the ends of a stray curve. [param undo] converts into local space.
-static func _sweep(points: Array[Vector3], undo: Basis) -> PackedVector3Array:
+static func _build_sweep(points: Array[Vector3], undo: Basis) -> PackedVector3Array:
 	var lines: PackedVector3Array = PackedVector3Array()
 
 	for i: int in points.size() - 1:

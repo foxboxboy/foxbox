@@ -31,8 +31,8 @@ func _gizmo_draws_the_range() -> void:
 		return
 
 	var g: FoxAimGimbal3D = _gimbal()
-	check(gizmo.handles(g), "it claims FoxAimGimbal3D nodes")
-	check(not gizmo.handles(track(Node3D.new()) as Node3D), "and nothing else")
+	check(gizmo.has_gizmo_for(g), "it claims FoxAimGimbal3D nodes")
+	check(not gizmo.has_gizmo_for(track(Node3D.new()) as Node3D), "and nothing else")
 	check(FoxFabric.GIZMOS.has(GIZMO_PATH), "the plugin lists it")
 
 	start_case("the arc spans the clamp range")
