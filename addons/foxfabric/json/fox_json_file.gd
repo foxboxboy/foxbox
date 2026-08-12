@@ -70,6 +70,18 @@ const TEMP_SUFFIX: String = ".tmp"
 ## to the one written. Assigning into a typed [int] converts it.
 var data: Dictionary
 
+## The format the last successful [method read] found in the file, before any migration ran. Zero
+## until the first one succeeds.
+## [br][br]
+## [method read] takes [constant FORMAT_KEY] back out of [member data], so this is where the number
+## goes. Compare it against what the subclass writes to see whether the file was carried forward,
+## which is what decides whether to write the upgrade back.
+## [codeblock]
+## if file.read(path) == OK and file.read_format < 2:
+##     file.write(path, file.data)
+## [/codeblock]
+var read_format: int = 0
+
 var _error_code: Error = OK
 var _error_message: String = ""
 var _error_line: int = 0
@@ -181,23 +193,34 @@ func _write(path: String, contents: Dictionary) -> Error:
 		if made != OK:
 			return _fail(made, "%s could not be created" % folder)
 
-	var temp: String = path + TEMP_SUFFIX
+	# Named for this write alone. Two saves running at once would otherwise stream into one file
+	# and rename the mixture into place, which is what stops saving being moved to a thread.
+	var temp: String = "%s.%d%s" % [path, Time.get_ticks_usec(), TEMP_SUFFIX]
 	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
 		return _fail(FileAccess.get_open_error(), "%s could not be opened for writing" % temp)
 	file.store_string(JSON.stringify(payload, "\t"))
 	file.close()
 
-	var rotated: Error = _rotate(path)
+	# Worked out before the file moves, so a failure further down knows what to put back.
+	var previous: String = ""
+	if FileAccess.file_exists(path):
+		previous = get_backup_path(path)
+		if not _is_readable(path):
+			previous += BROKEN_SUFFIX
+
+	var rotated: Error = _rotate(path, previous)
 	if rotated != OK:
 		DirAccess.remove_absolute(temp)
 		return rotated
 
 	var moved: Error = DirAccess.rename_absolute(temp, path)
 	if moved != OK:
-		# The previous file is already in the backup folder by now, which is where a caller can
-		# reach for it. Leaving the half-written one behind would serve nobody.
 		DirAccess.remove_absolute(temp)
+		# Nothing took its place, so the file moved aside a moment ago goes back. Leaving the path
+		# empty reads as a lost save, when what is there is the one that was already working.
+		if not previous.is_empty():
+			DirAccess.rename_absolute(previous, path)
 		return _fail(moved, "%s could not be moved into place" % temp)
 
 	return OK
@@ -268,32 +291,28 @@ func _adopt(contents: Dictionary) -> Error:
 			contents = _migrate(contents, step)
 
 	data = contents
+	read_format = from_format
 	if from_format < current:
 		migrated.emit(from_format)
 	return OK
 
 
-# Moves the file already at path into the backup folder. One that cannot be parsed is put aside
-# under BROKEN_SUFFIX rather than taking the slot from a whole copy, which is checked here rather
-# than remembered from an earlier read: the file may have been broken by something other than this
-# object, or by nothing that ran this session at all.
-func _rotate(path: String) -> Error:
-	if not FileAccess.file_exists(path):
+# Moves the file already at path to destination, which is empty when there is nothing there to
+# move. The caller works destination out rather than this deciding, so the same answer is available
+# afterwards if the write fails and the move has to be undone.
+func _rotate(path: String, destination: String) -> Error:
+	if destination.is_empty():
 		return OK
 
-	var backup: String = get_backup_path(path)
-	if not _is_readable(path):
-		backup += BROKEN_SUFFIX
-
-	var folder: String = backup.get_base_dir()
+	var folder: String = destination.get_base_dir()
 	if not DirAccess.dir_exists_absolute(folder):
 		var made: Error = DirAccess.make_dir_recursive_absolute(folder)
 		if made != OK:
 			return _fail(made, "%s could not be created" % folder)
 
-	var moved: Error = DirAccess.rename_absolute(path, backup)
+	var moved: Error = DirAccess.rename_absolute(path, destination)
 	if moved != OK:
-		return _fail(moved, "%s could not be moved to %s" % [path, backup])
+		return _fail(moved, "%s could not be moved to %s" % [path, destination])
 	return OK
 
 

@@ -237,7 +237,8 @@ func _migration_runs_once_per_step() -> void:
 	check(current.data.has("props"), "step 1 renamed objects to props")
 	check(not current.data.has("objects"), "and took the old key away")
 	check_equal(current.data.get("era"), "modern", "step 2 ran as well, so it was not one jump")
-	check_equal(announced, [1] as Array[int], "migrated reported the version it started from")
+	check_equal(announced, [1] as Array[int], "migrated reported the format it started from")
+	check_equal(current.read_format, 1, "and read_format says the same without connecting first")
 
 	start_case("a file already at the current version is left alone")
 	var same: WorldV3 = WorldV3.new()
@@ -247,6 +248,7 @@ func _migration_runs_once_per_step() -> void:
 	reader.migrated.connect(func(from: int) -> void: seen.append(from))
 	check_equal(reader.read(DIR + "/new.json"), OK, "it opens")
 	check_equal(seen.size(), 0, "and nothing was migrated")
+	check_equal(reader.read_format, 3, "read_format matches when there was nothing to do")
 
 	start_case("a file from a newer build is refused rather than guessed at")
 	var behind: WorldV1 = WorldV1.new()
@@ -291,7 +293,34 @@ func _writing_refuses_before_touching_the_file() -> void:
 	var after: WorldV1 = WorldV1.new()
 	check_equal(after.read(path), OK, "the file that was already there still opens")
 	check_equal(after.data["keep"], "me", "holding what it held before the refusals")
-	check(not FileAccess.file_exists(path + FoxJsonFile.TEMP_SUFFIX), "and no half-written file")
+	check(_temp_files(DIR).is_empty(), "and no scratch file was left behind")
+
+	start_case("a write that cannot finish cleans up after itself")
+
+	# a directory where the file belongs, so the last move has nowhere to land
+	var blocked: String = DIR + "/blocked.json"
+	var second: WorldV1 = WorldV1.new()
+	second.write(blocked, {"take": 1})
+	second.write(blocked, {"take": 2})
+	DirAccess.remove_absolute(blocked)
+	DirAccess.make_dir_absolute(blocked)
+
+	check(second.write(blocked, {"take": 3}) != OK, "the write fails")
+	check(_temp_files(DIR).is_empty(), "its scratch file goes with it")
+	var kept: WorldV1 = WorldV1.new()
+	check_equal(kept.read(FoxJsonFile.get_backup_path(blocked)), OK, "the backup is untouched")
+	check_equal(kept.data["take"], 1, "still holding what it held")
+
+	start_case("the scratch file is not a name anything else could be using")
+
+	# the fixed name earlier versions used, which a write still using it would truncate
+	var squatter: String = DIR + "/scratch.json" + FoxJsonFile.TEMP_SUFFIX
+	_write_text(squatter, "not mine to touch")
+	var racer: WorldV1 = WorldV1.new()
+	check_equal(racer.write(DIR + "/scratch.json", {"take": 1}), OK, "the write succeeds")
+	check_equal(FileAccess.get_file_as_string(squatter), "not mine to touch",
+		"and leaves a file already sitting at the old fixed name alone")
+	DirAccess.remove_absolute(squatter)
 
 
 func _a_broken_file_falls_back_to_the_backup() -> void:
@@ -357,6 +386,17 @@ func _survives(label: String, encoded: Array, decode: Callable, encode: Callable
 	var parsed: Dictionary = JSON.parse_string(JSON.stringify({"v": encoded}))
 	var again: Array = encode.call(decode.call(parsed["v"]))
 	check_equal(JSON.stringify(again), JSON.stringify(encoded), label)
+
+
+func _temp_files(path: String) -> PackedStringArray:
+	var found: PackedStringArray = []
+	var dir: DirAccess = DirAccess.open(path)
+	if dir == null:
+		return found
+	for name: String in dir.get_files():
+		if name.ends_with(FoxJsonFile.TEMP_SUFFIX):
+			found.append(name)
+	return found
 
 
 func _write_text(path: String, text: String) -> void:

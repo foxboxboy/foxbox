@@ -49,9 +49,11 @@ Properties
 .. table::
    :widths: auto
 
-   +-------------------------------------+----------------------------------------------+
-   | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>` |
-   +-------------------------------------+----------------------------------------------+
+   +-------------------------------------+------------------------------------------------------------+-------+
+   | :ref:`Dictionary<class_Dictionary>` | :ref:`data<class_FoxJsonFile_property_data>`               |       |
+   +-------------------------------------+------------------------------------------------------------+-------+
+   | :ref:`int<class_int>`               | :ref:`read_format<class_FoxJsonFile_property_read_format>` | ``0`` |
+   +-------------------------------------+------------------------------------------------------------+-------+
 
 .. rst-class:: classref-reftable-group
 
@@ -151,6 +153,25 @@ Property Descriptions
 The contents of the last successful :ref:`read()<class_FoxJsonFile_method_read>`. A read that fails leaves whatever was there before it, so the returned :ref:`Error<enum_@GlobalScope_Error>` is what says whether this is current. 
 
 Every number in it is a :ref:`float<class_float>`, because JSON has one number type. A count written as ``3`` reads back as ``3.0``, and a dictionary read back does not compare equal to the one written. Assigning into a typed :ref:`int<class_int>` converts it.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FoxJsonFile_property_read_format:
+
+.. rst-class:: classref-property
+
+:ref:`int<class_int>` **read_format** = ``0`` :ref:`🔗<class_FoxJsonFile_property_read_format>`
+
+The format the last successful :ref:`read()<class_FoxJsonFile_method_read>` found in the file, before any migration ran. Zero until the first one succeeds. 
+
+\ :ref:`read()<class_FoxJsonFile_method_read>` takes :ref:`FORMAT_KEY<class_FoxJsonFile_constant_FORMAT_KEY>` back out of :ref:`data<class_FoxJsonFile_property_data>`, so this is where the number goes. Compare it against what the subclass writes to see whether the file was carried forward, which is what decides whether to write the upgrade back.
+
+::
+
+    if file.read(path) == OK and file.read_format < 2:
+        file.write(path, file.data)
 
 .. rst-class:: classref-section-separator
 
